@@ -47,10 +47,14 @@ def main() -> None:
     args = parser.parse_args()
 
     # Deferred import so `python -m` style tooling can at least load the script on CPU.
+    import torch
     from unsloth import FastLanguageModel
     from unsloth.chat_templates import get_chat_template, train_on_responses_only
     from datasets import load_dataset
     from trl import SFTConfig, SFTTrainer
+
+    # T4 (Turing) only supports fp16; A100/L4/H100 (Ampere+) support bf16.
+    bf16_ok = torch.cuda.is_available() and torch.cuda.is_bf16_supported()
 
     model, tokenizer = FastLanguageModel.from_pretrained(
         model_name=args.base_model,
@@ -95,8 +99,8 @@ def main() -> None:
         eval_strategy="epoch",
         save_strategy="epoch",
         save_total_limit=2,
-        bf16=True,
-        fp16=False,
+        bf16=bf16_ok,
+        fp16=not bf16_ok,
         max_seq_length=args.max_length,
         packing=False,
         dataset_text_field="text",

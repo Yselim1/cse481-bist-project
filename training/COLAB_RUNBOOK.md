@@ -35,8 +35,14 @@ Cell 1 — install Unsloth (it brings its own compatible torch/bnb/triton pins):
 
 ```python
 !pip install -q "unsloth[colab-new] @ git+https://github.com/unslothai/unsloth.git"
-!pip install -q --no-deps "xformers<0.0.27" "trl<0.9.0" peft accelerate bitsandbytes
 ```
+
+Do **not** pin xformers, trl, peft, accelerate, or bitsandbytes here — the
+`unsloth[colab-new]` extra already pulls a torch-compatible set of all of them,
+and manually pinning older versions either forces a source build that fails on
+recent Colab base images (xformers) or downgrades `trl` below the version
+Unsloth's own `SFTConfig` import expects. `train_on_responses_only` is re-exported
+from `unsloth.chat_templates`, not from `trl`, so no manual `trl` pin is needed.
 
 If Unsloth prints a compatibility warning about torch or triton, follow its on-screen
 instructions — it emits the exact `pip install` line needed for the current Colab image.
