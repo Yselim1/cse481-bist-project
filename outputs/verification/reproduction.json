@@ -1,0 +1,58 @@
+{
+  "checks": [
+    {
+      "command": [
+        "C:\\Users\\yavuz\\Desktop\\CSE481-Term-Project\\.verify-venv\\Scripts\\python.exe",
+        "-m",
+        "pytest"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "......................                                                   [100%]\n22 passed in 3.43s\n"
+    },
+    {
+      "command": [
+        "C:\\Users\\yavuz\\Desktop\\CSE481-Term-Project\\.verify-venv\\Scripts\\python.exe",
+        "-m",
+        "ruff",
+        "check",
+        "src",
+        "tests",
+        "scripts"
+      ],
+      "exit_code": 0,
+      "stderr": "",
+      "stdout": "All checks passed!\n"
+    },
+    {
+      "annual_performance": "exact_json_equal",
+      "daily_ledgers": "equal_within_1e-9_TRY",
+      "features": "all_equal",
+      "performance": "exact_json_equal",
+      "policy": "retrospective",
+      "run_id": "e311b7d42a8ff31f"
+    },
+    {
+      "annual_performance": "exact_json_equal",
+      "daily_ledgers": "equal_within_1e-9_TRY",
+      "features": "all_equal",
+      "performance": "exact_json_equal",
+      "policy": "verified_only",
+      "run_id": "79a98aad22e50933"
+    }
+  ],
+  "interpreter": "C:\\Users\\yavuz\\Desktop\\CSE481-Term-Project\\.verify-venv\\Scripts\\python.exe",
+  "lock_sha256": "fcc64056412586342b27011ac38d9cc3b21cc927592c76c443a76713dfc65f37",
+  "network_used": false,
+  "packages": {
+    "mcp": "2.2.0",
+    "numpy": "2.5.3",
+    "pandas": "3.0.5",
+    "pytest": "9.1.1",
+    "uv": "0.12.15",
+    "yfinance": "1.7.0"
+  },
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.12.14 (main, Aug 25 2026, 14:01:42) [MSC v.1944 64 bit (AMD64)]",
+  "verified_at": "2026-09-15T17:31:19.361505+00:00"
+}

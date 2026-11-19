@@ -1,0 +1,7 @@
+{
+  "scope": "CSE481 educational THYAO case study",
+  "source_constraint": "Historical company fundamentals come exclusively from Fintables-hosted originals.",
+  "accounting_constraint": "The primary comparison uses the internally consistent post-TMS 29 dataset.",
+  "context_constraint": "Timestamped KAP disclosures provide context and never change the trading score.",
+  "communication_preference": "Use dates, units, evidence tools, and limitations; do not give investment advice."
+}

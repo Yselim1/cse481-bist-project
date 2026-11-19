@@ -1,0 +1,8 @@
+{
+  "checked_at": "2026-09-15",
+  "scope": "Publication metadata only. No financial values imported from KAP. Values are transcribed exclusively from the Fintables-hosted PDFs downloaded by the user.",
+  "2021": {"published_at": "2022-03-01", "time_local": "07:47:08", "timezone": "Europe/Istanbul", "evidence_url": "https://www.kap.org.tr/tr/Bildirim/1005607", "observed_header": "Gönderim Tarihi 01.03.2022 07:47:08 Bildirim Tipi FR Yıl 2021 Periyot Yıllık Finansal Rapor", "attachment_title": "THY A.O. Aralık 2021.pdf"},
+  "2022": {"published_at": "2023-03-01", "time_local": "18:22:22", "timezone": "Europe/Istanbul", "evidence_url": "https://www.kap.org.tr/tr/Bildirim/1118481", "observed_header": "Gönderim Tarihi 01.03.2023 18:22:22 Bildirim Tipi FR Yıl 2022 Periyot Yıllık Finansal Rapor", "attachment_title": "THY A.O. Aralık 2022.pdf"},
+  "2023": {"published_at": "2024-04-03", "time_local": "19:00", "timezone": "Europe/Istanbul", "evidence_url": "https://fintables.com/borsa-haber-akisi/ca09fa43-446f-4c7e-8593-43eebea89e1b", "observed_header": "3 Nisan 2024, 19:00; THYAO; Finansal Rapor", "attachment_title": "THY A.O. Aralık 2023.pdf"},
+  "2024": {"published_at": "2025-02-28", "time_local": "08:00:12", "timezone": "Europe/Istanbul", "evidence_url": "https://www.kap.org.tr/tr/Bildirim/1396940", "observed_header": "Gönderim Tarihi 28.02.2025 08:00:12 Bildirim Tipi FR Yıl 2024 Periyot Yıllık Finansal Rapor", "attachment_title": "THY A.O. Aralık 2024.pdf"}
+}

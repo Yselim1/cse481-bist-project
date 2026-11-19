@@ -1,0 +1,36 @@
+{
+  "copies": [
+    {
+      "pages": 98,
+      "pdf": "output/pdf/originals/THYAO_2021_original.pdf",
+      "pdf_content_modified": false,
+      "receipt": "data/raw/fintables/originals/THYAO_2021_original.pdf",
+      "removed_envelope_bytes": 27,
+      "sha256": "4986cafea36f73e2451e7b48773304812f7ab46823b28c4fcdc865f0036100b6"
+    },
+    {
+      "pages": 99,
+      "pdf": "output/pdf/originals/THYAO_2022_original.pdf",
+      "pdf_content_modified": false,
+      "receipt": "data/raw/fintables/originals/THYAO_2022_original.pdf",
+      "removed_envelope_bytes": 27,
+      "sha256": "2d282b0a0dbb8312534343084dd31dbf01cbc4fd53e183bd9cb77ba48d10a7a6"
+    },
+    {
+      "pages": 101,
+      "pdf": "output/pdf/originals/THYAO_2023_original.pdf",
+      "pdf_content_modified": false,
+      "receipt": "data/raw/fintables/originals/THYAO_2023_original.pdf",
+      "removed_envelope_bytes": 27,
+      "sha256": "afc44f24166f25de7101d32bc7c1a353afe280345679dab8bf1bd269747adb29"
+    },
+    {
+      "pages": 101,
+      "pdf": "output/pdf/originals/THYAO_2024_original.pdf",
+      "pdf_content_modified": false,
+      "receipt": "data/raw/fintables/originals/THYAO_2024_original.pdf",
+      "removed_envelope_bytes": 27,
+      "sha256": "6c370ce5c470c2e8c0b283170463d4b818b5d7328cd163da4463f37503b7c0db"
+    }
+  ]
+}

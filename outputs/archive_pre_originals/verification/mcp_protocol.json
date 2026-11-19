@@ -1,0 +1,38 @@
+{
+  "checks": [
+    {
+      "result": "equal_to_direct_python",
+      "tool": "project_status"
+    },
+    {
+      "result": "equal_to_direct_python",
+      "tool": "calculate_indicators"
+    },
+    {
+      "result": "equal_to_direct_python",
+      "tool": "get_fundamental_metrics"
+    },
+    {
+      "result": "equal_to_direct_python",
+      "tool": "calculate_scores"
+    },
+    {
+      "result": "equal_to_direct_python",
+      "tool": "generate_signal"
+    },
+    {
+      "result": "equal_to_direct_python",
+      "tool": "run_backtest"
+    },
+    {
+      "result": "invalid_symbol_rejected",
+      "tool": "get_stock_history"
+    },
+    {
+      "result": "missing_data_returned_as_null",
+      "tool": "get_fundamental_metrics"
+    }
+  ],
+  "real_llm": false,
+  "transport": "stdio"
+}

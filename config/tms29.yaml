@@ -1,0 +1,36 @@
+ticker: THYAO.IS
+benchmark: XU100.IS
+fx_ticker: TRY=X
+market_start: '2021-01-01'
+evaluation_start: '2025-01-01'
+evaluation_end: '2026-09-26'
+currency: TRY
+fundamental_currency: TRY
+fundamentals_file: data/processed/fintables_tms29_observations.csv
+output_name: tms29_primary
+initial_capital: 100000.0
+commission_bps: 10.0
+slippage_bps: 5.0
+annual_sessions: 252
+max_fundamental_age_days: 230
+vintage_policy: verified_only
+strategy:
+  sma_fast: 20
+  sma_slow: 50
+  pivot_left: 5
+  pivot_right: 5
+  zone_lookback: 252
+  zone_tolerance: 0.015
+  zone_min_touches: 2
+  support_distance: 0.02
+  revenue_growth_threshold: 0.15
+  profit_growth_threshold: 0.15
+  roe_threshold: 0.20
+  debt_ebitda_threshold: 4.0
+  valuation_min_history: 63
+  valuation_lookback: 252
+  technical_weight: 0.60
+  fundamental_min_score: 3
+  entry_score: 0.70
+  stop_loss: 0.08
+  max_holding_sessions: 40

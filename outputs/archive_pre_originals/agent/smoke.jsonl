@@ -1,0 +1,7 @@
+{"type":"thread.started","thread_id":"01a0a5c8-9f9f-7cf2-a3f7-a2d15e90fe83"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"I’ll locate and call the BIST `project_status` tool once, then report its ticker and fundamental source."}}
+{"type":"item.started","item":{"id":"item_1","type":"mcp_tool_call","server":"bist","tool":"project_status","arguments":{},"result":null,"error":null,"status":"in_progress"}}
+{"type":"item.completed","item":{"id":"item_1","type":"mcp_tool_call","server":"bist","tool":"project_status","arguments":{},"result":{"content":[{"type":"text","text":"{\n  \"ticker\": \"THYAO.IS\",\n  \"benchmark\": \"XU100.IS\",\n  \"fundamental_source\": \"Fintables\",\n  \"fundamentals_present\": true,\n  \"educational_only\": true\n}"}],"structured_content":null},"error":null,"status":"completed"}}
+{"type":"item.completed","item":{"id":"item_2","type":"agent_message","text":"- **Ticker:** THYAO.IS\n- **Fundamental source:** Fintables\n\nCalled `bist.project_status` exactly once. No shell tools used or files changed."}}
+{"type":"turn.completed","usage":{"input_tokens":46992,"cached_input_tokens":42240,"cache_write_input_tokens":0,"output_tokens":164,"reasoning_output_tokens":0}}

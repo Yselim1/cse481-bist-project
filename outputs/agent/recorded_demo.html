@@ -1,0 +1,1483 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>THYAO recorded MCP demonstration</title><style>
+body{font:16px/1.6 system-ui;color:#172554;background:#f1f5f9;margin:0}main{max-width:1060px;margin:auto;background:white;padding:36px}h1{border-top:7px solid #be123c;padding-top:20px}section{margin:40px 0}summary{cursor:pointer;padding:12px;background:#e2e8f0}details{margin:8px 0}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.5 Consolas,monospace;padding:16px;background:#f8fafc}.notice{padding:16px;background:#fff1f2;border-left:4px solid #be123c}</style><main><h1>THYAO: recorded MCP demonstration</h1><p class="notice">Offline viewer of genuine Codex host sessions captured 15 September 2026. Opening this page does not call a model. These are recorded tool responses and actual explanations, not a live trading service.</p><p>Expand a tool to inspect its arguments and response. Source JSONL and Markdown files are preserved beside this page. The active study uses verified annual Fintables originals in TRY; annual refresh and investment-performance limitations remain disclosed.</p><section><h2>smoke</h2><p>1 recorded MCP calls</p><details><summary>project_status | completed</summary><pre>{
+  &quot;id&quot;: &quot;item_1&quot;,
+  &quot;type&quot;: &quot;mcp_tool_call&quot;,
+  &quot;server&quot;: &quot;bist&quot;,
+  &quot;tool&quot;: &quot;project_status&quot;,
+  &quot;arguments&quot;: {},
+  &quot;result&quot;: {
+    &quot;content&quot;: [
+      {
+        &quot;type&quot;: &quot;text&quot;,
+        &quot;text&quot;: &quot;{\n  \&quot;ticker\&quot;: \&quot;THYAO.IS\&quot;,\n  \&quot;benchmark\&quot;: \&quot;XU100.IS\&quot;,\n  \&quot;fundamental_source\&quot;: \&quot;Fintables\&quot;,\n  \&quot;fundamentals_present\&quot;: true,\n  \&quot;vintage_policy\&quot;: \&quot;verified_only\&quot;,\n  \&quot;fundamental_currency\&quot;: \&quot;TRY\&quot;,\n  \&quot;educational_only\&quot;: true\n}&quot;
+      }
+    ],
+    &quot;structured_content&quot;: {
+      &quot;ticker&quot;: &quot;THYAO.IS&quot;,
+      &quot;benchmark&quot;: &quot;XU100.IS&quot;,
+      &quot;fundamental_source&quot;: &quot;Fintables&quot;,
+      &quot;fundamentals_present&quot;: true,
+      &quot;vintage_policy&quot;: &quot;verified_only&quot;,
+      &quot;fundamental_currency&quot;: &quot;TRY&quot;,
+      &quot;educational_only&quot;: true
+    }
+  },
+  &quot;error&quot;: null,
+  &quot;status&quot;: &quot;completed&quot;
+}</pre></details><h3>Actual host explanation</h3><pre>- Ticker: **THYAO.IS**
+- Fundamental source: **Fintables**</pre></section><section><h2>analysis_demo</h2><p>8 recorded MCP calls</p><details><summary>generate_report | completed</summary><pre>{
+  &quot;id&quot;: &quot;item_8&quot;,
+  &quot;type&quot;: &quot;mcp_tool_call&quot;,
+  &quot;server&quot;: &quot;bist&quot;,
+  &quot;tool&quot;: &quot;generate_report&quot;,
+  &quot;arguments&quot;: {},
+  &quot;result&quot;: {
+    &quot;content&quot;: [
+      {
+        &quot;type&quot;: &quot;text&quot;,
+        &quot;text&quot;: &quot;{\n  \&quot;ticker\&quot;: \&quot;THYAO.IS\&quot;,\n  \&quot;as_of\&quot;: null,\n  \&quot;data\&quot;: {\n    \&quot;performance\&quot;: {\n      \&quot;bist100\&quot;: {\n        \&quot;annualized_volatility\&quot;: 0.29021467728922656,\n        \&quot;basis\&quot;: \&quot;BIST100 price index; no costs\&quot;,\n        \&quot;cagr\&quot;: 0.2650810950272522,\n        \&quot;cumulative_return\&quot;: 1.022394260022093,\n        \&quot;end\&quot;: \&quot;2025-12-31\&quot;,\n        \&quot;final_equity\&quot;: 202239.4260022093,\n        \&quot;initial_capital\&quot;: 100000.0,\n        \&quot;maximum_drawdown\&quot;: -0.2286087856192982,\n        \&quot;missing_sessions\&quot;: 3,\n        \&quot;sessions\&quot;: 746,\n        \&quot;sharpe_zero_risk_free\&quot;: 0.9652412271043687,\n        \&quot;start\&quot;: \&quot;2023-01-02\&quot;\n      },\n      \&quot;buy_hold\&quot;: {\n        \&quot;annualized_volatility\&quot;: 0.3976817376399488,\n        \&quot;benchmark_difference_pp\&quot;: -9.513530941793856,\n        \&quot;cagr\&quot;: 0.24489280553325243,\n        \&quot;closed_trades\&quot;: 0,\n        \&quot;cumulative_return\&quot;: 0.9272589506041544,\n        \&quot;diagnostic_flags\&quot;: [\n          \&quot;fewer_than_10_closed_trades\&quot;\n        ],\n        \&quot;end\&quot;: \&quot;2025-12-31\&quot;,\n        \&quot;exposure\&quot;: 1.0,\n        \&quot;final_equity\&quot;: 192725.89506041544,\n        \&quot;gross_return_same_executions\&quot;: 0.9301508026595355,\n        \&quot;initial_capital\&quot;: 100000.0,\n        \&quot;maximum_drawdown\&quot;: -0.25614493728705756,\n        \&quot;open_trades\&quot;: 1,\n        \&quot;sessions\&quot;: 749,\n        \&quot;sharpe_zero_risk_free\&quot;: 0.7503853529465033,\n        \&quot;start\&quot;: \&quot;2023-01-02\&quot;,\n        \&quot;strategy\&quot;: \&quot;buy_hold\&quot;,\n        \&quot;total_commission\&quot;: 99.9000999000999,\n        \&quot;total_slippage_cost\&quot;: 49.925087406336765,\n        \&quot;turnover_initial_capital\&quot;: 0.9985017481269357,\n        \&quot;unrealized_pnl\&quot;: 92725.89506041544,\n        \&quot;win_rate\&quot;: null\n      },\n      \&quot;combined\&quot;: {\n        \&quot;annualized_volatility\&quot;: 0.17018404304814624,\n        \&quot;benchmark_difference_pp\&quot;: -36.922302659143135,\n        \&quot;cagr\&quot;: 0.18273928639253567,\n        \&quot;closed_trades\&quot;: 8,\n        \&quot;cumulative_return\&quot;: 0.6531712334306616,\n        \&quot;diagnostic_flags\&quot;: [\n          \&quot;fewer_than_10_closed_trades\&quot;\n        ],\n        \&quot;end\&quot;: \&quot;2025-12-31\&quot;,\n        \&quot;exposure\&quot;: 0.20160213618157544,\n        \&quot;final_equity\&quot;: 165317.12334306617,\n        \&quot;gross_return_same_executions\&quot;: 0.6933272983782912,\n        \&quot;initial_capital\&quot;: 100000.0,\n        \&quot;maximum_drawdown\&quot;: -0.13853114796833998,\n        \&quot;open_trades\&quot;: 0,\n        \&quot;sessions\&quot;: 749,\n        \&quot;sharpe_zero_risk_free\&quot;: 1.077509711601558,\n        \&quot;start\&quot;: \&quot;2023-01-02\&quot;,\n        \&quot;strategy\&quot;: \&quot;combined\&quot;,\n        \&quot;total_commission\&quot;: 2115.8741630890936,\n        \&quot;total_slippage_cost\&quot;: 1057.954204282381,\n        \&quot;turnover_initial_capital\&quot;: 21.159084085649486,\n        \&quot;unrealized_pnl\&quot;: 0.0,\n        \&quot;win_rate\&quot;: 0.875\n      },\n      \&quot;technical\&quot;: {\n        \&quot;annualized_volatility\&quot;: 0.17699876282028346,\n        \&quot;benchmark_difference_pp\&quot;: -41.053410662024525,\n        \&quot;cagr\&quot;: 0.1727884198567522,\n        \&quot;closed_trades\&quot;: 11,\n        \&quot;cumulative_return\&quot;: 0.6118601534018477,\n        \&quot;diagnostic_flags\&quot;: [],\n        \&quot;end\&quot;: \&quot;2025-12-31\&quot;,\n        \&quot;exposure\&quot;: 0.26702269692923897,\n        \&quot;final_equity\&quot;: 161186.01534018476,\n        \&quot;gross_return_same_executions\&quot;: 0.6659389444740551,\n        \&quot;initial_capital\&quot;: 100000.0,\n        \&quot;maximum_drawdown\&quot;: -0.13155894458680928,\n        \&quot;open_trades\&quot;: 0,\n        \&quot;sessions\&quot;: 749,\n        \&quot;sharpe_zero_risk_free\&quot;: 0.9950150603252809,\n        \&quot;start\&quot;: \&quot;2023-01-02\&quot;,\n        \&quot;strategy\&quot;: \&quot;technical\&quot;,\n        \&quot;total_commission\&quot;: 3123.4762069147228,\n        \&quot;total_slippage_cost\&quot;: 1561.7545712687024,\n        \&quot;turnover_initial_capital\&quot;: 31.235091425377814,\n        \&quot;unrealized_pnl\&quot;: 0.0,\n        \&quot;win_rate\&quot;: 0.6363636363636364\n      }\n    },\n    \&quot;quality\&quot;: {\n      \&quot;evaluation_sessions\&quot;: 749,\n      \&quot;fundamental_complete_sessions\&quot;: 710,\n      \&quot;fundamental_fresh_sessions\&quot;: 749,\n      \&quot;fundamentals\&quot;: {\n        \&quot;assumed_release_rows\&quot;: 0,\n        \&quot;currencies\&quot;: [\n          \&quot;TRY\&quot;\n        ],\n        \&quot;metrics\&quot;: [\n          \&quot;cash\&quot;,\n          \&quot;current_assets\&quot;,\n          \&quot;current_liabilities\&quot;,\n          \&quot;ebitda\&quot;,\n          \&quot;equity\&quot;,\n          \&quot;financial_debt\&quot;,\n          \&quot;financing_cash_flow\&quot;,\n          \&quot;gross_profit\&quot;,\n          \&quot;inventories\&quot;,\n          \&quot;investing_cash_flow\&quot;,\n          \&quot;net_debt\&quot;,\n          \&quot;net_profit\&quot;,\n          \&quot;operating_cash_flow\&quot;,\n          \&quot;operating_profit\&quot;,\n          \&quot;revenue\&quot;,\n          \&quot;shares_outstanding\&quot;,\n          \&quot;total_assets\&quot;\n        ],\n        \&quot;missing_values\&quot;: 0,\n        \&quot;observations\&quot;: 136,\n        \&quot;periods\&quot;: [\n          \&quot;2020-12-31\&quot;,\n          \&quot;2021-12-31\&quot;,\n          \&quot;2022-12-31\&quot;,\n          \&quot;2023-12-31\&quot;,\n          \&quot;2024-12-31\&quot;\n        ],\n        \&quot;unverified_vintage_rows\&quot;: 0,\n        \&quot;verified_vintage_rows\&quot;: 136\n      },\n      \&quot;index_only_dates\&quot;: [\n        \&quot;2024-04-09\&quot;\n      ],\n      \&quot;market\&quot;: {\n        \&quot;THYAO.IS\&quot;: {\n          \&quot;first\&quot;: \&quot;2021-01-04\&quot;,\n          \&quot;fx_usage\&quot;: null,\n          \&quot;inconsistent_ohlc_rows\&quot;: 0,\n          \&quot;large_close_moves\&quot;: 0,\n          \&quot;last\&quot;: \&quot;2025-12-31\&quot;,\n          \&quot;rows\&quot;: 1250,\n          \&quot;ticker\&quot;: \&quot;THYAO.IS\&quot;,\n          \&quot;zero_volume_sessions\&quot;: 0\n        },\n        \&quot;TRY=X\&quot;: {\n          \&quot;first\&quot;: \&quot;2021-01-01\&quot;,\n          \&quot;fx_usage\&quot;: \&quot;close only; provider OHLC inconsistencies retained and flagged\&quot;,\n          \&quot;inconsistent_ohlc_rows\&quot;: 23,\n          \&quot;large_close_moves\&quot;: 0,\n          \&quot;last\&quot;: \&quot;2025-12-31\&quot;,\n          \&quot;rows\&quot;: 1300,\n          \&quot;ticker\&quot;: \&quot;TRY=X\&quot;,\n          \&quot;zero_volume_sessions\&quot;: 1300\n        },\n        \&quot;XU100.IS\&quot;: {\n          \&quot;first\&quot;: \&quot;2021-01-04\&quot;,\n          \&quot;fx_usage\&quot;: null,\n          \&quot;inconsistent_ohlc_rows\&quot;: 0,\n          \&quot;large_close_moves\&quot;: 0,\n          \&quot;last\&quot;: \&quot;2025-12-31\&quot;,\n          \&quot;rows\&quot;: 1247,\n          \&quot;ticker\&quot;: \&quot;XU100.IS\&quot;,\n          \&quot;zero_volume_sessions\&quot;: 1\n        }\n      },\n      \&quot;missing_fx_dates\&quot;: [\n        \&quot;2025-04-18\&quot;,\n        \&quot;2025-04-21\&quot;,\n        \&quot;2025-12-25\&quot;\n      ],\n      \&quot;stock_only_dates\&quot;: [\n        \&quot;2021-04-02\&quot;,\n        \&quot;2023-12-25\&quot;,\n        \&quot;2024-12-25\&quot;,\n        \&quot;2025-12-25\&quot;\n      ],\n      \&quot;vintage_policy\&quot;: \&quot;verified_only\&quot;,\n      \&quot;warnings\&quot;: [\n        \&quot;Single user-selected stock; selection/survivorship bias; no market-wide inference.\&quot;,\n        \&quot;Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.\&quot;,\n        \&quot;Adjusted synthetic units; whole-lot execution and taxes not modeled.\&quot;,\n        \&quot;BIST100 price-index basis differs from adjusted stock return basis.\&quot;,\n        \&quot;Original annual statement vintages and comparative revisions are dated; interim reports are outside this annual-refresh strategy.\&quot;,\n        \&quot;Original TRY presentation is nominal: growth and return on average balances are affected by inflation and currency translation.\&quot;,\n        \&quot;Source/currency correction was made after the earlier USD results were inspected; 2025 is a chronological parameter holdout, not a pristine blind test.\&quot;\n      ]\n    },\n    \&quot;report_path\&quot;: \&quot;C:\\\\Users\\\\yavuz\\\\Desktop\\\\CSE481-Term-Project\\\\outputs\\\\verified_only\\\\report.md\&quot;,\n    \&quot;html_path\&quot;: \&quot;C:\\\\Users\\\\yavuz\\\\Desktop\\\\CSE481-Term-Project\\\\outputs\\\\verified_only\\\\report.html\&quot;\n  },\n  \&quot;price_currency\&quot;: \&quot;TRY\&quot;,\n  \&quot;fundamental_currency\&quot;: \&quot;TRY\&quot;,\n  \&quot;vintage_policy\&quot;: \&quot;verified_only\&quot;,\n  \&quot;fundamental_dataset\&quot;: \&quot;data/processed/fintables_original_observations.csv\&quot;,\n  \&quot;warnings\&quot;: [\n    \&quot;Single user-selected stock; selection/survivorship bias; no market-wide inference.\&quot;,\n    \&quot;Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.\&quot;,\n    \&quot;Adjusted synthetic units; whole-lot execution and taxes not modeled.\&quot;,\n    \&quot;BIST100 price-index basis differs from adjusted stock return basis.\&quot;,\n    \&quot;Original annual statement vintages and comparative revisions are dated; interim reports are outside this annual-refresh strategy.\&quot;,\n    \&quot;Original TRY presentation is nominal: growth and return on average balances are affected by inflation and currency translation.\&quot;,\n    \&quot;Source/currency correction was made after the earlier USD results were inspected; 2025 is a chronological parameter holdout, not a pristine blind test.\&quot;\n  ],\n  \&quot;source_document\&quot;: \&quot;docs/DATA_SOURCES.md\&quot;,\n  \&quot;execution_assumptions\&quot;: {\n    \&quot;commission_bps_per_side\&quot;: 10.0,\n    \&quot;slippage_bps_per_side\&quot;: 5.0,\n    \&quot;initial_capital_try\&quot;: 100000.0,\n    \&quot;signal_timing\&quot;: \&quot;close decision, next stock-session open execution\&quot;\n  }\n}&quot;
+      }
+    ],
+    &quot;structured_content&quot;: {
+      &quot;ticker&quot;: &quot;THYAO.IS&quot;,
+      &quot;as_of&quot;: null,
+      &quot;data&quot;: {
+        &quot;performance&quot;: {
+          &quot;bist100&quot;: {
+            &quot;annualized_volatility&quot;: 0.29021467728922656,
+            &quot;basis&quot;: &quot;BIST100 price index; no costs&quot;,
+            &quot;cagr&quot;: 0.2650810950272522,
+            &quot;cumulative_return&quot;: 1.022394260022093,
+            &quot;end&quot;: &quot;2025-12-31&quot;,
+            &quot;final_equity&quot;: 202239.4260022093,
+            &quot;initial_capital&quot;: 100000.0,
+            &quot;maximum_drawdown&quot;: -0.2286087856192982,
+            &quot;missing_sessions&quot;: 3,
+            &quot;sessions&quot;: 746,
+            &quot;sharpe_zero_risk_free&quot;: 0.9652412271043687,
+            &quot;start&quot;: &quot;2023-01-02&quot;
+          },
+          &quot;buy_hold&quot;: {
+            &quot;annualized_volatility&quot;: 0.3976817376399488,
+            &quot;benchmark_difference_pp&quot;: -9.513530941793856,
+            &quot;cagr&quot;: 0.24489280553325243,
+            &quot;closed_trades&quot;: 0,
+            &quot;cumulative_return&quot;: 0.9272589506041544,
+            &quot;diagnostic_flags&quot;: [
+              &quot;fewer_than_10_closed_trades&quot;
+            ],
+            &quot;end&quot;: &quot;2025-12-31&quot;,
+            &quot;exposure&quot;: 1.0,
+            &quot;final_equity&quot;: 192725.89506041544,
+            &quot;gross_return_same_executions&quot;: 0.9301508026595355,
+            &quot;initial_capital&quot;: 100000.0,
+            &quot;maximum_drawdown&quot;: -0.25614493728705756,
+            &quot;open_trades&quot;: 1,
+            &quot;sessions&quot;: 749,
+            &quot;sharpe_zero_risk_free&quot;: 0.7503853529465033,
+            &quot;start&quot;: &quot;2023-01-02&quot;,
+            &quot;strategy&quot;: &quot;buy_hold&quot;,
+            &quot;total_commission&quot;: 99.9000999000999,
+            &quot;total_slippage_cost&quot;: 49.925087406336765,
+            &quot;turnover_initial_capital&quot;: 0.9985017481269357,
+            &quot;unrealized_pnl&quot;: 92725.89506041544,
+            &quot;win_rate&quot;: null
+          },
+          &quot;combined&quot;: {
+            &quot;annualized_volatility&quot;: 0.17018404304814624,
+            &quot;benchmark_difference_pp&quot;: -36.922302659143135,
+            &quot;cagr&quot;: 0.18273928639253567,
+            &quot;closed_trades&quot;: 8,
+            &quot;cumulative_return&quot;: 0.6531712334306616,
+            &quot;diagnostic_flags&quot;: [
+              &quot;fewer_than_10_closed_trades&quot;
+            ],
+            &quot;end&quot;: &quot;2025-12-31&quot;,
+            &quot;exposure&quot;: 0.20160213618157544,
+            &quot;final_equity&quot;: 165317.12334306617,
+            &quot;gross_return_same_executions&quot;: 0.6933272983782912,
+            &quot;initial_capital&quot;: 100000.0,
+            &quot;maximum_drawdown&quot;: -0.13853114796833998,
+            &quot;open_trades&quot;: 0,
+            &quot;sessions&quot;: 749,
+            &quot;sharpe_zero_risk_free&quot;: 1.077509711601558,
+            &quot;start&quot;: &quot;2023-01-02&quot;,
+            &quot;strategy&quot;: &quot;combined&quot;,
+            &quot;total_commission&quot;: 2115.8741630890936,
+            &quot;total_slippage_cost&quot;: 1057.954204282381,
+            &quot;turnover_initial_capital&quot;: 21.159084085649486,
+            &quot;unrealized_pnl&quot;: 0.0,
+            &quot;win_rate&quot;: 0.875
+          },
+          &quot;technical&quot;: {
+            &quot;annualized_volatility&quot;: 0.17699876282028346,
+            &quot;benchmark_difference_pp&quot;: -41.053410662024525,
+            &quot;cagr&quot;: 0.1727884198567522,
+            &quot;closed_trades&quot;: 11,
+            &quot;cumulative_return&quot;: 0.6118601534018477,
+            &quot;diagnostic_flags&quot;: [],
+            &quot;end&quot;: &quot;2025-12-31&quot;,
+            &quot;exposure&quot;: 0.26702269692923897,
+            &quot;final_equity&quot;: 161186.01534018476,
+            &quot;gross_return_same_executions&quot;: 0.6659389444740551,
+            &quot;initial_capital&quot;: 100000.0,
+            &quot;maximum_drawdown&quot;: -0.13155894458680928,
+            &quot;open_trades&quot;: 0,
+            &quot;sessions&quot;: 749,
+            &quot;sharpe_zero_risk_free&quot;: 0.9950150603252809,
+            &quot;start&quot;: &quot;2023-01-02&quot;,
+            &quot;strategy&quot;: &quot;technical&quot;,
+            &quot;total_commission&quot;: 3123.4762069147228,
+            &quot;total_slippage_cost&quot;: 1561.7545712687024,
+            &quot;turnover_initial_capital&quot;: 31.235091425377814,
+            &quot;unrealized_pnl&quot;: 0.0,
+            &quot;win_rate&quot;: 0.6363636363636364
+          }
+        },
+        &quot;quality&quot;: {
+          &quot;evaluation_sessions&quot;: 749,
+          &quot;fundamental_complete_sessions&quot;: 710,
+          &quot;fundamental_fresh_sessions&quot;: 749,
+          &quot;fundamentals&quot;: {
+            &quot;assumed_release_rows&quot;: 0,
+            &quot;currencies&quot;: [
+              &quot;TRY&quot;
+            ],
+            &quot;metrics&quot;: [
+              &quot;cash&quot;,
+              &quot;current_assets&quot;,
+              &quot;current_liabilities&quot;,
+              &quot;ebitda&quot;,
+              &quot;equity&quot;,
+              &quot;financial_debt&quot;,
+              &quot;financing_cash_flow&quot;,
+              &quot;gross_profit&quot;,
+              &quot;inventories&quot;,
+              &quot;investing_cash_flow&quot;,
+              &quot;net_debt&quot;,
+              &quot;net_profit&quot;,
+              &quot;operating_cash_flow&quot;,
+              &quot;operating_profit&quot;,
+              &quot;revenue&quot;,
+              &quot;shares_outstanding&quot;,
+              &quot;total_assets&quot;
+            ],
+            &quot;missing_values&quot;: 0,
+            &quot;observations&quot;: 136,
+            &quot;periods&quot;: [
+              &quot;2020-12-31&quot;,
+              &quot;2021-12-31&quot;,
+              &quot;2022-12-31&quot;,
+              &quot;2023-12-31&quot;,
+              &quot;2024-12-31&quot;
+            ],
+            &quot;unverified_vintage_rows&quot;: 0,
+            &quot;verified_vintage_rows&quot;: 136
+          },
+          &quot;index_only_dates&quot;: [
+            &quot;2024-04-09&quot;
+          ],
+          &quot;market&quot;: {
+            &quot;THYAO.IS&quot;: {
+              &quot;first&quot;: &quot;2021-01-04&quot;,
+              &quot;fx_usage&quot;: null,
+              &quot;inconsistent_ohlc_rows&quot;: 0,
+              &quot;large_close_moves&quot;: 0,
+              &quot;last&quot;: &quot;2025-12-31&quot;,
+              &quot;rows&quot;: 1250,
+              &quot;ticker&quot;: &quot;THYAO.IS&quot;,
+              &quot;zero_volume_sessions&quot;: 0
+            },
+            &quot;TRY=X&quot;: {
+              &quot;first&quot;: &quot;2021-01-01&quot;,
+              &quot;fx_usage&quot;: &quot;close only; provider OHLC inconsistencies retained and flagged&quot;,
+              &quot;inconsistent_ohlc_rows&quot;: 23,
+              &quot;large_close_moves&quot;: 0,
+              &quot;last&quot;: &quot;2025-12-31&quot;,
+              &quot;rows&quot;: 1300,
+              &quot;ticker&quot;: &quot;TRY=X&quot;,
+              &quot;zero_volume_sessions&quot;: 1300
+            },
+            &quot;XU100.IS&quot;: {
+              &quot;first&quot;: &quot;2021-01-04&quot;,
+              &quot;fx_usage&quot;: null,
+              &quot;inconsistent_ohlc_rows&quot;: 0,
+              &quot;large_close_moves&quot;: 0,
+              &quot;last&quot;: &quot;2025-12-31&quot;,
+              &quot;rows&quot;: 1247,
+              &quot;ticker&quot;: &quot;XU100.IS&quot;,
+              &quot;zero_volume_sessions&quot;: 1
+            }
+          },
+          &quot;missing_fx_dates&quot;: [
+            &quot;2025-04-18&quot;,
+            &quot;2025-04-21&quot;,
+            &quot;2025-12-25&quot;
+          ],
+          &quot;stock_only_dates&quot;: [
+            &quot;2021-04-02&quot;,
+            &quot;2023-12-25&quot;,
+            &quot;2024-12-25&quot;,
+            &quot;2025-12-25&quot;
+          ],
+          &quot;vintage_policy&quot;: &quot;verified_only&quot;,
+          &quot;warnings&quot;: [
+            &quot;Single user-selected stock; selection/survivorship bias; no market-wide inference.&quot;,
+            &quot;Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.&quot;,
+            &quot;Adjusted synthetic units; whole-lot execution and taxes not modeled.&quot;,
+            &quot;BIST100 price-index basis differs from adjusted stock return basis.&quot;,
+            &quot;Original annual statement vintages and comparative revisions are dated; interim reports are outside this annual-refresh strategy.&quot;,
+            &quot;Original TRY presentation is nominal: growth and return on average balances are affected by inflation and currency translation.&quot;,
+            &quot;Source/currency correction was made after the earlier USD results were inspected; 2025 is a chronological parameter holdout, not a pristine blind test.&quot;
+          ]
+        },
+        &quot;report_path&quot;: &quot;C:\\Users\\yavuz\\Desktop\\CSE481-Term-Project\\outputs\\verified_only\\report.md&quot;,
+        &quot;html_path&quot;: &quot;C:\\Users\\yavuz\\Desktop\\CSE481-Term-Project\\outputs\\verified_only\\report.html&quot;
+      },
+      &quot;price_currency&quot;: &quot;TRY&quot;,
+      &quot;fundamental_currency&quot;: &quot;TRY&quot;,
+      &quot;vintage_policy&quot;: &quot;verified_only&quot;,
+      &quot;fundamental_dataset&quot;: &quot;data/processed/fintables_original_observations.csv&quot;,
+      &quot;warnings&quot;: [
+        &quot;Single user-selected stock; selection/survivorship bias; no market-wide inference.&quot;,
+        &quot;Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.&quot;,
+        &quot;Adjusted synthetic units; whole-lot execution and taxes not modeled.&quot;,
+        &quot;BIST100 price-index basis differs from adjusted stock return basis.&quot;,
+        &quot;Original annual statement vintages and comparative revisions are dated; interim reports are outside this annual-refresh strategy.&quot;,
+        &quot;Original TRY presentation is nominal: growth and return on average balances are affected by inflation and currency translation.&quot;,
+        &quot;Source/currency correction was made after the earlier USD results were inspected; 2025 is a chronological parameter holdout, not a pristine blind test.&quot;
+      ],
+      &quot;source_document&quot;: &quot;docs/DATA_SOURCES.md&quot;,
+      &quot;execution_assumptions&quot;: {
+        &quot;commission_bps_per_side&quot;: 10.0,
+        &quot;slippage_bps_per_side&quot;: 5.0,
+        &quot;initial_capital_try&quot;: 100000.0,
+        &quot;signal_timing&quot;: &quot;close decision, next stock-session open execution&quot;
+      }
+    }
+  },
+  &quot;error&quot;: null,
+  &quot;status&quot;: &quot;completed&quot;
+}</pre></details><details><summary>calculate_scores | completed</summary><pre>{
+  &quot;id&quot;: &quot;item_5&quot;,
+  &quot;type&quot;: &quot;mcp_tool_call&quot;,
+  &quot;server&quot;: &quot;bist&quot;,
+  &quot;tool&quot;: &quot;calculate_scores&quot;,
+  &quot;arguments&quot;: {
+    &quot;ticker&quot;: &quot;THYAO.IS&quot;,
+    &quot;as_of&quot;: &quot;2025-12-31&quot;
+  },
+  &quot;result&quot;: {
+    &quot;content&quot;: [
+      {
+        &quot;type&quot;: &quot;text&quot;,
+        &quot;text&quot;: &quot;{\n  \&quot;ticker\&quot;: \&quot;THYAO.IS\&quot;,\n  \&quot;as_of\&quot;: \&quot;2025-12-31\&quot;,\n  \&quot;data\&quot;: {\n    \&quot;f_growth\&quot;: 1.0,\n    \&quot;f_profit_growth\&quot;: 0.0,\n    \&quot;f_roe\&quot;: 0.0,\n    \&quot;f_leverage\&quot;: 1.0,\n    \&quot;f_valuation\&quot;: 1.0,\n    \&quot;t_trend\&quot;: 0.0,\n    \&quot;t_rsi\&quot;: 1.0,\n    \&quot;t_macd\&quot;: 0.0,\n    \&quot;t_volume\&quot;: 0.0,\n    \&quot;t_support\&quot;: 1.0,\n    \&quot;fundamental_score\&quot;: 3.0,\n    \&quot;technical_score\&quot;: 2.0,\n    \&quot;combined_score\&quot;: 0.48000000000000004,\n    \&quot;fundamental_label\&quot;: \&quot;neutral\&quot;,\n    \&quot;pe_history_median\&quot;: 3.529785319903332\n  },\n  \&quot;price_currency\&quot;: \&quot;TRY\&quot;,\n  \&quot;fundamental_currency\&quot;: \&quot;TRY\&quot;,\n  \&quot;vintage_policy\&quot;: \&quot;verified_only\&quot;,\n  \&quot;fundamental_dataset\&quot;: \&quot;data/processed/fintables_original_observations.csv\&quot;,\n  \&quot;warnings\&quot;: [\n    \&quot;Single user-selected stock; selection/survivorship bias; no market-wide inference.\&quot;,\n    \&quot;Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.\&quot;,\n    \&quot;Adjusted synthetic units; whole-lot execution and taxes not modeled.\&quot;,\n    \&quot;BIST100 price-index basis differs from adjusted stock return basis.\&quot;,\n    \&quot;Original annual statement vintages and comparative revisions are dated; interim reports are outside this annual-refresh strategy.\&quot;,\n    \&quot;Original TRY presentation is nominal: growth and return on average balances are affected by inflation and currency translation.\&quot;,\n    \&quot;Source/currency correction was made after the earlier USD results were inspected; 2025 is a chronological parameter holdout, not a pristine blind test.\&quot;\n  ],\n  \&quot;source_document\&quot;: \&quot;docs/DATA_SOURCES.md\&quot;,\n  \&quot;execution_assumptions\&quot;: {\n    \&quot;commission_bps_per_side\&quot;: 10.0,\n    \&quot;slippage_bps_per_side\&quot;: 5.0,\n    \&quot;initial_capital_try\&quot;: 100000.0,\n    \&quot;signal_timing\&quot;: \&quot;close decision, next stock-session open execution\&quot;\n  }\n}&quot;
+      }
+    ],
+    &quot;structured_content&quot;: {
+      &quot;ticker&quot;: &quot;THYAO.IS&quot;,
+      &quot;as_of&quot;: &quot;2025-12-31&quot;,
+      &quot;data&quot;: {
+        &quot;f_growth&quot;: 1.0,
+        &quot;f_profit_growth&quot;: 0.0,
+        &quot;f_roe&quot;: 0.0,
+        &quot;f_leverage&quot;: 1.0,
+        &quot;f_valuation&quot;: 1.0,
+        &quot;t_trend&quot;: 0.0,
+        &quot;t_rsi&quot;: 1.0,
+        &quot;t_macd&quot;: 0.0,
+        &quot;t_volume&quot;: 0.0,
+        &quot;t_support&quot;: 1.0,
+        &quot;fundamental_score&quot;: 3.0,
+        &quot;technical_score&quot;: 2.0,
+        &quot;combined_score&quot;: 0.48000000000000004,
+        &quot;fundamental_label&quot;: &quot;neutral&quot;,
+        &quot;pe_history_median&quot;: 3.529785319903332
+      },
+      &quot;price_currency&quot;: &quot;TRY&quot;,
+      &quot;fundamental_currency&quot;: &quot;TRY&quot;,
+      &quot;vintage_policy&quot;: &quot;verified_only&quot;,
+      &quot;fundamental_dataset&quot;: &quot;data/processed/fintables_original_observations.csv&quot;,
+      &quot;warnings&quot;: [
+        &quot;Single user-selected stock; selection/survivorship bias; no market-wide inference.&quot;,
+        &quot;Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.&quot;,
+        &quot;Adjusted synthetic units; whole-lot execution and taxes not modeled.&quot;,
+        &quot;BIST100 price-index basis differs from adjusted stock return basis.&quot;,
+        &quot;Original annual statement vintages and comparative revisions are dated; interim reports are outside this annual-refresh strategy.&quot;,
+        &quot;Original TRY presentation is nominal: growth and return on average balances are affected by inflation and currency translation.&quot;,
+        &quot;Source/currency correction was made after the earlier USD results were inspected; 2025 is a chronological parameter holdout, not a pristine blind test.&quot;
+      ],
+      &quot;source_document&quot;: &quot;docs/DATA_SOURCES.md&quot;,
+      &quot;execution_assumptions&quot;: {
+        &quot;commission_bps_per_side&quot;: 10.0,
+        &quot;slippage_bps_per_side&quot;: 5.0,
+        &quot;initial_capital_try&quot;: 100000.0,
+        &quot;signal_timing&quot;: &quot;close decision, next stock-session open execution&quot;
+      }
+    }
+  },
+  &quot;error&quot;: null,
+  &quot;status&quot;: &quot;completed&quot;
+}</pre></details><details><summary>find_support_resistance | completed</summary><pre>{
+  &quot;id&quot;: &quot;item_3&quot;,
+  &quot;type&quot;: &quot;mcp_tool_call&quot;,
+  &quot;server&quot;: &quot;bist&quot;,
+  &quot;tool&quot;: &quot;find_support_resistance&quot;,
+  &quot;arguments&quot;: {
+    &quot;ticker&quot;: &quot;THYAO.IS&quot;,
+    &quot;as_of&quot;: &quot;2025-12-31&quot;
+  },
+  &quot;result&quot;: {
+    &quot;content&quot;: [
+      {
+        &quot;type&quot;: &quot;text&quot;,
+        &quot;text&quot;: &quot;{\n  \&quot;ticker\&quot;: \&quot;THYAO.IS\&quot;,\n  \&quot;as_of\&quot;: \&quot;2025-12-31\&quot;,\n  \&quot;data\&quot;: {\n    \&quot;support\&quot;: 267.75,\n    \&quot;resistance\&quot;: 269.8642471386547,\n    \&quot;support_distance\&quot;: 0.002793296089385475,\n    \&quot;resistance_distance\&quot;: 0.005080994929812732,\n    \&quot;in_zone\&quot;: false,\n    \&quot;zone_count\&quot;: 10\n  },\n  \&quot;price_currency\&quot;: \&quot;TRY\&quot;,\n  \&quot;fundamental_currency\&quot;: \&quot;TRY\&quot;,\n  \&quot;vintage_policy\&quot;: \&quot;verified_only\&quot;,\n  \&quot;fundamental_dataset\&quot;: \&quot;data/processed/fintables_original_observations.csv\&quot;,\n  \&quot;warnings\&quot;: [\n    \&quot;Single user-selected stock; selection/survivorship bias; no market-wide inference.\&quot;,\n    \&quot;Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.\&quot;,\n    \&quot;Adjusted synthetic units; whole-lot execution and taxes not modeled.\&quot;,\n    \&quot;BIST100 price-index basis differs from adjusted stock return basis.\&quot;,\n    \&quot;Original annual statement vintages and comparative revisions are dated; interim reports are outside this annual-refresh strategy.\&quot;,\n    \&quot;Original TRY presentation is nominal: growth and return on average balances are affected by inflation and currency translation.\&quot;,\n    \&quot;Source/currency correction was made after the earlier USD results were inspected; 2025 is a chronological parameter holdout, not a pristine blind test.\&quot;\n  ],\n  \&quot;source_document\&quot;: \&quot;docs/DATA_SOURCES.md\&quot;,\n  \&quot;execution_assumptions\&quot;: {\n    \&quot;commission_bps_per_side\&quot;: 10.0,\n    \&quot;slippage_bps_per_side\&quot;: 5.0,\n    \&quot;initial_capital_try\&quot;: 100000.0,\n    \&quot;signal_timing\&quot;: \&quot;close decision, next stock-session open execution\&quot;\n  }\n}&quot;
+      }
+    ],
+    &quot;structured_content&quot;: {
+      &quot;ticker&quot;: &quot;THYAO.IS&quot;,
+      &quot;as_of&quot;: &quot;2025-12-31&quot;,
+      &quot;data&quot;: {
+        &quot;support&quot;: 267.75,
+        &quot;resistance&quot;: 269.8642471386547,
+        &quot;support_distance&quot;: 0.002793296089385475,
+        &quot;resistance_distance&quot;: 0.005080994929812732,
+        &quot;in_zone&quot;: false,
+        &quot;zone_count&quot;: 10
+      },
+      &quot;price_currency&quot;: &quot;TRY&quot;,
+      &quot;fundamental_currency&quot;: &quot;TRY&quot;,
+      &quot;vintage_policy&quot;: &quot;verified_only&quot;,
+      &quot;fundamental_dataset&quot;: &quot;data/processed/fintables_original_observations.csv&quot;,
+      &quot;warnings&quot;: [
+        &quot;Single user-selected stock; selection/survivorship bias; no market-wide inference.&quot;,
+        &quot;Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.&quot;,
+        &quot;Adjusted synthetic units; whole-lot execution and taxes not modeled.&quot;,
+        &quot;BIST100 price-index basis differs from adjusted stock return basis.&quot;,
+        &quot;Original annual statement vintages and comparative revisions are dated; interim reports are outside this annual-refresh strategy.&quot;,
+        &quot;Original TRY presentation is nominal: growth and return on average balances are affected by inflation and currency translation.&quot;,
+        &quot;Source/currency correction was made after the earlier USD results were inspected; 2025 is a chronological parameter holdout, not a pristine blind test.&quot;
+      ],
+      &quot;source_document&quot;: &quot;docs/DATA_SOURCES.md&quot;,
+      &quot;execution_assumptions&quot;: {
+        &quot;commission_bps_per_side&quot;: 10.0,
+        &quot;slippage_bps_per_side&quot;: 5.0,
+        &quot;initial_capital_try&quot;: 100000.0,
+        &quot;signal_timing&quot;: &quot;close decision, next stock-session open execution&quot;
+      }
+    }
+  },
+  &quot;error&quot;: null,
+  &quot;status&quot;: &quot;completed&quot;
+}</pre></details><details><summary>calculate_indicators | completed</summary><pre>{
+  &quot;id&quot;: &quot;item_2&quot;,
+  &quot;type&quot;: &quot;mcp_tool_call&quot;,
+  &quot;server&quot;: &quot;bist&quot;,
+  &quot;tool&quot;: &quot;calculate_indicators&quot;,
+  &quot;arguments&quot;: {
+    &quot;ticker&quot;: &quot;THYAO.IS&quot;,
+    &quot;as_of&quot;: &quot;2025-12-31&quot;
+  },
+  &quot;result&quot;: {
+    &quot;content&quot;: [
+      {
+        &quot;type&quot;: &quot;text&quot;,
+        &quot;text&quot;: &quot;{\n  \&quot;ticker\&quot;: \&quot;THYAO.IS\&quot;,\n  \&quot;as_of\&quot;: \&quot;2025-12-31\&quot;,\n  \&quot;data\&quot;: {\n    \&quot;close\&quot;: 268.5,\n    \&quot;sma_fast\&quot;: 271.1625,\n    \&quot;sma_slow\&quot;: 276.64,\n    \&quot;ema_fast\&quot;: 271.3614326012023,\n    \&quot;ema_slow\&quot;: 278.5447427747445,\n    \&quot;rsi\&quot;: 42.621023117930676,\n    \&quot;macd\&quot;: -2.6016433843773825,\n    \&quot;macd_signal\&quot;: -2.5234989084787047,\n    \&quot;macd_histogram\&quot;: -0.07814447589867779,\n    \&quot;relative_volume\&quot;: 0.694733328985064,\n    \&quot;obv\&quot;: 14303909645.0\n  },\n  \&quot;price_currency\&quot;: \&quot;TRY\&quot;,\n  \&quot;fundamental_currency\&quot;: \&quot;TRY\&quot;,\n  \&quot;vintage_policy\&quot;: \&quot;verified_only\&quot;,\n  \&quot;fundamental_dataset\&quot;: \&quot;data/processed/fintables_original_observations.csv\&quot;,\n  \&quot;warnings\&quot;: [\n    \&quot;Single user-selected stock; selection/survivorship bias; no market-wide inference.\&quot;,\n    \&quot;Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.\&quot;,\n    \&quot;Adjusted synthetic units; whole-lot execution and taxes not modeled.\&quot;,\n    \&quot;BIST100 price-index basis differs from adjusted stock return basis.\&quot;,\n    \&quot;Original annual statement vintages and comparative revisions are dated; interim reports are outside this annual-refresh strategy.\&quot;,\n    \&quot;Original TRY presentation is nominal: growth and return on average balances are affected by inflation and currency translation.\&quot;,\n    \&quot;Source/currency correction was made after the earlier USD results were inspected; 2025 is a chronological parameter holdout, not a pristine blind test.\&quot;\n  ],\n  \&quot;source_document\&quot;: \&quot;docs/DATA_SOURCES.md\&quot;,\n  \&quot;execution_assumptions\&quot;: {\n    \&quot;commission_bps_per_side\&quot;: 10.0,\n    \&quot;slippage_bps_per_side\&quot;: 5.0,\n    \&quot;initial_capital_try\&quot;: 100000.0,\n    \&quot;signal_timing\&quot;: \&quot;close decision, next stock-session open execution\&quot;\n  }\n}&quot;
+      }
+    ],
+    &quot;structured_content&quot;: {
+      &quot;ticker&quot;: &quot;THYAO.IS&quot;,
+      &quot;as_of&quot;: &quot;2025-12-31&quot;,
+      &quot;data&quot;: {
+        &quot;close&quot;: 268.5,
+        &quot;sma_fast&quot;: 271.1625,
+        &quot;sma_slow&quot;: 276.64,
+        &quot;ema_fast&quot;: 271.3614326012023,
+        &quot;ema_slow&quot;: 278.5447427747445,
+        &quot;rsi&quot;: 42.621023117930676,
+        &quot;macd&quot;: -2.6016433843773825,
+        &quot;macd_signal&quot;: -2.5234989084787047,
+        &quot;macd_histogram&quot;: -0.07814447589867779,
+        &quot;relative_volume&quot;: 0.694733328985064,
+        &quot;obv&quot;: 14303909645.0
+      },
+      &quot;price_currency&quot;: &quot;TRY&quot;,
+      &quot;fundamental_currency&quot;: &quot;TRY&quot;,
+      &quot;vintage_policy&quot;: &quot;verified_only&quot;,
+      &quot;fundamental_dataset&quot;: &quot;data/processed/fintables_original_observations.csv&quot;,
+      &quot;warnings&quot;: [
+        &quot;Single user-selected stock; selection/survivorship bias; no market-wide inference.&quot;,
+        &quot;Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.&quot;,
+        &quot;Adjusted synthetic units; whole-lot execution and taxes not modeled.&quot;,
+        &quot;BIST100 price-index basis differs from adjusted stock return basis.&quot;,
+        &quot;Original annual statement vintages and comparative revisions are dated; interim reports are outside this annual-refresh strategy.&quot;,
+        &quot;Original TRY presentation is nominal: growth and return on average balances are affected by inflation and currency translation.&quot;,
+        &quot;Source/currency correction was made after the earlier USD results were inspected; 2025 is a chronological parameter holdout, not a pristine blind test.&quot;
+      ],
+      &quot;source_document&quot;: &quot;docs/DATA_SOURCES.md&quot;,
+      &quot;execution_assumptions&quot;: {
+        &quot;commission_bps_per_side&quot;: 10.0,
+        &quot;slippage_bps_per_side&quot;: 5.0,
+        &quot;initial_capital_try&quot;: 100000.0,
+        &quot;signal_timing&quot;: &quot;close decision, next stock-session open execution&quot;
+      }
+    }
+  },
+  &quot;error&quot;: null,
+  &quot;status&quot;: &quot;completed&quot;
+}</pre></details><details><summary>get_fundamental_metrics | completed</summary><pre>{
+  &quot;id&quot;: &quot;item_4&quot;,
+  &quot;type&quot;: &quot;mcp_tool_call&quot;,
+  &quot;server&quot;: &quot;bist&quot;,
+  &quot;tool&quot;: &quot;get_fundamental_metrics&quot;,
+  &quot;arguments&quot;: {
+    &quot;ticker&quot;: &quot;THYAO.IS&quot;,
+    &quot;as_of&quot;: &quot;2025-12-31&quot;
+  },
+  &quot;result&quot;: {
+    &quot;content&quot;: [
+      {
+        &quot;type&quot;: &quot;text&quot;,
+        &quot;text&quot;: &quot;{\n  \&quot;ticker\&quot;: \&quot;THYAO.IS\&quot;,\n  \&quot;as_of\&quot;: \&quot;2025-12-31\&quot;,\n  \&quot;data\&quot;: {\n    \&quot;cash\&quot;: 95992000000.0,\n    \&quot;current_assets\&quot;: 341910000000.0,\n    \&quot;current_liabilities\&quot;: 339533000000.0,\n    \&quot;ebitda\&quot;: 136256000000.0,\n    \&quot;equity\&quot;: 679887000000.0,\n    \&quot;financial_debt\&quot;: 489939000000.0,\n    \&quot;financing_cash_flow\&quot;: -75360000000.0,\n    \&quot;gross_profit\&quot;: 142908000000.0,\n    \&quot;inventories\&quot;: 23661000000.0,\n    \&quot;investing_cash_flow\&quot;: 10003000000.0,\n    \&quot;net_debt\&quot;: 236664000000.0,\n    \&quot;net_profit\&quot;: 113378000000.0,\n    \&quot;operating_cash_flow\&quot;: 135580000000.0,\n    \&quot;operating_profit\&quot;: 80393000000.0,\n    \&quot;revenue\&quot;: 745430000000.0,\n    \&quot;shares_outstanding\&quot;: 1380000000.0,\n    \&quot;total_assets\&quot;: 1399606000000.0,\n    \&quot;revenue_growth\&quot;: 0.4778607369577199,\n    \&quot;ebitda_growth\&quot;: 0.1807585985770861,\n    \&quot;net_profit_growth\&quot;: -0.3044422495291498,\n    \&quot;roe\&quot;: 0.19940834230317356,\n    \&quot;roa\&quot;: 0.09260831619052753,\n    \&quot;ebitda_margin\&quot;: 0.18278845766872812,\n    \&quot;net_margin\&quot;: 0.1520974471110634,\n    \&quot;net_debt_ebitda\&quot;: 1.7369069985908878,\n    \&quot;debt_equity\&quot;: 0.7206182792140459,\n    \&quot;current_ratio\&quot;: 1.0070007922646693,\n    \&quot;quick_ratio\&quot;: 0.9373138987962878,\n    \&quot;pe\&quot;: 3.268094339289809,\n    \&quot;pb\&quot;: 0.5449876229432243,\n    \&quot;ev_ebitda\&quot;: 4.4562734852043215,\n    \&quot;financial_period\&quot;: \&quot;2024-12-31T00:00:00\&quot;,\n    \&quot;financial_available_at\&quot;: \&quot;2025-03-03T00:00:00\&quot;,\n    \&quot;financial_status\&quot;: \&quot;available\&quot;,\n    \&quot;financial_age_days\&quot;: 303.0,\n    \&quot;financial_source\&quot;: \&quot;https://storage.fintables.com/media/uploads/kap-attachments/THY%20A.O.%20Aral%C4%B1k%202024.pdf\&quot;\n  },\n  \&quot;price_currency\&quot;: \&quot;TRY\&quot;,\n  \&quot;fundamental_currency\&quot;: \&quot;TRY\&quot;,\n  \&quot;vintage_policy\&quot;: \&quot;verified_only\&quot;,\n  \&quot;fundamental_dataset\&quot;: \&quot;data/processed/fintables_original_observations.csv\&quot;,\n  \&quot;warnings\&quot;: [\n    \&quot;Single user-selected stock; selection/survivorship bias; no market-wide inference.\&quot;,\n    \&quot;Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.\&quot;,\n    \&quot;Adjusted synthetic units; whole-lot execution and taxes not modeled.\&quot;,\n    \&quot;BIST100 price-index basis differs from adjusted stock return basis.\&quot;,\n    \&quot;Original annual statement vintages and comparative revisions are dated; interim reports are outside this annual-refresh strategy.\&quot;,\n    \&quot;Original TRY presentation is nominal: growth and return on average balances are affected by inflation and currency translation.\&quot;,\n    \&quot;Source/currency correction was made after the earlier USD results were inspected; 2025 is a chronological parameter holdout, not a pristine blind test.\&quot;\n  ],\n  \&quot;source_document\&quot;: \&quot;docs/DATA_SOURCES.md\&quot;,\n  \&quot;execution_assumptions\&quot;: {\n    \&quot;commission_bps_per_side\&quot;: 10.0,\n    \&quot;slippage_bps_per_side\&quot;: 5.0,\n    \&quot;initial_capital_try\&quot;: 100000.0,\n    \&quot;signal_timing\&quot;: \&quot;close decision, next stock-session open execution\&quot;\n  }\n}&quot;
+      }
+    ],
+    &quot;structured_content&quot;: {
+      &quot;ticker&quot;: &quot;THYAO.IS&quot;,
+      &quot;as_of&quot;: &quot;2025-12-31&quot;,
+      &quot;data&quot;: {
+        &quot;cash&quot;: 95992000000.0,
+        &quot;current_assets&quot;: 341910000000.0,
+        &quot;current_liabilities&quot;: 339533000000.0,
+        &quot;ebitda&quot;: 136256000000.0,
+        &quot;equity&quot;: 679887000000.0,
+        &quot;financial_debt&quot;: 489939000000.0,
+        &quot;financing_cash_flow&quot;: -75360000000.0,
+        &quot;gross_profit&quot;: 142908000000.0,
+        &quot;inventories&quot;: 23661000000.0,
+        &quot;investing_cash_flow&quot;: 10003000000.0,
+        &quot;net_debt&quot;: 236664000000.0,
+        &quot;net_profit&quot;: 113378000000.0,
+        &quot;operating_cash_flow&quot;: 135580000000.0,
+        &quot;operating_profit&quot;: 80393000000.0,
+        &quot;revenue&quot;: 745430000000.0,
+        &quot;shares_outstanding&quot;: 1380000000.0,
+        &quot;total_assets&quot;: 1399606000000.0,
+        &quot;revenue_growth&quot;: 0.4778607369577199,
+        &quot;ebitda_growth&quot;: 0.1807585985770861,
+        &quot;net_profit_growth&quot;: -0.3044422495291498,
+        &quot;roe&quot;: 0.19940834230317356,
+        &quot;roa&quot;: 0.09260831619052753,
+        &quot;ebitda_margin&quot;: 0.18278845766872812,
+        &quot;net_margin&quot;: 0.1520974471110634,
+        &quot;net_debt_ebitda&quot;: 1.7369069985908878,
+        &quot;debt_equity&quot;: 0.7206182792140459,
+        &quot;current_ratio&quot;: 1.0070007922646693,
+        &quot;quick_ratio&quot;: 0.9373138987962878,
+        &quot;pe&quot;: 3.268094339289809,
+        &quot;pb&quot;: 0.5449876229432243,
+        &quot;ev_ebitda&quot;: 4.4562734852043215,
+        &quot;financial_period&quot;: &quot;2024-12-31T00:00:00&quot;,
+        &quot;financial_available_at&quot;: &quot;2025-03-03T00:00:00&quot;,
+        &quot;financial_status&quot;: &quot;available&quot;,
+        &quot;financial_age_days&quot;: 303.0,
+        &quot;financial_source&quot;: &quot;https://storage.fintables.com/media/uploads/kap-attachments/THY%20A.O.%20Aral%C4%B1k%202024.pdf&quot;
+      },
+      &quot;price_currency&quot;: &quot;TRY&quot;,
+      &quot;fundamental_currency&quot;: &quot;TRY&quot;,
+      &quot;vintage_policy&quot;: &quot;verified_only&quot;,
+      &quot;fundamental_dataset&quot;: &quot;data/processed/fintables_original_observations.csv&quot;,
+      &quot;warnings&quot;: [
+        &quot;Single user-selected stock; selection/survivorship bias; no market-wide inference.&quot;,
+        &quot;Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.&quot;,
+        &quot;Adjusted synthetic units; whole-lot execution and taxes not modeled.&quot;,
+        &quot;BIST100 price-index basis differs from adjusted stock return basis.&quot;,
+        &quot;Original annual statement vintages and comparative revisions are dated; interim reports are outside this annual-refresh strategy.&quot;,
+        &quot;Original TRY presentation is nominal: growth and return on average balances are affected by inflation and currency translation.&quot;,
+        &quot;Source/currency correction was made after the earlier USD results were inspected; 2025 is a chronological parameter holdout, not a pristine blind test.&quot;
+      ],
+      &quot;source_document&quot;: &quot;docs/DATA_SOURCES.md&quot;,
+      &quot;execution_assumptions&quot;: {
+        &quot;commission_bps_per_side&quot;: 10.0,
+        &quot;slippage_bps_per_side&quot;: 5.0,
+        &quot;initial_capital_try&quot;: 100000.0,
+        &quot;signal_timing&quot;: &quot;close decision, next stock-session open execution&quot;
+      }
+    }
+  },
+  &quot;error&quot;: null,
+  &quot;status&quot;: &quot;completed&quot;
+}</pre></details><details><summary>generate_signal | completed</summary><pre>{
+  &quot;id&quot;: &quot;item_6&quot;,
+  &quot;type&quot;: &quot;mcp_tool_call&quot;,
+  &quot;server&quot;: &quot;bist&quot;,
+  &quot;tool&quot;: &quot;generate_signal&quot;,
+  &quot;arguments&quot;: {
+    &quot;ticker&quot;: &quot;THYAO.IS&quot;,
+    &quot;as_of&quot;: &quot;2025-12-31&quot;,
+    &quot;holding&quot;: false
+  },
+  &quot;result&quot;: {
+    &quot;content&quot;: [
+      {
+        &quot;type&quot;: &quot;text&quot;,
+        &quot;text&quot;: &quot;{\n  \&quot;ticker\&quot;: \&quot;THYAO.IS\&quot;,\n  \&quot;as_of\&quot;: \&quot;2025-12-31\&quot;,\n  \&quot;data\&quot;: {\n    \&quot;action\&quot;: \&quot;HOLD\&quot;,\n    \&quot;reason\&quot;: \&quot;trend_filter\&quot;,\n    \&quot;holding\&quot;: false,\n    \&quot;execution\&quot;: \&quot;next available stock-session open; not an executed order\&quot;\n  },\n  \&quot;price_currency\&quot;: \&quot;TRY\&quot;,\n  \&quot;fundamental_currency\&quot;: \&quot;TRY\&quot;,\n  \&quot;vintage_policy\&quot;: \&quot;verified_only\&quot;,\n  \&quot;fundamental_dataset\&quot;: \&quot;data/processed/fintables_original_observations.csv\&quot;,\n  \&quot;warnings\&quot;: [\n    \&quot;Single user-selected stock; selection/survivorship bias; no market-wide inference.\&quot;,\n    \&quot;Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.\&quot;,\n    \&quot;Adjusted synthetic units; whole-lot execution and taxes not modeled.\&quot;,\n    \&quot;BIST100 price-index basis differs from adjusted stock return basis.\&quot;,\n    \&quot;Original annual statement vintages and comparative revisions are dated; interim reports are outside this annual-refresh strategy.\&quot;,\n    \&quot;Original TRY presentation is nominal: growth and return on average balances are affected by inflation and currency translation.\&quot;,\n    \&quot;Source/currency correction was made after the earlier USD results were inspected; 2025 is a chronological parameter holdout, not a pristine blind test.\&quot;\n  ],\n  \&quot;source_document\&quot;: \&quot;docs/DATA_SOURCES.md\&quot;,\n  \&quot;execution_assumptions\&quot;: {\n    \&quot;commission_bps_per_side\&quot;: 10.0,\n    \&quot;slippage_bps_per_side\&quot;: 5.0,\n    \&quot;initial_capital_try\&quot;: 100000.0,\n    \&quot;signal_timing\&quot;: \&quot;close decision, next stock-session open execution\&quot;\n  }\n}&quot;
+      }
+    ],
+    &quot;structured_content&quot;: {
+      &quot;ticker&quot;: &quot;THYAO.IS&quot;,
+      &quot;as_of&quot;: &quot;2025-12-31&quot;,
+      &quot;data&quot;: {
+        &quot;action&quot;: &quot;HOLD&quot;,
+        &quot;reason&quot;: &quot;trend_filter&quot;,
+        &quot;holding&quot;: false,
+        &quot;execution&quot;: &quot;next available stock-session open; not an executed order&quot;
+      },
+      &quot;price_currency&quot;: &quot;TRY&quot;,
+      &quot;fundamental_currency&quot;: &quot;TRY&quot;,
+      &quot;vintage_policy&quot;: &quot;verified_only&quot;,
+      &quot;fundamental_dataset&quot;: &quot;data/processed/fintables_original_observations.csv&quot;,
+      &quot;warnings&quot;: [
+        &quot;Single user-selected stock; selection/survivorship bias; no market-wide inference.&quot;,
+        &quot;Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.&quot;,
+        &quot;Adjusted synthetic units; whole-lot execution and taxes not modeled.&quot;,
+        &quot;BIST100 price-index basis differs from adjusted stock return basis.&quot;,
+        &quot;Original annual statement vintages and comparative revisions are dated; interim reports are outside this annual-refresh strategy.&quot;,
+        &quot;Original TRY presentation is nominal: growth and return on average balances are affected by inflation and currency translation.&quot;,
+        &quot;Source/currency correction was made after the earlier USD results were inspected; 2025 is a chronological parameter holdout, not a pristine blind test.&quot;
+      ],
+      &quot;source_document&quot;: &quot;docs/DATA_SOURCES.md&quot;,
+      &quot;execution_assumptions&quot;: {
+        &quot;commission_bps_per_side&quot;: 10.0,
+        &quot;slippage_bps_per_side&quot;: 5.0,
+        &quot;initial_capital_try&quot;: 100000.0,
+        &quot;signal_timing&quot;: &quot;close decision, next stock-session open execution&quot;
+      }
+    }
+  },
+  &quot;error&quot;: null,
+  &quot;status&quot;: &quot;completed&quot;
+}</pre></details><details><summary>run_backtest | completed</summary><pre>{
+  &quot;id&quot;: &quot;item_7&quot;,
+  &quot;type&quot;: &quot;mcp_tool_call&quot;,
+  &quot;server&quot;: &quot;bist&quot;,
+  &quot;tool&quot;: &quot;run_backtest&quot;,
+  &quot;arguments&quot;: {
+    &quot;start&quot;: &quot;2023-01-01&quot;,
+    &quot;end&quot;: &quot;2026-01-01&quot;
+  },
+  &quot;result&quot;: {
+    &quot;content&quot;: [
+      {
+        &quot;type&quot;: &quot;text&quot;,
+        &quot;text&quot;: &quot;{\n  \&quot;ticker\&quot;: \&quot;THYAO.IS\&quot;,\n  \&quot;as_of\&quot;: \&quot;2025-12-31\&quot;,\n  \&quot;data\&quot;: {\n    \&quot;performance\&quot;: {\n      \&quot;combined\&quot;: {\n        \&quot;initial_capital\&quot;: 100000.0,\n        \&quot;final_equity\&quot;: 165317.12334306617,\n        \&quot;cumulative_return\&quot;: 0.6531712334306616,\n        \&quot;cagr\&quot;: 0.18273928639253567,\n        \&quot;annualized_volatility\&quot;: 0.17018404304814624,\n        \&quot;sharpe_zero_risk_free\&quot;: 1.077509711601558,\n        \&quot;maximum_drawdown\&quot;: -0.13853114796833998,\n        \&quot;sessions\&quot;: 749,\n        \&quot;start\&quot;: \&quot;2023-01-02\&quot;,\n        \&quot;end\&quot;: \&quot;2025-12-31\&quot;,\n        \&quot;strategy\&quot;: \&quot;combined\&quot;,\n        \&quot;closed_trades\&quot;: 8,\n        \&quot;open_trades\&quot;: 0,\n        \&quot;win_rate\&quot;: 0.875,\n        \&quot;exposure\&quot;: 0.20160213618157544,\n        \&quot;total_commission\&quot;: 2115.8741630890936,\n        \&quot;total_slippage_cost\&quot;: 1057.954204282381,\n        \&quot;turnover_initial_capital\&quot;: 21.159084085649486,\n        \&quot;unrealized_pnl\&quot;: 0.0,\n        \&quot;benchmark_difference_pp\&quot;: -36.922302659143135,\n        \&quot;diagnostic_flags\&quot;: [\n          \&quot;fewer_than_10_closed_trades\&quot;\n        ],\n        \&quot;gross_return_same_executions\&quot;: 0.6933272983782912\n      },\n      \&quot;technical\&quot;: {\n        \&quot;initial_capital\&quot;: 100000.0,\n        \&quot;final_equity\&quot;: 161186.01534018476,\n        \&quot;cumulative_return\&quot;: 0.6118601534018477,\n        \&quot;cagr\&quot;: 0.1727884198567522,\n        \&quot;annualized_volatility\&quot;: 0.17699876282028346,\n        \&quot;sharpe_zero_risk_free\&quot;: 0.9950150603252809,\n        \&quot;maximum_drawdown\&quot;: -0.13155894458680928,\n        \&quot;sessions\&quot;: 749,\n        \&quot;start\&quot;: \&quot;2023-01-02\&quot;,\n        \&quot;end\&quot;: \&quot;2025-12-31\&quot;,\n        \&quot;strategy\&quot;: \&quot;technical\&quot;,\n        \&quot;closed_trades\&quot;: 11,\n        \&quot;open_trades\&quot;: 0,\n        \&quot;win_rate\&quot;: 0.6363636363636364,\n        \&quot;exposure\&quot;: 0.26702269692923897,\n        \&quot;total_commission\&quot;: 3123.4762069147228,\n        \&quot;total_slippage_cost\&quot;: 1561.7545712687024,\n        \&quot;turnover_initial_capital\&quot;: 31.235091425377814,\n        \&quot;unrealized_pnl\&quot;: 0.0,\n        \&quot;benchmark_difference_pp\&quot;: -41.053410662024525,\n        \&quot;diagnostic_flags\&quot;: [],\n        \&quot;gross_return_same_executions\&quot;: 0.6659389444740551\n      },\n      \&quot;buy_hold\&quot;: {\n        \&quot;initial_capital\&quot;: 100000.0,\n        \&quot;final_equity\&quot;: 192725.89506041544,\n        \&quot;cumulative_return\&quot;: 0.9272589506041544,\n        \&quot;cagr\&quot;: 0.24489280553325243,\n        \&quot;annualized_volatility\&quot;: 0.3976817376399488,\n        \&quot;sharpe_zero_risk_free\&quot;: 0.7503853529465033,\n        \&quot;maximum_drawdown\&quot;: -0.25614493728705756,\n        \&quot;sessions\&quot;: 749,\n        \&quot;start\&quot;: \&quot;2023-01-02\&quot;,\n        \&quot;end\&quot;: \&quot;2025-12-31\&quot;,\n        \&quot;strategy\&quot;: \&quot;buy_hold\&quot;,\n        \&quot;closed_trades\&quot;: 0,\n        \&quot;open_trades\&quot;: 1,\n        \&quot;win_rate\&quot;: null,\n        \&quot;exposure\&quot;: 1.0,\n        \&quot;total_commission\&quot;: 99.9000999000999,\n        \&quot;total_slippage_cost\&quot;: 49.925087406336765,\n        \&quot;turnover_initial_capital\&quot;: 0.9985017481269357,\n        \&quot;unrealized_pnl\&quot;: 92725.89506041544,\n        \&quot;benchmark_difference_pp\&quot;: -9.513530941793856,\n        \&quot;diagnostic_flags\&quot;: [\n          \&quot;fewer_than_10_closed_trades\&quot;\n        ],\n        \&quot;gross_return_same_executions\&quot;: 0.9301508026595355\n      },\n      \&quot;bist100\&quot;: {\n        \&quot;initial_capital\&quot;: 100000.0,\n        \&quot;final_equity\&quot;: 202239.4260022093,\n        \&quot;cumulative_return\&quot;: 1.022394260022093,\n        \&quot;cagr\&quot;: 0.2650810950272522,\n        \&quot;annualized_volatility\&quot;: 0.29021467728922656,\n        \&quot;sharpe_zero_risk_free\&quot;: 0.9652412271043687,\n        \&quot;maximum_drawdown\&quot;: -0.2286087856192982,\n        \&quot;sessions\&quot;: 746,\n        \&quot;start\&quot;: \&quot;2023-01-02\&quot;,\n        \&quot;end\&quot;: \&quot;2025-12-31\&quot;,\n        \&quot;basis\&quot;: \&quot;BIST100 price index; no costs\&quot;,\n        \&quot;missing_sessions\&quot;: 3\n      }\n    },\n    \&quot;combined_orders\&quot;: [\n      {\n        \&quot;index\&quot;: 8,\n        \&quot;decision_date\&quot;: \&quot;2024-03-07T00:00:00\&quot;,\n        \&quot;execution_date\&quot;: \&quot;2024-03-08T00:00:00\&quot;,\n        \&quot;side\&quot;: \&quot;BUY\&quot;,\n        \&quot;units\&quot;: 440.99502815700555,\n        \&quot;reference_price\&quot;: 266.689395423008,\n        \&quot;fill_price\&quot;: 266.8227401207195,\n        \&quot;commission\&quot;: 117.66750179246608,\n        \&quot;slippage_cost\&quot;: 58.80434872186731,\n        \&quot;cash_after\&quot;: -1.4551915228366852e-11,\n        \&quot;reason\&quot;: \&quot;combined_entry\&quot;\n      },\n      {\n        \&quot;index\&quot;: 9,\n        \&quot;decision_date\&quot;: \&quot;2024-04-29T00:00:00\&quot;,\n        \&quot;execution_date\&quot;: \&quot;2024-04-30T00:00:00\&quot;,\n        \&quot;side\&quot;: \&quot;SELL\&quot;,\n        \&quot;units\&quot;: 440.99502815700555,\n        \&quot;reference_price\&quot;: 317.4873796708589,\n        \&quot;fill_price\&quot;: 317.32863598102347,\n        \&quot;commission\&quot;: 139.94035075947562,\n        \&quot;slippage_cost\&quot;: 70.00517796872357,\n        \&quot;cash_after\&quot;: 139800.41040871612,\n        \&quot;reason\&quot;: \&quot;rsi_exit\&quot;\n      },\n      {\n        \&quot;index\&quot;: 10,\n        \&quot;decision_date\&quot;: \&quot;2024-06-07T00:00:00\&quot;,\n        \&quot;execution_date\&quot;: \&quot;2024-06-10T00:00:00\&quot;,\n        \&quot;side\&quot;: \&quot;BUY\&quot;,\n        \&quot;units\&quot;: 475.9169421845364,\n        \&quot;reference_price\&quot;: 293.3094870319616,\n        \&quot;fill_price\&quot;: 293.4561417754776,\n        \&quot;commission\&quot;: 139.6607496590571,\n        \&quot;slippage_cost\&quot;: 69.79547709097642,\n        \&quot;cash_after\&quot;: -2.9103830456733704e-11,\n        \&quot;reason\&quot;: \&quot;combined_entry\&quot;\n      },\n      {\n        \&quot;index\&quot;: 11,\n        \&quot;decision_date\&quot;: \&quot;2024-06-14T00:00:00\&quot;,\n        \&quot;execution_date\&quot;: \&quot;2024-06-20T00:00:00\&quot;,\n        \&quot;side\&quot;: \&quot;SELL\&quot;,\n        \&quot;units\&quot;: 475.9169421845364,\n        \&quot;reference_price\&quot;: 307.96274091046917,\n        \&quot;fill_price\&quot;: 307.80875954001397,\n        \&quot;commission\&quot;: 146.4914036178987,\n        \&quot;slippage_cost\&quot;: 73.28234298042257,\n        \&quot;cash_after\&quot;: 146344.91221428078,\n        \&quot;reason\&quot;: \&quot;trend_reversal\&quot;\n      },\n      {\n        \&quot;index\&quot;: 12,\n        \&quot;decision_date\&quot;: \&quot;2024-11-21T00:00:00\&quot;,\n        \&quot;execution_date\&quot;: \&quot;2024-11-22T00:00:00\&quot;,\n        \&quot;side\&quot;: \&quot;BUY\&quot;,\n        \&quot;units\&quot;: 535.1820371047503,\n        \&quot;reference_price\&quot;: 273.039154053,\n        \&quot;fill_price\&quot;: 273.1756736300265,\n        \&quot;commission\&quot;: 146.19871350078,\n        \&quot;slippage_cost\&quot;: 73.06282533771602,\n        \&quot;cash_after\&quot;: 0.0,\n        \&quot;reason\&quot;: \&quot;combined_entry\&quot;\n      },\n      {\n        \&quot;index\&quot;: 13,\n        \&quot;decision_date\&quot;: \&quot;2025-01-17T00:00:00\&quot;,\n        \&quot;execution_date\&quot;: \&quot;2025-01-20T00:00:00\&quot;,\n        \&quot;side\&quot;: \&quot;SELL\&quot;,\n        \&quot;units\&quot;: 535.1820371047503,\n        \&quot;reference_price\&quot;: 297.9496793829762,\n        \&quot;fill_price\&quot;: 297.8007045432848,\n        \&quot;commission\&quot;: 159.37758770870502,\n        \&quot;slippage_cost\&quot;: 79.72865818342268,\n        \&quot;cash_after\&quot;: 159218.21012099631,\n        \&quot;reason\&quot;: \&quot;maximum_holding_period\&quot;\n      },\n      {\n        \&quot;index\&quot;: 14,\n        \&quot;decision_date\&quot;: \&quot;2025-01-21T00:00:00\&quot;,\n        \&quot;execution_date\&quot;: \&quot;2025-01-22T00:00:00\&quot;,\n        \&quot;side\&quot;: \&quot;BUY\&quot;,\n        \&quot;units\&quot;: 539.325795945979,\n        \&quot;reference_price\&quot;: 294.7748139148542,\n        \&quot;fill_price\&quot;: 294.9222013218116,\n        \&quot;commission\&quot;: 159.05915097002634,\n        \&quot;slippage_cost\&quot;: 79.4898305697249,\n        \&quot;cash_after\&quot;: -2.9103830456733704e-11,\n        \&quot;reason\&quot;: \&quot;combined_entry\&quot;\n      },\n      {\n        \&quot;index\&quot;: 15,\n        \&quot;decision_date\&quot;: \&quot;2025-03-03T00:00:00\&quot;,\n        \&quot;execution_date\&quot;: \&quot;2025-03-04T00:00:00\&quot;,\n        \&quot;side\&quot;: \&quot;SELL\&quot;,\n        \&quot;units\&quot;: 539.325795945979,\n        \&quot;reference_price\&quot;: 306.9858513867943,\n        \&quot;fill_price\&quot;: 306.8323584611009,\n        \&quot;commission\&quot;: 165.4826059490152,\n        \&quot;slippage_cost\&quot;: 82.78269432166955,\n        \&quot;cash_after\&quot;: 165317.12334306617,\n        \&quot;reason\&quot;: \&quot;fundamental_deterioration\&quot;\n      }\n    ],\n    \&quot;return_basis\&quot;: \&quot;Net nominal TRY; adjusted stock vs BIST100 price index\&quot;\n  },\n  \&quot;price_currency\&quot;: \&quot;TRY\&quot;,\n  \&quot;fundamental_currency\&quot;: \&quot;TRY\&quot;,\n  \&quot;vintage_policy\&quot;: \&quot;verified_only\&quot;,\n  \&quot;fundamental_dataset\&quot;: \&quot;data/processed/fintables_original_observations.csv\&quot;,\n  \&quot;warnings\&quot;: [\n    \&quot;Single user-selected stock; selection/survivorship bias; no market-wide inference.\&quot;,\n    \&quot;Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.\&quot;,\n    \&quot;Adjusted synthetic units; whole-lot execution and taxes not modeled.\&quot;,\n    \&quot;BIST100 price-index basis differs from adjusted stock return basis.\&quot;,\n    \&quot;Original annual statement vintages and comparative revisions are dated; interim reports are outside this annual-refresh strategy.\&quot;,\n    \&quot;Original TRY presentation is nominal: growth and return on average balances are affected by inflation and currency translation.\&quot;,\n    \&quot;Source/currency correction was made after the earlier USD results were inspected; 2025 is a chronological parameter holdout, not a pristine blind test.\&quot;\n  ],\n  \&quot;source_document\&quot;: \&quot;docs/DATA_SOURCES.md\&quot;,\n  \&quot;execution_assumptions\&quot;: {\n    \&quot;commission_bps_per_side\&quot;: 10.0,\n    \&quot;slippage_bps_per_side\&quot;: 5.0,\n    \&quot;initial_capital_try\&quot;: 100000.0,\n    \&quot;signal_timing\&quot;: \&quot;close decision, next stock-session open execution\&quot;\n  }\n}&quot;
+      }
+    ],
+    &quot;structured_content&quot;: {
+      &quot;ticker&quot;: &quot;THYAO.IS&quot;,
+      &quot;as_of&quot;: &quot;2025-12-31&quot;,
+      &quot;data&quot;: {
+        &quot;performance&quot;: {
+          &quot;combined&quot;: {
+            &quot;initial_capital&quot;: 100000.0,
+            &quot;final_equity&quot;: 165317.12334306617,
+            &quot;cumulative_return&quot;: 0.6531712334306616,
+            &quot;cagr&quot;: 0.18273928639253567,
+            &quot;annualized_volatility&quot;: 0.17018404304814624,
+            &quot;sharpe_zero_risk_free&quot;: 1.077509711601558,
+            &quot;maximum_drawdown&quot;: -0.13853114796833998,
+            &quot;sessions&quot;: 749,
+            &quot;start&quot;: &quot;2023-01-02&quot;,
+            &quot;end&quot;: &quot;2025-12-31&quot;,
+            &quot;strategy&quot;: &quot;combined&quot;,
+            &quot;closed_trades&quot;: 8,
+            &quot;open_trades&quot;: 0,
+            &quot;win_rate&quot;: 0.875,
+            &quot;exposure&quot;: 0.20160213618157544,
+            &quot;total_commission&quot;: 2115.8741630890936,
+            &quot;total_slippage_cost&quot;: 1057.954204282381,
+            &quot;turnover_initial_capital&quot;: 21.159084085649486,
+            &quot;unrealized_pnl&quot;: 0.0,
+            &quot;benchmark_difference_pp&quot;: -36.922302659143135,
+            &quot;diagnostic_flags&quot;: [
+              &quot;fewer_than_10_closed_trades&quot;
+            ],
+            &quot;gross_return_same_executions&quot;: 0.6933272983782912
+          },
+          &quot;technical&quot;: {
+            &quot;initial_capital&quot;: 100000.0,
+            &quot;final_equity&quot;: 161186.01534018476,
+            &quot;cumulative_return&quot;: 0.6118601534018477,
+            &quot;cagr&quot;: 0.1727884198567522,
+            &quot;annualized_volatility&quot;: 0.17699876282028346,
+            &quot;sharpe_zero_risk_free&quot;: 0.9950150603252809,
+            &quot;maximum_drawdown&quot;: -0.13155894458680928,
+            &quot;sessions&quot;: 749,
+            &quot;start&quot;: &quot;2023-01-02&quot;,
+            &quot;end&quot;: &quot;2025-12-31&quot;,
+            &quot;strategy&quot;: &quot;technical&quot;,
+            &quot;closed_trades&quot;: 11,
+            &quot;open_trades&quot;: 0,
+            &quot;win_rate&quot;: 0.6363636363636364,
+            &quot;exposure&quot;: 0.26702269692923897,
+            &quot;total_commission&quot;: 3123.4762069147228,
+            &quot;total_slippage_cost&quot;: 1561.7545712687024,
+            &quot;turnover_initial_capital&quot;: 31.235091425377814,
+            &quot;unrealized_pnl&quot;: 0.0,
+            &quot;benchmark_difference_pp&quot;: -41.053410662024525,
+            &quot;diagnostic_flags&quot;: [],
+            &quot;gross_return_same_executions&quot;: 0.6659389444740551
+          },
+          &quot;buy_hold&quot;: {
+            &quot;initial_capital&quot;: 100000.0,
+            &quot;final_equity&quot;: 192725.89506041544,
+            &quot;cumulative_return&quot;: 0.9272589506041544,
+            &quot;cagr&quot;: 0.24489280553325243,
+            &quot;annualized_volatility&quot;: 0.3976817376399488,
+            &quot;sharpe_zero_risk_free&quot;: 0.7503853529465033,
+            &quot;maximum_drawdown&quot;: -0.25614493728705756,
+            &quot;sessions&quot;: 749,
+            &quot;start&quot;: &quot;2023-01-02&quot;,
+            &quot;end&quot;: &quot;2025-12-31&quot;,
+            &quot;strategy&quot;: &quot;buy_hold&quot;,
+            &quot;closed_trades&quot;: 0,
+            &quot;open_trades&quot;: 1,
+            &quot;win_rate&quot;: null,
+            &quot;exposure&quot;: 1.0,
+            &quot;total_commission&quot;: 99.9000999000999,
+            &quot;total_slippage_cost&quot;: 49.925087406336765,
+            &quot;turnover_initial_capital&quot;: 0.9985017481269357,
+            &quot;unrealized_pnl&quot;: 92725.89506041544,
+            &quot;benchmark_difference_pp&quot;: -9.513530941793856,
+            &quot;diagnostic_flags&quot;: [
+              &quot;fewer_than_10_closed_trades&quot;
+            ],
+            &quot;gross_return_same_executions&quot;: 0.9301508026595355
+          },
+          &quot;bist100&quot;: {
+            &quot;initial_capital&quot;: 100000.0,
+            &quot;final_equity&quot;: 202239.4260022093,
+            &quot;cumulative_return&quot;: 1.022394260022093,
+            &quot;cagr&quot;: 0.2650810950272522,
+            &quot;annualized_volatility&quot;: 0.29021467728922656,
+            &quot;sharpe_zero_risk_free&quot;: 0.9652412271043687,
+            &quot;maximum_drawdown&quot;: -0.2286087856192982,
+            &quot;sessions&quot;: 746,
+            &quot;start&quot;: &quot;2023-01-02&quot;,
+            &quot;end&quot;: &quot;2025-12-31&quot;,
+            &quot;basis&quot;: &quot;BIST100 price index; no costs&quot;,
+            &quot;missing_sessions&quot;: 3
+          }
+        },
+        &quot;combined_orders&quot;: [
+          {
+            &quot;index&quot;: 8,
+            &quot;decision_date&quot;: &quot;2024-03-07T00:00:00&quot;,
+            &quot;execution_date&quot;: &quot;2024-03-08T00:00:00&quot;,
+            &quot;side&quot;: &quot;BUY&quot;,
+            &quot;units&quot;: 440.99502815700555,
+            &quot;reference_price&quot;: 266.689395423008,
+            &quot;fill_price&quot;: 266.8227401207195,
+            &quot;commission&quot;: 117.66750179246608,
+            &quot;slippage_cost&quot;: 58.80434872186731,
+            &quot;cash_after&quot;: -1.4551915228366852e-11,
+            &quot;reason&quot;: &quot;combined_entry&quot;
+          },
+          {
+            &quot;index&quot;: 9,
+            &quot;decision_date&quot;: &quot;2024-04-29T00:00:00&quot;,
+            &quot;execution_date&quot;: &quot;2024-04-30T00:00:00&quot;,
+            &quot;side&quot;: &quot;SELL&quot;,
+            &quot;units&quot;: 440.99502815700555,
+            &quot;reference_price&quot;: 317.4873796708589,
+            &quot;fill_price&quot;: 317.32863598102347,
+            &quot;commission&quot;: 139.94035075947562,
+            &quot;slippage_cost&quot;: 70.00517796872357,
+            &quot;cash_after&quot;: 139800.41040871612,
+            &quot;reason&quot;: &quot;rsi_exit&quot;
+          },
+          {
+            &quot;index&quot;: 10,
+            &quot;decision_date&quot;: &quot;2024-06-07T00:00:00&quot;,
+            &quot;execution_date&quot;: &quot;2024-06-10T00:00:00&quot;,
+            &quot;side&quot;: &quot;BUY&quot;,
+            &quot;units&quot;: 475.9169421845364,
+            &quot;reference_price&quot;: 293.3094870319616,
+            &quot;fill_price&quot;: 293.4561417754776,
+            &quot;commission&quot;: 139.6607496590571,
+            &quot;slippage_cost&quot;: 69.79547709097642,
+            &quot;cash_after&quot;: -2.9103830456733704e-11,
+            &quot;reason&quot;: &quot;combined_entry&quot;
+          },
+          {
+            &quot;index&quot;: 11,
+            &quot;decision_date&quot;: &quot;2024-06-14T00:00:00&quot;,
+            &quot;execution_date&quot;: &quot;2024-06-20T00:00:00&quot;,
+            &quot;side&quot;: &quot;SELL&quot;,
+            &quot;units&quot;: 475.9169421845364,
+            &quot;reference_price&quot;: 307.96274091046917,
+            &quot;fill_price&quot;: 307.80875954001397,
+            &quot;commission&quot;: 146.4914036178987,
+            &quot;slippage_cost&quot;: 73.28234298042257,
+            &quot;cash_after&quot;: 146344.91221428078,
+            &quot;reason&quot;: &quot;trend_reversal&quot;
+          },
+          {
+            &quot;index&quot;: 12,
+            &quot;decision_date&quot;: &quot;2024-11-21T00:00:00&quot;,
+            &quot;execution_date&quot;: &quot;2024-11-22T00:00:00&quot;,
+            &quot;side&quot;: &quot;BUY&quot;,
+            &quot;units&quot;: 535.1820371047503,
+            &quot;reference_price&quot;: 273.039154053,
+            &quot;fill_price&quot;: 273.1756736300265,
+            &quot;commission&quot;: 146.19871350078,
+            &quot;slippage_cost&quot;: 73.06282533771602,
+            &quot;cash_after&quot;: 0.0,
+            &quot;reason&quot;: &quot;combined_entry&quot;
+          },
+          {
+            &quot;index&quot;: 13,
+            &quot;decision_date&quot;: &quot;2025-01-17T00:00:00&quot;,
+            &quot;execution_date&quot;: &quot;2025-01-20T00:00:00&quot;,
+            &quot;side&quot;: &quot;SELL&quot;,
+            &quot;units&quot;: 535.1820371047503,
+            &quot;reference_price&quot;: 297.9496793829762,
+            &quot;fill_price&quot;: 297.8007045432848,
+            &quot;commission&quot;: 159.37758770870502,
+            &quot;slippage_cost&quot;: 79.72865818342268,
+            &quot;cash_after&quot;: 159218.21012099631,
+            &quot;reason&quot;: &quot;maximum_holding_period&quot;
+          },
+          {
+            &quot;index&quot;: 14,
+            &quot;decision_date&quot;: &quot;2025-01-21T00:00:00&quot;,
+            &quot;execution_date&quot;: &quot;2025-01-22T00:00:00&quot;,
+            &quot;side&quot;: &quot;BUY&quot;,
+            &quot;units&quot;: 539.325795945979,
+            &quot;reference_price&quot;: 294.7748139148542,
+            &quot;fill_price&quot;: 294.9222013218116,
+            &quot;commission&quot;: 159.05915097002634,
+            &quot;slippage_cost&quot;: 79.4898305697249,
+            &quot;cash_after&quot;: -2.9103830456733704e-11,
+            &quot;reason&quot;: &quot;combined_entry&quot;
+          },
+          {
+            &quot;index&quot;: 15,
+            &quot;decision_date&quot;: &quot;2025-03-03T00:00:00&quot;,
+            &quot;execution_date&quot;: &quot;2025-03-04T00:00:00&quot;,
+            &quot;side&quot;: &quot;SELL&quot;,
+            &quot;units&quot;: 539.325795945979,
+            &quot;reference_price&quot;: 306.9858513867943,
+            &quot;fill_price&quot;: 306.8323584611009,
+            &quot;commission&quot;: 165.4826059490152,
+            &quot;slippage_cost&quot;: 82.78269432166955,
+            &quot;cash_after&quot;: 165317.12334306617,
+            &quot;reason&quot;: &quot;fundamental_deterioration&quot;
+          }
+        ],
+        &quot;return_basis&quot;: &quot;Net nominal TRY; adjusted stock vs BIST100 price index&quot;
+      },
+      &quot;price_currency&quot;: &quot;TRY&quot;,
+      &quot;fundamental_currency&quot;: &quot;TRY&quot;,
+      &quot;vintage_policy&quot;: &quot;verified_only&quot;,
+      &quot;fundamental_dataset&quot;: &quot;data/processed/fintables_original_observations.csv&quot;,
+      &quot;warnings&quot;: [
+        &quot;Single user-selected stock; selection/survivorship bias; no market-wide inference.&quot;,
+        &quot;Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.&quot;,
+        &quot;Adjusted synthetic units; whole-lot execution and taxes not modeled.&quot;,
+        &quot;BIST100 price-index basis differs from adjusted stock return basis.&quot;,
+        &quot;Original annual statement vintages and comparative revisions are dated; interim reports are outside this annual-refresh strategy.&quot;,
+        &quot;Original TRY presentation is nominal: growth and return on average balances are affected by inflation and currency translation.&quot;,
+        &quot;Source/currency correction was made after the earlier USD results were inspected; 2025 is a chronological parameter holdout, not a pristine blind test.&quot;
+      ],
+      &quot;source_document&quot;: &quot;docs/DATA_SOURCES.md&quot;,
+      &quot;execution_assumptions&quot;: {
+        &quot;commission_bps_per_side&quot;: 10.0,
+        &quot;slippage_bps_per_side&quot;: 5.0,
+        &quot;initial_capital_try&quot;: 100000.0,
+        &quot;signal_timing&quot;: &quot;close decision, next stock-session open execution&quot;
+      }
+    }
+  },
+  &quot;error&quot;: null,
+  &quot;status&quot;: &quot;completed&quot;
+}</pre></details><details><summary>get_stock_history | completed</summary><pre>{
+  &quot;id&quot;: &quot;item_1&quot;,
+  &quot;type&quot;: &quot;mcp_tool_call&quot;,
+  &quot;server&quot;: &quot;bist&quot;,
+  &quot;tool&quot;: &quot;get_stock_history&quot;,
+  &quot;arguments&quot;: {
+    &quot;ticker&quot;: &quot;THYAO.IS&quot;,
+    &quot;as_of&quot;: &quot;2025-12-31&quot;,
+    &quot;sessions&quot;: 5
+  },
+  &quot;result&quot;: {
+    &quot;content&quot;: [
+      {
+        &quot;type&quot;: &quot;text&quot;,
+        &quot;text&quot;: &quot;{\n  \&quot;ticker\&quot;: \&quot;THYAO.IS\&quot;,\n  \&quot;as_of\&quot;: \&quot;2025-12-31\&quot;,\n  \&quot;data\&quot;: [\n    {\n      \&quot;date\&quot;: \&quot;2025-12-25T00:00:00\&quot;,\n      \&quot;open\&quot;: 272.5,\n      \&quot;high\&quot;: 273.5,\n      \&quot;low\&quot;: 271.0,\n      \&quot;close\&quot;: 271.25,\n      \&quot;raw_close\&quot;: 271.25,\n      \&quot;volume\&quot;: 12977291\n    },\n    {\n      \&quot;date\&quot;: \&quot;2025-12-26T00:00:00\&quot;,\n      \&quot;open\&quot;: 271.25,\n      \&quot;high\&quot;: 271.5,\n      \&quot;low\&quot;: 267.25,\n      \&quot;close\&quot;: 268.0,\n      \&quot;raw_close\&quot;: 268.0,\n      \&quot;volume\&quot;: 22195231\n    },\n    {\n      \&quot;date\&quot;: \&quot;2025-12-29T00:00:00\&quot;,\n      \&quot;open\&quot;: 268.25,\n      \&quot;high\&quot;: 269.0,\n      \&quot;low\&quot;: 262.75,\n      \&quot;close\&quot;: 264.5,\n      \&quot;raw_close\&quot;: 264.5,\n      \&quot;volume\&quot;: 31535713\n    },\n    {\n      \&quot;date\&quot;: \&quot;2025-12-30T00:00:00\&quot;,\n      \&quot;open\&quot;: 265.0,\n      \&quot;high\&quot;: 269.75,\n      \&quot;low\&quot;: 264.75,\n      \&quot;close\&quot;: 267.75,\n      \&quot;raw_close\&quot;: 267.75,\n      \&quot;volume\&quot;: 32525018\n    },\n    {\n      \&quot;date\&quot;: \&quot;2025-12-31T00:00:00\&quot;,\n      \&quot;open\&quot;: 268.5,\n      \&quot;high\&quot;: 269.75,\n      \&quot;low\&quot;: 267.25,\n      \&quot;close\&quot;: 268.5,\n      \&quot;raw_close\&quot;: 268.5,\n      \&quot;volume\&quot;: 20565368\n    }\n  ],\n  \&quot;price_currency\&quot;: \&quot;TRY\&quot;,\n  \&quot;fundamental_currency\&quot;: \&quot;TRY\&quot;,\n  \&quot;vintage_policy\&quot;: \&quot;verified_only\&quot;,\n  \&quot;fundamental_dataset\&quot;: \&quot;data/processed/fintables_original_observations.csv\&quot;,\n  \&quot;warnings\&quot;: [\n    \&quot;Single user-selected stock; selection/survivorship bias; no market-wide inference.\&quot;,\n    \&quot;Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.\&quot;,\n    \&quot;Adjusted synthetic units; whole-lot execution and taxes not modeled.\&quot;,\n    \&quot;BIST100 price-index basis differs from adjusted stock return basis.\&quot;,\n    \&quot;Original annual statement vintages and comparative revisions are dated; interim reports are outside this annual-refresh strategy.\&quot;,\n    \&quot;Original TRY presentation is nominal: growth and return on average balances are affected by inflation and currency translation.\&quot;,\n    \&quot;Source/currency correction was made after the earlier USD results were inspected; 2025 is a chronological parameter holdout, not a pristine blind test.\&quot;\n  ],\n  \&quot;source_document\&quot;: \&quot;docs/DATA_SOURCES.md\&quot;,\n  \&quot;execution_assumptions\&quot;: {\n    \&quot;commission_bps_per_side\&quot;: 10.0,\n    \&quot;slippage_bps_per_side\&quot;: 5.0,\n    \&quot;initial_capital_try\&quot;: 100000.0,\n    \&quot;signal_timing\&quot;: \&quot;close decision, next stock-session open execution\&quot;\n  }\n}&quot;
+      }
+    ],
+    &quot;structured_content&quot;: {
+      &quot;ticker&quot;: &quot;THYAO.IS&quot;,
+      &quot;as_of&quot;: &quot;2025-12-31&quot;,
+      &quot;data&quot;: [
+        {
+          &quot;date&quot;: &quot;2025-12-25T00:00:00&quot;,
+          &quot;open&quot;: 272.5,
+          &quot;high&quot;: 273.5,
+          &quot;low&quot;: 271.0,
+          &quot;close&quot;: 271.25,
+          &quot;raw_close&quot;: 271.25,
+          &quot;volume&quot;: 12977291
+        },
+        {
+          &quot;date&quot;: &quot;2025-12-26T00:00:00&quot;,
+          &quot;open&quot;: 271.25,
+          &quot;high&quot;: 271.5,
+          &quot;low&quot;: 267.25,
+          &quot;close&quot;: 268.0,
+          &quot;raw_close&quot;: 268.0,
+          &quot;volume&quot;: 22195231
+        },
+        {
+          &quot;date&quot;: &quot;2025-12-29T00:00:00&quot;,
+          &quot;open&quot;: 268.25,
+          &quot;high&quot;: 269.0,
+          &quot;low&quot;: 262.75,
+          &quot;close&quot;: 264.5,
+          &quot;raw_close&quot;: 264.5,
+          &quot;volume&quot;: 31535713
+        },
+        {
+          &quot;date&quot;: &quot;2025-12-30T00:00:00&quot;,
+          &quot;open&quot;: 265.0,
+          &quot;high&quot;: 269.75,
+          &quot;low&quot;: 264.75,
+          &quot;close&quot;: 267.75,
+          &quot;raw_close&quot;: 267.75,
+          &quot;volume&quot;: 32525018
+        },
+        {
+          &quot;date&quot;: &quot;2025-12-31T00:00:00&quot;,
+          &quot;open&quot;: 268.5,
+          &quot;high&quot;: 269.75,
+          &quot;low&quot;: 267.25,
+          &quot;close&quot;: 268.5,
+          &quot;raw_close&quot;: 268.5,
+          &quot;volume&quot;: 20565368
+        }
+      ],
+      &quot;price_currency&quot;: &quot;TRY&quot;,
+      &quot;fundamental_currency&quot;: &quot;TRY&quot;,
+      &quot;vintage_policy&quot;: &quot;verified_only&quot;,
+      &quot;fundamental_dataset&quot;: &quot;data/processed/fintables_original_observations.csv&quot;,
+      &quot;warnings&quot;: [
+        &quot;Single user-selected stock; selection/survivorship bias; no market-wide inference.&quot;,
+        &quot;Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.&quot;,
+        &quot;Adjusted synthetic units; whole-lot execution and taxes not modeled.&quot;,
+        &quot;BIST100 price-index basis differs from adjusted stock return basis.&quot;,
+        &quot;Original annual statement vintages and comparative revisions are dated; interim reports are outside this annual-refresh strategy.&quot;,
+        &quot;Original TRY presentation is nominal: growth and return on average balances are affected by inflation and currency translation.&quot;,
+        &quot;Source/currency correction was made after the earlier USD results were inspected; 2025 is a chronological parameter holdout, not a pristine blind test.&quot;
+      ],
+      &quot;source_document&quot;: &quot;docs/DATA_SOURCES.md&quot;,
+      &quot;execution_assumptions&quot;: {
+        &quot;commission_bps_per_side&quot;: 10.0,
+        &quot;slippage_bps_per_side&quot;: 5.0,
+        &quot;initial_capital_try&quot;: 100000.0,
+        &quot;signal_timing&quot;: &quot;close decision, next stock-session open execution&quot;
+      }
+    }
+  },
+  &quot;error&quot;: null,
+  &quot;status&quot;: &quot;completed&quot;
+}</pre></details><h3>Actual host explanation</h3><pre>## THYAO.IS — as of 2025-12-31
+
+**Rule signal: HOLD with `holding=false`**, meaning remain out of the position. `generate_signal` identifies the blocking reason as `trend_filter`; this is an academic rule output, not an executed order.
+
+### Evidence
+
+- **Technical:** Actual market date is **2025-12-31**. Adjusted and raw close were **TRY 268.50**, below fast/slow SMAs of **271.1625 / 276.64**. RSI was **42.6210**, MACD histogram **−0.0781**, and relative volume **0.6947**, consistent with weak trend and momentum. Support/resistance were **TRY 267.75 / 269.8642**, with `in_zone=false`; pivots require five subsequent sessions for confirmation before use. Sources: `get_stock_history`, `calculate_indicators`, `find_support_resistance`.
+- **Fundamental:** The active annual financial period is **2024-12-31**, available from **2025-03-03**, aged **303 days**. Revenue growth was **0.477861**, net-profit growth **−0.304442**, ROE **0.199408**, net-debt/EBITDA **1.736907**, and P/E **3.268094**. Growth, leverage and valuation earned rule points; profit growth and ROE did not. Fundamental score was **3**, labelled **neutral**; technical score **2**, combined score **0.4800**. Sources: `get_fundamental_metrics`, `calculate_scores`.
+
+### Backtest
+
+Requested interval: **2023-01-01 to exclusive 2026-01-01**. Actual observations: **2023-01-02–2025-12-31**, with **749** stock sessions and **746** benchmark sessions (**3** missing).
+
+Values below are tool-returned **decimal ratios**, rounded for display; returns are cumulative.
+
+| Strategy / baseline | Return | Max drawdown | Zero-risk-free Sharpe | Closed-trade win rate |
+|---|---:|---:|---:|---:|
+| Combined | 0.653171 | −0.138531 | 1.077510 | 0.875000 |
+| Technical | 0.611860 | −0.131559 | 0.995015 | 0.636364 |
+| THYAO buy-and-hold | 0.927259 | −0.256145 | 0.750385 | Unavailable |
+| BIST100 price index | 1.022394 | −0.228609 | 0.965241 | Unavailable |
+
+Source: `run_backtest`, corroborated by `generate_report`. Combined and technical strategies closed **8** and **11** trades respectively. Buy-and-hold had **0** closed trades and **1** open trade; its missing win rate is not zero.
+
+### Units, costs and validation limits
+
+Both price and financial currencies are **TRY**; financial amounts use TRY units and stock execution uses adjusted synthetic units. Returns are nominal TRY, with **zero cash yield**. Initial capital is **TRY 100,000**; commission is **10 bps per side**, slippage **5 bps per side**. Decisions occur at close with next stock-session open execution. Stock results include modeled costs; BIST100 is a cost-free price-index baseline. Taxes and whole-lot execution are not modeled.
+
+The **`verified_only`** policy uses publication-lagged annual statements and dated comparative revisions. `generate_report` records **136 verified observations**, **0 unverified rows**, and **0 assumed-release rows**, covering annual periods **2020–2024**. Interim reports are outside this annual-refresh strategy.
+
+**Verified source vintages do not validate investment performance.** The strategies showed smaller drawdowns but lower cumulative returns than both baselines. Small trade samples, stock-selection/survivorship bias, differing benchmark return bases, inflation and currency translation limit interpretation. Source/currency corrections followed inspection of earlier USD results, so **2025 is a chronological parameter holdout, not a pristine blind test**. These results establish no investable advantage.
+
+`generate_report` retrieved the existing report without writing files: [Local report](C:/Users/yavuz/Desktop/CSE481-Term-Project/outputs/verified_only/report.md).</pre></section><section><h2>missing_data</h2><p>7 recorded MCP calls</p><details><summary>get_stock_history | failed</summary><pre>{
+  &quot;id&quot;: &quot;item_2&quot;,
+  &quot;type&quot;: &quot;mcp_tool_call&quot;,
+  &quot;server&quot;: &quot;bist&quot;,
+  &quot;tool&quot;: &quot;get_stock_history&quot;,
+  &quot;arguments&quot;: {
+    &quot;ticker&quot;: &quot;INVALID.IS&quot;,
+    &quot;as_of&quot;: &quot;2021-01-15&quot;
+  },
+  &quot;result&quot;: {
+    &quot;content&quot;: [
+      {
+        &quot;type&quot;: &quot;text&quot;,
+        &quot;text&quot;: &quot;Error executing tool get_stock_history: INVALID_SYMBOL: this case study only supports THYAO.IS&quot;
+      }
+    ],
+    &quot;structured_content&quot;: null
+  },
+  &quot;error&quot;: null,
+  &quot;status&quot;: &quot;failed&quot;
+}</pre></details><details><summary>project_status | completed</summary><pre>{
+  &quot;id&quot;: &quot;item_3&quot;,
+  &quot;type&quot;: &quot;mcp_tool_call&quot;,
+  &quot;server&quot;: &quot;bist&quot;,
+  &quot;tool&quot;: &quot;project_status&quot;,
+  &quot;arguments&quot;: {},
+  &quot;result&quot;: {
+    &quot;content&quot;: [
+      {
+        &quot;type&quot;: &quot;text&quot;,
+        &quot;text&quot;: &quot;{\n  \&quot;ticker\&quot;: \&quot;THYAO.IS\&quot;,\n  \&quot;benchmark\&quot;: \&quot;XU100.IS\&quot;,\n  \&quot;fundamental_source\&quot;: \&quot;Fintables\&quot;,\n  \&quot;fundamentals_present\&quot;: true,\n  \&quot;vintage_policy\&quot;: \&quot;verified_only\&quot;,\n  \&quot;fundamental_currency\&quot;: \&quot;TRY\&quot;,\n  \&quot;educational_only\&quot;: true\n}&quot;
+      }
+    ],
+    &quot;structured_content&quot;: {
+      &quot;ticker&quot;: &quot;THYAO.IS&quot;,
+      &quot;benchmark&quot;: &quot;XU100.IS&quot;,
+      &quot;fundamental_source&quot;: &quot;Fintables&quot;,
+      &quot;fundamentals_present&quot;: true,
+      &quot;vintage_policy&quot;: &quot;verified_only&quot;,
+      &quot;fundamental_currency&quot;: &quot;TRY&quot;,
+      &quot;educational_only&quot;: true
+    }
+  },
+  &quot;error&quot;: null,
+  &quot;status&quot;: &quot;completed&quot;
+}</pre></details><details><summary>calculate_scores | completed</summary><pre>{
+  &quot;id&quot;: &quot;item_5&quot;,
+  &quot;type&quot;: &quot;mcp_tool_call&quot;,
+  &quot;server&quot;: &quot;bist&quot;,
+  &quot;tool&quot;: &quot;calculate_scores&quot;,
+  &quot;arguments&quot;: {
+    &quot;ticker&quot;: &quot;THYAO.IS&quot;,
+    &quot;as_of&quot;: &quot;2021-01-15&quot;
+  },
+  &quot;result&quot;: {
+    &quot;content&quot;: [
+      {
+        &quot;type&quot;: &quot;text&quot;,
+        &quot;text&quot;: &quot;{\n  \&quot;ticker\&quot;: \&quot;THYAO.IS\&quot;,\n  \&quot;as_of\&quot;: \&quot;2021-01-15\&quot;,\n  \&quot;data\&quot;: {\n    \&quot;f_growth\&quot;: null,\n    \&quot;f_profit_growth\&quot;: null,\n    \&quot;f_roe\&quot;: null,\n    \&quot;f_leverage\&quot;: null,\n    \&quot;f_valuation\&quot;: null,\n    \&quot;t_trend\&quot;: null,\n    \&quot;t_rsi\&quot;: null,\n    \&quot;t_macd\&quot;: null,\n    \&quot;t_volume\&quot;: null,\n    \&quot;t_support\&quot;: null,\n    \&quot;fundamental_score\&quot;: null,\n    \&quot;technical_score\&quot;: null,\n    \&quot;combined_score\&quot;: null,\n    \&quot;fundamental_label\&quot;: \&quot;incomplete\&quot;,\n    \&quot;pe_history_median\&quot;: null\n  },\n  \&quot;price_currency\&quot;: \&quot;TRY\&quot;,\n  \&quot;fundamental_currency\&quot;: \&quot;TRY\&quot;,\n  \&quot;vintage_policy\&quot;: \&quot;verified_only\&quot;,\n  \&quot;fundamental_dataset\&quot;: \&quot;data/processed/fintables_original_observations.csv\&quot;,\n  \&quot;warnings\&quot;: [\n    \&quot;Single user-selected stock; selection/survivorship bias; no market-wide inference.\&quot;,\n    \&quot;Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.\&quot;,\n    \&quot;Adjusted synthetic units; whole-lot execution and taxes not modeled.\&quot;,\n    \&quot;BIST100 price-index basis differs from adjusted stock return basis.\&quot;,\n    \&quot;Original annual statement vintages and comparative revisions are dated; interim reports are outside this annual-refresh strategy.\&quot;,\n    \&quot;Original TRY presentation is nominal: growth and return on average balances are affected by inflation and currency translation.\&quot;,\n    \&quot;Source/currency correction was made after the earlier USD results were inspected; 2025 is a chronological parameter holdout, not a pristine blind test.\&quot;\n  ],\n  \&quot;source_document\&quot;: \&quot;docs/DATA_SOURCES.md\&quot;,\n  \&quot;execution_assumptions\&quot;: {\n    \&quot;commission_bps_per_side\&quot;: 10.0,\n    \&quot;slippage_bps_per_side\&quot;: 5.0,\n    \&quot;initial_capital_try\&quot;: 100000.0,\n    \&quot;signal_timing\&quot;: \&quot;close decision, next stock-session open execution\&quot;\n  }\n}&quot;
+      }
+    ],
+    &quot;structured_content&quot;: {
+      &quot;ticker&quot;: &quot;THYAO.IS&quot;,
+      &quot;as_of&quot;: &quot;2021-01-15&quot;,
+      &quot;data&quot;: {
+        &quot;f_growth&quot;: null,
+        &quot;f_profit_growth&quot;: null,
+        &quot;f_roe&quot;: null,
+        &quot;f_leverage&quot;: null,
+        &quot;f_valuation&quot;: null,
+        &quot;t_trend&quot;: null,
+        &quot;t_rsi&quot;: null,
+        &quot;t_macd&quot;: null,
+        &quot;t_volume&quot;: null,
+        &quot;t_support&quot;: null,
+        &quot;fundamental_score&quot;: null,
+        &quot;technical_score&quot;: null,
+        &quot;combined_score&quot;: null,
+        &quot;fundamental_label&quot;: &quot;incomplete&quot;,
+        &quot;pe_history_median&quot;: null
+      },
+      &quot;price_currency&quot;: &quot;TRY&quot;,
+      &quot;fundamental_currency&quot;: &quot;TRY&quot;,
+      &quot;vintage_policy&quot;: &quot;verified_only&quot;,
+      &quot;fundamental_dataset&quot;: &quot;data/processed/fintables_original_observations.csv&quot;,
+      &quot;warnings&quot;: [
+        &quot;Single user-selected stock; selection/survivorship bias; no market-wide inference.&quot;,
+        &quot;Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.&quot;,
+        &quot;Adjusted synthetic units; whole-lot execution and taxes not modeled.&quot;,
+        &quot;BIST100 price-index basis differs from adjusted stock return basis.&quot;,
+        &quot;Original annual statement vintages and comparative revisions are dated; interim reports are outside this annual-refresh strategy.&quot;,
+        &quot;Original TRY presentation is nominal: growth and return on average balances are affected by inflation and currency translation.&quot;,
+        &quot;Source/currency correction was made after the earlier USD results were inspected; 2025 is a chronological parameter holdout, not a pristine blind test.&quot;
+      ],
+      &quot;source_document&quot;: &quot;docs/DATA_SOURCES.md&quot;,
+      &quot;execution_assumptions&quot;: {
+        &quot;commission_bps_per_side&quot;: 10.0,
+        &quot;slippage_bps_per_side&quot;: 5.0,
+        &quot;initial_capital_try&quot;: 100000.0,
+        &quot;signal_timing&quot;: &quot;close decision, next stock-session open execution&quot;
+      }
+    }
+  },
+  &quot;error&quot;: null,
+  &quot;status&quot;: &quot;completed&quot;
+}</pre></details><details><summary>generate_signal | completed</summary><pre>{
+  &quot;id&quot;: &quot;item_4&quot;,
+  &quot;type&quot;: &quot;mcp_tool_call&quot;,
+  &quot;server&quot;: &quot;bist&quot;,
+  &quot;tool&quot;: &quot;generate_signal&quot;,
+  &quot;arguments&quot;: {
+    &quot;ticker&quot;: &quot;THYAO.IS&quot;,
+    &quot;as_of&quot;: &quot;2021-01-15&quot;,
+    &quot;holding&quot;: false
+  },
+  &quot;result&quot;: {
+    &quot;content&quot;: [
+      {
+        &quot;type&quot;: &quot;text&quot;,
+        &quot;text&quot;: &quot;{\n  \&quot;ticker\&quot;: \&quot;THYAO.IS\&quot;,\n  \&quot;as_of\&quot;: \&quot;2021-01-15\&quot;,\n  \&quot;data\&quot;: {\n    \&quot;action\&quot;: \&quot;HOLD\&quot;,\n    \&quot;reason\&quot;: \&quot;technical_warmup_or_no_support\&quot;,\n    \&quot;holding\&quot;: false,\n    \&quot;execution\&quot;: \&quot;next available stock-session open; not an executed order\&quot;\n  },\n  \&quot;price_currency\&quot;: \&quot;TRY\&quot;,\n  \&quot;fundamental_currency\&quot;: \&quot;TRY\&quot;,\n  \&quot;vintage_policy\&quot;: \&quot;verified_only\&quot;,\n  \&quot;fundamental_dataset\&quot;: \&quot;data/processed/fintables_original_observations.csv\&quot;,\n  \&quot;warnings\&quot;: [\n    \&quot;Single user-selected stock; selection/survivorship bias; no market-wide inference.\&quot;,\n    \&quot;Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.\&quot;,\n    \&quot;Adjusted synthetic units; whole-lot execution and taxes not modeled.\&quot;,\n    \&quot;BIST100 price-index basis differs from adjusted stock return basis.\&quot;,\n    \&quot;Original annual statement vintages and comparative revisions are dated; interim reports are outside this annual-refresh strategy.\&quot;,\n    \&quot;Original TRY presentation is nominal: growth and return on average balances are affected by inflation and currency translation.\&quot;,\n    \&quot;Source/currency correction was made after the earlier USD results were inspected; 2025 is a chronological parameter holdout, not a pristine blind test.\&quot;\n  ],\n  \&quot;source_document\&quot;: \&quot;docs/DATA_SOURCES.md\&quot;,\n  \&quot;execution_assumptions\&quot;: {\n    \&quot;commission_bps_per_side\&quot;: 10.0,\n    \&quot;slippage_bps_per_side\&quot;: 5.0,\n    \&quot;initial_capital_try\&quot;: 100000.0,\n    \&quot;signal_timing\&quot;: \&quot;close decision, next stock-session open execution\&quot;\n  }\n}&quot;
+      }
+    ],
+    &quot;structured_content&quot;: {
+      &quot;ticker&quot;: &quot;THYAO.IS&quot;,
+      &quot;as_of&quot;: &quot;2021-01-15&quot;,
+      &quot;data&quot;: {
+        &quot;action&quot;: &quot;HOLD&quot;,
+        &quot;reason&quot;: &quot;technical_warmup_or_no_support&quot;,
+        &quot;holding&quot;: false,
+        &quot;execution&quot;: &quot;next available stock-session open; not an executed order&quot;
+      },
+      &quot;price_currency&quot;: &quot;TRY&quot;,
+      &quot;fundamental_currency&quot;: &quot;TRY&quot;,
+      &quot;vintage_policy&quot;: &quot;verified_only&quot;,
+      &quot;fundamental_dataset&quot;: &quot;data/processed/fintables_original_observations.csv&quot;,
+      &quot;warnings&quot;: [
+        &quot;Single user-selected stock; selection/survivorship bias; no market-wide inference.&quot;,
+        &quot;Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.&quot;,
+        &quot;Adjusted synthetic units; whole-lot execution and taxes not modeled.&quot;,
+        &quot;BIST100 price-index basis differs from adjusted stock return basis.&quot;,
+        &quot;Original annual statement vintages and comparative revisions are dated; interim reports are outside this annual-refresh strategy.&quot;,
+        &quot;Original TRY presentation is nominal: growth and return on average balances are affected by inflation and currency translation.&quot;,
+        &quot;Source/currency correction was made after the earlier USD results were inspected; 2025 is a chronological parameter holdout, not a pristine blind test.&quot;
+      ],
+      &quot;source_document&quot;: &quot;docs/DATA_SOURCES.md&quot;,
+      &quot;execution_assumptions&quot;: {
+        &quot;commission_bps_per_side&quot;: 10.0,
+        &quot;slippage_bps_per_side&quot;: 5.0,
+        &quot;initial_capital_try&quot;: 100000.0,
+        &quot;signal_timing&quot;: &quot;close decision, next stock-session open execution&quot;
+      }
+    }
+  },
+  &quot;error&quot;: null,
+  &quot;status&quot;: &quot;completed&quot;
+}</pre></details><details><summary>generate_report | completed</summary><pre>{
+  &quot;id&quot;: &quot;item_6&quot;,
+  &quot;type&quot;: &quot;mcp_tool_call&quot;,
+  &quot;server&quot;: &quot;bist&quot;,
+  &quot;tool&quot;: &quot;generate_report&quot;,
+  &quot;arguments&quot;: {},
+  &quot;result&quot;: {
+    &quot;content&quot;: [
+      {
+        &quot;type&quot;: &quot;text&quot;,
+        &quot;text&quot;: &quot;{\n  \&quot;ticker\&quot;: \&quot;THYAO.IS\&quot;,\n  \&quot;as_of\&quot;: null,\n  \&quot;data\&quot;: {\n    \&quot;performance\&quot;: {\n      \&quot;bist100\&quot;: {\n        \&quot;annualized_volatility\&quot;: 0.29021467728922656,\n        \&quot;basis\&quot;: \&quot;BIST100 price index; no costs\&quot;,\n        \&quot;cagr\&quot;: 0.2650810950272522,\n        \&quot;cumulative_return\&quot;: 1.022394260022093,\n        \&quot;end\&quot;: \&quot;2025-12-31\&quot;,\n        \&quot;final_equity\&quot;: 202239.4260022093,\n        \&quot;initial_capital\&quot;: 100000.0,\n        \&quot;maximum_drawdown\&quot;: -0.2286087856192982,\n        \&quot;missing_sessions\&quot;: 3,\n        \&quot;sessions\&quot;: 746,\n        \&quot;sharpe_zero_risk_free\&quot;: 0.9652412271043687,\n        \&quot;start\&quot;: \&quot;2023-01-02\&quot;\n      },\n      \&quot;buy_hold\&quot;: {\n        \&quot;annualized_volatility\&quot;: 0.3976817376399488,\n        \&quot;benchmark_difference_pp\&quot;: -9.513530941793856,\n        \&quot;cagr\&quot;: 0.24489280553325243,\n        \&quot;closed_trades\&quot;: 0,\n        \&quot;cumulative_return\&quot;: 0.9272589506041544,\n        \&quot;diagnostic_flags\&quot;: [\n          \&quot;fewer_than_10_closed_trades\&quot;\n        ],\n        \&quot;end\&quot;: \&quot;2025-12-31\&quot;,\n        \&quot;exposure\&quot;: 1.0,\n        \&quot;final_equity\&quot;: 192725.89506041544,\n        \&quot;gross_return_same_executions\&quot;: 0.9301508026595355,\n        \&quot;initial_capital\&quot;: 100000.0,\n        \&quot;maximum_drawdown\&quot;: -0.25614493728705756,\n        \&quot;open_trades\&quot;: 1,\n        \&quot;sessions\&quot;: 749,\n        \&quot;sharpe_zero_risk_free\&quot;: 0.7503853529465033,\n        \&quot;start\&quot;: \&quot;2023-01-02\&quot;,\n        \&quot;strategy\&quot;: \&quot;buy_hold\&quot;,\n        \&quot;total_commission\&quot;: 99.9000999000999,\n        \&quot;total_slippage_cost\&quot;: 49.925087406336765,\n        \&quot;turnover_initial_capital\&quot;: 0.9985017481269357,\n        \&quot;unrealized_pnl\&quot;: 92725.89506041544,\n        \&quot;win_rate\&quot;: null\n      },\n      \&quot;combined\&quot;: {\n        \&quot;annualized_volatility\&quot;: 0.17018404304814624,\n        \&quot;benchmark_difference_pp\&quot;: -36.922302659143135,\n        \&quot;cagr\&quot;: 0.18273928639253567,\n        \&quot;closed_trades\&quot;: 8,\n        \&quot;cumulative_return\&quot;: 0.6531712334306616,\n        \&quot;diagnostic_flags\&quot;: [\n          \&quot;fewer_than_10_closed_trades\&quot;\n        ],\n        \&quot;end\&quot;: \&quot;2025-12-31\&quot;,\n        \&quot;exposure\&quot;: 0.20160213618157544,\n        \&quot;final_equity\&quot;: 165317.12334306617,\n        \&quot;gross_return_same_executions\&quot;: 0.6933272983782912,\n        \&quot;initial_capital\&quot;: 100000.0,\n        \&quot;maximum_drawdown\&quot;: -0.13853114796833998,\n        \&quot;open_trades\&quot;: 0,\n        \&quot;sessions\&quot;: 749,\n        \&quot;sharpe_zero_risk_free\&quot;: 1.077509711601558,\n        \&quot;start\&quot;: \&quot;2023-01-02\&quot;,\n        \&quot;strategy\&quot;: \&quot;combined\&quot;,\n        \&quot;total_commission\&quot;: 2115.8741630890936,\n        \&quot;total_slippage_cost\&quot;: 1057.954204282381,\n        \&quot;turnover_initial_capital\&quot;: 21.159084085649486,\n        \&quot;unrealized_pnl\&quot;: 0.0,\n        \&quot;win_rate\&quot;: 0.875\n      },\n      \&quot;technical\&quot;: {\n        \&quot;annualized_volatility\&quot;: 0.17699876282028346,\n        \&quot;benchmark_difference_pp\&quot;: -41.053410662024525,\n        \&quot;cagr\&quot;: 0.1727884198567522,\n        \&quot;closed_trades\&quot;: 11,\n        \&quot;cumulative_return\&quot;: 0.6118601534018477,\n        \&quot;diagnostic_flags\&quot;: [],\n        \&quot;end\&quot;: \&quot;2025-12-31\&quot;,\n        \&quot;exposure\&quot;: 0.26702269692923897,\n        \&quot;final_equity\&quot;: 161186.01534018476,\n        \&quot;gross_return_same_executions\&quot;: 0.6659389444740551,\n        \&quot;initial_capital\&quot;: 100000.0,\n        \&quot;maximum_drawdown\&quot;: -0.13155894458680928,\n        \&quot;open_trades\&quot;: 0,\n        \&quot;sessions\&quot;: 749,\n        \&quot;sharpe_zero_risk_free\&quot;: 0.9950150603252809,\n        \&quot;start\&quot;: \&quot;2023-01-02\&quot;,\n        \&quot;strategy\&quot;: \&quot;technical\&quot;,\n        \&quot;total_commission\&quot;: 3123.4762069147228,\n        \&quot;total_slippage_cost\&quot;: 1561.7545712687024,\n        \&quot;turnover_initial_capital\&quot;: 31.235091425377814,\n        \&quot;unrealized_pnl\&quot;: 0.0,\n        \&quot;win_rate\&quot;: 0.6363636363636364\n      }\n    },\n    \&quot;quality\&quot;: {\n      \&quot;evaluation_sessions\&quot;: 749,\n      \&quot;fundamental_complete_sessions\&quot;: 710,\n      \&quot;fundamental_fresh_sessions\&quot;: 749,\n      \&quot;fundamentals\&quot;: {\n        \&quot;assumed_release_rows\&quot;: 0,\n        \&quot;currencies\&quot;: [\n          \&quot;TRY\&quot;\n        ],\n        \&quot;metrics\&quot;: [\n          \&quot;cash\&quot;,\n          \&quot;current_assets\&quot;,\n          \&quot;current_liabilities\&quot;,\n          \&quot;ebitda\&quot;,\n          \&quot;equity\&quot;,\n          \&quot;financial_debt\&quot;,\n          \&quot;financing_cash_flow\&quot;,\n          \&quot;gross_profit\&quot;,\n          \&quot;inventories\&quot;,\n          \&quot;investing_cash_flow\&quot;,\n          \&quot;net_debt\&quot;,\n          \&quot;net_profit\&quot;,\n          \&quot;operating_cash_flow\&quot;,\n          \&quot;operating_profit\&quot;,\n          \&quot;revenue\&quot;,\n          \&quot;shares_outstanding\&quot;,\n          \&quot;total_assets\&quot;\n        ],\n        \&quot;missing_values\&quot;: 0,\n        \&quot;observations\&quot;: 136,\n        \&quot;periods\&quot;: [\n          \&quot;2020-12-31\&quot;,\n          \&quot;2021-12-31\&quot;,\n          \&quot;2022-12-31\&quot;,\n          \&quot;2023-12-31\&quot;,\n          \&quot;2024-12-31\&quot;\n        ],\n        \&quot;unverified_vintage_rows\&quot;: 0,\n        \&quot;verified_vintage_rows\&quot;: 136\n      },\n      \&quot;index_only_dates\&quot;: [\n        \&quot;2024-04-09\&quot;\n      ],\n      \&quot;market\&quot;: {\n        \&quot;THYAO.IS\&quot;: {\n          \&quot;first\&quot;: \&quot;2021-01-04\&quot;,\n          \&quot;fx_usage\&quot;: null,\n          \&quot;inconsistent_ohlc_rows\&quot;: 0,\n          \&quot;large_close_moves\&quot;: 0,\n          \&quot;last\&quot;: \&quot;2025-12-31\&quot;,\n          \&quot;rows\&quot;: 1250,\n          \&quot;ticker\&quot;: \&quot;THYAO.IS\&quot;,\n          \&quot;zero_volume_sessions\&quot;: 0\n        },\n        \&quot;TRY=X\&quot;: {\n          \&quot;first\&quot;: \&quot;2021-01-01\&quot;,\n          \&quot;fx_usage\&quot;: \&quot;close only; provider OHLC inconsistencies retained and flagged\&quot;,\n          \&quot;inconsistent_ohlc_rows\&quot;: 23,\n          \&quot;large_close_moves\&quot;: 0,\n          \&quot;last\&quot;: \&quot;2025-12-31\&quot;,\n          \&quot;rows\&quot;: 1300,\n          \&quot;ticker\&quot;: \&quot;TRY=X\&quot;,\n          \&quot;zero_volume_sessions\&quot;: 1300\n        },\n        \&quot;XU100.IS\&quot;: {\n          \&quot;first\&quot;: \&quot;2021-01-04\&quot;,\n          \&quot;fx_usage\&quot;: null,\n          \&quot;inconsistent_ohlc_rows\&quot;: 0,\n          \&quot;large_close_moves\&quot;: 0,\n          \&quot;last\&quot;: \&quot;2025-12-31\&quot;,\n          \&quot;rows\&quot;: 1247,\n          \&quot;ticker\&quot;: \&quot;XU100.IS\&quot;,\n          \&quot;zero_volume_sessions\&quot;: 1\n        }\n      },\n      \&quot;missing_fx_dates\&quot;: [\n        \&quot;2025-04-18\&quot;,\n        \&quot;2025-04-21\&quot;,\n        \&quot;2025-12-25\&quot;\n      ],\n      \&quot;stock_only_dates\&quot;: [\n        \&quot;2021-04-02\&quot;,\n        \&quot;2023-12-25\&quot;,\n        \&quot;2024-12-25\&quot;,\n        \&quot;2025-12-25\&quot;\n      ],\n      \&quot;vintage_policy\&quot;: \&quot;verified_only\&quot;,\n      \&quot;warnings\&quot;: [\n        \&quot;Single user-selected stock; selection/survivorship bias; no market-wide inference.\&quot;,\n        \&quot;Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.\&quot;,\n        \&quot;Adjusted synthetic units; whole-lot execution and taxes not modeled.\&quot;,\n        \&quot;BIST100 price-index basis differs from adjusted stock return basis.\&quot;,\n        \&quot;Original annual statement vintages and comparative revisions are dated; interim reports are outside this annual-refresh strategy.\&quot;,\n        \&quot;Original TRY presentation is nominal: growth and return on average balances are affected by inflation and currency translation.\&quot;,\n        \&quot;Source/currency correction was made after the earlier USD results were inspected; 2025 is a chronological parameter holdout, not a pristine blind test.\&quot;\n      ]\n    },\n    \&quot;report_path\&quot;: \&quot;C:\\\\Users\\\\yavuz\\\\Desktop\\\\CSE481-Term-Project\\\\outputs\\\\verified_only\\\\report.md\&quot;,\n    \&quot;html_path\&quot;: \&quot;C:\\\\Users\\\\yavuz\\\\Desktop\\\\CSE481-Term-Project\\\\outputs\\\\verified_only\\\\report.html\&quot;\n  },\n  \&quot;price_currency\&quot;: \&quot;TRY\&quot;,\n  \&quot;fundamental_currency\&quot;: \&quot;TRY\&quot;,\n  \&quot;vintage_policy\&quot;: \&quot;verified_only\&quot;,\n  \&quot;fundamental_dataset\&quot;: \&quot;data/processed/fintables_original_observations.csv\&quot;,\n  \&quot;warnings\&quot;: [\n    \&quot;Single user-selected stock; selection/survivorship bias; no market-wide inference.\&quot;,\n    \&quot;Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.\&quot;,\n    \&quot;Adjusted synthetic units; whole-lot execution and taxes not modeled.\&quot;,\n    \&quot;BIST100 price-index basis differs from adjusted stock return basis.\&quot;,\n    \&quot;Original annual statement vintages and comparative revisions are dated; interim reports are outside this annual-refresh strategy.\&quot;,\n    \&quot;Original TRY presentation is nominal: growth and return on average balances are affected by inflation and currency translation.\&quot;,\n    \&quot;Source/currency correction was made after the earlier USD results were inspected; 2025 is a chronological parameter holdout, not a pristine blind test.\&quot;\n  ],\n  \&quot;source_document\&quot;: \&quot;docs/DATA_SOURCES.md\&quot;,\n  \&quot;execution_assumptions\&quot;: {\n    \&quot;commission_bps_per_side\&quot;: 10.0,\n    \&quot;slippage_bps_per_side\&quot;: 5.0,\n    \&quot;initial_capital_try\&quot;: 100000.0,\n    \&quot;signal_timing\&quot;: \&quot;close decision, next stock-session open execution\&quot;\n  }\n}&quot;
+      }
+    ],
+    &quot;structured_content&quot;: {
+      &quot;ticker&quot;: &quot;THYAO.IS&quot;,
+      &quot;as_of&quot;: null,
+      &quot;data&quot;: {
+        &quot;performance&quot;: {
+          &quot;bist100&quot;: {
+            &quot;annualized_volatility&quot;: 0.29021467728922656,
+            &quot;basis&quot;: &quot;BIST100 price index; no costs&quot;,
+            &quot;cagr&quot;: 0.2650810950272522,
+            &quot;cumulative_return&quot;: 1.022394260022093,
+            &quot;end&quot;: &quot;2025-12-31&quot;,
+            &quot;final_equity&quot;: 202239.4260022093,
+            &quot;initial_capital&quot;: 100000.0,
+            &quot;maximum_drawdown&quot;: -0.2286087856192982,
+            &quot;missing_sessions&quot;: 3,
+            &quot;sessions&quot;: 746,
+            &quot;sharpe_zero_risk_free&quot;: 0.9652412271043687,
+            &quot;start&quot;: &quot;2023-01-02&quot;
+          },
+          &quot;buy_hold&quot;: {
+            &quot;annualized_volatility&quot;: 0.3976817376399488,
+            &quot;benchmark_difference_pp&quot;: -9.513530941793856,
+            &quot;cagr&quot;: 0.24489280553325243,
+            &quot;closed_trades&quot;: 0,
+            &quot;cumulative_return&quot;: 0.9272589506041544,
+            &quot;diagnostic_flags&quot;: [
+              &quot;fewer_than_10_closed_trades&quot;
+            ],
+            &quot;end&quot;: &quot;2025-12-31&quot;,
+            &quot;exposure&quot;: 1.0,
+            &quot;final_equity&quot;: 192725.89506041544,
+            &quot;gross_return_same_executions&quot;: 0.9301508026595355,
+            &quot;initial_capital&quot;: 100000.0,
+            &quot;maximum_drawdown&quot;: -0.25614493728705756,
+            &quot;open_trades&quot;: 1,
+            &quot;sessions&quot;: 749,
+            &quot;sharpe_zero_risk_free&quot;: 0.7503853529465033,
+            &quot;start&quot;: &quot;2023-01-02&quot;,
+            &quot;strategy&quot;: &quot;buy_hold&quot;,
+            &quot;total_commission&quot;: 99.9000999000999,
+            &quot;total_slippage_cost&quot;: 49.925087406336765,
+            &quot;turnover_initial_capital&quot;: 0.9985017481269357,
+            &quot;unrealized_pnl&quot;: 92725.89506041544,
+            &quot;win_rate&quot;: null
+          },
+          &quot;combined&quot;: {
+            &quot;annualized_volatility&quot;: 0.17018404304814624,
+            &quot;benchmark_difference_pp&quot;: -36.922302659143135,
+            &quot;cagr&quot;: 0.18273928639253567,
+            &quot;closed_trades&quot;: 8,
+            &quot;cumulative_return&quot;: 0.6531712334306616,
+            &quot;diagnostic_flags&quot;: [
+              &quot;fewer_than_10_closed_trades&quot;
+            ],
+            &quot;end&quot;: &quot;2025-12-31&quot;,
+            &quot;exposure&quot;: 0.20160213618157544,
+            &quot;final_equity&quot;: 165317.12334306617,
+            &quot;gross_return_same_executions&quot;: 0.6933272983782912,
+            &quot;initial_capital&quot;: 100000.0,
+            &quot;maximum_drawdown&quot;: -0.13853114796833998,
+            &quot;open_trades&quot;: 0,
+            &quot;sessions&quot;: 749,
+            &quot;sharpe_zero_risk_free&quot;: 1.077509711601558,
+            &quot;start&quot;: &quot;2023-01-02&quot;,
+            &quot;strategy&quot;: &quot;combined&quot;,
+            &quot;total_commission&quot;: 2115.8741630890936,
+            &quot;total_slippage_cost&quot;: 1057.954204282381,
+            &quot;turnover_initial_capital&quot;: 21.159084085649486,
+            &quot;unrealized_pnl&quot;: 0.0,
+            &quot;win_rate&quot;: 0.875
+          },
+          &quot;technical&quot;: {
+            &quot;annualized_volatility&quot;: 0.17699876282028346,
+            &quot;benchmark_difference_pp&quot;: -41.053410662024525,
+            &quot;cagr&quot;: 0.1727884198567522,
+            &quot;closed_trades&quot;: 11,
+            &quot;cumulative_return&quot;: 0.6118601534018477,
+            &quot;diagnostic_flags&quot;: [],
+            &quot;end&quot;: &quot;2025-12-31&quot;,
+            &quot;exposure&quot;: 0.26702269692923897,
+            &quot;final_equity&quot;: 161186.01534018476,
+            &quot;gross_return_same_executions&quot;: 0.6659389444740551,
+            &quot;initial_capital&quot;: 100000.0,
+            &quot;maximum_drawdown&quot;: -0.13155894458680928,
+            &quot;open_trades&quot;: 0,
+            &quot;sessions&quot;: 749,
+            &quot;sharpe_zero_risk_free&quot;: 0.9950150603252809,
+            &quot;start&quot;: &quot;2023-01-02&quot;,
+            &quot;strategy&quot;: &quot;technical&quot;,
+            &quot;total_commission&quot;: 3123.4762069147228,
+            &quot;total_slippage_cost&quot;: 1561.7545712687024,
+            &quot;turnover_initial_capital&quot;: 31.235091425377814,
+            &quot;unrealized_pnl&quot;: 0.0,
+            &quot;win_rate&quot;: 0.6363636363636364
+          }
+        },
+        &quot;quality&quot;: {
+          &quot;evaluation_sessions&quot;: 749,
+          &quot;fundamental_complete_sessions&quot;: 710,
+          &quot;fundamental_fresh_sessions&quot;: 749,
+          &quot;fundamentals&quot;: {
+            &quot;assumed_release_rows&quot;: 0,
+            &quot;currencies&quot;: [
+              &quot;TRY&quot;
+            ],
+            &quot;metrics&quot;: [
+              &quot;cash&quot;,
+              &quot;current_assets&quot;,
+              &quot;current_liabilities&quot;,
+              &quot;ebitda&quot;,
+              &quot;equity&quot;,
+              &quot;financial_debt&quot;,
+              &quot;financing_cash_flow&quot;,
+              &quot;gross_profit&quot;,
+              &quot;inventories&quot;,
+              &quot;investing_cash_flow&quot;,
+              &quot;net_debt&quot;,
+              &quot;net_profit&quot;,
+              &quot;operating_cash_flow&quot;,
+              &quot;operating_profit&quot;,
+              &quot;revenue&quot;,
+              &quot;shares_outstanding&quot;,
+              &quot;total_assets&quot;
+            ],
+            &quot;missing_values&quot;: 0,
+            &quot;observations&quot;: 136,
+            &quot;periods&quot;: [
+              &quot;2020-12-31&quot;,
+              &quot;2021-12-31&quot;,
+              &quot;2022-12-31&quot;,
+              &quot;2023-12-31&quot;,
+              &quot;2024-12-31&quot;
+            ],
+            &quot;unverified_vintage_rows&quot;: 0,
+            &quot;verified_vintage_rows&quot;: 136
+          },
+          &quot;index_only_dates&quot;: [
+            &quot;2024-04-09&quot;
+          ],
+          &quot;market&quot;: {
+            &quot;THYAO.IS&quot;: {
+              &quot;first&quot;: &quot;2021-01-04&quot;,
+              &quot;fx_usage&quot;: null,
+              &quot;inconsistent_ohlc_rows&quot;: 0,
+              &quot;large_close_moves&quot;: 0,
+              &quot;last&quot;: &quot;2025-12-31&quot;,
+              &quot;rows&quot;: 1250,
+              &quot;ticker&quot;: &quot;THYAO.IS&quot;,
+              &quot;zero_volume_sessions&quot;: 0
+            },
+            &quot;TRY=X&quot;: {
+              &quot;first&quot;: &quot;2021-01-01&quot;,
+              &quot;fx_usage&quot;: &quot;close only; provider OHLC inconsistencies retained and flagged&quot;,
+              &quot;inconsistent_ohlc_rows&quot;: 23,
+              &quot;large_close_moves&quot;: 0,
+              &quot;last&quot;: &quot;2025-12-31&quot;,
+              &quot;rows&quot;: 1300,
+              &quot;ticker&quot;: &quot;TRY=X&quot;,
+              &quot;zero_volume_sessions&quot;: 1300
+            },
+            &quot;XU100.IS&quot;: {
+              &quot;first&quot;: &quot;2021-01-04&quot;,
+              &quot;fx_usage&quot;: null,
+              &quot;inconsistent_ohlc_rows&quot;: 0,
+              &quot;large_close_moves&quot;: 0,
+              &quot;last&quot;: &quot;2025-12-31&quot;,
+              &quot;rows&quot;: 1247,
+              &quot;ticker&quot;: &quot;XU100.IS&quot;,
+              &quot;zero_volume_sessions&quot;: 1
+            }
+          },
+          &quot;missing_fx_dates&quot;: [
+            &quot;2025-04-18&quot;,
+            &quot;2025-04-21&quot;,
+            &quot;2025-12-25&quot;
+          ],
+          &quot;stock_only_dates&quot;: [
+            &quot;2021-04-02&quot;,
+            &quot;2023-12-25&quot;,
+            &quot;2024-12-25&quot;,
+            &quot;2025-12-25&quot;
+          ],
+          &quot;vintage_policy&quot;: &quot;verified_only&quot;,
+          &quot;warnings&quot;: [
+            &quot;Single user-selected stock; selection/survivorship bias; no market-wide inference.&quot;,
+            &quot;Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.&quot;,
+            &quot;Adjusted synthetic units; whole-lot execution and taxes not modeled.&quot;,
+            &quot;BIST100 price-index basis differs from adjusted stock return basis.&quot;,
+            &quot;Original annual statement vintages and comparative revisions are dated; interim reports are outside this annual-refresh strategy.&quot;,
+            &quot;Original TRY presentation is nominal: growth and return on average balances are affected by inflation and currency translation.&quot;,
+            &quot;Source/currency correction was made after the earlier USD results were inspected; 2025 is a chronological parameter holdout, not a pristine blind test.&quot;
+          ]
+        },
+        &quot;report_path&quot;: &quot;C:\\Users\\yavuz\\Desktop\\CSE481-Term-Project\\outputs\\verified_only\\report.md&quot;,
+        &quot;html_path&quot;: &quot;C:\\Users\\yavuz\\Desktop\\CSE481-Term-Project\\outputs\\verified_only\\report.html&quot;
+      },
+      &quot;price_currency&quot;: &quot;TRY&quot;,
+      &quot;fundamental_currency&quot;: &quot;TRY&quot;,
+      &quot;vintage_policy&quot;: &quot;verified_only&quot;,
+      &quot;fundamental_dataset&quot;: &quot;data/processed/fintables_original_observations.csv&quot;,
+      &quot;warnings&quot;: [
+        &quot;Single user-selected stock; selection/survivorship bias; no market-wide inference.&quot;,
+        &quot;Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.&quot;,
+        &quot;Adjusted synthetic units; whole-lot execution and taxes not modeled.&quot;,
+        &quot;BIST100 price-index basis differs from adjusted stock return basis.&quot;,
+        &quot;Original annual statement vintages and comparative revisions are dated; interim reports are outside this annual-refresh strategy.&quot;,
+        &quot;Original TRY presentation is nominal: growth and return on average balances are affected by inflation and currency translation.&quot;,
+        &quot;Source/currency correction was made after the earlier USD results were inspected; 2025 is a chronological parameter holdout, not a pristine blind test.&quot;
+      ],
+      &quot;source_document&quot;: &quot;docs/DATA_SOURCES.md&quot;,
+      &quot;execution_assumptions&quot;: {
+        &quot;commission_bps_per_side&quot;: 10.0,
+        &quot;slippage_bps_per_side&quot;: 5.0,
+        &quot;initial_capital_try&quot;: 100000.0,
+        &quot;signal_timing&quot;: &quot;close decision, next stock-session open execution&quot;
+      }
+    }
+  },
+  &quot;error&quot;: null,
+  &quot;status&quot;: &quot;completed&quot;
+}</pre></details><details><summary>get_fundamental_metrics | completed</summary><pre>{
+  &quot;id&quot;: &quot;item_1&quot;,
+  &quot;type&quot;: &quot;mcp_tool_call&quot;,
+  &quot;server&quot;: &quot;bist&quot;,
+  &quot;tool&quot;: &quot;get_fundamental_metrics&quot;,
+  &quot;arguments&quot;: {
+    &quot;ticker&quot;: &quot;THYAO.IS&quot;,
+    &quot;as_of&quot;: &quot;2021-01-15&quot;
+  },
+  &quot;result&quot;: {
+    &quot;content&quot;: [
+      {
+        &quot;type&quot;: &quot;text&quot;,
+        &quot;text&quot;: &quot;{\n  \&quot;ticker\&quot;: \&quot;THYAO.IS\&quot;,\n  \&quot;as_of\&quot;: \&quot;2021-01-15\&quot;,\n  \&quot;data\&quot;: {\n    \&quot;cash\&quot;: null,\n    \&quot;current_assets\&quot;: null,\n    \&quot;current_liabilities\&quot;: null,\n    \&quot;ebitda\&quot;: null,\n    \&quot;equity\&quot;: null,\n    \&quot;financial_debt\&quot;: null,\n    \&quot;financing_cash_flow\&quot;: null,\n    \&quot;gross_profit\&quot;: null,\n    \&quot;inventories\&quot;: null,\n    \&quot;investing_cash_flow\&quot;: null,\n    \&quot;net_debt\&quot;: null,\n    \&quot;net_profit\&quot;: null,\n    \&quot;operating_cash_flow\&quot;: null,\n    \&quot;operating_profit\&quot;: null,\n    \&quot;revenue\&quot;: null,\n    \&quot;shares_outstanding\&quot;: null,\n    \&quot;total_assets\&quot;: null,\n    \&quot;revenue_growth\&quot;: null,\n    \&quot;ebitda_growth\&quot;: null,\n    \&quot;net_profit_growth\&quot;: null,\n    \&quot;roe\&quot;: null,\n    \&quot;roa\&quot;: null,\n    \&quot;ebitda_margin\&quot;: null,\n    \&quot;net_margin\&quot;: null,\n    \&quot;net_debt_ebitda\&quot;: null,\n    \&quot;debt_equity\&quot;: null,\n    \&quot;current_ratio\&quot;: null,\n    \&quot;quick_ratio\&quot;: null,\n    \&quot;pe\&quot;: null,\n    \&quot;pb\&quot;: null,\n    \&quot;ev_ebitda\&quot;: null,\n    \&quot;financial_period\&quot;: null,\n    \&quot;financial_available_at\&quot;: null,\n    \&quot;financial_status\&quot;: \&quot;missing\&quot;,\n    \&quot;financial_age_days\&quot;: null,\n    \&quot;financial_source\&quot;: null\n  },\n  \&quot;price_currency\&quot;: \&quot;TRY\&quot;,\n  \&quot;fundamental_currency\&quot;: \&quot;TRY\&quot;,\n  \&quot;vintage_policy\&quot;: \&quot;verified_only\&quot;,\n  \&quot;fundamental_dataset\&quot;: \&quot;data/processed/fintables_original_observations.csv\&quot;,\n  \&quot;warnings\&quot;: [\n    \&quot;Single user-selected stock; selection/survivorship bias; no market-wide inference.\&quot;,\n    \&quot;Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.\&quot;,\n    \&quot;Adjusted synthetic units; whole-lot execution and taxes not modeled.\&quot;,\n    \&quot;BIST100 price-index basis differs from adjusted stock return basis.\&quot;,\n    \&quot;Original annual statement vintages and comparative revisions are dated; interim reports are outside this annual-refresh strategy.\&quot;,\n    \&quot;Original TRY presentation is nominal: growth and return on average balances are affected by inflation and currency translation.\&quot;,\n    \&quot;Source/currency correction was made after the earlier USD results were inspected; 2025 is a chronological parameter holdout, not a pristine blind test.\&quot;\n  ],\n  \&quot;source_document\&quot;: \&quot;docs/DATA_SOURCES.md\&quot;,\n  \&quot;execution_assumptions\&quot;: {\n    \&quot;commission_bps_per_side\&quot;: 10.0,\n    \&quot;slippage_bps_per_side\&quot;: 5.0,\n    \&quot;initial_capital_try\&quot;: 100000.0,\n    \&quot;signal_timing\&quot;: \&quot;close decision, next stock-session open execution\&quot;\n  }\n}&quot;
+      }
+    ],
+    &quot;structured_content&quot;: {
+      &quot;ticker&quot;: &quot;THYAO.IS&quot;,
+      &quot;as_of&quot;: &quot;2021-01-15&quot;,
+      &quot;data&quot;: {
+        &quot;cash&quot;: null,
+        &quot;current_assets&quot;: null,
+        &quot;current_liabilities&quot;: null,
+        &quot;ebitda&quot;: null,
+        &quot;equity&quot;: null,
+        &quot;financial_debt&quot;: null,
+        &quot;financing_cash_flow&quot;: null,
+        &quot;gross_profit&quot;: null,
+        &quot;inventories&quot;: null,
+        &quot;investing_cash_flow&quot;: null,
+        &quot;net_debt&quot;: null,
+        &quot;net_profit&quot;: null,
+        &quot;operating_cash_flow&quot;: null,
+        &quot;operating_profit&quot;: null,
+        &quot;revenue&quot;: null,
+        &quot;shares_outstanding&quot;: null,
+        &quot;total_assets&quot;: null,
+        &quot;revenue_growth&quot;: null,
+        &quot;ebitda_growth&quot;: null,
+        &quot;net_profit_growth&quot;: null,
+        &quot;roe&quot;: null,
+        &quot;roa&quot;: null,
+        &quot;ebitda_margin&quot;: null,
+        &quot;net_margin&quot;: null,
+        &quot;net_debt_ebitda&quot;: null,
+        &quot;debt_equity&quot;: null,
+        &quot;current_ratio&quot;: null,
+        &quot;quick_ratio&quot;: null,
+        &quot;pe&quot;: null,
+        &quot;pb&quot;: null,
+        &quot;ev_ebitda&quot;: null,
+        &quot;financial_period&quot;: null,
+        &quot;financial_available_at&quot;: null,
+        &quot;financial_status&quot;: &quot;missing&quot;,
+        &quot;financial_age_days&quot;: null,
+        &quot;financial_source&quot;: null
+      },
+      &quot;price_currency&quot;: &quot;TRY&quot;,
+      &quot;fundamental_currency&quot;: &quot;TRY&quot;,
+      &quot;vintage_policy&quot;: &quot;verified_only&quot;,
+      &quot;fundamental_dataset&quot;: &quot;data/processed/fintables_original_observations.csv&quot;,
+      &quot;warnings&quot;: [
+        &quot;Single user-selected stock; selection/survivorship bias; no market-wide inference.&quot;,
+        &quot;Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.&quot;,
+        &quot;Adjusted synthetic units; whole-lot execution and taxes not modeled.&quot;,
+        &quot;BIST100 price-index basis differs from adjusted stock return basis.&quot;,
+        &quot;Original annual statement vintages and comparative revisions are dated; interim reports are outside this annual-refresh strategy.&quot;,
+        &quot;Original TRY presentation is nominal: growth and return on average balances are affected by inflation and currency translation.&quot;,
+        &quot;Source/currency correction was made after the earlier USD results were inspected; 2025 is a chronological parameter holdout, not a pristine blind test.&quot;
+      ],
+      &quot;source_document&quot;: &quot;docs/DATA_SOURCES.md&quot;,
+      &quot;execution_assumptions&quot;: {
+        &quot;commission_bps_per_side&quot;: 10.0,
+        &quot;slippage_bps_per_side&quot;: 5.0,
+        &quot;initial_capital_try&quot;: 100000.0,
+        &quot;signal_timing&quot;: &quot;close decision, next stock-session open execution&quot;
+      }
+    }
+  },
+  &quot;error&quot;: null,
+  &quot;status&quot;: &quot;completed&quot;
+}</pre></details><details><summary>get_stock_history | completed</summary><pre>{
+  &quot;id&quot;: &quot;item_7&quot;,
+  &quot;type&quot;: &quot;mcp_tool_call&quot;,
+  &quot;server&quot;: &quot;bist&quot;,
+  &quot;tool&quot;: &quot;get_stock_history&quot;,
+  &quot;arguments&quot;: {
+    &quot;ticker&quot;: &quot;THYAO.IS&quot;,
+    &quot;as_of&quot;: &quot;2021-01-15&quot;,
+    &quot;sessions&quot;: 1
+  },
+  &quot;result&quot;: {
+    &quot;content&quot;: [
+      {
+        &quot;type&quot;: &quot;text&quot;,
+        &quot;text&quot;: &quot;{\n  \&quot;ticker\&quot;: \&quot;THYAO.IS\&quot;,\n  \&quot;as_of\&quot;: \&quot;2021-01-15\&quot;,\n  \&quot;data\&quot;: [\n    {\n      \&quot;date\&quot;: \&quot;2021-01-15T00:00:00\&quot;,\n      \&quot;open\&quot;: 12.836258319792263,\n      \&quot;high\&quot;: 13.080479362113952,\n      \&quot;low\&quot;: 12.758107660785585,\n      \&quot;close\&quot;: 12.9730215073,\n      \&quot;raw_close\&quot;: 13.279999733,\n      \&quot;volume\&quot;: 126680673\n    }\n  ],\n  \&quot;price_currency\&quot;: \&quot;TRY\&quot;,\n  \&quot;fundamental_currency\&quot;: \&quot;TRY\&quot;,\n  \&quot;vintage_policy\&quot;: \&quot;verified_only\&quot;,\n  \&quot;fundamental_dataset\&quot;: \&quot;data/processed/fintables_original_observations.csv\&quot;,\n  \&quot;warnings\&quot;: [\n    \&quot;Single user-selected stock; selection/survivorship bias; no market-wide inference.\&quot;,\n    \&quot;Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.\&quot;,\n    \&quot;Adjusted synthetic units; whole-lot execution and taxes not modeled.\&quot;,\n    \&quot;BIST100 price-index basis differs from adjusted stock return basis.\&quot;,\n    \&quot;Original annual statement vintages and comparative revisions are dated; interim reports are outside this annual-refresh strategy.\&quot;,\n    \&quot;Original TRY presentation is nominal: growth and return on average balances are affected by inflation and currency translation.\&quot;,\n    \&quot;Source/currency correction was made after the earlier USD results were inspected; 2025 is a chronological parameter holdout, not a pristine blind test.\&quot;\n  ],\n  \&quot;source_document\&quot;: \&quot;docs/DATA_SOURCES.md\&quot;,\n  \&quot;execution_assumptions\&quot;: {\n    \&quot;commission_bps_per_side\&quot;: 10.0,\n    \&quot;slippage_bps_per_side\&quot;: 5.0,\n    \&quot;initial_capital_try\&quot;: 100000.0,\n    \&quot;signal_timing\&quot;: \&quot;close decision, next stock-session open execution\&quot;\n  }\n}&quot;
+      }
+    ],
+    &quot;structured_content&quot;: {
+      &quot;ticker&quot;: &quot;THYAO.IS&quot;,
+      &quot;as_of&quot;: &quot;2021-01-15&quot;,
+      &quot;data&quot;: [
+        {
+          &quot;date&quot;: &quot;2021-01-15T00:00:00&quot;,
+          &quot;open&quot;: 12.836258319792263,
+          &quot;high&quot;: 13.080479362113952,
+          &quot;low&quot;: 12.758107660785585,
+          &quot;close&quot;: 12.9730215073,
+          &quot;raw_close&quot;: 13.279999733,
+          &quot;volume&quot;: 126680673
+        }
+      ],
+      &quot;price_currency&quot;: &quot;TRY&quot;,
+      &quot;fundamental_currency&quot;: &quot;TRY&quot;,
+      &quot;vintage_policy&quot;: &quot;verified_only&quot;,
+      &quot;fundamental_dataset&quot;: &quot;data/processed/fintables_original_observations.csv&quot;,
+      &quot;warnings&quot;: [
+        &quot;Single user-selected stock; selection/survivorship bias; no market-wide inference.&quot;,
+        &quot;Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.&quot;,
+        &quot;Adjusted synthetic units; whole-lot execution and taxes not modeled.&quot;,
+        &quot;BIST100 price-index basis differs from adjusted stock return basis.&quot;,
+        &quot;Original annual statement vintages and comparative revisions are dated; interim reports are outside this annual-refresh strategy.&quot;,
+        &quot;Original TRY presentation is nominal: growth and return on average balances are affected by inflation and currency translation.&quot;,
+        &quot;Source/currency correction was made after the earlier USD results were inspected; 2025 is a chronological parameter holdout, not a pristine blind test.&quot;
+      ],
+      &quot;source_document&quot;: &quot;docs/DATA_SOURCES.md&quot;,
+      &quot;execution_assumptions&quot;: {
+        &quot;commission_bps_per_side&quot;: 10.0,
+        &quot;slippage_bps_per_side&quot;: 5.0,
+        &quot;initial_capital_try&quot;: 100000.0,
+        &quot;signal_timing&quot;: &quot;close decision, next stock-session open execution&quot;
+      }
+    }
+  },
+  &quot;error&quot;: null,
+  &quot;status&quot;: &quot;completed&quot;
+}</pre></details><h3>Actual host explanation</h3><pre>## THYAO.IS — as of 2021-01-15
+
+**The tools returned HOLD with no existing position, alongside unavailable fundamentals and scores.** This is an academic demonstration; it does not establish an investable advantage.
+
+| BIST tool | Result |
+|---|---|
+| `get_stock_history` | Actual market session: **2021-01-15**. Adjusted synthetic close: **12.9730215073 TRY**; raw close: **13.279999733 TRY**. |
+| `get_fundamental_metrics` | `financial_status: missing`. All financial figures and ratios are **unavailable**, as are the financial period, release/availability date, source, and age. |
+| `calculate_scores` | Fundamental, technical, and combined scores—and all component points—are **unavailable**. Fundamental label: `incomplete`. |
+| `generate_signal` | **HOLD**, with `holding: false`; reason: `technical_warmup_or_no_support`. This represents staying out under the supplied position state, not an executed order. |
+
+### Historical availability and units
+
+`project_status` identifies **Fintables**, active fundamental currency **TRY**, and policy **`verified_only`**. Prices also use **TRY**, with adjusted synthetic units.
+
+`get_fundamental_metrics` uses publication-lagged fundamentals. Its missing result means no eligible fundamentals were returned for this historical cutoff; **missing values are unavailable, not zero**. A financial period end must not be treated as its release date.
+
+`generate_report` lists annual financial periods **2020-12-31, 2021-12-31, 2022-12-31, 2023-12-31, and 2024-12-31**, with **136 verified vintage rows**, **0 unverified rows**, and **0 assumed-release rows**. Original annual vintages and comparative revisions are dated; interim reports are outside this annual-refresh strategy. These archive statistics do not supply a financial release date or usable figures for **2021-01-15**.
+
+### Costs and validation limits
+
+Tool execution assumptions specify **10 basis points commission per side**, **5 basis points slippage per side**, and **100000 TRY** initial capital. Decisions occur at the close, with execution at the next stock-session open. Taxes and whole-lot execution are not modeled; cash yield and the Sharpe risk-free rate are zero.
+
+The saved report evaluates **2023-01-02 through 2025-12-31**, separately from this historical query. Verified annual source vintages establish data provenance, not validated investment performance. Tools flag single-stock selection/survivorship bias, nominal TRY inflation and currency-translation effects, and differing benchmark/stock return bases. They also identify **2025** as a chronological parameter holdout, not a pristine blind test, because source/currency corrections followed inspection of earlier USD results.
+
+### Bounded invalid-symbol demonstration
+
+`get_stock_history(ticker=&quot;INVALID.IS&quot;, as_of=&quot;2021-01-15&quot;)` returned:
+
+&gt; `INVALID_SYMBOL: this case study only supports THYAO.IS`
+
+Local saved report, identified by read-only `generate_report`: [report.md](C:/Users/yavuz/Desktop/CSE481-Term-Project/outputs/verified_only/report.md).
+
+Only BIST MCP tools were called; no outside calculations or file edits were performed.</pre></section></main></html>

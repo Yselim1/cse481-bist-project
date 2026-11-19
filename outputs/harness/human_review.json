@@ -1,0 +1,9 @@
+{
+  "candidate": "memory_human_review.json",
+  "comments": "Review numerical evidence, clarity, limitations, and presentation suitability.",
+  "decision": "",
+  "reviewed_at": "",
+  "reviewer": "",
+  "stage": "memory_human_review",
+  "status": "pending_human_review"
+}

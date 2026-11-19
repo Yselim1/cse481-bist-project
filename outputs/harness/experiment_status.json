@@ -1,0 +1,15 @@
+{
+  "fixed_model": "gpt-6-luna",
+  "reasoning_effort": "low",
+  "stages": [
+    "raw_llm",
+    "llm_tools",
+    "stateful_harness",
+    "evidence_quality_gate",
+    "memory_human_review"
+  ],
+  "local_implementation": "complete",
+  "live_run": "complete_after_explicit_user_authorization",
+  "synthetic_outputs_used": false,
+  "human_review": "pending"
+}

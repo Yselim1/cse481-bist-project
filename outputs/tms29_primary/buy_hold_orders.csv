@@ -1,0 +1,2 @@
+decision_date,execution_date,side,units,reference_price,fill_price,commission,slippage_cost,cash_after,reason
+,2025-01-02,BUY,362.13606483747964,275.72557529586174,275.86343808350966,99.9000999000999,49.925087406342335,0.0,scheduled_buy_and_hold_entry

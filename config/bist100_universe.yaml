@@ -1,0 +1,45 @@
+universe_name: bist10_sector_sample
+description: >
+  Ten-ticker BIST100 subset selected for Phase A–C sector/peer analysis.
+  Five sectors with two tickers each enable within-sector relative-strength
+  comparisons without inflating data-verification load. Liquidity screen:
+  continuous BIST100 membership through the 2025-01-01 – 2026-11 window and
+  daily turnover high enough for next-open execution.
+selection_date: '2026-11-19'
+evaluation_window:
+  start: '2025-01-01'
+  end: '2026-11-01'
+primary: THYAO.IS
+benchmark: XU100.IS
+fx: TRY=X
+tickers:
+  - ticker: THYAO.IS
+    sector: airlines
+    note: Flag carrier; primary case study with TMS 29 fundamentals verified.
+  - ticker: PGSUS.IS
+    sector: airlines
+    note: Low-cost carrier; sector peer for THYAO.
+  - ticker: AKBNK.IS
+    sector: banking
+    note: Private bank; exempted from TMS 29 remeasurement (per instructor Q&A).
+  - ticker: GARAN.IS
+    sector: banking
+    note: Private bank; sector peer for AKBNK.
+  - ticker: EREGL.IS
+    sector: steel
+    note: Flat steel; commodity-cycle exposure.
+  - ticker: KRDMD.IS
+    sector: steel
+    note: Long steel; sector peer for EREGL.
+  - ticker: BIMAS.IS
+    sector: retail
+    note: Discount grocery; defensive consumer staples.
+  - ticker: MGROS.IS
+    sector: retail
+    note: Supermarket chain; sector peer for BIMAS.
+  - ticker: TCELL.IS
+    sector: telecom
+    note: Mobile operator; regulated-revenue profile.
+  - ticker: TTKOM.IS
+    sector: telecom
+    note: Fixed + mobile; sector peer for TCELL.

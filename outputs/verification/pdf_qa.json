@@ -1,0 +1,10 @@
+{
+  "all_pages_rendered_and_visually_inspected": true,
+  "checked_content": "Verified annual TRY sources, final metrics, charts, tables, source and holdout qualifications",
+  "layout_defects_observed": 0,
+  "pages": 8,
+  "pdf": "output/pdf/THYAO_Term_Project_Report.pdf",
+  "pdf_sha256": "8d545d94863acd66115592c66fb1c5d1d0973360a6a7d63e7bcaa59468b696b0",
+  "render_tool": "Poppler pdftoppm",
+  "verified_at": "2026-09-15T17:37:26.522418+00:00"
+}

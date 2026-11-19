@@ -1,0 +1,28 @@
+{
+  "target": 400,
+  "scenarios_target": {
+    "sector_lag": 100,
+    "weekday": 60,
+    "reversal": 120,
+    "fundamental": 24,
+    "analysis_unsafe": 96
+  },
+  "scenarios_built": {
+    "sector_lag": 100,
+    "weekday": 60,
+    "reversal": 120,
+    "fundamental": 24,
+    "analysis_unsafe": 96
+  },
+  "rejections": {
+    "sector_lag": 23,
+    "weekday": 32,
+    "reversal": 40,
+    "fundamental": 73,
+    "analysis_unsafe": 31
+  },
+  "train_count": 320,
+  "eval_count": 80,
+  "seed": 17,
+  "elapsed_seconds": 43.2
+}

@@ -1,0 +1,24 @@
+{
+  "checks": {
+    "as_of": true,
+    "bist100_return": true,
+    "buy_hold_return": true,
+    "combined_return": true,
+    "context_event": true,
+    "financial_period": true,
+    "net_debt_try_million": true,
+    "net_profit_try_million": true,
+    "revenue_try_million": true,
+    "signal_action": true,
+    "technical_return": true
+  },
+  "constraint_compliance": true,
+  "evidence_coverage": 1.0,
+  "missing_data_honesty": true,
+  "numeric_exactness": 1.0,
+  "quality_gate_pass": true,
+  "structured_reproducibility": true,
+  "temporal_validity": true,
+  "unsupported_tool_claims": [],
+  "workflow_completion": 1.0
+}

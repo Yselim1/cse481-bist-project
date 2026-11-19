@@ -1,0 +1,14 @@
+{
+  "checked_in_browser": true,
+  "heading_and_recorded_disclaimer_visible": true,
+  "indicator_details_expand_with_actual_response": true,
+  "layout_defects_observed": 0,
+  "page": "outputs/agent/recorded_demo.html",
+  "report_charts_loaded": true,
+  "report_header_source_notice_and_current_tables_checked": true,
+  "report_page": "outputs/verified_only/report.html",
+  "report_sha256": "7b270055579a7e3eb1be616d63589f578be27582f677bde7a3468984cb30d619",
+  "sha256": "5dd97de1dea57a81ebbce68926ad6915111d795a97986879cc7f266492bd7c53",
+  "verified_at": "2026-09-15T17:37:26.524524+00:00",
+  "verified_try_source_notice_visible": true
+}

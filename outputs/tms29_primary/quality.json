@@ -1,0 +1,106 @@
+{
+  "evaluation_sessions": 437,
+  "fundamental_complete_sessions": 142,
+  "fundamental_fresh_sessions": 395,
+  "fundamentals": {
+    "assumed_release_rows": 0,
+    "currencies": [
+      "TRY"
+    ],
+    "metrics": [
+      "cash",
+      "current_assets",
+      "current_liabilities",
+      "ebitda",
+      "equity",
+      "financial_debt",
+      "financing_cash_flow",
+      "gross_profit",
+      "inventories",
+      "investing_cash_flow",
+      "net_debt",
+      "net_profit",
+      "operating_cash_flow",
+      "operating_profit",
+      "revenue",
+      "shares_outstanding",
+      "total_assets"
+    ],
+    "missing_values": 0,
+    "observations": 238,
+    "periods": [
+      "2023-12-31",
+      "2024-03-31",
+      "2024-06-30",
+      "2024-09-30",
+      "2024-12-31",
+      "2025-03-31",
+      "2025-06-30",
+      "2025-09-30",
+      "2025-12-31",
+      "2026-03-31",
+      "2026-06-30"
+    ],
+    "unverified_vintage_rows": 0,
+    "verified_vintage_rows": 238
+  },
+  "index_only_dates": [
+    "2024-04-09"
+  ],
+  "market": {
+    "THYAO.IS": {
+      "first": "2021-01-04",
+      "fx_usage": null,
+      "inconsistent_ohlc_rows": 0,
+      "large_close_moves": 0,
+      "last": "2026-09-25",
+      "rows": 1436,
+      "ticker": "THYAO.IS",
+      "zero_volume_sessions": 3
+    },
+    "TRY=X": {
+      "first": "2021-01-01",
+      "fx_usage": "close only; provider OHLC inconsistencies retained and flagged",
+      "inconsistent_ohlc_rows": 34,
+      "large_close_moves": 0,
+      "last": "2026-09-25",
+      "rows": 1491,
+      "ticker": "TRY=X",
+      "zero_volume_sessions": 1491
+    },
+    "XU100.IS": {
+      "first": "2021-01-04",
+      "fx_usage": null,
+      "inconsistent_ohlc_rows": 0,
+      "large_close_moves": 0,
+      "last": "2026-09-25",
+      "rows": 1430,
+      "ticker": "XU100.IS",
+      "zero_volume_sessions": 1
+    }
+  },
+  "missing_fx_dates": [
+    "2025-04-18",
+    "2025-04-21",
+    "2025-12-25"
+  ],
+  "stock_only_dates": [
+    "2021-04-02",
+    "2023-12-25",
+    "2024-12-25",
+    "2025-12-25",
+    "2026-05-27",
+    "2026-05-28",
+    "2026-05-29"
+  ],
+  "vintage_policy": "verified_only",
+  "warnings": [
+    "Single user-selected stock; selection/survivorship bias; no market-wide inference.",
+    "Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.",
+    "Adjusted synthetic units; whole-lot execution and taxes not modeled.",
+    "BIST100 price-index basis differs from adjusted stock return basis.",
+    "Primary analysis uses one internally consistent post-TMS 29 basis; pre-2025 trading results are outside its evaluation window.",
+    "2026 is partial through the last cached session before the exclusive evaluation end.",
+    "KAP context is evidence for interpretation and does not alter any strategy score or order."
+  ]
+}

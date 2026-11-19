@@ -1,0 +1,2 @@
+- Ticker: **THYAO.IS**
+- Fundamental source: **Fintables**

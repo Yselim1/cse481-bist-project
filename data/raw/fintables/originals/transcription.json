@@ -1,0 +1,36 @@
+{
+  "currency": "TRY",
+  "unit": "million TRY",
+  "method": "Manual transcription from visually inspected PDF pages 9, 10, 11 and 13 (printed pages 1, 2, 3 and 5). Each pair is current year followed by comparative prior year. Dashes explicitly shown in borrowing rows are zero. Original files are preserved byte-for-byte.",
+  "pages": {"cash":9,"investments_current":9,"investments_noncurrent":9,"current_assets":9,"inventories":9,"noncurrent_assets":9,"total_assets":9,"current_liabilities":10,"noncurrent_liabilities":10,"equity":10,"minority_equity":10,"paid_capital":10,"bank_loans_current_related":10,"bank_loans_current_other":10,"bank_loans_current_portion_related":10,"bank_loans_current_portion_other":10,"lease_debt_current":10,"bank_loans_noncurrent_related":10,"bank_loans_noncurrent_other":10,"lease_debt_noncurrent":10,"other_financial_liabilities":10,"revenue":11,"cost_of_sales":11,"gross_profit":11,"administrative_expense":11,"selling_expense":11,"operating_profit":11,"net_profit":11,"depreciation":13,"operating_cash_flow":13,"investing_cash_flow":13,"financing_cash_flow":13,"cashflow_change":13,"cashflow_opening_cash":13,"cashflow_closing_cash":13},
+  "reports": {
+    "2021": {
+      "cash":[35679,13293],"investments_current":[69,131],"investments_noncurrent":[1171,548],"current_assets":[65797,30659],"inventories":[3481,2236],"noncurrent_assets":[287911,156743],"total_assets":[353708,187402],
+      "current_liabilities":[90443,47379],"noncurrent_liabilities":[172615,100512],"equity":[90640,39502],"minority_equity":[10,9],"paid_capital":[1380,1380],
+      "bank_loans_current_related":[0,101],"bank_loans_current_other":[11792,11108],"bank_loans_current_portion_related":[7350,3216],"bank_loans_current_portion_other":[11914,5491],"lease_debt_current":[22305,12684],"bank_loans_noncurrent_related":[15152,10288],"bank_loans_noncurrent_other":[16000,9389],"lease_debt_noncurrent":[114495,70317],"other_financial_liabilities":[103,126],
+      "revenue":[97378,46448],"cost_of_sales":[-75233,-43765],"gross_profit":[22145,2683],"administrative_expense":[-2123,-1518],"selling_expense":[-7573,-4542],"operating_profit":[13547,-1382],"net_profit":[8213,-5588],
+      "depreciation":[15473,11638],"operating_cash_flow":[49362,5603],"investing_cash_flow":[-4630,-3102],"financing_cash_flow":[-22346,-1536],"cashflow_change":[22386,965],"cashflow_opening_cash":[13293,12328],"cashflow_closing_cash":[35679,13293]
+    },
+    "2022": {
+      "cash":[76192,35679],"investments_current":[11705,69],"investments_noncurrent":[3079,1171],"current_assets":[135095,65797],"inventories":[6196,3481],"noncurrent_assets":[443476,287911],"total_assets":[578571,353708],
+      "current_liabilities":[154040,90443],"noncurrent_liabilities":[243104,172615],"equity":[181422,90640],"minority_equity":[5,10],"paid_capital":[1380,1380],
+      "bank_loans_current_related":[0,0],"bank_loans_current_other":[19821,11792],"bank_loans_current_portion_related":[8897,7350],"bank_loans_current_portion_other":[11710,11914],"lease_debt_current":[29756,22305],"bank_loans_noncurrent_related":[11307,15152],"bank_loans_noncurrent_other":[9579,16000],"lease_debt_noncurrent":[171913,114495],"other_financial_liabilities":[0,103],
+      "revenue":[311169,97378],"cost_of_sales":[-235528,-75233],"gross_profit":[75641,22145],"administrative_expense":[-4701,-2123],"selling_expense":[-23209,-7573],"operating_profit":[48811,13547],"net_profit":[47429,8213],
+      "depreciation":[30953,15473],"operating_cash_flow":[117012,49362],"investing_cash_flow":[-26494,-4630],"financing_cash_flow":[-50005,-22346],"cashflow_change":[40513,22386],"cashflow_opening_cash":[35679,13293],"cashflow_closing_cash":[76192,35679]
+    },
+    "2023": {
+      "cash":[20115,76192],"investments_current":[157311,11705],"investments_noncurrent":[11724,3079],"current_assets":[253043,135095],"inventories":[12311,6196],"noncurrent_assets":[797048,443476],"total_assets":[1050091,578571],
+      "current_liabilities":[267956,154040],"noncurrent_liabilities":[325023,243104],"equity":[457257,181422],"minority_equity":[-145,5],"paid_capital":[1380,1380],
+      "bank_loans_current_related":[0,0],"bank_loans_current_other":[39662,19821],"bank_loans_current_portion_related":[9964,8897],"bank_loans_current_portion_other":[8267,11710],"lease_debt_current":[51917,29756],"bank_loans_noncurrent_related":[6050,11307],"bank_loans_noncurrent_other":[7877,9579],"lease_debt_noncurrent":[296435,171913],"other_financial_liabilities":[0,0],
+      "revenue":[504398,311169],"cost_of_sales":[-384952,-235528],"gross_profit":[119446,75641],"administrative_expense":[-10622,-4701],"selling_expense":[-41901,-23209],"operating_profit":[71425,48811],"net_profit":[163003,47429],
+      "depreciation":[48474,30953],"operating_cash_flow":[145032,117012],"investing_cash_flow":[-130387,-26760],"financing_cash_flow":[-70563,-50005],"cashflow_change":[-55918,40247],"cashflow_opening_cash":[75859,35612],"cashflow_closing_cash":[19941,75859]
+    },
+    "2024": {
+      "cash":[95992,20115],"investments_current":[118030,157311],"investments_noncurrent":[39253,11724],"current_assets":[341910,251895],"inventories":[23661,12311],"noncurrent_assets":[1057696,797048],"total_assets":[1399606,1048943],
+      "current_liabilities":[339533,266808],"noncurrent_liabilities":[380061,325023],"equity":[679887,457257],"minority_equity":[125,-145],"paid_capital":[1380,1380],
+      "bank_loans_current_related":[0,0],"bank_loans_current_other":[55536,39662],"bank_loans_current_portion_related":[164,9964],"bank_loans_current_portion_other":[10139,8267],"lease_debt_current":[64571,51917],"bank_loans_noncurrent_related":[0,6050],"bank_loans_noncurrent_other":[1176,7877],"lease_debt_noncurrent":[358353,296435],"other_financial_liabilities":[0,0],
+      "revenue":[745430,504398],"cost_of_sales":[-602522,-384952],"gross_profit":[142908,119446],"administrative_expense":[-18675,-10622],"selling_expense":[-60283,-41901],"operating_profit":[80393,71425],"net_profit":[113378,163003],
+      "depreciation":[72306,48474],"operating_cash_flow":[135580,145032],"investing_cash_flow":[10003,-130387],"financing_cash_flow":[-75360,-70563],"cashflow_change":[70223,-55918],"cashflow_opening_cash":[19941,75859],"cashflow_closing_cash":[90164,19941]
+    }
+  }
+}

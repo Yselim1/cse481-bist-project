@@ -1,0 +1,26 @@
+{
+  "quality": {
+    "first": "2021-01-01",
+    "fx_usage": "close only; provider OHLC inconsistencies retained and flagged",
+    "inconsistent_ohlc_rows": 36,
+    "large_close_moves": 0,
+    "last": "2026-10-30",
+    "rows": 1516,
+    "ticker": "TRY=X",
+    "zero_volume_sessions": 1516
+  },
+  "request": {
+    "actions": true,
+    "auto_adjust": false,
+    "end": "2026-11-01",
+    "interval": "1d",
+    "repair": false,
+    "start": "2021-01-01"
+  },
+  "retrieved_at": "2026-11-19T10:45:18.754368+00:00",
+  "return_basis": "provider adjusted OHLC; preserve raw prices and actions",
+  "sha256": "7c63f4dba5a74fdc24095cf678a8eee5c152e57c963d97d28b927629a63d9710",
+  "source": "Yahoo Finance via yfinance",
+  "ticker": "TRY=X",
+  "yfinance_version": "1.7.0"
+}

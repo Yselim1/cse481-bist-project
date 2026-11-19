@@ -1,0 +1,26 @@
+{
+  "quality": {
+    "first": "2021-01-04",
+    "fx_usage": null,
+    "inconsistent_ohlc_rows": 0,
+    "large_close_moves": 0,
+    "last": "2026-10-30",
+    "rows": 1458,
+    "ticker": "BIMAS.IS",
+    "zero_volume_sessions": 1
+  },
+  "request": {
+    "actions": true,
+    "auto_adjust": false,
+    "end": "2026-11-01",
+    "interval": "1d",
+    "repair": false,
+    "start": "2021-01-01"
+  },
+  "retrieved_at": "2026-11-19T10:45:24.061525+00:00",
+  "return_basis": "provider adjusted OHLC; preserve raw prices and actions",
+  "sha256": "0e3d9cc34ad07f7541cac76b98afb7f2ad9ef085a7b8e3a1f668bea688932eaf",
+  "source": "Yahoo Finance via yfinance",
+  "ticker": "BIMAS.IS",
+  "yfinance_version": "1.7.0"
+}

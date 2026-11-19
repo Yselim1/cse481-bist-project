@@ -1,0 +1,98 @@
+{
+  "demos": [
+    {
+      "answer_sha256": "3209dea7b96fe2cc8cc51a1c85cf031ffe2232a08d824046e8b8fe621b6fd0f2",
+      "checks": [
+        {
+          "check": "recorded_fields_equal_current_python",
+          "tool": "project_status"
+        }
+      ],
+      "demo": "smoke",
+      "real_host": "Codex CLI 0.154.0",
+      "trace_sha256": "cb1adcf4442ef306ce8e31874efcf036310813da7c8f1a8ac5fbdd173e312577",
+      "transport": "stdio"
+    },
+    {
+      "answer_sha256": "85da6b92b08c145be55610d56b5ccbc581daa6e7e16699197e695281ded01676",
+      "checks": [
+        {
+          "check": "recorded_report_path_and_results_manually_audited",
+          "tool": "generate_report"
+        },
+        {
+          "check": "recorded_fields_equal_current_python",
+          "tool": "calculate_indicators"
+        },
+        {
+          "check": "recorded_fields_equal_current_python",
+          "tool": "generate_signal"
+        },
+        {
+          "check": "recorded_fields_equal_current_python",
+          "tool": "find_support_resistance"
+        },
+        {
+          "check": "recorded_fields_equal_current_python",
+          "tool": "get_stock_history"
+        },
+        {
+          "check": "recorded_fields_equal_current_python",
+          "tool": "calculate_scores"
+        },
+        {
+          "check": "recorded_fields_equal_current_python",
+          "tool": "get_fundamental_metrics"
+        },
+        {
+          "check": "known_metadata_correction",
+          "detail": "Recorded envelope used exclusive end 2026-01-01; current envelope uses actual final session 2025-12-31. Performance dates and numbers were unchanged.",
+          "tool": "run_backtest"
+        },
+        {
+          "check": "recorded_fields_equal_current_python",
+          "tool": "run_backtest"
+        }
+      ],
+      "demo": "analysis_demo",
+      "real_host": "Codex CLI 0.154.0",
+      "trace_sha256": "9a7f4c28ca3d955799943f9cf7f307e5adfe4374734b30abbed539161a2ee91c",
+      "transport": "stdio"
+    },
+    {
+      "answer_sha256": "e412637a5d9dd7e2f8f2e2de7d72ebef4aeeebfae42589a15ae4e462eaafeefb",
+      "checks": [
+        {
+          "check": "expected_invalid_symbol_error",
+          "tool": "get_stock_history"
+        },
+        {
+          "check": "recorded_fields_equal_current_python",
+          "tool": "generate_signal"
+        },
+        {
+          "check": "recorded_report_path_and_results_manually_audited",
+          "tool": "generate_report"
+        },
+        {
+          "check": "recorded_fields_equal_current_python",
+          "tool": "get_fundamental_metrics"
+        },
+        {
+          "check": "recorded_fields_equal_current_python",
+          "tool": "calculate_scores"
+        },
+        {
+          "check": "recorded_fields_equal_current_python",
+          "tool": "get_stock_history"
+        }
+      ],
+      "demo": "missing_data",
+      "real_host": "Codex CLI 0.154.0",
+      "trace_sha256": "e211179db1550140f49ca6e1ba9dda860c1df29245b740265db82d228e4ea7d9",
+      "transport": "stdio"
+    }
+  ],
+  "recordings_are_real_host_sessions": true,
+  "replay_uses_llm": false
+}

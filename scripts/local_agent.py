@@ -1,0 +1,213 @@
+r"""Local LLM agent client against the BIST MCP server.
+
+Replaces the Codex CLI subprocess in `run_agent_demo.py` with an Ollama-hosted model
+(OpenAI-compatible endpoint at http://localhost:11434/v1). Supports tool-calling.
+
+Usage (PowerShell):
+    ollama serve   # in another terminal, if not already a service
+    .\.venv\Scripts\python.exe scripts/local_agent.py --smoke
+    .\.venv\Scripts\python.exe scripts/local_agent.py --ticker THYAO.IS --as-of 2025-12-31
+
+The script bridges the model to our stdio MCP server by launching the server as a child
+process and shuttling JSON-RPC messages. All inference is local; no cloud calls.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import subprocess
+import sys
+import time
+import urllib.error
+import urllib.request
+from pathlib import Path
+from typing import Any
+
+ROOT = Path(__file__).resolve().parents[1]
+OLLAMA_URL = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434/v1")
+DEFAULT_MODEL = os.environ.get("BIST_LOCAL_MODEL", "qwen2.5:7b-instruct")
+SYSTEM_PROMPT = (
+    "You are an academic BIST financial-analysis agent. For every claim, call a tool first: "
+    "you must never invent numbers. Allowed labels are the 8 educational labels "
+    "(HOLD, WATCH, INVESTIGATE, POTENTIAL_CATCH_UP_CANDIDATE, TECHNICAL_REVERSAL_CANDIDATE, "
+    "FUNDAMENTAL_IMPROVEMENT_CANDIDATE, REJECT_SIGNAL, ANALYSIS_UNSAFE). When evidence is "
+    "insufficient, choose INVESTIGATE or ANALYSIS_UNSAFE. Cite tool names in your reasoning. "
+    "Do not give investment advice. Numeric values must come from committed_evidence entries."
+)
+
+
+# ---------- MCP stdio client (minimal; one connection per run) --------------------------
+
+class MCPStdioClient:
+    def __init__(self, command: list[str], env: dict[str, str] | None = None) -> None:
+        child_env = os.environ.copy()
+        if env:
+            child_env.update(env)
+        # Redirect stderr to DEVNULL so the child never blocks on a full stderr pipe
+        # (we don't read it). Chatty warnings from pandas/yfinance can fill the default
+        # 64 KB OS buffer after a few hundred tool calls and deadlock the server.
+        self.process = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+                                        stderr=subprocess.DEVNULL, cwd=str(ROOT), bufsize=0,
+                                        env=child_env)
+        self.counter = 0
+        self._initialize()
+
+    def _rpc(self, method: str, params: dict | None = None) -> Any:
+        self.counter += 1
+        request = {"jsonrpc": "2.0", "id": self.counter, "method": method, "params": params or {}}
+        payload = (json.dumps(request) + "\n").encode("utf-8")
+        assert self.process.stdin is not None and self.process.stdout is not None
+        self.process.stdin.write(payload)
+        self.process.stdin.flush()
+        while True:
+            line = self.process.stdout.readline()
+            if not line:
+                raise RuntimeError(f"MCP server closed before responding to {method}")
+            try:
+                message = json.loads(line.decode("utf-8"))
+            except json.JSONDecodeError:
+                continue
+            if message.get("id") == self.counter:
+                if "error" in message:
+                    raise RuntimeError(f"MCP {method} error: {message['error']}")
+                return message.get("result")
+
+    def _initialize(self) -> None:
+        self._rpc("initialize", {"protocolVersion": "2024-11-05", "capabilities": {},
+                                  "clientInfo": {"name": "bist-local-agent", "version": "0.1.0"}})
+        # per MCP spec, no response required for notifications/initialized
+        assert self.process.stdin is not None
+        self.process.stdin.write((json.dumps({"jsonrpc": "2.0", "method": "notifications/initialized"})
+                                  + "\n").encode("utf-8"))
+        self.process.stdin.flush()
+
+    def list_tools(self) -> list[dict]:
+        result = self._rpc("tools/list")
+        return result.get("tools", [])
+
+    def call_tool(self, name: str, arguments: dict) -> dict:
+        return self._rpc("tools/call", {"name": name, "arguments": arguments})
+
+    def close(self) -> None:
+        try:
+            self.process.terminate()
+            self.process.wait(timeout=5)
+        except Exception:
+            self.process.kill()
+
+
+# ---------- Ollama OpenAI-compatible client ---------------------------------------------
+
+def _mcp_tool_to_openai_schema(tool: dict) -> dict:
+    """Translate an MCP tool descriptor into OpenAI-tool-calling format."""
+    return {"type": "function", "function": {
+        "name": tool["name"],
+        "description": (tool.get("description") or "").strip(),
+        "parameters": tool.get("inputSchema", {"type": "object", "properties": {}})}}
+
+
+def _chat(messages: list[dict], tools: list[dict], model: str,
+          temperature: float = 0.0, allow_tools: bool = True) -> dict:
+    body: dict = {"model": model, "messages": messages, "temperature": temperature, "stream": False}
+    if allow_tools and tools:
+        body["tools"] = tools
+        body["tool_choice"] = "auto"
+    data = json.dumps(body).encode("utf-8")
+    request = urllib.request.Request(f"{OLLAMA_URL}/chat/completions", data=data,
+                                      headers={"Content-Type": "application/json"})
+    try:
+        with urllib.request.urlopen(request, timeout=120) as response:
+            return json.loads(response.read())
+    except urllib.error.URLError as exc:
+        raise RuntimeError(f"Ollama endpoint unreachable at {OLLAMA_URL}: {exc}") from exc
+
+
+def run_agent(prompt: str, *, model: str = DEFAULT_MODEL, max_turns: int = 10,
+              trace_path: Path | None = None, allow_tools: bool = True) -> dict:
+    """Run a tool-calling loop against a local Ollama model and the BIST MCP server.
+
+    If ``allow_tools`` is False the MCP server is still launched for schema listing but
+    the model is called with an empty tools array and ``tool_choice="none"``, used for
+    the stage-A raw-LLM baseline in the harness.
+    """
+    mcp = MCPStdioClient([sys.executable, "-m", "bist_analytics.mcp.server"])
+    trace: list[dict] = []
+    try:
+        mcp_tools = mcp.list_tools() if allow_tools else []
+        openai_tools = [_mcp_tool_to_openai_schema(t) for t in mcp_tools] if allow_tools else []
+        messages: list[dict] = [{"role": "system", "content": SYSTEM_PROMPT},
+                                 {"role": "user", "content": prompt}]
+        for turn in range(max_turns):
+            response = _chat(messages, openai_tools, model=model, allow_tools=allow_tools)
+            choice = response["choices"][0]
+            message = choice["message"]
+            trace.append({"turn": turn, "role": "assistant", "content": message.get("content"),
+                           "tool_calls": message.get("tool_calls", [])})
+            tool_calls = message.get("tool_calls") or []
+            if not tool_calls or not allow_tools:
+                return {"final_answer": message.get("content", ""), "trace": trace,
+                         "turns_used": turn + 1, "model": model}
+            messages.append(message)
+            for call in tool_calls:
+                try:
+                    args = json.loads(call["function"].get("arguments") or "{}")
+                except json.JSONDecodeError:
+                    args = {}
+                try:
+                    tool_result = mcp.call_tool(call["function"]["name"], args)
+                except Exception as exc:  # noqa: BLE001 - surface tool errors to the model
+                    tool_result = {"error": str(exc)}
+                trace.append({"turn": turn, "tool": call["function"]["name"],
+                               "arguments": args, "result": tool_result})
+                messages.append({"role": "tool", "tool_call_id": call.get("id", str(time.time())),
+                                 "name": call["function"]["name"],
+                                 "content": json.dumps(tool_result, default=str)})
+        return {"final_answer": "MAX_TURNS_EXCEEDED", "trace": trace,
+                 "turns_used": max_turns, "model": model}
+    finally:
+        mcp.close()
+        if trace_path is not None:
+            trace_path.parent.mkdir(parents=True, exist_ok=True)
+            # Harness scripts consume the trace as JSONL; also writeable as plain JSON.
+            if trace_path.suffix == ".jsonl":
+                with trace_path.open("w", encoding="utf-8") as fh:
+                    for entry in trace:
+                        fh.write(json.dumps(entry, default=str) + "\n")
+            else:
+                trace_path.write_text(json.dumps({"trace": trace}, indent=2, default=str),
+                                       encoding="utf-8")
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Local Ollama-driven BIST MCP agent.")
+    parser.add_argument("--smoke", action="store_true", help="Run a one-tool smoke test.")
+    parser.add_argument("--ticker", default="THYAO.IS")
+    parser.add_argument("--as-of", default="2025-12-31")
+    parser.add_argument("--model", default=DEFAULT_MODEL)
+    parser.add_argument("--output", default=None, help="Optional path to dump the full trace JSON.")
+    args = parser.parse_args()
+
+    if args.smoke:
+        prompt = ("Call project_status exactly once. Report its ticker and fundamental source. "
+                  "Then stop and summarize in two sentences.")
+    else:
+        prompt = (f"Analyze {args.ticker} as of {args.as_of}. Call calculate_indicators, "
+                  "calculate_scores, generate_signal and check_data_quality. Commit evidence_ids "
+                  "and choose one of the 8 educational labels. If data is missing choose "
+                  "INVESTIGATE or ANALYSIS_UNSAFE. Keep the explanation under 200 words.")
+
+    trace_path = Path(args.output) if args.output else ROOT / "outputs/agent/local_agent.trace.json"
+    result = run_agent(prompt, model=args.model, trace_path=trace_path)
+    out = ROOT / "outputs/agent/local_agent.result.json"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(result, indent=2, default=str), encoding="utf-8")
+    print(json.dumps({"final_answer_head": result["final_answer"][:400],
+                      "turns_used": result["turns_used"],
+                      "trace": str(trace_path),
+                      "result": str(out)}, indent=2))
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,270 @@
+{
+  "accounting_basis": "TMS29-THY-TFRS-consolidated-TRY",
+  "files": {
+    "2024FY": {
+      "envelope_bytes": 27,
+      "pages": 101,
+      "parsed_statement_pages": [
+        9,
+        10,
+        11,
+        13
+      ],
+      "path": "data/raw/fintables/originals/THYAO_2024_original.pdf",
+      "pdf_payload_sha256": "6c370ce5c470c2e8c0b283170463d4b818b5d7328cd163da4463f37503b7c0db",
+      "publication_evidence": "https://www.kap.org.tr/tr/Bildirim/1396940",
+      "published_at": "2025-02-28",
+      "sha256": "92f44d79cad60da7b97d4da030eb5ef82c413a6e737889ba7570955c62ee55ec",
+      "source_url": "https://storage.fintables.com/media/uploads/kap-attachments/THY%20A.O.%20Aral%C4%B1k%202024.pdf"
+    },
+    "2025FY": {
+      "envelope_bytes": 27,
+      "pages": 101,
+      "parsed_statement_pages": [
+        9,
+        10,
+        11,
+        13
+      ],
+      "path": "data/raw/fintables/tms29_originals/THYAO_2025FY_original.pdf",
+      "pdf_payload_sha256": "77316dd8252d0ed3e0cf10be946787c42ab9ff12d9e741c52275f27f0017d49d",
+      "publication_evidence": "https://fintables.com/borsa-haber-akisi/ac19e15a-2370-4ed9-86c7-0a67b6746841/thyao-finansal-rapor",
+      "published_at": "2026-03-04",
+      "sha256": "78283347bef012895eab00ef3c7aeee678824b49a41ae18daf68c727e603824f",
+      "source_url": "https://storage.fintables.com/media/uploads/kap-attachments/THY%20A.O.%20Aral%C4%B1k%202025.pdf"
+    },
+    "2025Q1": {
+      "envelope_bytes": 27,
+      "pages": 55,
+      "parsed_statement_pages": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "path": "data/raw/fintables/tms29_originals/THYAO_2025Q1_original.pdf",
+      "pdf_payload_sha256": "2d0a12eb18e296cd29f36aa3f9f83999ad0091323d7d30d2c60e5d9626ec57aa",
+      "publication_evidence": "https://fintables.com/borsa-haber-akisi/a3432935-b179-4ed1-a5c7-9e21ee900a7a/thyao-finansal-rapor",
+      "published_at": "2025-04-28",
+      "sha256": "90dcdccc2def75fe99fef21080392a920fc8b8199d072936ee6a3ddad1d3d252",
+      "source_url": "https://storage.fintables.com/media/uploads/kap-attachments/THY%20A.O.%20Mart%202025.pdf"
+    },
+    "2025Q2": {
+      "envelope_bytes": 27,
+      "pages": 56,
+      "parsed_statement_pages": [
+        3,
+        4,
+        5,
+        8
+      ],
+      "path": "data/raw/fintables/tms29_originals/THYAO_2025Q2_original.pdf",
+      "pdf_payload_sha256": "5fefa9d96a01e50f519d1ea61f431cbb0c0a69032c0cbc9701d787fa4f9d6bef",
+      "publication_evidence": "https://fintables.com/borsa-haber-akisi/ae1ecf79-500a-4ca7-9153-269b2a6a5a18/thyao-finansal-rapor",
+      "published_at": "2025-08-05",
+      "sha256": "661a9f683b06e542c7eb4334cb745d410fd8cb0d465e224db06a0ec0fd59e340",
+      "source_url": "https://storage.fintables.com/media/uploads/kap-attachments/THY%20AO%20Haziran%202025.pdf"
+    },
+    "2025Q3": {
+      "envelope_bytes": 27,
+      "pages": 55,
+      "parsed_statement_pages": [
+        2,
+        3,
+        4,
+        7
+      ],
+      "path": "data/raw/fintables/tms29_originals/THYAO_2025Q3_original.pdf",
+      "pdf_payload_sha256": "756f3b9ca13828fa9e5e2c7b7a388f81ebdafdde43062ccceaee763e4bad04fe",
+      "publication_evidence": "https://fintables.com/borsa-haber-akisi/231614f1-9ca9-4786-93c5-1cdd96e7d0d1/thyao-finansal-rapor",
+      "published_at": "2025-11-07",
+      "sha256": "fa44f26fcbcf87360add01daf822eb0adc48b60c6f63ce9226d1b230cc711005",
+      "source_url": "https://storage.fintables.com/media/uploads/kap-attachments/THY%20AO%20Eyl%C3%BCl%202025.pdf"
+    },
+    "2026Q1": {
+      "envelope_bytes": 27,
+      "pages": 55,
+      "parsed_statement_pages": [
+        2,
+        3,
+        4,
+        6
+      ],
+      "path": "data/raw/fintables/tms29_originals/THYAO_2026Q1_original.pdf",
+      "pdf_payload_sha256": "7dfdee666408dba7656782082519f0993364b91a6b0fbafe460e664741fc6811",
+      "publication_evidence": "https://fintables.com/borsa-haber-akisi/4c4ab8e3-ce67-4f08-b163-c76265f1d391/thyao-finansal-rapor",
+      "published_at": "2026-04-29",
+      "sha256": "f6c6722bb667d806e4b20b5ec9a13f6c4bbb7738774c20f8d4d525e35e164c30",
+      "source_url": "https://storage.fintables.com/media/uploads/kap-attachments/THY%20A.O.%20Mart%202026.pdf"
+    },
+    "2026Q2": {
+      "envelope_bytes": 27,
+      "pages": 59,
+      "parsed_statement_pages": [
+        3,
+        4,
+        5,
+        8
+      ],
+      "path": "data/raw/fintables/tms29_originals/THYAO_2026Q2_original.pdf",
+      "pdf_payload_sha256": "03d28c05ec4afeef1b1818a4b0fb9cca51b768658925fbb51daaa4b99160f5ab",
+      "publication_evidence": "https://fintables.com/borsa-haber-akisi/bf8af587-78d6-4fe4-82f0-8dbb4bd082a8/thyao-finansal-rapor",
+      "published_at": "2026-08-05",
+      "sha256": "95beca35c11da68b62b0d961aa07059160319edcd6cea2b7b7497506b7a4ae93",
+      "source_url": "https://storage.fintables.com/media/uploads/kap-attachments/THY%20A.O.%20Haziran%202026.pdf"
+    }
+  },
+  "financial_currency": "TRY",
+  "net_debt_policy": "Financial debt less cash and current financial investments, matching the Fintables company summary.",
+  "normalized_file": "data/processed/fintables_tms29_observations.csv",
+  "normalized_sha256": "b4d7994c3aa9e310e5e723818619416ed850668e840665830b959a182603feac",
+  "observations": 238,
+  "retrieved_at": "2026-09-27",
+  "scope": "Primary internally consistent TMS 29 study: FY2024 annual anchor, 2025, and the latest available 2026 interim report, with report-published comparatives retained as vintages.",
+  "source": "Fintables-hosted original post-TMS 29 THYAO statements",
+  "statement_checks": [
+    {
+      "column": 0,
+      "report": "2024FY",
+      "residuals_million_try": {
+        "assets": 0.0,
+        "cash_rollforward": 0.0,
+        "gross_profit": 0.0,
+        "sources": 0.0
+      }
+    },
+    {
+      "column": 1,
+      "report": "2024FY",
+      "residuals_million_try": {
+        "assets": 0.0,
+        "cash_rollforward": 0.0,
+        "gross_profit": 0.0,
+        "sources": 0.0
+      }
+    },
+    {
+      "column": 0,
+      "report": "2025Q1",
+      "residuals_million_try": {
+        "assets": 0.0,
+        "cash_rollforward": 0.0,
+        "gross_profit": 0.0,
+        "sources": 0.0
+      }
+    },
+    {
+      "column": 1,
+      "report": "2025Q1",
+      "residuals_million_try": {
+        "assets": 0.0,
+        "cash_rollforward": 0.0,
+        "gross_profit": 0.0,
+        "sources": 0.0
+      }
+    },
+    {
+      "column": 0,
+      "report": "2025Q2",
+      "residuals_million_try": {
+        "assets": 0.0,
+        "cash_rollforward": 0.0,
+        "gross_profit": 0.0,
+        "sources": 0.0
+      }
+    },
+    {
+      "column": 1,
+      "report": "2025Q2",
+      "residuals_million_try": {
+        "assets": 0.0,
+        "cash_rollforward": 0.0,
+        "gross_profit": 0.0,
+        "sources": 0.0
+      }
+    },
+    {
+      "column": 0,
+      "report": "2025Q3",
+      "residuals_million_try": {
+        "assets": 0.0,
+        "cash_rollforward": 0.0,
+        "gross_profit": 0.0,
+        "sources": 0.0
+      }
+    },
+    {
+      "column": 1,
+      "report": "2025Q3",
+      "residuals_million_try": {
+        "assets": 0.0,
+        "cash_rollforward": 0.0,
+        "gross_profit": 0.0,
+        "sources": 0.0
+      }
+    },
+    {
+      "column": 0,
+      "report": "2025FY",
+      "residuals_million_try": {
+        "assets": 0.0,
+        "cash_rollforward": 0.0,
+        "gross_profit": 0.0,
+        "sources": 0.0
+      }
+    },
+    {
+      "column": 1,
+      "report": "2025FY",
+      "residuals_million_try": {
+        "assets": 0.0,
+        "cash_rollforward": 0.0,
+        "gross_profit": 0.0,
+        "sources": 0.0
+      }
+    },
+    {
+      "column": 0,
+      "report": "2026Q1",
+      "residuals_million_try": {
+        "assets": 0.0,
+        "cash_rollforward": 0.0,
+        "gross_profit": 0.0,
+        "sources": 0.0
+      }
+    },
+    {
+      "column": 1,
+      "report": "2026Q1",
+      "residuals_million_try": {
+        "assets": 0.0,
+        "cash_rollforward": 0.0,
+        "gross_profit": 0.0,
+        "sources": 0.0
+      }
+    },
+    {
+      "column": 0,
+      "report": "2026Q2",
+      "residuals_million_try": {
+        "assets": 0.0,
+        "cash_rollforward": 0.0,
+        "gross_profit": 0.0,
+        "sources": 0.0
+      }
+    },
+    {
+      "column": 1,
+      "report": "2026Q2",
+      "residuals_million_try": {
+        "assets": 0.0,
+        "cash_rollforward": 0.0,
+        "gross_profit": 0.0,
+        "sources": 0.0
+      }
+    }
+  ],
+  "timing_policy": "Every report vintage becomes usable at the first stock-session close strictly after its verified disclosure date.",
+  "unit": "million TRY",
+  "verified_vintage_rows": 238
+}

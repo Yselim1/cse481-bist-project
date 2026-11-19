@@ -1,0 +1,26 @@
+{
+  "quality": {
+    "first": "2021-01-04",
+    "fx_usage": null,
+    "inconsistent_ohlc_rows": 0,
+    "large_close_moves": 0,
+    "last": "2026-10-30",
+    "rows": 1457,
+    "ticker": "GARAN.IS",
+    "zero_volume_sessions": 0
+  },
+  "request": {
+    "actions": true,
+    "auto_adjust": false,
+    "end": "2026-11-01",
+    "interval": "1d",
+    "repair": false,
+    "start": "2021-01-01"
+  },
+  "retrieved_at": "2026-11-19T10:45:21.441335+00:00",
+  "return_basis": "provider adjusted OHLC; preserve raw prices and actions",
+  "sha256": "afc3bd9decc9454518c323ad9e0e37f15c09d950597da0bdab6ea92c9e1ac423",
+  "source": "Yahoo Finance via yfinance",
+  "ticker": "GARAN.IS",
+  "yfinance_version": "1.7.0"
+}

@@ -1,0 +1,152 @@
+{
+  "$defs": {
+    "EvidenceItem": {
+      "additionalProperties": false,
+      "description": "A single piece of evidence captured for an answer.\n\n`observed`: available to the agent for context.\n`committed`: cited in the final answer; audited by the evidence completeness metric.",
+      "properties": {
+        "evidence_id": {
+          "title": "Evidence Id",
+          "type": "string"
+        },
+        "source_tool": {
+          "title": "Source Tool",
+          "type": "string"
+        },
+        "source_document": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Document"
+        },
+        "value": {
+          "anyOf": [
+            {},
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unit"
+        },
+        "as_of": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "As Of"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Note"
+        }
+      },
+      "required": [
+        "evidence_id",
+        "source_tool"
+      ],
+      "title": "EvidenceItem",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "ticker": {
+      "title": "Ticker",
+      "type": "string"
+    },
+    "as_of": {
+      "title": "As Of",
+      "type": "string"
+    },
+    "observed": {
+      "items": {
+        "$ref": "#/$defs/EvidenceItem"
+      },
+      "title": "Observed",
+      "type": "array"
+    },
+    "committed": {
+      "items": {
+        "$ref": "#/$defs/EvidenceItem"
+      },
+      "title": "Committed",
+      "type": "array"
+    },
+    "gate_status": {
+      "enum": [
+        "PASS",
+        "PASS_WITH_WARNINGS",
+        "INVESTIGATE",
+        "ANALYSIS_UNSAFE",
+        "HARD_BLOCK"
+      ],
+      "title": "Gate Status",
+      "type": "string"
+    },
+    "educational_label": {
+      "enum": [
+        "HOLD",
+        "WATCH",
+        "INVESTIGATE",
+        "POTENTIAL_CATCH_UP_CANDIDATE",
+        "TECHNICAL_REVERSAL_CANDIDATE",
+        "FUNDAMENTAL_IMPROVEMENT_CANDIDATE",
+        "REJECT_SIGNAL",
+        "ANALYSIS_UNSAFE"
+      ],
+      "title": "Educational Label",
+      "type": "string"
+    },
+    "reason": {
+      "title": "Reason",
+      "type": "string"
+    },
+    "warnings": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Warnings",
+      "type": "array"
+    }
+  },
+  "required": [
+    "ticker",
+    "as_of",
+    "gate_status",
+    "educational_label",
+    "reason"
+  ],
+  "title": "EvidenceBundle",
+  "type": "object"
+}

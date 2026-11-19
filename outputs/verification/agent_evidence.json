@@ -1,0 +1,97 @@
+{
+  "demos": [
+    {
+      "answer_sha256": "912cb39f32abf3ac46cee31beaffb32a6378d1edc2a1329e380b394476398db9",
+      "checks": [
+        {
+          "check": "recorded_fields_equal_current_python",
+          "tool": "project_status"
+        }
+      ],
+      "demo": "smoke",
+      "real_host": "Codex CLI 0.154.0",
+      "trace_sha256": "b8dd85a8338590cfc648605d4f99610a528690158d606adbe066d63c4a624524",
+      "transport": "stdio"
+    },
+    {
+      "answer_sha256": "cc5395473fa7829a8c433f1863f18c2dee5bc29a26d4468a83b7937c6362ce06",
+      "checks": [
+        {
+          "check": "recorded_fields_equal_current_python",
+          "tool": "generate_report"
+        },
+        {
+          "check": "recorded_fields_equal_current_python",
+          "tool": "calculate_scores"
+        },
+        {
+          "check": "recorded_fields_equal_current_python",
+          "tool": "find_support_resistance"
+        },
+        {
+          "check": "recorded_fields_equal_current_python",
+          "tool": "calculate_indicators"
+        },
+        {
+          "check": "recorded_fields_equal_current_python",
+          "tool": "get_fundamental_metrics"
+        },
+        {
+          "check": "recorded_fields_equal_current_python",
+          "tool": "generate_signal"
+        },
+        {
+          "check": "recorded_fields_equal_current_python",
+          "tool": "run_backtest"
+        },
+        {
+          "check": "recorded_fields_equal_current_python",
+          "tool": "get_stock_history"
+        }
+      ],
+      "demo": "analysis_demo",
+      "real_host": "Codex CLI 0.154.0",
+      "trace_sha256": "eebfbe94a38817292166a22d445fdf74976582e96995dc3053d7946cdfedd0ce",
+      "transport": "stdio"
+    },
+    {
+      "answer_sha256": "720437be2cbdfd0db501ebbc8d4635ceabab9634fb6ad0c47b0e00f3c7a5220c",
+      "checks": [
+        {
+          "check": "expected_invalid_symbol_error",
+          "tool": "get_stock_history"
+        },
+        {
+          "check": "recorded_fields_equal_current_python",
+          "tool": "project_status"
+        },
+        {
+          "check": "recorded_fields_equal_current_python",
+          "tool": "calculate_scores"
+        },
+        {
+          "check": "recorded_fields_equal_current_python",
+          "tool": "generate_signal"
+        },
+        {
+          "check": "recorded_fields_equal_current_python",
+          "tool": "generate_report"
+        },
+        {
+          "check": "recorded_fields_equal_current_python",
+          "tool": "get_fundamental_metrics"
+        },
+        {
+          "check": "recorded_fields_equal_current_python",
+          "tool": "get_stock_history"
+        }
+      ],
+      "demo": "missing_data",
+      "real_host": "Codex CLI 0.154.0",
+      "trace_sha256": "8229c7cce0a045a26cab4eb04ebef2c8bcd42f698eae99353513ae006c55e3e2",
+      "transport": "stdio"
+    }
+  ],
+  "recordings_are_real_host_sessions": true,
+  "replay_uses_llm": false
+}

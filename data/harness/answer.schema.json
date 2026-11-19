@@ -1,0 +1,80 @@
+{
+  "additionalProperties": false,
+  "description": "Structured answer envelope the fine-tuned agent must emit.",
+  "properties": {
+    "question": {
+      "title": "Question",
+      "type": "string"
+    },
+    "ticker": {
+      "title": "Ticker",
+      "type": "string"
+    },
+    "as_of": {
+      "title": "As Of",
+      "type": "string"
+    },
+    "educational_label": {
+      "enum": [
+        "HOLD",
+        "WATCH",
+        "INVESTIGATE",
+        "POTENTIAL_CATCH_UP_CANDIDATE",
+        "TECHNICAL_REVERSAL_CANDIDATE",
+        "FUNDAMENTAL_IMPROVEMENT_CANDIDATE",
+        "REJECT_SIGNAL",
+        "ANALYSIS_UNSAFE"
+      ],
+      "title": "Educational Label",
+      "type": "string"
+    },
+    "gate_status": {
+      "enum": [
+        "PASS",
+        "PASS_WITH_WARNINGS",
+        "INVESTIGATE",
+        "ANALYSIS_UNSAFE",
+        "HARD_BLOCK"
+      ],
+      "title": "Gate Status",
+      "type": "string"
+    },
+    "committed_evidence_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Committed Evidence Ids",
+      "type": "array"
+    },
+    "explanation": {
+      "title": "Explanation",
+      "type": "string"
+    },
+    "warnings": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Warnings",
+      "type": "array"
+    },
+    "tool_calls": {
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Tool Calls",
+      "type": "array"
+    }
+  },
+  "required": [
+    "question",
+    "ticker",
+    "as_of",
+    "educational_label",
+    "gate_status",
+    "committed_evidence_ids",
+    "explanation"
+  ],
+  "title": "AgentAnswer",
+  "type": "object"
+}

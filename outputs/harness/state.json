@@ -1,0 +1,84 @@
+{
+  "completed_stages": [
+    "raw_llm",
+    "llm_tools",
+    "stateful_harness",
+    "evidence_quality_gate",
+    "memory_human_review"
+  ],
+  "runs": [
+    {
+      "answer_sha256": "8fdd67b72bcaee2bbd861ecad42650dfea6ba95a9d73283dcb72946c9a529bc8",
+      "called_tools": [],
+      "completed_at": "2026-09-27T15:21:34.312471+00:00",
+      "model": "gpt-6-luna",
+      "quality_gate_pass": false,
+      "stage": "raw_llm",
+      "trace_sha256": "752d95d3d844c64f9fc1fe616f4bd677d16fbb2d665df27a2bd45ae3c928a93e"
+    },
+    {
+      "answer_sha256": "aab8c6ed9069b1d4f0c73635d0325360c2e608cae3b8a39d0666f09a2c304a72",
+      "called_tools": [
+        "calculate_indicators",
+        "calculate_scores",
+        "generate_signal",
+        "get_context_events",
+        "get_fundamental_metrics",
+        "run_backtest"
+      ],
+      "completed_at": "2026-09-27T15:22:11.789716+00:00",
+      "model": "gpt-6-luna",
+      "quality_gate_pass": true,
+      "stage": "llm_tools",
+      "trace_sha256": "83b8a0dab3495c510e45535962a6b9a670760bb8a51efe7ca92e41224cebd985"
+    },
+    {
+      "answer_sha256": "9393e94a950cd1112e88497e75c481a755bd13275e1dc606159789bc3cf09c61",
+      "called_tools": [
+        "calculate_indicators",
+        "calculate_scores",
+        "generate_signal",
+        "get_context_events",
+        "get_fundamental_metrics",
+        "run_backtest"
+      ],
+      "completed_at": "2026-09-27T15:22:46.261885+00:00",
+      "model": "gpt-6-luna",
+      "quality_gate_pass": true,
+      "stage": "stateful_harness",
+      "trace_sha256": "d0c97127f1c17bc6944f3c52ac009916f12005e4c20a77ab2fd23be95be00b99"
+    },
+    {
+      "answer_sha256": "66e1f50698fd00874fe9890747b7a5cf8b1a898e1495615d58deef1c5241876e",
+      "called_tools": [
+        "calculate_indicators",
+        "calculate_scores",
+        "generate_signal",
+        "get_context_events",
+        "get_fundamental_metrics",
+        "run_backtest"
+      ],
+      "completed_at": "2026-09-27T15:23:24.665730+00:00",
+      "model": "gpt-6-luna",
+      "quality_gate_pass": true,
+      "stage": "evidence_quality_gate",
+      "trace_sha256": "948f67629d667d7a272ca494e18187c18f10b6a6ecab2fccb35de299a741ed18"
+    },
+    {
+      "answer_sha256": "41903c2933b6961a6a05c2e0f54cd2acb728090cffa7e61290bd0bf9db0b3c40",
+      "called_tools": [
+        "calculate_indicators",
+        "calculate_scores",
+        "generate_signal",
+        "get_context_events",
+        "get_fundamental_metrics",
+        "run_backtest"
+      ],
+      "completed_at": "2026-09-27T15:24:03.496052+00:00",
+      "model": "gpt-6-luna",
+      "quality_gate_pass": true,
+      "stage": "memory_human_review",
+      "trace_sha256": "4171888811a14ea86bc8403688c1a05fa40f99a045c6e14de14e1e8ecce0b31c"
+    }
+  ]
+}

@@ -1,0 +1,247 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>THYAO research report</title><style>
+body{font:16px/1.65 system-ui,sans-serif;color:#172554;background:#f1f5f9;margin:0}main{max-width:1120px;margin:auto;background:white;padding:48px}h1{font-size:36px;line-height:1.15}h2{font-size:24px;margin-top:40px}p{max-width:100ch}header{border-top:8px solid #be123c;padding-top:18px}small{color:#475569}.notice{background:#fff1f2;padding:16px;border-left:4px solid #be123c}table{border-collapse:collapse;width:100%;font-size:14px;margin:24px 0}td,th{text-align:left;padding:10px;border-bottom:1px solid #cbd5e1}th{background:#f1f5f9}img{width:100%;height:auto}section{overflow-x:auto}@media(max-width:700px){main{padding:20px}h1{font-size:28px}}@media print{body{background:white}main{padding:0}section{break-inside:auto}img,table{break-inside:avoid}}
+</style></head><body><main><header><small>CSE481 · TURKISH AIRLINES · 15 SEPTEMBER 2026</small><h1>Technical and fundamental strategy study</h1></header>
+<p class="notice">Verified annual Fintables original statements. Comparative revisions enter only after publication. Original TRY presentation; annual refresh; academic backtest with the limitations below.</p><section><h2>1. Research question</h2><p>Does a publication-lagged Fintables financial filter change the behavior of a causal technical strategy for Turkish Airlines, compared with technical-only trading, stock buy-and-hold and the BIST100 price index?</p></section><section><h2>2. Scope and source quality</h2><p>THYAO.IS; warm-up from 2021-01-01; evaluation 2023-01-01 through 2025-12-31; initial capital TRY 100,000. Fintables supplies 136 normalized observations over 5 financial period ends. Evaluation has 749 stock sessions; 710 have all five fundamental score inputs. Historical values come exclusively from Fintables. See ../../docs/DATA_SOURCES.md and the run manifest for provenance. The configured vintage policy is verified_only. Currency is TRY; source eligibility and revisions are documented in the manifest.</p></section><section><h2>3. Method and timing</h2><p>SMA20/50 and EMA20/50 use trailing closes; EMA uses a simple-average seed. RSI14 uses Wilder smoothing; MACD is EMA12 minus EMA26 with a nine-period signal. Volume features include relative volume, change and OBV. A pivot needs five observations on either side and becomes usable only on its fifth following session. Confirmed prices from the trailing 252 sessions form clusters with maximum 1.5% width and at least two touches. No later pivot is painted into an earlier decision. Financial snapshots join backward after their verified or explicitly assumed release date. Annual totals are not fourth-quarter flows. Original-report comparative revisions enter at the containing report&#x27;s publication, never at the earlier period end.</p><img src="figures/technical.png" alt="technical evidence chart"></section><section><h2>4. Fundamental analysis at the final stock date</h2><p>The following values are the latest modeled available financial period on 2026-09-25: 2024-12-31 00:00:00. Flows are trailing totals when enough same-basis YTD/annual observations exist; assets and debt are period-end balances in TRY. EBITDA and net debt follow the formulas documented in DATA_SOURCES.md. Net profit is parent-attributable; average equity/assets are used for ROE/ROA. Valuation uses raw stock price and nominal shares, with same-date FX conversion only when using USD fundamentals. Growth against a loss or missing denominator is unavailable. Deferred-tax gains, airline cycles, leases and exchange translation can distort apparent profitability.</p><table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Metric</th>
+      <th>TRY millions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>revenue</td>
+      <td>745,430.00</td>
+    </tr>
+    <tr>
+      <td>gross_profit</td>
+      <td>142,908.00</td>
+    </tr>
+    <tr>
+      <td>ebitda</td>
+      <td>136,256.00</td>
+    </tr>
+    <tr>
+      <td>operating_profit</td>
+      <td>80,393.00</td>
+    </tr>
+    <tr>
+      <td>net_profit</td>
+      <td>113,378.00</td>
+    </tr>
+    <tr>
+      <td>cash</td>
+      <td>95,992.00</td>
+    </tr>
+    <tr>
+      <td>financial_debt</td>
+      <td>489,939.00</td>
+    </tr>
+    <tr>
+      <td>net_debt</td>
+      <td>236,664.00</td>
+    </tr>
+    <tr>
+      <td>total_assets</td>
+      <td>1,399,606.00</td>
+    </tr>
+    <tr>
+      <td>equity</td>
+      <td>679,887.00</td>
+    </tr>
+    <tr>
+      <td>operating_cash_flow</td>
+      <td>135,580.00</td>
+    </tr>
+    <tr>
+      <td>investing_cash_flow</td>
+      <td>10,003.00</td>
+    </tr>
+    <tr>
+      <td>financing_cash_flow</td>
+      <td>-75,360.00</td>
+    </tr>
+  </tbody>
+</table><table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Metric</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>revenue_growth</td>
+      <td>47.79%</td>
+    </tr>
+    <tr>
+      <td>net_profit_growth</td>
+      <td>-30.44%</td>
+    </tr>
+    <tr>
+      <td>ebitda_growth</td>
+      <td>18.08%</td>
+    </tr>
+    <tr>
+      <td>roe</td>
+      <td>19.94%</td>
+    </tr>
+    <tr>
+      <td>roa</td>
+      <td>9.26%</td>
+    </tr>
+    <tr>
+      <td>ebitda_margin</td>
+      <td>18.28%</td>
+    </tr>
+    <tr>
+      <td>net_margin</td>
+      <td>15.21%</td>
+    </tr>
+    <tr>
+      <td>net_debt_ebitda</td>
+      <td>1.74</td>
+    </tr>
+    <tr>
+      <td>debt_equity</td>
+      <td>0.72</td>
+    </tr>
+    <tr>
+      <td>current_ratio</td>
+      <td>1.01</td>
+    </tr>
+    <tr>
+      <td>quick_ratio</td>
+      <td>0.94</td>
+    </tr>
+    <tr>
+      <td>pe</td>
+      <td>3.54</td>
+    </tr>
+    <tr>
+      <td>pb</td>
+      <td>0.59</td>
+    </tr>
+    <tr>
+      <td>ev_ebitda</td>
+      <td>4.68</td>
+    </tr>
+  </tbody>
+</table></section><section><h2>5. Explainable strategy</h2><p>Each technical and fundamental component contributes one point. Fundamental conditions: sales growth &gt;15%, earnings growth &gt;15%, ROE &gt;20%, net debt/EBITDA &lt;4, and positive P/E at or below its prior 252-valid-session median (minimum 63). Technical conditions: SMA20 &gt; SMA50, RSI 35–55, MACD above signal, relative volume &gt;=1, and within 2% of support or inside a confirmed zone. Combined score = .6*T/5 + .4*F/5. Entry additionally requires F&gt;=3, combined&gt;=.70, complete/fresh fundamentals, trend and support. Exit on a close-triggered 8% loss, 40-session holding limit, unavailable/stale/weak fundamentals, trend reversal or RSI&gt;=70. Exits take precedence; the next session open executes each decision. The 4x leverage threshold is a predeclared airline case-study assumption, not an established sector optimum.</p><img src="figures/scores.png" alt="scores evidence chart"></section><section><h2>6. Evaluation</h2><p>The combined rule returned 65.32% with a maximum drawdown of -13.85% and 8 closed trades. Its endpoint return differed from BIST100 by -36.92 percentage points. Low activity is flagged rather than treated as evidence of robustness. These outcomes describe this dataset and frozen rule; they do not establish an investable advantage. Both sides pay 10 bps commission and 5 bps slippage. Fractional adjusted-price units avoid double-counting dividends; final positions are marked at close. Win rate counts closed net-profitable trades only. Sharpe annualizes observed daily returns at 252 with zero risk-free return; maximum drawdown includes initial capital. The BIST100 reference has no transaction costs and is a price index. Missing index sessions stay missing; its risk-metric observation count is reported.</p><table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Strategy</th>
+      <th>Return</th>
+      <th>Max drawdown</th>
+      <th>Sharpe (rf=0)</th>
+      <th>Closed trades</th>
+      <th>Win rate</th>
+      <th>Exposure</th>
+      <th>Sessions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>combined</td>
+      <td>65.32%</td>
+      <td>-13.85%</td>
+      <td>1.08</td>
+      <td>8</td>
+      <td>87.50%</td>
+      <td>20.16%</td>
+      <td>749</td>
+    </tr>
+    <tr>
+      <td>technical</td>
+      <td>61.19%</td>
+      <td>-13.16%</td>
+      <td>1.00</td>
+      <td>11</td>
+      <td>63.64%</td>
+      <td>26.70%</td>
+      <td>749</td>
+    </tr>
+    <tr>
+      <td>buy_hold</td>
+      <td>92.73%</td>
+      <td>-25.61%</td>
+      <td>0.75</td>
+      <td>0</td>
+      <td>Unavailable</td>
+      <td>100.00%</td>
+      <td>749</td>
+    </tr>
+    <tr>
+      <td>bist100</td>
+      <td>102.24%</td>
+      <td>-22.86%</td>
+      <td>0.97</td>
+      <td>—</td>
+      <td>Unavailable</td>
+      <td>Unavailable</td>
+      <td>746</td>
+    </tr>
+  </tbody>
+</table><table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Strategy</th>
+      <th>Net return</th>
+      <th>Gross, same executions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>combined</td>
+      <td>65.32%</td>
+      <td>69.33%</td>
+    </tr>
+    <tr>
+      <td>technical</td>
+      <td>61.19%</td>
+      <td>66.59%</td>
+    </tr>
+    <tr>
+      <td>buy_hold</td>
+      <td>92.73%</td>
+      <td>93.02%</td>
+    </tr>
+  </tbody>
+</table><img src="figures/performance.png" alt="performance evidence chart"></section><section><h2>7. Chronological split</h2><p>Each calendar-year evaluation starts flat with TRY100,000 and retains the preceding feature warm-up. They are independent starts and need not compound to the full-period result. The strategy settings remain fixed across the displayed periods. A partial final year is labeled explicitly and is not compared as though it were a full year.</p><table class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Year</th>
+      <th>Role</th>
+      <th>Combined return</th>
+      <th>Technical return</th>
+      <th>Buy/hold return</th>
+      <th>BIST100 return</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>2023</td>
+      <td>development</td>
+      <td>15.26%</td>
+      <td>15.48%</td>
+      <td>60.29%</td>
+      <td>34.15%</td>
+    </tr>
+    <tr>
+      <td>2024</td>
+      <td>validation</td>
+      <td>24.81%</td>
+      <td>23.98%</td>
+      <td>20.16%</td>
+      <td>30.34%</td>
+    </tr>
+    <tr>
+      <td>2025</td>
+      <td>holdout</td>
+      <td>8.26%</td>
+      <td>6.43%</td>
+      <td>-2.77%</td>
+      <td>14.24%</td>
+    </tr>
+  </tbody>
+</table></section><section><h2>8. MCP AI agent</h2><p>The stdio MCP server wraps the same local Python analytics, with typed inputs, bounded symbols/dates, structured values and explicit source warnings. The host computes no financial numbers independently: it calls history, indicators, zones, fundamentals, scores, signals and backtest tools, then explains the evidence. An actual Codex host trace and final answer are stored in ../agent, including a missing-data demonstration. Protocol tests independently compare tool results with direct Python calculations. Tools never place trades.</p></section><section><h2>9. Verification and limitations</h2><p>Unit tests independently check indicator recurrences, pivot confirmation, prefix invariance, release boundaries, later financial revisions, invalid denominators, next-open gaps, fees, position state and benchmark identities. These verify implementation behavior, not future investment performance. The original-report dataset has verified publication dates and separately dated comparatives; the earlier displayed-USD table study remains unverified. Further limits include one selected company, short evaluation, nominal TRY inflation, zero cash yield, simplistic slippage, fractional units, no taxes, unmatched benchmark return bases and index gaps. Original TRY accounts use nominal presentation and currency translation; their growth is not real growth or functional-USD growth. The original-report manifest includes page references, hashes and statement reconciliations.</p></section><section><h2>10. Reproduction and follow-up</h2><p>For the primary study, run .venv/Scripts/python.exe -m bist_analytics.cli --config config/tms29.yaml import-tms29, fetch --refresh, and run. The report, data, trades, signals, charts, metrics and source/code hashes are regenerated locally. The annual baseline remains available through config/project.yaml, and the earlier displayed-USD study through config/retrospective.yaml.</p></section></main></body></html>

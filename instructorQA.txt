@@ -1,0 +1,114 @@
+Questions and Answers About the Project
+1. Will the project be completed individually or in groups?
+
+You may complete the project individually or in groups of two.
+ 
+2. Can I use a data source other than Yahoo Finance?
+
+Yes. Yahoo Finance is not mandatory. If index data or historical data are insufficient, you may use another reliable and legally accessible data source.
+
+The important point is to clearly document the data source, date range, any adjustments applied, and how missing data are handled.
+
+Yahoo Finance / yfinance is provided in the project only as an example data source.    
+ 
+3. Is the news and speech layer mandatory? Can I use KAP disclosures?
+
+The news/context layer is part of the project architecture. You may use KAP disclosures for company-specific events, and this is actually a very appropriate source because KAP provides official disclosure timestamps. It is especially useful for financial results, material company events, and disclosure dates.
+
+The speech-to-text component may be implemented on a smaller scale using selected and instructor-approved examples. The main objective is to use textual sources as timestamped contextual evidence, not to replace numerical financial data with text-based information.    
+ 
+4. Companies, except banks, report their annual financial statements under TMS 29 after 2024. Since direct comparisons with earlier periods and with banks may be misleading, should I use only post-TMS 29 periods for quarterly analysis, or should I include earlier periods after adjusting them for inflation in real terms?
+
+TMS stands for Turkish Accounting Standards.
+
+TMS 29 is the accounting standard that governs financial reporting in hyperinflationary economies.
+
+Directly mixing older nominal financial statements with post-TMS 29 inflation-adjusted statements may be misleading. Therefore, for the main analysis, I recommend using post-TMS 29 periods that are internally consistent.
+
+You may use data from 1 January 2025 to November 2026 for your tests.
+ 
+5. Is there a specific model you recommend for the harness experiments?
+
+No specific LLM is mandatory. My recommendation is to keep the same model fixed across the harness experiments and focus the comparison on the system architecture.
+
+Compare the following stages:
+
+Raw LLM → LLM + Tools → Tools + Stateful Harness → + Evidence/Quality Gate → + Memory + Human Review
+
+The objective is not to answer the question, “Which LLM is better?” Instead, the goal is to examine how much more reliable and reproducible the system becomes as tools, state, evidence, verification, and human review are added.
+ 
+
+
+
+
+PROJECT ANNOUNCEMENT
+PROJECT ANNOUNCEMENT – WHAT DOES "DEVELOP YOUR OWN LLM" MEAN?
+
+Core principle: The LLM reasons and explains. Python tools calculate. The harness controls. Backtests verify. The model runs locally.
+
+1. You will not train a model from scratch
+
+Pick an open-source LLM and fine-tune it for the project's financial tasks. You can use models such as Qwen, Llama, Mistral, Gemma or Phi. Small models of 1–8B parameters are recommended. They can be trained on a single GPU with methods such as LoRA/QLoRA.
+
+2. The LLM is the system's interpreter, not its calculator
+
+The core principle of the project document still applies. Your model must be able to:
+
+- Understand the user's question (e.g., "Find banks lagging their sector").
+
+- Call the correct MCP tool with the correct parameters (e.g., rank_sector_relative_strength, run_backtest).
+
+- Write explanations based only on what the tools return.
+
+- Give its conclusion from the allowed action space only (WATCH, POTENTIAL_CATCH_UP_CANDIDATE, ANALYSIS_UNSAFE, etc.).
+
+- Never invent numbers or give investment advice. Answer INVESTIGATE or ANALYSIS_UNSAFE when evidence is insufficient.
+
+3. You build the fine-tuning dataset yourselves
+
+Example training record: question → correct tool call → tool output → evidence-based explanation.
+
+Records should come from the four mandatory scenarios:
+
+- Sector laggards (catch-up)
+
+- Weekday and multi-day patterns
+
+- Technical reversals
+
+- Quarterly fundamentals and price reaction
+
+4. The final system must run fully locally
+
+The submitted system must make NO calls to ChatGPT, Claude, Gemini or any other cloud AI API. The model must run on a local machine without internet access (via Ollama, llama.cpp, vLLM or Hugging Face Transformers).
+
+5. Grading: your model will be tested live
+
+You will be asked questions you have not seen in advance. Evaluation follows the metrics in Section 30 of the project document:
+
+- Numerical hallucination rate
+
+- Invalid tool-call rate
+
+- Unsupported conclusion rate
+
+- Evidence completeness and reproducibility
+
+- Rule violations (e.g., giving investment advice, skipping mandatory quality/backtest states)
+
+6. Presentation and report
+
+Demonstrate your model live during the presentation, and clearly state the following in your report:
+
+- The base model you used and why you chose it
+
+- How you prepared your fine-tuning data and how many examples you used
+
+- Training method and settings (e.g., LoRA/QLoRA, hyperparameters)
+
+- How you run the model locally
+
+- Comparison of the base model and the fine-tuned model: what did fine-tuning improve?
+
+- Known limitations of your model
+ 

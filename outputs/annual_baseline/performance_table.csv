@@ -1,0 +1,5 @@
+Strategy,Return,Max drawdown,Sharpe (rf=0),Closed trades,Win rate,Exposure,Sessions
+combined,65.32%,-13.85%,1.08,8,87.50%,20.16%,749
+technical,61.19%,-13.16%,1.00,11,63.64%,26.70%,749
+buy_hold,92.73%,-25.61%,0.75,0,Unavailable,100.00%,749
+bist100,102.24%,-22.86%,0.97,—,Unavailable,Unavailable,746

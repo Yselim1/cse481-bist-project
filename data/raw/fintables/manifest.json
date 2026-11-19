@@ -1,0 +1,31 @@
+{
+  "files": {
+    "balance": {
+      "path": "data\\raw\\fintables\\balance_annual_usd.tsv",
+      "sha256": "b2d05ba376ca4520b0704c7196c5fed7e4aafded0619c0aa24ca01492b08b7a2",
+      "source_url": "https://fintables.com/sirketler/THYAO/finansal-tablolar/bilanco?period=12&type=&currency=usd&mode=adjusted"
+    },
+    "capital": {
+      "path": "data\\raw\\fintables\\capital_annual_try.tsv",
+      "sha256": "e8a3e1dc1c426224df8a0750dc6adf34da19b63dc6fa3b451e71e8d6620db06f",
+      "source_url": "https://fintables.com/sirketler/THYAO/finansal-tablolar/bilanco?period=12&type=&currency=try&mode=adjusted"
+    },
+    "cashflow": {
+      "path": "data\\raw\\fintables\\cashflow_annual_usd.tsv",
+      "sha256": "1303ae46a176845e47b9b84d1d1107ab9e863c0fa8603cda47a31bceec3e6619",
+      "source_url": "https://fintables.com/sirketler/THYAO/finansal-tablolar/nakit-akim-tablosu?period=12&type=&currency=usd&mode=adjusted"
+    },
+    "income": {
+      "path": "data\\raw\\fintables\\income_annual_usd.tsv",
+      "sha256": "d5b397cc2d0a6cf667e7c232dee013456efab5d801e4d2db89c370afa484c086",
+      "source_url": "https://fintables.com/sirketler/THYAO/finansal-tablolar/gelir-tablosu?period=12&type=&currency=usd&mode=adjusted"
+    }
+  },
+  "formula_source": "https://fintables.com/arastirma/yazilar/degerleme-analizi-101/fdfavok",
+  "normalized_sha256": "cf8ff5cada483cb5c1aa85c8589a6e168864d8ce277d839b8d4a5961941a92f5",
+  "observations": 102,
+  "release_policy": "Two verified dates; other dates explicitly assumed at following June 30",
+  "retrieved_at": "2026-09-15",
+  "source": "Fintables",
+  "vintage_verified": false
+}

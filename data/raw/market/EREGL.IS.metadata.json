@@ -1,0 +1,26 @@
+{
+  "quality": {
+    "first": "2021-01-04",
+    "fx_usage": null,
+    "inconsistent_ohlc_rows": 0,
+    "large_close_moves": 0,
+    "last": "2026-10-30",
+    "rows": 1458,
+    "ticker": "EREGL.IS",
+    "zero_volume_sessions": 1
+  },
+  "request": {
+    "actions": true,
+    "auto_adjust": false,
+    "end": "2026-11-01",
+    "interval": "1d",
+    "repair": false,
+    "start": "2021-01-01"
+  },
+  "retrieved_at": "2026-11-19T10:45:22.383169+00:00",
+  "return_basis": "provider adjusted OHLC; preserve raw prices and actions",
+  "sha256": "3e1e2ff25e9fe10c476b5eb7438f49dc93865ad7ed97ff6a0ccc12b8c7db955d",
+  "source": "Yahoo Finance via yfinance",
+  "ticker": "EREGL.IS",
+  "yfinance_version": "1.7.0"
+}

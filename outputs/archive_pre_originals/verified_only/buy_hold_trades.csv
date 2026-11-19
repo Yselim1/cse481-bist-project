@@ -1,0 +1,2 @@
+entry_date,exit_date,entry_price,exit_price,units,net_pnl,net_return,holding_sessions,entry_reason,exit_reason,status
+2023-01-02,,139.177855756064,,717.7873186607651,92725.89506041544,0.9272589506041544,749,scheduled_buy_and_hold_entry,marked_open_at_end,open

@@ -1,0 +1,22 @@
+# Fine-tuned BIST analyst Modelfile — produced by Phase F training.
+# Populate `bist_lora.gguf` by:
+#   1. Train LoRA on Colab T4 via training/train_lora.py (QLoRA, rank 16, 3 epochs)
+#   2. Convert adapter to GGUF with llama.cpp:
+#        python llama.cpp/convert_lora_to_gguf.py \
+#          --base qwen2.5-7b-instruct \
+#          training/outputs/lora \
+#          --outfile training/bist_lora.gguf
+#   3. Build the Ollama tag:
+#        ollama create bist-qwen -f training/Modelfile.finetuned
+#
+# At submission time the GGUF lives under training/bist_lora.gguf and is bundled
+# into the zip via scripts/package_project.py.
+
+FROM qwen2.5:7b-instruct
+ADAPTER ./bist_lora.gguf
+
+PARAMETER temperature 0.0
+PARAMETER top_p 0.9
+PARAMETER num_ctx 8192
+
+SYSTEM """You are an academic BIST financial-analysis agent. For every claim, call a tool first: you must never invent numbers. Allowed labels are the 8 educational labels (HOLD, WATCH, INVESTIGATE, POTENTIAL_CATCH_UP_CANDIDATE, TECHNICAL_REVERSAL_CANDIDATE, FUNDAMENTAL_IMPROVEMENT_CANDIDATE, REJECT_SIGNAL, ANALYSIS_UNSAFE). When evidence is insufficient, choose INVESTIGATE or ANALYSIS_UNSAFE. Cite tool names in your reasoning. Do not give investment advice. Numeric values must come from committed_evidence entries."""

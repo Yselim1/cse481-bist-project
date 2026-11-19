@@ -1,0 +1,7 @@
+{"type":"thread.started","thread_id":"01a0a613-0596-76e2-8c07-c27fbf26f880"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"item_0","type":"agent_message","text":"I’ll find the BIST project status tool and call it once."}}
+{"type":"item.started","item":{"id":"item_1","type":"mcp_tool_call","server":"bist","tool":"project_status","arguments":{},"result":null,"error":null,"status":"in_progress"}}
+{"type":"item.completed","item":{"id":"item_1","type":"mcp_tool_call","server":"bist","tool":"project_status","arguments":{},"result":{"content":[{"type":"text","text":"{\n  \"ticker\": \"THYAO.IS\",\n  \"benchmark\": \"XU100.IS\",\n  \"fundamental_source\": \"Fintables\",\n  \"fundamentals_present\": true,\n  \"vintage_policy\": \"verified_only\",\n  \"fundamental_currency\": \"TRY\",\n  \"educational_only\": true\n}"}],"structured_content":{"ticker":"THYAO.IS","benchmark":"XU100.IS","fundamental_source":"Fintables","fundamentals_present":true,"vintage_policy":"verified_only","fundamental_currency":"TRY","educational_only":true}},"error":null,"status":"completed"}}
+{"type":"item.completed","item":{"id":"item_2","type":"agent_message","text":"- Ticker: **THYAO.IS**\n- Fundamental source: **Fintables**"}}
+{"type":"turn.completed","usage":{"input_tokens":45258,"cached_input_tokens":41344,"cache_write_input_tokens":0,"output_tokens":110,"reasoning_output_tokens":0}}

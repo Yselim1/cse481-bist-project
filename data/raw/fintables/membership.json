@@ -1,0 +1,9 @@
+{
+  "source_url": "https://fintables.com/endeksler/XU100",
+  "observed_on": "2026-09-15",
+  "index_label": "BİST 100",
+  "constituent_symbol": "THYAO",
+  "constituent_link": "https://fintables.com/sirketler/THYAO",
+  "evidence": "THYAO row observed in the BIST100 detail page constituent table",
+  "scope": "Selection-date membership only; not a historical membership reconstruction"
+}
