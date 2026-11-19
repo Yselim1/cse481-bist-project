@@ -1,9 +1,10 @@
 # Fine-tuned BIST analyst Modelfile — produced by Phase F training.
 # Populate `bist_lora.gguf` by:
 #   1. Train LoRA on Colab T4 via training/train_unsloth.py (Unsloth QLoRA, Qwen 2.5 3B,
-#      rank 16, 3 epochs — see training/COLAB_RUNBOOK.md for the three Colab cells).
-#   2. Unsloth exports GGUF directly via model.save_pretrained_gguf(...); drop the
-#      resulting bist_lora.gguf under training/.
+#      rank 16, 3 epochs — see training/COLAB_RUNBOOK.md for the Colab cells).
+#   2. Unsloth's `save_pretrained_gguf(..., quantization_method="q4_k_m")` writes a
+#      merged Q4_K_M GGUF (adapter baked into the base); the runbook renames it to
+#      `bist_lora.gguf` before download.
 #   3. Build the Ollama tag:
 #        ollama create bist-qwen -f training/Modelfile.finetuned
 #
@@ -15,9 +16,12 @@
 # after activations + logits upcast; 3B fits with headroom and trains ~3x faster.
 # Chat template, tokenizer, and tool-call format are identical, so downstream harness
 # and evaluation code are unchanged.
+#
+# Why FROM (not ADAPTER): Unsloth merges the LoRA adapter back into the base weights
+# before GGUF conversion, so the resulting file is a full model, not an adapter delta.
+# Ollama's ADAPTER directive expects a separate adapter file; using FROM is correct.
 
-FROM qwen2.5:3b-instruct
-ADAPTER ./bist_lora.gguf
+FROM ./bist_lora.gguf
 
 PARAMETER temperature 0.0
 PARAMETER top_p 0.9

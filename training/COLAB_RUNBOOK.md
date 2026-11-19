@@ -74,11 +74,20 @@ Expected wall-clock: ~20 min for 400 examples on T4. If OOM still occurs (unusua
 drop `--batch` to 2 and raise `--grad-accum` to 8; drop `--max-length` to 1024 if that
 is not enough.
 
-Cell 4 — download the GGUF to the Windows workstation:
+Cell 4 — rename the Unsloth-exported GGUF to the stable path the Modelfile expects,
+then download:
 
 ```python
+import shutil, glob, os
+# Unsloth writes to training/bist_lora_gguf/<BaseName>.Q4_K_M.gguf — pick it up by glob
+# so the exact base-model filename does not matter.
+src = glob.glob("training/bist_lora_gguf/*.Q4_K_M.gguf")[0]
+dst = "training/bist_lora.gguf"
+shutil.move(src, dst)
+print(f"Moved {src} -> {dst} ({os.path.getsize(dst) / 1e9:.2f} GB)")
+
 from google.colab import files
-files.download("training/bist_lora.gguf")
+files.download(dst)
 ```
 
 ## 2. Local install (back on Windows)
