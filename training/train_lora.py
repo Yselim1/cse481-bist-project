@@ -93,32 +93,47 @@ def main() -> None:
     train_ds = train_ds.map(format_messages, remove_columns=train_ds.column_names)
     eval_ds = eval_ds.map(format_messages, remove_columns=eval_ds.column_names)
 
-    sft_config = SFTConfig(
+    sft_kwargs = dict(
         output_dir=args.output,
         num_train_epochs=args.epochs,
         per_device_train_batch_size=args.batch,
         gradient_accumulation_steps=args.grad_accum,
         learning_rate=args.lr,
         lr_scheduler_type="cosine",
-        warmup_ratio=args.warmup_ratio,
         logging_steps=5,
         eval_strategy="epoch",
         save_strategy="epoch",
         save_total_limit=2,
         bf16=True,
-        max_seq_length=args.max_length,
-        packing=False,
-        dataset_text_field="text",
         gradient_checkpointing=True,
         report_to=["none"],
         seed=args.seed,
     )
+    # Pass optional args only if the installed trl SFTConfig still accepts them.
+    import inspect
+    _sft_params = set(inspect.signature(SFTConfig.__init__).parameters)
+    for key, value in {
+        "warmup_ratio": args.warmup_ratio,
+        "max_seq_length": args.max_length,
+        "max_length": args.max_length,
+        "packing": False,
+        "dataset_text_field": "text",
+    }.items():
+        if key in _sft_params:
+            sft_kwargs[key] = value
+    sft_config = SFTConfig(**sft_kwargs)
 
-    trainer = SFTTrainer(
-        model=model, tokenizer=tokenizer,
+    trainer_kwargs = dict(
+        model=model,
         train_dataset=train_ds, eval_dataset=eval_ds,
         args=sft_config, peft_config=lora_config,
     )
+    _trainer_params = set(inspect.signature(SFTTrainer.__init__).parameters)
+    if "tokenizer" in _trainer_params:
+        trainer_kwargs["tokenizer"] = tokenizer
+    elif "processing_class" in _trainer_params:
+        trainer_kwargs["processing_class"] = tokenizer
+    trainer = SFTTrainer(**trainer_kwargs)
     trainer.train()
     trainer.save_model(args.output)
     tokenizer.save_pretrained(args.output)
