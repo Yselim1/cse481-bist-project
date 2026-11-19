@@ -1,18 +1,22 @@
 # Fine-tuned BIST analyst Modelfile — produced by Phase F training.
 # Populate `bist_lora.gguf` by:
-#   1. Train LoRA on Colab T4 via training/train_lora.py (QLoRA, rank 16, 3 epochs)
-#   2. Convert adapter to GGUF with llama.cpp:
-#        python llama.cpp/convert_lora_to_gguf.py \
-#          --base qwen2.5-7b-instruct \
-#          training/outputs/lora \
-#          --outfile training/bist_lora.gguf
+#   1. Train LoRA on Colab T4 via training/train_unsloth.py (Unsloth QLoRA, Qwen 2.5 3B,
+#      rank 16, 3 epochs — see training/COLAB_RUNBOOK.md for the three Colab cells).
+#   2. Unsloth exports GGUF directly via model.save_pretrained_gguf(...); drop the
+#      resulting bist_lora.gguf under training/.
 #   3. Build the Ollama tag:
 #        ollama create bist-qwen -f training/Modelfile.finetuned
 #
 # At submission time the GGUF lives under training/bist_lora.gguf and is bundled
 # into the zip via scripts/package_project.py.
+#
+# Base model note: switched from Qwen 2.5 7B Instruct to 3B Instruct per the project
+# plan's explicit <12 GB VRAM fallback (D2). T4's 14.56 GB is marginal for 7B QLoRA
+# after activations + logits upcast; 3B fits with headroom and trains ~3x faster.
+# Chat template, tokenizer, and tool-call format are identical, so downstream harness
+# and evaluation code are unchanged.
 
-FROM qwen2.5:7b-instruct
+FROM qwen2.5:3b-instruct
 ADAPTER ./bist_lora.gguf
 
 PARAMETER temperature 0.0

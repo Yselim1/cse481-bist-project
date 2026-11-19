@@ -118,7 +118,7 @@ def _chat(messages: list[dict], tools: list[dict], model: str,
     request = urllib.request.Request(f"{OLLAMA_URL}/chat/completions", data=data,
                                       headers={"Content-Type": "application/json"})
     try:
-        with urllib.request.urlopen(request, timeout=120) as response:
+        with urllib.request.urlopen(request, timeout=600) as response:
             return json.loads(response.read())
     except urllib.error.URLError as exc:
         raise RuntimeError(f"Ollama endpoint unreachable at {OLLAMA_URL}: {exc}") from exc
