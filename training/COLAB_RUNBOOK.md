@@ -37,8 +37,8 @@ Cell 2 — clone + checkout:
 
 ```python
 import getpass, subprocess
-token = getpass.getpass("GitHub token (or press Enter for public clone): ").strip()
-repo = "yavuzgezginci24/CSE481-Term-Project"       # replace with your fork path
+token = getpass.getpass("GitHub token (or press Enter if repo is public): ").strip()
+repo = "Yselim1/cse481-bist-project"
 url = f"https://{token}@github.com/{repo}.git" if token else f"https://github.com/{repo}.git"
 subprocess.check_call(["git", "clone", url, "/content/bist"])
 %cd /content/bist
