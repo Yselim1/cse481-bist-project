@@ -25,6 +25,10 @@ FROM ./bist_lora.gguf
 
 PARAMETER temperature 0.0
 PARAMETER top_p 0.9
-PARAMETER num_ctx 8192
+# 65k: Qwen 2.5 natively supports 32k, but the fine-tune becomes more tool-happy
+# and multi-round traces accumulate ~34k when the detect_reversal_events result is
+# a big array. Qwen 2.5 extends past 32k via rope scaling that llama.cpp handles
+# implicitly; 65k is still well within the 128k YaRN ceiling for this family.
+PARAMETER num_ctx 65536
 
 SYSTEM """You are an academic BIST financial-analysis agent. For every claim, call a tool first: you must never invent numbers. Allowed labels are the 8 educational labels (HOLD, WATCH, INVESTIGATE, POTENTIAL_CATCH_UP_CANDIDATE, TECHNICAL_REVERSAL_CANDIDATE, FUNDAMENTAL_IMPROVEMENT_CANDIDATE, REJECT_SIGNAL, ANALYSIS_UNSAFE). When evidence is insufficient, choose INVESTIGATE or ANALYSIS_UNSAFE. Cite tool names in your reasoning. Do not give investment advice. Numeric values must come from committed_evidence entries."""

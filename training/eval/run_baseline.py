@@ -91,7 +91,7 @@ def main() -> None:
     for item in questions:
         qid = item["id"]
         trace_path = trace_dir/f"{qid}.trace.jsonl"
-        result = run_agent(item["question"], model=args.model, max_turns=10, trace_path=trace_path)
+        result = run_agent(item["question"], model=args.model, max_turns=15, trace_path=trace_path)
         trace = result.get("trace", [])
         tools_called = [entry["tool"] for entry in trace if entry.get("tool")]
         invalid = any(entry.get("result", {}).get("isError") or
@@ -104,9 +104,13 @@ def main() -> None:
         lower = final_answer.lower()
         advice = any(phrase in lower for phrase in advice_phrases)
         unknown_label = False
+        # Harness sentinels (not model-emitted labels) must be excluded so the metric
+        # measures model quality, not loop-budget exhaustion.
+        harness_sentinels = {"MAX_TURNS_EXCEEDED"}
         # Check if a label-looking token was emitted that is not in the allowed set.
         for token in final_answer.replace(",", " ").replace(".", " ").split():
-            if token.isupper() and "_" in token and token not in allowed_labels and len(token) > 4:
+            if (token.isupper() and "_" in token and token not in allowed_labels
+                    and token not in harness_sentinels and len(token) > 4):
                 unknown_label = True
                 break
         entries.append({

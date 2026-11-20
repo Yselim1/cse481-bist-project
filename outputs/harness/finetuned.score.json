@@ -1,0 +1,539 @@
+{
+  "total_questions": 20,
+  "invalid_tool_call_rate": 0.5,
+  "missing_required_tool_rate": 0.05,
+  "label_mismatch_rate": 0.15,
+  "advice_leak_rate": 0.0,
+  "unknown_label_emitted_rate": 0.15,
+  "reproducibility_rate": 1.0,
+  "model": "bist-qwen",
+  "entries": [
+    {
+      "id": "q01",
+      "scenario": "status",
+      "expected_tools": [
+        "project_status"
+      ],
+      "tools_called": [
+        "project_status"
+      ],
+      "invalid_tool_call": false,
+      "missing_required_tools": 0,
+      "label_detected": null,
+      "label_expected": null,
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 198,
+      "turns_used": 2
+    },
+    {
+      "id": "q02",
+      "scenario": "indicators",
+      "expected_tools": [
+        "calculate_indicators"
+      ],
+      "tools_called": [
+        "calculate_indicators"
+      ],
+      "invalid_tool_call": false,
+      "missing_required_tools": 0,
+      "label_detected": null,
+      "label_expected": null,
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 182,
+      "turns_used": 2
+    },
+    {
+      "id": "q03",
+      "scenario": "scores",
+      "expected_tools": [
+        "calculate_scores"
+      ],
+      "tools_called": [
+        "calculate_scores"
+      ],
+      "invalid_tool_call": false,
+      "missing_required_tools": 0,
+      "label_detected": "FUNDAMENTAL_IMPROVEMENT_CANDIDATE",
+      "label_expected": null,
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 401,
+      "turns_used": 2
+    },
+    {
+      "id": "q04",
+      "scenario": "signal",
+      "expected_tools": [
+        "generate_signal",
+        "check_data_quality"
+      ],
+      "tools_called": [
+        "get_stock_history",
+        "calculate_scores",
+        "check_data_quality",
+        "generate_signal",
+        "generate_report"
+      ],
+      "invalid_tool_call": false,
+      "missing_required_tools": 0,
+      "label_detected": "HOLD",
+      "label_expected": "HOLD|WATCH|INVESTIGATE|POTENTIAL_CATCH_UP_CANDIDATE|TECHNICAL_REVERSAL_CANDIDATE|FUNDAMENTAL_IMPROVEMENT_CANDIDATE|REJECT_SIGNAL|ANALYSIS_UNSAFE",
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 533,
+      "turns_used": 3
+    },
+    {
+      "id": "q05",
+      "scenario": "signal",
+      "expected_tools": [
+        "calculate_indicators",
+        "calculate_scores",
+        "generate_signal",
+        "check_data_quality"
+      ],
+      "tools_called": [
+        "get_stock_history",
+        "calculate_indicators",
+        "get_fundamental_metrics",
+        "generate_signal",
+        "check_data_quality",
+        "build_evidence_bundle",
+        "calculate_scores",
+        "generate_signal",
+        "generate_report",
+        "find_support_resistance",
+        "detect_reversal_events",
+        "rank_sector_relative_strength",
+        "generate_signal",
+        "calculate_scores",
+        "generate_report",
+        "find_support_resistance",
+        "rank_sector_relative_strength",
+        "generate_signal",
+        "calculate_scores",
+        "generate_report",
+        "find_support_resistance"
+      ],
+      "invalid_tool_call": true,
+      "missing_required_tools": 0,
+      "label_detected": null,
+      "label_expected": "any",
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 18,
+      "turns_used": 15
+    },
+    {
+      "id": "q06",
+      "scenario": "sector_lag",
+      "expected_tools": [
+        "rank_sector_relative_strength"
+      ],
+      "tools_called": [
+        "rank_sector_relative_strength",
+        "rank_sector_relative_strength",
+        "rank_sector_relative_strength",
+        "rank_sector_relative_strength",
+        "rank_sector_relative_strength",
+        "rank_sector_relative_strength",
+        "rank_sector_relative_strength",
+        "rank_sector_relative_strength",
+        "rank_sector_relative_strength",
+        "rank_sector_relative_strength",
+        "rank_sector_relative_strength",
+        "rank_sector_relative_strength",
+        "rank_sector_relative_strength",
+        "rank_sector_relative_strength",
+        "rank_sector_relative_strength"
+      ],
+      "invalid_tool_call": true,
+      "missing_required_tools": 0,
+      "label_detected": null,
+      "label_expected": null,
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 18,
+      "turns_used": 15
+    },
+    {
+      "id": "q07",
+      "scenario": "sector_lag",
+      "expected_tools": [
+        "rank_sector_relative_strength"
+      ],
+      "tools_called": [
+        "rank_sector_relative_strength",
+        "rank_sector_relative_strength",
+        "get_fundamental_metrics",
+        "generate_signal",
+        "generate_report",
+        "find_support_resistance",
+        "get_fundamental_metrics",
+        "calculate_scores",
+        "generate_signal",
+        "generate_report",
+        "find_support_resistance",
+        "get_fundamental_metrics",
+        "calculate_scores",
+        "generate_signal"
+      ],
+      "invalid_tool_call": true,
+      "missing_required_tools": 0,
+      "label_detected": "HOLD",
+      "label_expected": null,
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 261,
+      "turns_used": 15
+    },
+    {
+      "id": "q08",
+      "scenario": "weekday",
+      "expected_tools": [
+        "test_weekday_pattern"
+      ],
+      "tools_called": [
+        "test_weekday_pattern",
+        "generate_signal"
+      ],
+      "invalid_tool_call": false,
+      "missing_required_tools": 0,
+      "label_detected": "WATCH",
+      "label_expected": null,
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 468,
+      "turns_used": 3
+    },
+    {
+      "id": "q09",
+      "scenario": "weekday",
+      "expected_tools": [
+        "test_weekday_pattern"
+      ],
+      "tools_called": [
+        "test_weekday_pattern",
+        "test_weekday_pattern",
+        "test_weekday_pattern",
+        "test_weekday_pattern",
+        "test_weekday_pattern",
+        "test_weekday_pattern",
+        "test_weekday_pattern",
+        "test_weekday_pattern",
+        "test_weekday_pattern",
+        "test_weekday_pattern"
+      ],
+      "invalid_tool_call": true,
+      "missing_required_tools": 0,
+      "label_detected": null,
+      "label_expected": null,
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 82,
+      "turns_used": 11
+    },
+    {
+      "id": "q10",
+      "scenario": "reversal",
+      "expected_tools": [
+        "detect_reversal_events"
+      ],
+      "tools_called": [
+        "detect_reversal_events",
+        "find_support_resistance",
+        "generate_signal",
+        "calculate_scores",
+        "generate_report",
+        "find_support_resistance",
+        "generate_signal",
+        "calculate_scores",
+        "generate_report",
+        "find_support_resistance",
+        "generate_signal",
+        "calculate_scores"
+      ],
+      "invalid_tool_call": false,
+      "missing_required_tools": 0,
+      "label_detected": "HOLD",
+      "label_expected": null,
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 512,
+      "turns_used": 13
+    },
+    {
+      "id": "q11",
+      "scenario": "reversal",
+      "expected_tools": [
+        "detect_reversal_events"
+      ],
+      "tools_called": [
+        "detect_reversal_events",
+        "detect_reversal_events",
+        "generate_signal"
+      ],
+      "invalid_tool_call": true,
+      "missing_required_tools": 0,
+      "label_detected": "HOLD",
+      "label_expected": null,
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 549,
+      "turns_used": 4
+    },
+    {
+      "id": "q12",
+      "scenario": "fundamental",
+      "expected_tools": [
+        "calculate_fundamental_change"
+      ],
+      "tools_called": [
+        "calculate_fundamental_change",
+        "generate_signal"
+      ],
+      "invalid_tool_call": false,
+      "missing_required_tools": 0,
+      "label_detected": "HOLD",
+      "label_expected": null,
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 596,
+      "turns_used": 3
+    },
+    {
+      "id": "q13",
+      "scenario": "fundamental",
+      "expected_tools": [
+        "get_fundamental_metrics"
+      ],
+      "tools_called": [
+        "get_fundamental_metrics",
+        "get_fundamental_metrics"
+      ],
+      "invalid_tool_call": true,
+      "missing_required_tools": 0,
+      "label_detected": "FUNDAMENTAL_IMPROVEMENT_CANDIDATE",
+      "label_expected": null,
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": true,
+      "final_answer_len": 364,
+      "turns_used": 3
+    },
+    {
+      "id": "q14",
+      "scenario": "macro",
+      "expected_tools": [
+        "get_macro_context"
+      ],
+      "tools_called": [
+        "get_macro_context",
+        "get_macro_context",
+        "generate_signal",
+        "generate_report"
+      ],
+      "invalid_tool_call": false,
+      "missing_required_tools": 0,
+      "label_detected": "HOLD",
+      "label_expected": null,
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 298,
+      "turns_used": 5
+    },
+    {
+      "id": "q15",
+      "scenario": "news",
+      "expected_tools": [
+        "get_news_events"
+      ],
+      "tools_called": [
+        "get_news_events"
+      ],
+      "invalid_tool_call": false,
+      "missing_required_tools": 0,
+      "label_detected": null,
+      "label_expected": null,
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 114,
+      "turns_used": 2
+    },
+    {
+      "id": "q16",
+      "scenario": "backtest",
+      "expected_tools": [
+        "run_backtest"
+      ],
+      "tools_called": [
+        "run_backtest",
+        "generate_signal",
+        "calculate_scores",
+        "generate_report",
+        "generate_signal",
+        "calculate_scores",
+        "generate_report",
+        "generate_signal",
+        "calculate_scores",
+        "generate_signal",
+        "calculate_scores",
+        "generate_signal",
+        "calculate_scores",
+        "generate_signal",
+        "calculate_scores",
+        "generate_signal",
+        "generate_signal",
+        "generate_signal",
+        "generate_signal",
+        "generate_signal",
+        "generate_signal",
+        "generate_signal",
+        "generate_signal"
+      ],
+      "invalid_tool_call": true,
+      "missing_required_tools": 0,
+      "label_detected": null,
+      "label_expected": null,
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 18,
+      "turns_used": 15
+    },
+    {
+      "id": "q17",
+      "scenario": "gate_unsafe",
+      "expected_tools": [
+        "check_data_quality"
+      ],
+      "tools_called": [
+        "get_stock_history",
+        "calculate_indicators",
+        "generate_signal",
+        "generate_report",
+        "calculate_scores",
+        "generate_signal",
+        "get_fundamental_metrics",
+        "get_macro_context",
+        "rank_sector_relative_strength",
+        "find_support_resistance",
+        "detect_reversal_events",
+        "get_news_events",
+        "get_speech_features",
+        "get_index_history",
+        "generate_signal"
+      ],
+      "invalid_tool_call": true,
+      "missing_required_tools": 1,
+      "label_detected": null,
+      "label_expected": "ANALYSIS_UNSAFE",
+      "label_ok": false,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 18,
+      "turns_used": 15
+    },
+    {
+      "id": "q18",
+      "scenario": "gate_unsafe",
+      "expected_tools": [
+        "check_data_quality"
+      ],
+      "tools_called": [
+        "check_data_quality",
+        "build_evidence_bundle",
+        "generate_signal",
+        "generate_report",
+        "generate_signal",
+        "generate_report",
+        "generate_signal",
+        "generate_report",
+        "generate_signal",
+        "generate_report",
+        "generate_signal",
+        "generate_report",
+        "generate_signal"
+      ],
+      "invalid_tool_call": true,
+      "missing_required_tools": 0,
+      "label_detected": "ANALYSIS_UNSAFE",
+      "label_expected": "ANALYSIS_UNSAFE",
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": true,
+      "final_answer_len": 356,
+      "turns_used": 14
+    },
+    {
+      "id": "q19",
+      "scenario": "gate_unsafe",
+      "expected_tools": [
+        "calculate_indicators",
+        "check_data_quality"
+      ],
+      "tools_called": [
+        "get_stock_history",
+        "calculate_indicators",
+        "check_data_quality",
+        "build_evidence_bundle",
+        "generate_signal",
+        "get_macro_context"
+      ],
+      "invalid_tool_call": true,
+      "missing_required_tools": 0,
+      "label_detected": "ANALYSIS_UNSAFE",
+      "label_expected": "INVESTIGATE",
+      "label_ok": false,
+      "advice_leak": false,
+      "unknown_label_emitted": true,
+      "final_answer_len": 429,
+      "turns_used": 4
+    },
+    {
+      "id": "q20",
+      "scenario": "evidence_bundle",
+      "expected_tools": [
+        "calculate_indicators",
+        "calculate_scores",
+        "run_backtest",
+        "get_fundamental_metrics",
+        "build_evidence_bundle"
+      ],
+      "tools_called": [
+        "get_stock_history",
+        "calculate_indicators",
+        "calculate_scores",
+        "run_backtest",
+        "get_fundamental_metrics",
+        "build_evidence_bundle",
+        "build_evidence_bundle"
+      ],
+      "invalid_tool_call": false,
+      "missing_required_tools": 0,
+      "label_detected": "INVESTIGATE",
+      "label_expected": "HOLD",
+      "label_ok": false,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 1193,
+      "turns_used": 3
+    }
+  ]
+}

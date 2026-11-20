@@ -17,8 +17,10 @@
   "missing_data_honesty": true,
   "numeric_exactness": 0.0,
   "quality_gate_pass": false,
-  "structured_reproducibility": true,
+  "structured_reproducibility": false,
   "temporal_validity": false,
-  "unsupported_tool_claims": [],
+  "unsupported_tool_claims": [
+    "MCP"
+  ],
   "workflow_completion": 0.0
 }

@@ -1,1 +1,17 @@
-{"as_of":"2026-09-25","financial_period":"2026-06-30","revenue_try_million":1132505,"net_profit_try_million":112059,"net_debt_try_million":620378,"combined_return":-0.1102979392,"technical_return":0.0642150525,"buy_hold_return":0.0529106085,"bist100_return":0.3085078161,"signal_action":"HOLD","context_event_ids":["boeing-2026"],"evidence_tools":["get_fundamental_metrics","calculate_indicators","calculate_scores","generate_signal","run_backtest","get_context_events"],"educational_caveat":"Backtest covers 437 sessions from 2025-01-02 through 2026-09-25; nominal TRY, costs included for stock strategies, BIST100 price index without costs. Results are historical simulations, not validated investment performance. The combined strategy had four closed trades. Latest reviewed KAP context: Boeing 737 MAX order for 150 aircraft, disclosed 2026-09-23 18:19 +03:00.","investment_recommendation":false,"narrative":"Latest publication-lagged trailing financial data is for the period ending 2026-06-30, available 2026-08-06. Revenue, net profit and net debt are in million TRY. As of 2026-09-25, the signal is HOLD under the supplied flat-position state (holding=false); the generator cites its trend filter. Full-window cumulative returns: combined -0.1103, technical 0.0642, buy-and-hold 0.0529, BIST100 0.3085."}
+{
+  "as_of": null,
+  "financial_period": null,
+  "revenue_try_million": null,
+  "net_profit_try_million": null,
+  "net_debt_try_million": null,
+  "combined_return": null,
+  "technical_return": null,
+  "buy_hold_return": null,
+  "bist100_return": null,
+  "signal_action": null,
+  "context_event_ids": [],
+  "evidence_tools": [],
+  "educational_caveat": "",
+  "investment_recommendation": null,
+  "narrative": "MAX_TURNS_EXCEEDED"
+}

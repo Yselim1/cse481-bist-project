@@ -8,32 +8,36 @@
   ],
   "runs": [
     {
-      "answer_sha256": "8fdd67b72bcaee2bbd861ecad42650dfea6ba95a9d73283dcb72946c9a529bc8",
+      "answer_sha256": "902733bbc3d32197d67b42499e2a2994ca725f132b98de92d8b36b41a07b6619",
+      "backend": "ollama",
       "called_tools": [],
-      "completed_at": "2026-09-27T15:21:34.312471+00:00",
-      "model": "gpt-6-luna",
+      "completed_at": "2026-11-19T23:51:18.315668+00:00",
+      "model": "bist-qwen",
       "quality_gate_pass": false,
       "stage": "raw_llm",
-      "trace_sha256": "752d95d3d844c64f9fc1fe616f4bd677d16fbb2d665df27a2bd45ae3c928a93e"
+      "trace_sha256": "72f214e91a3c144990506815d60a716771515c386d07e6b40966bf6ddbabcf95"
     },
     {
-      "answer_sha256": "aab8c6ed9069b1d4f0c73635d0325360c2e608cae3b8a39d0666f09a2c304a72",
+      "answer_sha256": "685ab50aa1e748a6ee595a2d4528731516bb6e72d46da2a8e584d6c32d2171f4",
+      "backend": "ollama",
       "called_tools": [
         "calculate_indicators",
         "calculate_scores",
         "generate_signal",
         "get_context_events",
         "get_fundamental_metrics",
+        "get_macro_context",
         "run_backtest"
       ],
-      "completed_at": "2026-09-27T15:22:11.789716+00:00",
-      "model": "gpt-6-luna",
-      "quality_gate_pass": true,
+      "completed_at": "2026-11-19T23:58:11.114966+00:00",
+      "model": "bist-qwen",
+      "quality_gate_pass": false,
       "stage": "llm_tools",
-      "trace_sha256": "83b8a0dab3495c510e45535962a6b9a670760bb8a51efe7ca92e41224cebd985"
+      "trace_sha256": "38a72bd727f7265bf6e0507f56836cdd2991c6136ea814a9ac9f1f9388da1f82"
     },
     {
-      "answer_sha256": "9393e94a950cd1112e88497e75c481a755bd13275e1dc606159789bc3cf09c61",
+      "answer_sha256": "a24e368561fd62960c71785f8420f6d60b80b1f00276acfa74e4148d3ee2c9e9",
+      "backend": "ollama",
       "called_tools": [
         "calculate_indicators",
         "calculate_scores",
@@ -42,15 +46,17 @@
         "get_fundamental_metrics",
         "run_backtest"
       ],
-      "completed_at": "2026-09-27T15:22:46.261885+00:00",
-      "model": "gpt-6-luna",
-      "quality_gate_pass": true,
+      "completed_at": "2026-11-20T00:01:18.332340+00:00",
+      "model": "bist-qwen",
+      "quality_gate_pass": false,
       "stage": "stateful_harness",
-      "trace_sha256": "d0c97127f1c17bc6944f3c52ac009916f12005e4c20a77ab2fd23be95be00b99"
+      "trace_sha256": "fa8d2d7b996ff60e88fb4c88b56bb65dbaa0a31a124ae597f288153ff3868465"
     },
     {
-      "answer_sha256": "66e1f50698fd00874fe9890747b7a5cf8b1a898e1495615d58deef1c5241876e",
+      "answer_sha256": "a19d27c93d209e28bb83f617cac5fb053b5c2e4e621cb8ccc9486f7354cc2bed",
+      "backend": "ollama",
       "called_tools": [
+        "build_evidence_bundle",
         "calculate_indicators",
         "calculate_scores",
         "generate_signal",
@@ -58,14 +64,15 @@
         "get_fundamental_metrics",
         "run_backtest"
       ],
-      "completed_at": "2026-09-27T15:23:24.665730+00:00",
-      "model": "gpt-6-luna",
-      "quality_gate_pass": true,
+      "completed_at": "2026-11-20T00:02:29.491502+00:00",
+      "model": "bist-qwen",
+      "quality_gate_pass": false,
       "stage": "evidence_quality_gate",
-      "trace_sha256": "948f67629d667d7a272ca494e18187c18f10b6a6ecab2fccb35de299a741ed18"
+      "trace_sha256": "8be23c5f7bc54f2b2d5098fc5cfe9a35a40e364d638d5811f381ee21fc217196"
     },
     {
-      "answer_sha256": "41903c2933b6961a6a05c2e0f54cd2acb728090cffa7e61290bd0bf9db0b3c40",
+      "answer_sha256": "a24e368561fd62960c71785f8420f6d60b80b1f00276acfa74e4148d3ee2c9e9",
+      "backend": "ollama",
       "called_tools": [
         "calculate_indicators",
         "calculate_scores",
@@ -74,11 +81,11 @@
         "get_fundamental_metrics",
         "run_backtest"
       ],
-      "completed_at": "2026-09-27T15:24:03.496052+00:00",
-      "model": "gpt-6-luna",
-      "quality_gate_pass": true,
+      "completed_at": "2026-11-20T00:05:18.750105+00:00",
+      "model": "bist-qwen",
+      "quality_gate_pass": false,
       "stage": "memory_human_review",
-      "trace_sha256": "4171888811a14ea86bc8403688c1a05fa40f99a045c6e14de14e1e8ecce0b31c"
+      "trace_sha256": "cfdd48ec1e16a2f220bc201d38673dab69bfab0d53db40a56b32c022798a7bce"
     }
   ]
 }

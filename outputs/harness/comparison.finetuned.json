@@ -1,0 +1,135 @@
+{
+  "backend": "ollama",
+  "fixed_model": "bist-qwen",
+  "interpretation": "Architecture comparison only; model identity is fixed and model quality is not the independent variable.",
+  "question": "As of 2026-09-25, explain THYAO's latest available trailing financial state, current rule signal, the full 2025-01-01 to 2026-09-26-exclusive strategy comparison, and the latest reviewed KAP context event. Return money in million TRY and returns as decimals. Missing evidence must be null.",
+  "stages": [
+    {
+      "checks": {
+        "as_of": true,
+        "bist100_return": false,
+        "buy_hold_return": false,
+        "combined_return": false,
+        "context_event": false,
+        "financial_period": false,
+        "net_debt_try_million": false,
+        "net_profit_try_million": false,
+        "revenue_try_million": false,
+        "signal_action": false,
+        "technical_return": false
+      },
+      "constraint_compliance": true,
+      "evidence_coverage": 0.0,
+      "missing_data_honesty": true,
+      "numeric_exactness": 0.0,
+      "quality_gate_pass": false,
+      "stage": "raw_llm",
+      "structured_reproducibility": false,
+      "temporal_validity": false,
+      "unsupported_tool_claims": [
+        "MCP"
+      ],
+      "workflow_completion": 0.0
+    },
+    {
+      "checks": {
+        "as_of": false,
+        "bist100_return": false,
+        "buy_hold_return": false,
+        "combined_return": false,
+        "context_event": false,
+        "financial_period": false,
+        "net_debt_try_million": false,
+        "net_profit_try_million": false,
+        "revenue_try_million": false,
+        "signal_action": false,
+        "technical_return": false
+      },
+      "constraint_compliance": false,
+      "evidence_coverage": 1.0,
+      "missing_data_honesty": false,
+      "numeric_exactness": 0.0,
+      "quality_gate_pass": false,
+      "stage": "llm_tools",
+      "structured_reproducibility": false,
+      "temporal_validity": false,
+      "unsupported_tool_claims": [],
+      "workflow_completion": 1.0
+    },
+    {
+      "checks": {
+        "as_of": false,
+        "bist100_return": false,
+        "buy_hold_return": false,
+        "combined_return": false,
+        "context_event": false,
+        "financial_period": false,
+        "net_debt_try_million": false,
+        "net_profit_try_million": false,
+        "revenue_try_million": false,
+        "signal_action": false,
+        "technical_return": false
+      },
+      "constraint_compliance": false,
+      "evidence_coverage": 1.0,
+      "missing_data_honesty": false,
+      "numeric_exactness": 0.0,
+      "quality_gate_pass": false,
+      "stage": "stateful_harness",
+      "structured_reproducibility": true,
+      "temporal_validity": false,
+      "unsupported_tool_claims": [],
+      "workflow_completion": 1.0
+    },
+    {
+      "checks": {
+        "as_of": true,
+        "bist100_return": false,
+        "buy_hold_return": false,
+        "combined_return": false,
+        "context_event": false,
+        "financial_period": false,
+        "net_debt_try_million": false,
+        "net_profit_try_million": false,
+        "revenue_try_million": false,
+        "signal_action": false,
+        "technical_return": false
+      },
+      "constraint_compliance": false,
+      "evidence_coverage": 1.0,
+      "missing_data_honesty": false,
+      "numeric_exactness": 0.0,
+      "quality_gate_pass": false,
+      "stage": "evidence_quality_gate",
+      "structured_reproducibility": false,
+      "temporal_validity": false,
+      "unsupported_tool_claims": [],
+      "workflow_completion": 1.0
+    },
+    {
+      "checks": {
+        "as_of": false,
+        "bist100_return": false,
+        "buy_hold_return": false,
+        "combined_return": false,
+        "context_event": false,
+        "financial_period": false,
+        "net_debt_try_million": false,
+        "net_profit_try_million": false,
+        "revenue_try_million": false,
+        "signal_action": false,
+        "technical_return": false
+      },
+      "constraint_compliance": false,
+      "evidence_coverage": 1.0,
+      "missing_data_honesty": false,
+      "numeric_exactness": 0.0,
+      "quality_gate_pass": false,
+      "stage": "memory_human_review",
+      "structured_reproducibility": true,
+      "temporal_validity": false,
+      "unsupported_tool_claims": [],
+      "workflow_completion": 1.0
+    }
+  ]
+}

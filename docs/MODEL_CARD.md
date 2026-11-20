@@ -1,13 +1,24 @@
-# Model card — BIST educational agent (Qwen 2.5 7B + LoRA)
+# Model card — BIST educational agent (Qwen 2.5 3B + LoRA)
 
 ## Summary
 
-- **Base model**: `Qwen/Qwen2.5-7B-Instruct` (Apache 2.0). Chosen for native tool-calling
-  support, strong Turkish tokenisation, and a 32k-token context window (the agent uses 8k).
+- **Base model**: `unsloth/Qwen2.5-3B-Instruct-bnb-4bit` (Apache 2.0, 4-bit base checkpoint).
+  Switched from 7B to 3B per the project plan's D2 fallback for <12 GB VRAM — Colab T4's
+  14.56 GB is marginal for 7B QLoRA after activations + logits upcast. Same chat template,
+  same tokenizer, same tool-call format, so downstream harness and evaluation code are
+  unchanged.
 - **Adapter**: LoRA rank 16, alpha 32, dropout 0.05 on q/k/v/o + MLP projections.
-- **Training**: QLoRA 4-bit nf4 on a free Colab T4 (~70 min for 3 epochs on ~400 examples).
-- **Objective**: supervised fine-tune on verified MCP tool-call traces; no RLHF.
+- **Training**: Unsloth QLoRA 4-bit nf4 on a free Colab T4 (~20 min for 3 epochs on ~400
+  examples; final eval_loss 0.031 at step 60/60).
+- **Objective**: supervised SFT on verified MCP tool-call traces with
+  `train_on_responses_only` loss masking; no RLHF.
+- **Export**: Unsloth `save_pretrained_gguf(..., q4_k_m)` writes a merged GGUF (adapter
+  baked into base), so `training/Modelfile.finetuned` uses `FROM ./bist_lora.gguf` rather
+  than the `ADAPTER` directive.
 - **Deployment**: Ollama locally via `training/Modelfile.finetuned` → tag `bist-qwen`.
+  Context: Ollama caps `num_ctx` at the GGUF's advertised 32k regardless of Modelfile
+  override; `scripts/local_agent.py` truncates each MCP tool-result payload at 12 KB to
+  keep multi-round traces under the ceiling.
 
 ## Intended use
 
@@ -51,6 +62,12 @@ Head-to-head report: `outputs/training/base_vs_finetuned.md`.
 ## Limitations
 
 - Trained on 400 examples — small corpus; cannot generalise beyond the 10-ticker universe.
+- **Tool-loop pathology**: On ~20 % of the eval set (q05, q06, q07, q16) the model exhausts
+  the 15-turn budget by cycling through tools after its first successful call. Root cause:
+  the training demonstrations include multi-tool trajectories but lack explicit stop
+  signals, so the model generalizes "after a successful call, call another one" rather
+  than "after a successful call, answer." See `outputs/training/base_vs_finetuned.md`
+  for the per-question breakdown. First candidate for any future dataset iteration.
 - Turkish economic news beyond KAP is absent; macro context is limited to TCMB / TÜİK series.
 - Period mismatch (pre/post TMS 29) is hard-blocked by the gate; the model will refuse rather
   than fuse incompatible-presentation statements.

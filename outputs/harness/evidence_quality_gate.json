@@ -1,1 +1,27 @@
-{"as_of":"2026-09-25","financial_period":"2026-06-30","revenue_try_million":1132505,"net_profit_try_million":112059,"net_debt_try_million":620378,"combined_return":-0.11029793916663655,"technical_return":0.06421505249467252,"buy_hold_return":0.05291060851497198,"bist100_return":0.30850781608315225,"signal_action":"HOLD","context_event_ids":["boeing-2026"],"evidence_tools":["get_fundamental_metrics","calculate_indicators","calculate_scores","generate_signal","run_backtest","get_context_events"],"educational_caveat":"Latest verified trailing financials are for the period ending 2026-06-30 and were available 2026-08-06, before the 2026-09-25 as-of date. Returns are net nominal TRY for sessions 2025-01-02 through 2026-09-25; 2026 is partial, the BIST100 comparator is a price index without costs, and the tool flags fewer than 10 closed trades for combined and buy-hold. Single-stock selection bias, zero cash yield, no taxes, and synthetic adjusted units also limit interpretation. Educational research only; no investment recommendation.","investment_recommendation":false,"narrative":"At the 2026-09-25 as-of date, the latest verified trailing financial state was for the period ending 2026-06-30 (available 2026-08-06): revenue was 1,132,505 million TRY, net profit 112,059 million TRY, and net debt 620,378 million TRY. With the supplied flat-position state, the current rule signal was HOLD, reason trend_filter. Over 2025-01-01 through 2026-09-26 exclusive, cumulative returns were combined -0.11029793916663655, technical 0.06421505249467252, buy-and-hold 0.05291060851497198, and BIST100 0.30850781608315225. The latest reviewed KAP context event available by the as-of date was Boeing's 2026-09-23 disclosure of an order for 150 Boeing 737 MAX aircraft (event boeing-2026)."}
+{
+  "as_of": "2026-09-25",
+  "financial_period": "2026-09-25",
+  "ticker": "THYAO.IS",
+  "educational_label": "ANALYSIS_UNSAFE",
+  "explanation": "Primary metric failure: 1 live-session indicator(s) >0.1% change from sample window; gate escalates to ANALYSIS_UNSAFE. Note: live indicators may vary in subsequent sessions.",
+  "gate_status": "ANALYSIS_UNSAFE",
+  "hard_blocks": [],
+  "soft_block_counts": {
+    "WATCH": 0,
+    "HOLD": 1,
+    "POTENTIAL_CATCH_UP_CANDIDATE": 0,
+    "TECHNICAL_REVERSAL_CANDIDATE": 0,
+    "FUNDAMENTAL_IMPROVEMENT_CANDIDATE": 0,
+    "REJECT_SIGNAL": 0,
+    "ANALYSIS_UNSAFE": 1
+  },
+  "explanation_fallbacks": [],
+  "live_indicators_exceed_threshold": true,
+  "committed_evidence_ids": [
+    "calculate_scores:a416ea84421f:2026-09-25:technical_score",
+    "calculate_scores:a416ea84421f:2026-09-25:fundamental_score",
+    "calculate_scores:d6ecb1403323:2026-09-25:combined_score"
+  ],
+  "live_indicator_names_exceed_threshold": true,
+  "explanation_chain_of_reasoning": "Primary metric failure: 1 live-session indicator(s) >0.1% change from sample window; gate escalates to ANALYSIS_UNSAFE. Note: live indicators may vary in subsequent sessions."
+}

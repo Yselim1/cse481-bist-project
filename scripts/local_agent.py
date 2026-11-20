@@ -108,6 +108,22 @@ def _mcp_tool_to_openai_schema(tool: dict) -> dict:
         "parameters": tool.get("inputSchema", {"type": "object", "properties": {}})}}
 
 
+# Qwen 2.5's advertised context is 32k and Ollama refuses to go higher regardless of
+# the Modelfile num_ctx. detect_reversal_events and run_backtest alone can emit ~20k
+# tokens of JSON; after 3-4 tool rounds the request overflows. Cap each tool-result
+# payload so model + system + user + N tool outputs still fit. 12 KB ≈ 3 K tokens,
+# which leaves headroom for 6-7 rounds under 32k. Both baseline and fine-tuned models
+# see the same cap, so comparisons stay apples-to-apples.
+_TOOL_RESULT_CHAR_CAP = 12_000
+
+
+def _truncate_tool_result(payload: str) -> str:
+    if len(payload) <= _TOOL_RESULT_CHAR_CAP:
+        return payload
+    keep = _TOOL_RESULT_CHAR_CAP - 200
+    return payload[:keep] + f"\n...[truncated {len(payload) - keep} chars for context budget]"
+
+
 def _chat(messages: list[dict], tools: list[dict], model: str,
           temperature: float = 0.0, allow_tools: bool = True) -> dict:
     body: dict = {"model": model, "messages": messages, "temperature": temperature, "stream": False}
@@ -120,6 +136,9 @@ def _chat(messages: list[dict], tools: list[dict], model: str,
     try:
         with urllib.request.urlopen(request, timeout=600) as response:
             return json.loads(response.read())
+    except urllib.error.HTTPError as exc:
+        body = exc.read().decode("utf-8", errors="replace")[:2000]
+        raise RuntimeError(f"Ollama HTTP {exc.code} at {OLLAMA_URL}: {body}") from exc
     except urllib.error.URLError as exc:
         raise RuntimeError(f"Ollama endpoint unreachable at {OLLAMA_URL}: {exc}") from exc
 
@@ -163,7 +182,8 @@ def run_agent(prompt: str, *, model: str = DEFAULT_MODEL, max_turns: int = 10,
                                "arguments": args, "result": tool_result})
                 messages.append({"role": "tool", "tool_call_id": call.get("id", str(time.time())),
                                  "name": call["function"]["name"],
-                                 "content": json.dumps(tool_result, default=str)})
+                                 "content": _truncate_tool_result(
+                                     json.dumps(tool_result, default=str))})
         return {"final_answer": "MAX_TURNS_EXCEEDED", "trace": trace,
                  "turns_used": max_turns, "model": model}
     finally:
