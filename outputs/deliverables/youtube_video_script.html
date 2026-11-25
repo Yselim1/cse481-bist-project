@@ -145,8 +145,8 @@ body.tp .honest{background:#2a2112;color:#f2f2f2}
     <h2>Before you press record</h2>
     <ul>
       <li>In OBS, go to <b>Scene Collection → Import</b> and choose <code>Desktop\CSE481_Video_OBS_Scenes.json</code>, then switch to the "CSE481 Video" collection. It has one scene per screen in this script, with a hotkey for each (shown in each segment).</li>
-      <li>In OBS, open the <b>Webcam</b> source once and pick your camera (or leave it empty for no camera). Check that <b>Mic/Aux</b> moves in the audio mixer. Desktop audio starts muted so notification sounds stay out.</li>
-      <li>Open Windows Terminal and VS Code before switching to scenes 02b, 07 and 09a. If a capture is black, open the source and pick the window again.</li>
+      <li>Check that <b>Mic/Aux</b> moves in the OBS audio mixer. Desktop audio starts muted so notification sounds stay out.</li>
+      <li>Open Windows Terminal and VS Code before switching to scenes 02b, 07 and 09a, and don't minimise them. The captures use the "Windows 10 (1903 and up)" method; if one is still black, open the source and pick the window again from the list.</li>
       <li>Start Ollama and check that <code>ollama list</code> shows <code>bist-qwen</code>. If it doesn't, run <code>ollama create bist-qwen -f training/Modelfile.finetuned</code>.</li>
       <li>Set <code>$env:BIST_LOCAL_MODEL="bist-qwen"</code> or pass <code>--model bist-qwen</code>. <code>local_agent.py</code> falls back to <code>qwen2.5:7b-instruct</code> when neither is given.</li>
       <li>Run the 5-stage harness before recording; it takes about 8–15 minutes. During the video, only show <code>outputs/harness/</code>.</li>
