@@ -11,8 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def main():
     files = [ROOT/name for name in ["README.md","TASKS.md","IMPLEMENTATION_PLAN.md","pyproject.toml",
-        "uv.lock",".gitignore",".env.example","CSE481_Term_Project_BIST_Python_Fintables_MCP_Final.pdf",
-        "CLAUDE.md"]]
+        "uv.lock",".gitignore",".env.example","CSE481_Term_Project_BIST_Python_Fintables_MCP_Final.pdf"]]
     exclude = {"__pycache__",".ipynb_checkpoints",".ruff_cache",".pytest_cache",
                "harness_codex_archive"}  # legacy cloud-LLM runs; submission is local-only
     # Working-session notes and their generator are not submission material.

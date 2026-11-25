@@ -1,5 +1,5 @@
 {
-  "created_at": "2026-11-25T09:45:54.657231+00:00",
+  "created_at": "2026-11-25T09:49:11.713099+00:00",
   "external_files": {
     "training/bist_lora.gguf": {
       "bytes": 1929902688,
@@ -15,10 +15,6 @@
     ".gitignore": {
       "bytes": 220,
       "sha256": "a07760cef867b798b6938b82e80f7873860c257b0b3544761e36ea50a8cf0144"
-    },
-    "CLAUDE.md": {
-      "bytes": 9292,
-      "sha256": "1b8832d6fe246aeb87e7c6583f5e147dbd26cbb0fa7940940c42e6467d66bf7b"
     },
     "CSE481_Term_Project_BIST_Python_Fintables_MCP_Final.pdf": {
       "bytes": 230063,
@@ -337,8 +333,8 @@
       "sha256": "dddadea4526f429951edf369809a08154445d496cbbfa645517025a786f9628b"
     },
     "docs/PROPOSAL.md": {
-      "bytes": 3029,
-      "sha256": "5e4c99738b7f36932754693c3229e849830e4794817a07772768bb5b8d9fc023"
+      "bytes": 3209,
+      "sha256": "6f947783ca9c1b10865ec2b7086ecb95dfd98f0fffc7f221d07445d8bdcc33cb"
     },
     "docs/THYAO_PROJECT_COMPLETE_GUIDE.md": {
       "bytes": 75811,
@@ -1705,8 +1701,8 @@
       "sha256": "6e20f05dad98d572ce0120b84f95cd66c01d5aaccc97c6d2ce0d85f2610b3416"
     },
     "scripts/package_project.py": {
-      "bytes": 3095,
-      "sha256": "1aff40849d3d4a6d9b66e53e1d3ee81e189171dbfcbb394f5c68824f8274a66f"
+      "bytes": 3074,
+      "sha256": "625f464655838ac4fe21f23f1216cf6b2af275a917628e4c0aba501535ea07e5"
     },
     "scripts/presentation_launch.ps1": {
       "bytes": 9128,

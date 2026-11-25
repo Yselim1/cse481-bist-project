@@ -1,5 +1,12 @@
 # Project proposal
 
+| | |
+| --- | --- |
+| **Course** | CSE481 Engineering Economics |
+| **Team members** | [Student Name 1] ([Student ID]), [Student Name 2] ([Student ID]) |
+| **Instructor** | [Instructor Name] |
+| **Submission deadline** | [DD Month YYYY] |
+
 ## Title and question
 
 **Explainable analysis of Turkish Airlines using Python, Fintables and an MCP AI agent.** Does an annual financial filter change the exposure, risk, trading activity and returns of a technical strategy for THYAO.IS? Compare combined trading with technical-only trading, buy-and-hold and BIST100. Do not assume that additional financial inputs improve returns.
@@ -28,4 +35,4 @@ The completed implementation uses four original reports with 136 verified observ
 
 Package, lockfile, CLI, source and normalized data, executed notebook, analysis charts/tables, strategy, backtests, report, actual MCP trace/answer, setup guide and acceptance audit. Presentation preparation/rehearsal follows implementation as requested. ML is excluded from the core scope.
 
-Scope/source audit -> tested foundation -> data/analysis -> strategy/accounting -> baselines/sensitivity -> MCP demo -> report/notebook/clean reproduction -> presentation review. These are dependencies, not an eight-week calendar schedule. Team names, deadline and instructor amendments remain unspecified.
+Scope/source audit -> tested foundation -> data/analysis -> strategy/accounting -> baselines/sensitivity -> MCP demo -> report/notebook/clean reproduction -> presentation review. These are dependencies, not an eight-week calendar schedule.
