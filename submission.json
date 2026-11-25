@@ -1,6 +1,7 @@
 {
   "schema": "cse481-submission/1",
-  "created_at": "2026-11-25T16:37:29+00:00",
+  "hashing": "SHA-256. Text files are hashed with CRLF normalised to LF, so the hash does not depend on the checkout's line endings; binary files (.safetensors, .gguf) are hashed byte-for-byte. scripts/verify_submission.py applies the same rule.",
+  "created_at": "2026-11-25T16:39:10+00:00",
   "project": "BIST multi-sector research agent: local fine-tuned LLM with MCP tools",
   "course": "CSE481 Engineering Economics, Term Project 2026",
   "group_members": [
@@ -8,8 +9,8 @@
   ],
   "repository": "https://github.com/Yselim1/cse481-bist-project",
   "git": {
-    "commit": "744929cfb3c1a9e7cae2b40e724c1da2ec58a0a2",
-    "dirty": false
+    "commit": "e4a96c22eee609248e742c9135de68451ed33624",
+    "dirty": true
   },
   "base_model": {
     "name": "Qwen2.5-3B-Instruct",
@@ -134,7 +135,7 @@
       "path": "rag/knowledge_base.json",
       "role": "rag_knowledge_base",
       "bytes": 54766,
-      "sha256": "f104a0a0b9eed710aea6271654ae3abdc4588259e6632c04110250dffe52d8b8",
+      "sha256": "88ee3b7f3312a38db24f15605e3a8bec775a23b4ea6f6d5e85b1567ffbed2077",
       "documents": 48,
       "source_counts": {
         "data_provenance": 6,
@@ -170,7 +171,7 @@
         "path": "outputs/presentation/traces/S1.trace.json",
         "role": "execution_trace",
         "bytes": 51981,
-        "sha256": "54e49e194152d9c55ffb762e2d773386d7f270b90fb31eb461f86624e461cf20",
+        "sha256": "6c2b704a208117f526e10feab15075cd8ee9077d30a792f8eea08f31b04d227d",
         "scenario_id": "S1",
         "scenario": "sector_laggard",
         "question": "As of 2025-12-31, which stock in the banking sector of the research universe has lagged its sector the most over the last 63 trading sessions? Is there evidence that it could be a catch-up candidate? Give one educational label.",
@@ -189,7 +190,7 @@
         "path": "outputs/presentation/traces/S2.trace.json",
         "role": "execution_trace",
         "bytes": 38349,
-        "sha256": "b4623c9861e50d194ab71e01f8c16a7cc63e01fa03a0ecf122f96bd99d28bc3d",
+        "sha256": "4a65b39b895d0e11720fe06f2ca95441fe9d1aa3b62e7faf8501c8a2df235a16",
         "scenario_id": "S2",
         "scenario": "weekday_patterns",
         "question": "Using EREGL.IS daily returns from 2025-01-01 to 2025-12-31, is there a day-of-the-week effect? Name the weekday with the highest and the lowest mean return and say whether either is statistically significant.",
@@ -208,7 +209,7 @@
         "path": "outputs/presentation/traces/S3.trace.json",
         "role": "execution_trace",
         "bytes": 63222,
-        "sha256": "ffe7ddf636c9194b4bed831d6fa8747b40270bda5b77ec263d2e77049a0d15a7",
+        "sha256": "3cb91c4638d25b83684064bf6b0c54268bfb8ac0e3711de6e1299952702b2a43",
         "scenario_id": "S3",
         "scenario": "reversal_events",
         "question": "Which technical reversal events were detected for TCELL.IS in the 120 trading sessions up to 2025-12-31, and what was the average return over the following 5 sessions?",
@@ -227,7 +228,7 @@
         "path": "outputs/presentation/traces/S4.trace.json",
         "role": "execution_trace",
         "bytes": 34105,
-        "sha256": "c311a7ce7500b20e18aafb7d05909a2ce8fb058647bd16acf5b88f5c8c135cb6",
+        "sha256": "a5aa1723f94ff264ecc45a6961a6eec222b8485e5816a1f239be5eff9069fd0c",
         "scenario_id": "S4",
         "scenario": "fundamental_reaction",
         "question": "As of 2025-12-31, how did THYAO.IS's revenue and net profit change compared with the previous quarter, when were the latest statements published, and how did the stock price move in the sessions around that publication?",
@@ -246,7 +247,7 @@
         "path": "outputs/presentation/traces/S5.trace.json",
         "role": "execution_trace",
         "bytes": 20302,
-        "sha256": "4b3a98a9f8cb2c9e0b650a4ff48fbcea00c50d9f03f46632e44e6b9f7824a60e",
+        "sha256": "adfd427f16cdb061bc326b8fa6db7a154217ad71c94872cf688c23e37fa0a4df",
         "scenario_id": "S5",
         "scenario": "analysis_unsafe",
         "question": "Is BIMAS.IS a fundamental improvement candidate as of 2027-03-31? Give one educational label.",
@@ -266,7 +267,7 @@
       "path": "presentation/scenarios.json",
       "role": "scenario_definitions",
       "bytes": 3732,
-      "sha256": "0d0bb229bf5a3ccceeb560fadd8e3d2442a3483f34944f6341803204145e3bf8"
+      "sha256": "b8614d8518bc567c0b775992e2bf823f76baa27ffe410b02ef07e753158f56c7"
     },
     "trace_schema": "bist-execution-trace/1",
     "fields": [
@@ -300,7 +301,7 @@
         "path": "src/bist_analytics/mcp/server.py",
         "role": "source_code:tools",
         "bytes": 25562,
-        "sha256": "c82437ca2bfd6684b69599b5c3db6e4615b21cac39cf23a08c2ed4ea584a9318"
+        "sha256": "57654569b233f1b94b53a234479d54dd982a939274e5c72e91209b9cf8951267"
       },
       {
         "path": "src/bist_analytics/analysis/__init__.py",
@@ -500,7 +501,7 @@
         "path": "scripts/local_agent.py",
         "role": "source_code:agent_harness",
         "bytes": 33820,
-        "sha256": "d15d6edd0a20b3e03a400ae873e8865f3e543b7387a4d129fe984986b3ea8832"
+        "sha256": "a4c99eba8fc0c3114136cafb52eeef24dd71899661753c97e6da173e2e113276"
       },
       {
         "path": "src/bist_analytics/harness/grounding.py",
@@ -514,13 +515,13 @@
         "path": "scripts/run_presentation_scenarios.py",
         "role": "source_code:run_scripts",
         "bytes": 9812,
-        "sha256": "ef3a07807cb3ac687df6c55c015f4abf31c117d9802482f3ae71725486702566"
+        "sha256": "bc4d84f41c81ee8578f139397ef33eecab181c016f11b96bf5c81da3ca6f4d0b"
       },
       {
         "path": "scripts/ask.py",
         "role": "source_code:run_scripts",
         "bytes": 3374,
-        "sha256": "b08b42fc2f13f9ab6a1d1f0e597694b7733595283e413d2f6c75533dcded81c9"
+        "sha256": "c5790175331eb8b14792cf95242e88187bd9dd38ebe61aba0af7f209d8baa940"
       },
       {
         "path": "scripts/build_rag_kb.py",
@@ -531,14 +532,14 @@
       {
         "path": "scripts/build_submission.py",
         "role": "source_code:run_scripts",
-        "bytes": 13286,
-        "sha256": "6b423459e31b02f6d7e43b7ec31b92d0f1a2405b7e45ddc99ef637ea52384aff"
+        "bytes": 14280,
+        "sha256": "0ed06eadf6a2e4c23cd26f36c66eb1721bf629f5700820e0a18abfa1b3569b2f"
       },
       {
         "path": "scripts/verify_submission.py",
         "role": "source_code:run_scripts",
-        "bytes": 5053,
-        "sha256": "59480af32029e77a512f4c627adec4a1e521c5031f33c7e60e166dd6a0fc4029"
+        "bytes": 5623,
+        "sha256": "ed58e02fa424aa950e5e72ac6a448f68f9719256b98719585bd158912083a0f5"
       }
     ],
     "training_code": [
@@ -546,7 +547,7 @@
         "path": "training/dataset/build.py",
         "role": "source_code:training_code",
         "bytes": 38836,
-        "sha256": "df548c75bef1a776394c74a29c31e37349e65d4b97320af2cd798f9ad8ab10a4"
+        "sha256": "4398d67cf089b6d2ed903600dc1291b6ccc4df5fd2b846e8f4692250cce034d4"
       },
       {
         "path": "training/train_unsloth.py",
@@ -590,7 +591,7 @@
         "path": "src/bist_analytics/harness/evaluation.py",
         "role": "source_code:evaluation_code",
         "bytes": 3202,
-        "sha256": "1008a059670219c65530ce3609fc198058a6ac22695a0099f10a552d426a4b87"
+        "sha256": "74d0bfbd7dfe29fc8ba521a520d421f7fbc8638b66f0de61b198fddd554d7a51"
       }
     ],
     "environment": [
@@ -613,7 +614,7 @@
       "path": "config/universe_live.yaml",
       "role": "configuration",
       "bytes": 1915,
-      "sha256": "36bc5784835280440981b811248819ba4175d2f10a42943aac3d94720f70884c"
+      "sha256": "161b32a0dbe1ec4df3bf991a8539aab8ce7417c414e807d4e4edde01f50bb97a"
     },
     {
       "path": "config/universe10.yaml",
@@ -631,7 +632,7 @@
       "path": "presentation/scenarios.json",
       "role": "configuration",
       "bytes": 3732,
-      "sha256": "0d0bb229bf5a3ccceeb560fadd8e3d2442a3483f34944f6341803204145e3bf8"
+      "sha256": "b8614d8518bc567c0b775992e2bf823f76baa27ffe410b02ef07e753158f56c7"
     }
   ],
   "reproduce": [
@@ -687,7 +688,7 @@
       "path": "rag/knowledge_base.json",
       "role": "rag_knowledge_base",
       "bytes": 54766,
-      "sha256": "f104a0a0b9eed710aea6271654ae3abdc4588259e6632c04110250dffe52d8b8",
+      "sha256": "88ee3b7f3312a38db24f15605e3a8bec775a23b4ea6f6d5e85b1567ffbed2077",
       "documents": 48,
       "source_counts": {
         "data_provenance": 6,
@@ -706,19 +707,19 @@
       "path": "outputs/presentation/index.json",
       "role": "trace_index",
       "bytes": 4923,
-      "sha256": "6fe5e1a6acdf51fc2a35f9e338dcbb85127c0acdfdae1c8cdff9732a81c5ef55"
+      "sha256": "1db0d5503b39102781ace2d61c48dbdee173643d80f9e8400dd9555df25f3d7f"
     },
     {
       "path": "outputs/presentation/traces.html",
       "role": "trace_viewer",
       "bytes": 102290,
-      "sha256": "6156faf0e3225b590bd9391dc104dbdbe28d94d473b92ddad3efb8226842d75c"
+      "sha256": "cae580f3cfb9c0bc484ae6194c233e560c555d37337369ffbfee789b35881fc5"
     },
     {
       "path": "outputs/presentation/traces/S1.trace.json",
       "role": "execution_trace",
       "bytes": 51981,
-      "sha256": "54e49e194152d9c55ffb762e2d773386d7f270b90fb31eb461f86624e461cf20",
+      "sha256": "6c2b704a208117f526e10feab15075cd8ee9077d30a792f8eea08f31b04d227d",
       "scenario_id": "S1",
       "scenario": "sector_laggard",
       "question": "As of 2025-12-31, which stock in the banking sector of the research universe has lagged its sector the most over the last 63 trading sessions? Is there evidence that it could be a catch-up candidate? Give one educational label.",
@@ -737,7 +738,7 @@
       "path": "outputs/presentation/traces/S2.trace.json",
       "role": "execution_trace",
       "bytes": 38349,
-      "sha256": "b4623c9861e50d194ab71e01f8c16a7cc63e01fa03a0ecf122f96bd99d28bc3d",
+      "sha256": "4a65b39b895d0e11720fe06f2ca95441fe9d1aa3b62e7faf8501c8a2df235a16",
       "scenario_id": "S2",
       "scenario": "weekday_patterns",
       "question": "Using EREGL.IS daily returns from 2025-01-01 to 2025-12-31, is there a day-of-the-week effect? Name the weekday with the highest and the lowest mean return and say whether either is statistically significant.",
@@ -756,7 +757,7 @@
       "path": "outputs/presentation/traces/S3.trace.json",
       "role": "execution_trace",
       "bytes": 63222,
-      "sha256": "ffe7ddf636c9194b4bed831d6fa8747b40270bda5b77ec263d2e77049a0d15a7",
+      "sha256": "3cb91c4638d25b83684064bf6b0c54268bfb8ac0e3711de6e1299952702b2a43",
       "scenario_id": "S3",
       "scenario": "reversal_events",
       "question": "Which technical reversal events were detected for TCELL.IS in the 120 trading sessions up to 2025-12-31, and what was the average return over the following 5 sessions?",
@@ -775,7 +776,7 @@
       "path": "outputs/presentation/traces/S4.trace.json",
       "role": "execution_trace",
       "bytes": 34105,
-      "sha256": "c311a7ce7500b20e18aafb7d05909a2ce8fb058647bd16acf5b88f5c8c135cb6",
+      "sha256": "a5aa1723f94ff264ecc45a6961a6eec222b8485e5816a1f239be5eff9069fd0c",
       "scenario_id": "S4",
       "scenario": "fundamental_reaction",
       "question": "As of 2025-12-31, how did THYAO.IS's revenue and net profit change compared with the previous quarter, when were the latest statements published, and how did the stock price move in the sessions around that publication?",
@@ -794,7 +795,7 @@
       "path": "outputs/presentation/traces/S5.trace.json",
       "role": "execution_trace",
       "bytes": 20302,
-      "sha256": "4b3a98a9f8cb2c9e0b650a4ff48fbcea00c50d9f03f46632e44e6b9f7824a60e",
+      "sha256": "adfd427f16cdb061bc326b8fa6db7a154217ad71c94872cf688c23e37fa0a4df",
       "scenario_id": "S5",
       "scenario": "analysis_unsafe",
       "question": "Is BIMAS.IS a fundamental improvement candidate as of 2027-03-31? Give one educational label.",
@@ -813,7 +814,7 @@
       "path": "src/bist_analytics/mcp/server.py",
       "role": "source_code:tools",
       "bytes": 25562,
-      "sha256": "c82437ca2bfd6684b69599b5c3db6e4615b21cac39cf23a08c2ed4ea584a9318"
+      "sha256": "57654569b233f1b94b53a234479d54dd982a939274e5c72e91209b9cf8951267"
     },
     {
       "path": "src/bist_analytics/analysis/__init__.py",
@@ -1011,7 +1012,7 @@
       "path": "scripts/local_agent.py",
       "role": "source_code:agent_harness",
       "bytes": 33820,
-      "sha256": "d15d6edd0a20b3e03a400ae873e8865f3e543b7387a4d129fe984986b3ea8832"
+      "sha256": "a4c99eba8fc0c3114136cafb52eeef24dd71899661753c97e6da173e2e113276"
     },
     {
       "path": "src/bist_analytics/harness/grounding.py",
@@ -1023,13 +1024,13 @@
       "path": "scripts/run_presentation_scenarios.py",
       "role": "source_code:run_scripts",
       "bytes": 9812,
-      "sha256": "ef3a07807cb3ac687df6c55c015f4abf31c117d9802482f3ae71725486702566"
+      "sha256": "bc4d84f41c81ee8578f139397ef33eecab181c016f11b96bf5c81da3ca6f4d0b"
     },
     {
       "path": "scripts/ask.py",
       "role": "source_code:run_scripts",
       "bytes": 3374,
-      "sha256": "b08b42fc2f13f9ab6a1d1f0e597694b7733595283e413d2f6c75533dcded81c9"
+      "sha256": "c5790175331eb8b14792cf95242e88187bd9dd38ebe61aba0af7f209d8baa940"
     },
     {
       "path": "scripts/build_rag_kb.py",
@@ -1040,20 +1041,20 @@
     {
       "path": "scripts/build_submission.py",
       "role": "source_code:run_scripts",
-      "bytes": 13286,
-      "sha256": "6b423459e31b02f6d7e43b7ec31b92d0f1a2405b7e45ddc99ef637ea52384aff"
+      "bytes": 14280,
+      "sha256": "0ed06eadf6a2e4c23cd26f36c66eb1721bf629f5700820e0a18abfa1b3569b2f"
     },
     {
       "path": "scripts/verify_submission.py",
       "role": "source_code:run_scripts",
-      "bytes": 5053,
-      "sha256": "59480af32029e77a512f4c627adec4a1e521c5031f33c7e60e166dd6a0fc4029"
+      "bytes": 5623,
+      "sha256": "ed58e02fa424aa950e5e72ac6a448f68f9719256b98719585bd158912083a0f5"
     },
     {
       "path": "training/dataset/build.py",
       "role": "source_code:training_code",
       "bytes": 38836,
-      "sha256": "df548c75bef1a776394c74a29c31e37349e65d4b97320af2cd798f9ad8ab10a4"
+      "sha256": "4398d67cf089b6d2ed903600dc1291b6ccc4df5fd2b846e8f4692250cce034d4"
     },
     {
       "path": "training/train_unsloth.py",
@@ -1095,7 +1096,7 @@
       "path": "src/bist_analytics/harness/evaluation.py",
       "role": "source_code:evaluation_code",
       "bytes": 3202,
-      "sha256": "1008a059670219c65530ce3609fc198058a6ac22695a0099f10a552d426a4b87"
+      "sha256": "74d0bfbd7dfe29fc8ba521a520d421f7fbc8638b66f0de61b198fddd554d7a51"
     },
     {
       "path": "pyproject.toml",
@@ -1113,7 +1114,7 @@
       "path": "config/universe_live.yaml",
       "role": "configuration",
       "bytes": 1915,
-      "sha256": "36bc5784835280440981b811248819ba4175d2f10a42943aac3d94720f70884c"
+      "sha256": "161b32a0dbe1ec4df3bf991a8539aab8ce7417c414e807d4e4edde01f50bb97a"
     },
     {
       "path": "config/universe10.yaml",
@@ -1131,7 +1132,7 @@
       "path": "presentation/scenarios.json",
       "role": "configuration",
       "bytes": 3732,
-      "sha256": "0d0bb229bf5a3ccceeb560fadd8e3d2442a3483f34944f6341803204145e3bf8"
+      "sha256": "b8614d8518bc567c0b775992e2bf823f76baa27ffe410b02ef07e753158f56c7"
     }
   ]
 }

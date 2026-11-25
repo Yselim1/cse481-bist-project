@@ -48,8 +48,16 @@ SOURCE_CODE = {
 CONFIGS = ["config/universe_live.yaml", "config/universe10.yaml", "config/bist100_universe.yaml", "presentation/scenarios.json"]
 
 
+# Text files are hashed with LF line endings so the hash is the same on a Windows checkout
+# (core.autocrlf) and a Linux/macOS one. Binary files (safetensors, gguf, pdf) are hashed as-is.
+BINARY_SUFFIXES = {".safetensors", ".gguf", ".pdf", ".png", ".jpg", ".zip", ".bin"}
+
+
 def sha256(path: Path) -> str:
     h = hashlib.sha256()
+    if path.suffix.lower() not in BINARY_SUFFIXES and path.stat().st_size < 64 << 20:
+        h.update(path.read_bytes().replace(b"\r\n", b"\n"))
+        return h.hexdigest()
     with path.open("rb") as fh:
         for chunk in iter(lambda: fh.read(1 << 20), b""):
             h.update(chunk)
@@ -140,6 +148,9 @@ def main() -> None:
 
     manifest = {
         "schema": "cse481-submission/1",
+        "hashing": ("SHA-256. Text files are hashed with CRLF normalised to LF, so the hash does not "
+                    "depend on the checkout's line endings; binary files (.safetensors, .gguf) are "
+                    "hashed byte-for-byte. scripts/verify_submission.py applies the same rule."),
         "created_at": datetime.now(UTC).isoformat(timespec="seconds"),
         **{k: meta[k] for k in ("project", "course", "group_members", "repository")},
         "git": {"commit": git("rev-parse", "HEAD"),

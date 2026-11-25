@@ -30,8 +30,16 @@ AGENT_PATH = ["scripts/local_agent.py", "scripts/ask.py", "scripts/run_presentat
               "src/bist_analytics/harness/grounding.py"]
 
 
+# Text files are hashed with LF line endings so the hash is the same on a Windows checkout
+# (core.autocrlf) and a Linux/macOS one. Binary files (safetensors, gguf, pdf) are hashed as-is.
+BINARY_SUFFIXES = {".safetensors", ".gguf", ".pdf", ".png", ".jpg", ".zip", ".bin"}
+
+
 def sha256(path: Path) -> str:
     h = hashlib.sha256()
+    if path.suffix.lower() not in BINARY_SUFFIXES and path.stat().st_size < 64 << 20:
+        h.update(path.read_bytes().replace(b"\r\n", b"\n"))
+        return h.hexdigest()
     with path.open("rb") as fh:
         for chunk in iter(lambda: fh.read(1 << 20), b""):
             h.update(chunk)
