@@ -2,3 +2,8 @@
 # keep them byte-identical on every OS.
 training/dataset/*.jsonl text eol=lf
 training/adapter/*.safetensors filter=lfs diff=lfs merge=lfs -text
+
+# Generated documents and images must never get line-ending conversion.
+*.pdf binary
+*.png binary
+*.gguf binary
