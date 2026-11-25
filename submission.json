@@ -1,7 +1,7 @@
 {
   "schema": "cse481-submission/1",
   "hashing": "SHA-256. Text files are hashed with CRLF normalised to LF, so the hash does not depend on the checkout's line endings; binary files (.safetensors, .gguf) are hashed byte-for-byte. scripts/verify_submission.py applies the same rule.",
-  "created_at": "2026-11-25T18:13:19+00:00",
+  "created_at": "2026-11-25T18:20:17+00:00",
   "project": "BIST multi-sector research agent: local fine-tuned LLM with MCP tools",
   "course": "CSE481 Engineering Economics, Term Project 2026",
   "group_members": [
@@ -9,7 +9,7 @@
   ],
   "repository": "https://github.com/Yselim1/cse481-bist-project",
   "git": {
-    "commit": "928958c7cf5a5609fff555f6b15350df90da0109",
+    "commit": "e5a88f41a1112d30bf525451fa96ef8107c1e765",
     "dirty": true
   },
   "base_model": {
@@ -672,8 +672,8 @@
       {
         "path": "scripts/generate_deliverables.py",
         "role": "source_code:evaluation_code",
-        "bytes": 86830,
-        "sha256": "6bd529408281c91309ed9cd256dde1672ec16996ebf91f6797f598e7007afee8"
+        "bytes": 86366,
+        "sha256": "7cf6914f598575dae9cbeba7babcbae43650fb62f219797fb0a77a93d94b5e6b"
       },
       {
         "path": "src/bist_analytics/harness/evaluation.py",
@@ -1259,8 +1259,8 @@
     {
       "path": "scripts/generate_deliverables.py",
       "role": "source_code:evaluation_code",
-      "bytes": 86830,
-      "sha256": "6bd529408281c91309ed9cd256dde1672ec16996ebf91f6797f598e7007afee8"
+      "bytes": 86366,
+      "sha256": "7cf6914f598575dae9cbeba7babcbae43650fb62f219797fb0a77a93d94b5e6b"
     },
     {
       "path": "src/bist_analytics/harness/evaluation.py",

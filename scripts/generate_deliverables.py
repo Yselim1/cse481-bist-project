@@ -212,8 +212,34 @@ def _pct(v) -> str:
 #  PDF helpers
 # ─────────────────────────────────────────────────────────────────────────────
 
+_FONT, _FONT_BOLD = "Helvetica", "Helvetica-Bold"
+
+
+def _register_fonts() -> None:
+    """Use DejaVu Sans when available: the built-in Helvetica has no glyphs for →, ↑, − or ≠,
+    which the tables use. Falls back to Helvetica on machines without the TTF files."""
+    global _FONT, _FONT_BOLD
+    from reportlab.pdfbase import pdfmetrics
+    from reportlab.pdfbase.ttfonts import TTFont
+    for folder in (Path("C:/Windows/Fonts"), Path("/usr/share/fonts/truetype/dejavu"),
+                   Path.home() / "Library/Fonts"):
+        reg, bold = folder / "DejaVuSans.ttf", folder / "DejaVuSans-Bold.ttf"
+        if reg.exists() and bold.exists():
+            pdfmetrics.registerFont(TTFont("DejaVuSans", str(reg)))
+            pdfmetrics.registerFont(TTFont("DejaVuSans-Bold", str(bold)))
+            _FONT, _FONT_BOLD = "DejaVuSans", "DejaVuSans-Bold"
+            return
+
+
 def _pdf_styles():
     """Return a dict of named ParagraphStyle objects."""
+    styles = _pdf_styles_base()
+    for st in styles.values():
+        st.fontName = _FONT_BOLD if "Bold" in st.fontName else _FONT
+    return styles
+
+
+def _pdf_styles_base():
     from reportlab.lib import colors
     from reportlab.lib.enums import TA_CENTER
     from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
@@ -322,7 +348,7 @@ def _status_cell(status: str, style) -> "Paragraph":
     styled = ParagraphStyle(
         f"stat_{key}", parent=style,
         textColor=colors.HexColor(hex_c),
-        fontName="Helvetica-Bold",
+        fontName=_FONT_BOLD,
     )
     return Paragraph(status, styled)
 
@@ -658,7 +684,7 @@ def build_requirements_report(out: Path) -> None:
             from reportlab.lib.styles import ParagraphStyle
             mono_s = ParagraphStyle(
                 f"mono_{i}", parent=S["cell"],
-                textColor=rc.HexColor(mono_col), fontName="Helvetica-Bold",
+                textColor=rc.HexColor(mono_col), fontName=_FONT_BOLD,
             )
             h_data.append([P(metric, S["cell_bold"])] +
                            [P(v, S["cell"]) for v in vals] +
@@ -1506,6 +1532,7 @@ def build_qa_prep(out: Path) -> None:
 
 def main() -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    _register_fonts()
     F.update(_facts())
 
     req_path    = OUTPUT_DIR / "requirements_report.pdf"
