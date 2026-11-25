@@ -685,12 +685,10 @@ def main() -> None:
         train.extend(items[cut:])
 
     Path(args.train_out).parent.mkdir(parents=True, exist_ok=True)
-    with Path(args.train_out).open("w", encoding="utf-8", newline="
-") as fh:
+    with Path(args.train_out).open("w", encoding="utf-8", newline="\n") as fh:
         for ex in train:
             fh.write(json.dumps(ex, default=str, ensure_ascii=False) + "\n")
-    with Path(args.eval_out).open("w", encoding="utf-8", newline="
-") as fh:
+    with Path(args.eval_out).open("w", encoding="utf-8", newline="\n") as fh:
         for ex in eval_:
             fh.write(json.dumps(ex, default=str, ensure_ascii=False) + "\n")
 
