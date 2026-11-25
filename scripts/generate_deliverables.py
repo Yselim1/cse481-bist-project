@@ -1364,7 +1364,7 @@ def build_qa_prep(out: Path) -> None:
         "the evaluator whitelist — both are test-design fixes, not model fixes.",
     )
     story += qa(
-        "Q12. If the fine-tune 'regresses' on 3 metrics, why do you ship it?",
+        "Q12. If the fine-tune ties on 4 metrics and 'regresses' on 2, why do you ship it?",
         "Because the regressions are explained measurement artifacts, not real capability drops. "
         "(1) label_mismatch regression: base's 0.00 is vacuous (never tries), fine-tune's 0.20 "
         "shows real label-emission with some wrong choices on under-trained gate_unsafe cases. "

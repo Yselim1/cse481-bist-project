@@ -97,7 +97,7 @@ noise level.
 
 ## Decision
 
-**1 axis improved, 2 tied, 3 regressed** vs the base model.
+**Against the base model: 0 improved, 4 tied, 2 regressed.** (Against the fine-tune's own pre-fix run, `invalid_tool_call_rate` improved from 0.500 to 0.450, which brings it level with the base.)
 
 The ≥3-improvement bar is not met after the dedup fix. The inference-time guard solved the
 tool-loop pathology measurably (`invalid_tool_call_rate` tied) but the remaining regressions

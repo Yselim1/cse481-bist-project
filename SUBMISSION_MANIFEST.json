@@ -1,5 +1,5 @@
 {
-  "created_at": "2026-11-25T10:18:26.667243+00:00",
+  "created_at": "2026-11-25T10:19:29.648006+00:00",
   "external_files": {
     "training/bist_lora.gguf": {
       "bytes": 1929902688,
@@ -793,8 +793,8 @@
       "sha256": "1749da503abb7071319bb6ce0262b0d0d8f69a3463405dd112e25af222e114c1"
     },
     "outputs/deliverables/qa_prep.pdf": {
-      "bytes": 14397,
-      "sha256": "58bcc66153bc084258d1f4cf843cc623549d7df4d33d7411992656b6099d5f7b"
+      "bytes": 14404,
+      "sha256": "7fc2c61160007d179bf3a97d43a617609f6f89c1946075c4339da09cab17d3a5"
     },
     "outputs/deliverables/requirements_report.pdf": {
       "bytes": 21548,
@@ -1437,8 +1437,8 @@
       "sha256": "8b73313a97b37b9ff9aa396d3cd54caaee777a25b87b8b323a51fa65bcac7ab2"
     },
     "outputs/training/base_vs_finetuned.md": {
-      "bytes": 7480,
-      "sha256": "dde8d104852a5a80173ab328e330adc0bcaced82ced5f370ab465103c18be163"
+      "bytes": 7492,
+      "sha256": "b96268d97281999faf72695004fa07aeb14959503c6a5779ee7a4d9e4df38905"
     },
     "outputs/training/phase_g_harness_summary.md": {
       "bytes": 3866,
@@ -1697,8 +1697,8 @@
       "sha256": "3860dd6d57994107a616c74ce93913e991ffe167d1a3ae373dec100ee3f9da9d"
     },
     "scripts/generate_deliverables.py": {
-      "bytes": 76147,
-      "sha256": "d945c0cc779067e834821874d83b9ee51ee943f329b9099e5bcc5de15b17e098"
+      "bytes": 76161,
+      "sha256": "c3252d666fe512aa9433c0c30319f6538ab9f66249062d3e02ebff9b7909f3de"
     },
     "scripts/local_agent.py": {
       "bytes": 14122,
