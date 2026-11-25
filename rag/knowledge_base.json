@@ -1,0 +1,705 @@
+{
+  "version": 1,
+  "built_at": "2026-11-25T12:29:54+00:00",
+  "retrieval": {
+    "method": "BM25 (k1=1.5, b=0.75)",
+    "module": "src/bist_analytics/rag.py",
+    "point_in_time_field": "published_at"
+  },
+  "document_count": 48,
+  "source_counts": {
+    "data_provenance": 6,
+    "kap_disclosure": 13,
+    "methodology": 9,
+    "metric_definition": 2,
+    "universe_metadata": 18
+  },
+  "documents": [
+    {
+      "doc_id": "kap:THYAO.IS:fin-2025q1",
+      "title": "THYAO.IS — 2025 first-quarter financial report",
+      "text": "2025 first-quarter financial report. THYAO disclosed its consolidated first-quarter financial report. Category: financial_report. Published 2025-04-28T18:20:00+03:00. Evidence status: reviewed.",
+      "source_type": "kap_disclosure",
+      "source_path": "data/raw/kap/thyao_context_events.csv",
+      "source_url": "https://fintables.com/borsa-haber-akisi/a3432935-b179-4ed1-a5c7-9e21ee900a7a/thyao-finansal-rapor",
+      "published_at": "2025-04-28T18:20:00+03:00",
+      "retrieved_at": null,
+      "tickers": [
+        "THYAO.IS"
+      ],
+      "sector": "airlines",
+      "sha256": "464a17749d5fa29660ee24265edb11ec106948df5c42782452700e7071830670"
+    },
+    {
+      "doc_id": "kap:THYAO.IS:air-europa-talks",
+      "title": "THYAO.IS — Air Europa nonbinding talks",
+      "text": "Air Europa nonbinding talks. THYAO disclosed nonbinding talks concerning a potential investment in Air Europa. Category: partnership. Published 2025-06-20T21:57:00+03:00. Evidence status: reviewed.",
+      "source_type": "kap_disclosure",
+      "source_path": "data/raw/kap/thyao_context_events.csv",
+      "source_url": "https://fintables.com/borsa-haber-akisi/466dd11d-0c30-4f2e-8286-d2caa2ac8e80/thyao-ozel-durum-aciklamasi-genel",
+      "published_at": "2025-06-20T21:57:00+03:00",
+      "retrieved_at": null,
+      "tickers": [
+        "THYAO.IS"
+      ],
+      "sector": "airlines",
+      "sha256": "bb74d55cd2518a9ed95654050e2c4dd59c23e5feaeda37a819c9727936aada07"
+    },
+    {
+      "doc_id": "kap:THYAO.IS:fin-2025q2",
+      "title": "THYAO.IS — 2025 first-half financial report",
+      "text": "2025 first-half financial report. THYAO disclosed its consolidated first-half financial report. Category: financial_report. Published 2025-08-05T19:15:00+03:00. Evidence status: reviewed.",
+      "source_type": "kap_disclosure",
+      "source_path": "data/raw/kap/thyao_context_events.csv",
+      "source_url": "https://fintables.com/borsa-haber-akisi/ae1ecf79-500a-4ca7-9153-269b2a6a5a18/thyao-finansal-rapor",
+      "published_at": "2025-08-05T19:15:00+03:00",
+      "retrieved_at": null,
+      "tickers": [
+        "THYAO.IS"
+      ],
+      "sector": "airlines",
+      "sha256": "e2c0e96d9713c27aa6051c12a97d464e33a3a0da2cc6d556f84c46a76b8f5c8e"
+    },
+    {
+      "doc_id": "kap:THYAO.IS:air-europa-offer",
+      "title": "THYAO.IS — Air Europa binding offer accepted",
+      "text": "Air Europa binding offer accepted. THYAO disclosed acceptance of its binding offer involving a EUR 300 million investment. Category: partnership. Published 2025-08-19T22:11:00+03:00. Evidence status: reviewed.",
+      "source_type": "kap_disclosure",
+      "source_path": "data/raw/kap/thyao_context_events.csv",
+      "source_url": "https://fintables.com/borsa-haber-akisi/8cf22261-530d-408c-9bb0-e6346d26f7f9/thyao-ozel-durum-aciklamasi-genel",
+      "published_at": "2025-08-19T22:11:00+03:00",
+      "retrieved_at": null,
+      "tickers": [
+        "THYAO.IS"
+      ],
+      "sector": "airlines",
+      "sha256": "4382570ac5b4672d9d670187b9ce572307ab9b73034675f2a533a5e234a503bd"
+    },
+    {
+      "doc_id": "kap:THYAO.IS:boeing-2025",
+      "title": "THYAO.IS — Boeing fleet procurement",
+      "text": "Boeing fleet procurement. THYAO disclosed an order for 75 aircraft and discussions concerning 150 additional aircraft. Category: fleet. Published 2025-09-26T07:03:00+03:00. Evidence status: reviewed.",
+      "source_type": "kap_disclosure",
+      "source_path": "data/raw/kap/thyao_context_events.csv",
+      "source_url": "https://fintables.com/borsa-haber-akisi/a824c288-a62b-44f1-8916-76b3babee056/thyao-ozel-durum-aciklamasi-genel",
+      "published_at": "2025-09-26T07:03:00+03:00",
+      "retrieved_at": null,
+      "tickers": [
+        "THYAO.IS"
+      ],
+      "sector": "airlines",
+      "sha256": "fd8d45ebb91735bf0f4ab5d818e6b4fd5c4a9b622c5e2aff07c48d9f077aff7c"
+    },
+    {
+      "doc_id": "kap:THYAO.IS:air-europa-agreement",
+      "title": "THYAO.IS — Air Europa partnership agreement",
+      "text": "Air Europa partnership agreement. THYAO disclosed that the partnership agreement had been signed. Category: partnership. Published 2025-11-06T09:11:00+03:00. Evidence status: reviewed.",
+      "source_type": "kap_disclosure",
+      "source_path": "data/raw/kap/thyao_context_events.csv",
+      "source_url": "https://fintables.com/borsa-haber-akisi/bce329a1-2d07-429a-bea1-d7b4511f0541/thyao-ozel-durum-aciklamasi-genel",
+      "published_at": "2025-11-06T09:11:00+03:00",
+      "retrieved_at": null,
+      "tickers": [
+        "THYAO.IS"
+      ],
+      "sector": "airlines",
+      "sha256": "4cfd103012cdf7956712933b8af4754e657e5b687d834b5c60181ff0c1b3150d"
+    },
+    {
+      "doc_id": "kap:THYAO.IS:fin-2025q3",
+      "title": "THYAO.IS — 2025 nine-month financial report",
+      "text": "2025 nine-month financial report. THYAO disclosed its consolidated nine-month financial report. Category: financial_report. Published 2025-11-07T08:02:00+03:00. Evidence status: reviewed.",
+      "source_type": "kap_disclosure",
+      "source_path": "data/raw/kap/thyao_context_events.csv",
+      "source_url": "https://fintables.com/borsa-haber-akisi/231614f1-9ca9-4786-93c5-1cdd96e7d0d1/thyao-finansal-rapor",
+      "published_at": "2025-11-07T08:02:00+03:00",
+      "retrieved_at": null,
+      "tickers": [
+        "THYAO.IS"
+      ],
+      "sector": "airlines",
+      "sha256": "a027bc77e5d91f28e228d6da498a8a1f1830ea63bd0c4270aa1aa274a4aecee5"
+    },
+    {
+      "doc_id": "kap:THYAO.IS:fin-2025fy",
+      "title": "THYAO.IS — 2025 annual financial report",
+      "text": "2025 annual financial report. THYAO disclosed its consolidated 2025 annual financial report. Category: financial_report. Published 2026-03-04T18:55:00+03:00. Evidence status: reviewed.",
+      "source_type": "kap_disclosure",
+      "source_path": "data/raw/kap/thyao_context_events.csv",
+      "source_url": "https://fintables.com/borsa-haber-akisi/ac19e15a-2370-4ed9-86c7-0a67b6746841/thyao-finansal-rapor",
+      "published_at": "2026-03-04T18:55:00+03:00",
+      "retrieved_at": null,
+      "tickers": [
+        "THYAO.IS"
+      ],
+      "sector": "airlines",
+      "sha256": "bcf10dccfbaabe055ef7189cff5744d986c98b8f8c2573e85e50e6cccd2f4d7c"
+    },
+    {
+      "doc_id": "kap:THYAO.IS:biofuel-investment",
+      "title": "THYAO.IS — DB Tarımsal Enerji biofuel investment",
+      "text": "DB Tarımsal Enerji biofuel investment. THYAO disclosed a USD 42 million investment for a 40 percent interest in DB Tarımsal Enerji. Category: investment. Published 2026-04-01T17:56:00+03:00. Evidence status: reviewed.",
+      "source_type": "kap_disclosure",
+      "source_path": "data/raw/kap/thyao_context_events.csv",
+      "source_url": "https://fintables.com/borsa-haber-akisi/3b48d5d6-6e07-4e8b-8cdf-01d787bde576/thyao-ozel-durum-aciklamasi-genel",
+      "published_at": "2026-04-01T17:56:00+03:00",
+      "retrieved_at": null,
+      "tickers": [
+        "THYAO.IS"
+      ],
+      "sector": "airlines",
+      "sha256": "3a18a07f44f32142bfd02d54dea81c7c2e64525c280b7a709ff6e4a227d27d57"
+    },
+    {
+      "doc_id": "kap:THYAO.IS:fin-2026q1",
+      "title": "THYAO.IS — 2026 first-quarter financial report",
+      "text": "2026 first-quarter financial report. THYAO disclosed its consolidated first-quarter financial report. Category: financial_report. Published 2026-04-29T18:20:00+03:00. Evidence status: reviewed.",
+      "source_type": "kap_disclosure",
+      "source_path": "data/raw/kap/thyao_context_events.csv",
+      "source_url": "https://fintables.com/borsa-haber-akisi/4c4ab8e3-ce67-4f08-b163-c76265f1d391/thyao-finansal-rapor",
+      "published_at": "2026-04-29T18:20:00+03:00",
+      "retrieved_at": null,
+      "tickers": [
+        "THYAO.IS"
+      ],
+      "sector": "airlines",
+      "sha256": "ea5152ec83435625855c1f1130ee359e64287ba8867ad316dbb4912334a386b6"
+    },
+    {
+      "doc_id": "kap:THYAO.IS:air-europa-approval",
+      "title": "THYAO.IS — Spain approved Air Europa investment",
+      "text": "Spain approved Air Europa investment. THYAO disclosed Spanish foreign-direct-investment approval for the Air Europa transaction. Category: partnership. Published 2026-06-04T15:53:00+03:00. Evidence status: reviewed.",
+      "source_type": "kap_disclosure",
+      "source_path": "data/raw/kap/thyao_context_events.csv",
+      "source_url": "https://fintables.com/borsa-haber-akisi/7ccf7972-1746-45b7-a069-e9727ab74d3c/thyao-ozel-durum-aciklamasi-genel",
+      "published_at": "2026-06-04T15:53:00+03:00",
+      "retrieved_at": null,
+      "tickers": [
+        "THYAO.IS"
+      ],
+      "sector": "airlines",
+      "sha256": "18a5d1b623a4c4f351022c8891a2e151d36423098b8f2f3a18b0ae9a96cf8220"
+    },
+    {
+      "doc_id": "kap:THYAO.IS:fin-2026q2",
+      "title": "THYAO.IS — 2026 first-half financial report",
+      "text": "2026 first-half financial report. THYAO disclosed its consolidated first-half financial report. Category: financial_report. Published 2026-08-05T08:00:00+03:00. Evidence status: reviewed.",
+      "source_type": "kap_disclosure",
+      "source_path": "data/raw/kap/thyao_context_events.csv",
+      "source_url": "https://fintables.com/borsa-haber-akisi/bf8af587-78d6-4fe4-82f0-8dbb4bd082a8/thyao-finansal-rapor",
+      "published_at": "2026-08-05T08:00:00+03:00",
+      "retrieved_at": null,
+      "tickers": [
+        "THYAO.IS"
+      ],
+      "sector": "airlines",
+      "sha256": "9b90e90c6fe11b5eb07cb1e9f04332cc937e695fd8c26f7d6eb2afeeee0614b0"
+    },
+    {
+      "doc_id": "kap:THYAO.IS:boeing-2026",
+      "title": "THYAO.IS — Boeing 737 MAX order",
+      "text": "Boeing 737 MAX order. THYAO disclosed an order for 150 Boeing 737 MAX aircraft. Category: fleet. Published 2026-09-23T18:19:00+03:00. Evidence status: reviewed.",
+      "source_type": "kap_disclosure",
+      "source_path": "data/raw/kap/thyao_context_events.csv",
+      "source_url": "https://fintables.com/borsa-haber-akisi/61d0a4a5-1b52-4f54-890d-664d4189b38a/thyao-ozel-durum-aciklamasi-genel",
+      "published_at": "2026-09-23T18:19:00+03:00",
+      "retrieved_at": null,
+      "tickers": [
+        "THYAO.IS"
+      ],
+      "sector": "airlines",
+      "sha256": "a669c44be1f6104fdef4c3a05b06da188de630c92eb6a2f8ef2271e81294fa23"
+    },
+    {
+      "doc_id": "doc:decisions:01",
+      "title": "DECISIONS: Implementation decisions",
+      "text": "Items 1-15 were recorded before the first strategy-return comparison on 15 September 2026. Items 16-20 below record the subsequent original-source correction and supersede the initial source choices in items 4-7; the initial decisions are retained as history. 1. The user selected Turkish Airlines (THYAO.IS). Historical fundamental values remain exclusively from Fintables. Yahoo supplies stock, index and FX prices. No issuer financial values substitute for Fintables. 2. Deliver the working implementation now; milestone names describe dependencies, not eight calendar weeks. Presentation rehearsal follows implementation at the user's request. 3. Market warm-up begins 2021-01-01. Evaluation is 2023-01-01 through 2025-12-31. Report 2023 development, 2024 validation and 2025 holdout separately, each starting flat with equal capital. No parameter selection on holdout returns. 4. Initial source collection uses six annual Fintables snapshots (2020–2025). This intentionally tests an annual fundamental filter, with a 460-day age limit measured from modeled availability. It does not simulate quarterly updating. Flow and balance values retain their different period meanings. Current 2026 reports do not enter the 2023–2025 backtest. 5. Fintables USD display values are currency-converted series, not necessarily the issuer's original functional-USD statements. Comparisons use a consistent display convention; currency translation and revisions remain limitations. Valuation uses USD earnings/equity and historical USD market capitalization, so it may differ from Fintables' conventional TRY ratios. 6. The captured historical tables are today's vintages. They are all marked unverified. `retrospective` mode is an explicitly labeled exploratory reconstruction. `verified_only` mode excludes them. Neither date lagging nor passing causal-code tests proves that these current table versions existed historically. The primary original-vintage acceptance gate in the initial plan remains unmet; retrospective results must not be called a validated point-in-time strategy. 7. Verified release dates currently exist for 2023 (3 April 2024) and 2025 (4 March 2026). Other releases are explicitly assumed at 30 June of the following year, not represented as actual dates. This conservative modeling delay is a sensitivity/limitation, not proof of original availability. Improving dated Fintables provenance remains a data upgrade. 8. FAVÖK follows Fintables' published definition: gross profit plus signed general/admin and selling/distribution expenses plus depreciation; no separate R&D row is displayed. Net debt subtracts cash and current/noncurrent financial investments from both financial-debt rows. Separate airline lease cash outflows remain in the source excerpt for discussion; EBITDA is not EBITDAR. 9. Use a 4x net-debt/EBITDA score threshold as a declared airline case-study assumption because aircraft leasing makes debt substantial. It is not an industry-validated cutoff. Include a 2x variant. Growth >15%, profit growth >15%, ROE >20%, and positive P/E no higher than its prior median are the other four points. Negative comparison earnings produce an unavailable growth score rather than a misleading percentage. 10. Technical weight .60; F score at least 3/5 and combined score at least .70. The technical score includes trend, RSI, MACD, volume and proximity to causally confirmed zones. Entry requires trend and support proximity. Stop is a close-triggered 8% exit submitted for next open, not a guaranteed intraday stop. Maximum holding 40 sessions. Commission 10 bps and slippage 5 bps each side. Cash earns zero; Sharpe uses zero risk-free return, unsuitable as an inflation-adjusted performance claim. 11. Adjusted OHLC represents fractional synthetic total-return units. Preserve original prices, dividends and split fields. Do not add dividends again. This is an academic execution approximation, not an executable order simulation in whole BIST lots. Final positions are marked, not forcibly liquidated. 12. Yahoo stock and index calendars differ. Keep actual stock sessions for decisions/execution. Benchmark gaps remain missing; benchmark risk metrics use available index observations and disclose session counts. Endpoint return comparison uses the same first/last evaluation dates. Do not forward-fill an index or remove stock executions to conceal gaps. 13. Predeclare sensitivity: zero costs, 20 bps commission, combined entry .65 and .75, and debt threshold 2x. Run 2023–2024 variants without selecting a winner. Freeze the baseline throughout 2025. 14. MCP tools operate on local cached evidence, restrict symbols/dates and perform no trading. An actual authenticated Codex CLI host is the intended agent demonstrator. Mock/protocol tests alone do not satisfy the real-agent requirement. 15. No ML extension until core deliverables are verified. Team details, deadline and instructor amendments are unknown and are not invented.",
+      "source_type": "methodology",
+      "source_path": "docs/DECISIONS.md",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-11-19",
+      "tickers": [],
+      "sector": null,
+      "sha256": "6b707739ea64e158048b9acf1a8e114be997d422437d33c799e45f106fa460bb"
+    },
+    {
+      "doc_id": "doc:decisions:02",
+      "title": "DECISIONS: Original-source completion (after the earlier USD study)",
+      "text": "16. The user downloaded four original Fintables financial attachments for FY2021-2024. Current and comparative columns supply 136 observations for FY2020-2024. All 16 relevant statement pages were visually reviewed and 40 statement identities reconcile exactly. Receipt hashes, page references and actual publication metadata are recorded in `docs/ORIGINALS_AUDIT.md`. 17. Primary financial currency is changed to **original TRY presentation**. Annual conversion cannot exactly reconstruct functional-USD flows because the report uses monthly average rates. No approximate conversion is mislabeled as original USD. TRY growth, ROE and ROA remain nominal and translation-sensitive. Prices and valuation denominators now use the same TRY basis; FX is optional for a secondary USD market-cap column. 18. Original reports are released on 2022-03-01, 2023-03-01, 2024-04-03 and 2025-02-28. Every column becomes usable at the first stock-session close strictly after its containing report's release. FY2020 comparatives are dated in March 2022. Four changes to selected comparative metrics enter only after publication, never as historical overwrites. 19. `config/project.yaml` selects the verified original TRY dataset. `config/retrospective.yaml` and the old processed USD file preserve the earlier study. Old reports, verification and actual host traces were copied to `outputs/archive_pre_originals/` before refreshing final evidence. The source correction happened after earlier USD performance was seen; this is disclosed, not presented as a pristine blind test or a controlled currency experiment. No strategy parameter was optimized or changed to preserve a target profit. 20. The original annual-source gate is complete. This does not claim a complete quarterly disclosure archive, historical universe membership verification, future profitability or real-world order execution. The agreed scope remains one user-selected stock and annual refresh. Presentation/slides/rehearsal remain deferred; names, final deadline and classroom duration are administrative follow-ups.",
+      "source_type": "methodology",
+      "source_path": "docs/DECISIONS.md",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-11-19",
+      "tickers": [],
+      "sector": null,
+      "sha256": "6558a1bf427609547544f05163b197ac6733185fb6dbac398ef16d6c784b6bcb"
+    },
+    {
+      "doc_id": "doc:data_dictionary:01",
+      "title": "DATA_DICTIONARY: Financial data dictionary",
+      "text": "| Field | Meaning | |---|---| | ticker / metric | Validated THYAO.IS symbol and metric name | | period_end | Financial period end, not release date | | period_type | annual, ytd, quarter, ttm, instant or ratio | | value / scale | Numeric amount times scale; missing stays missing | | currency / unit | USD or TRY monetary display; money, shares, ratio or fraction. Share rows carry the snapshot currency tag but are not converted. | | published_at | Verified publication date; empty when unknown | | assumed_published_at | Explicit modeling date when publication is unknown | | retrieved_at | Source acquisition date | | source_url / source_reference | Fintables domain plus local excerpt/evidence reference | | vintage_verified | True only with verified original-release values and dates | | accounting_basis / notes | Comparability and source/calculation qualification | | available_at | Derived first stock session strictly after publication/modeling date; its close decision executes at the following open | Included annual flows: revenue, gross profit, EBITDA, operating profit, parent net profit and operating/investing/financing cash flows. Balances: cash, debt, net debt, assets, parent equity, current assets, inventory and current liabilities. Nominal share units derive from TRY paid-in capital. The primary dataset is `fintables_original_observations.csv`: original million-TRY values with scale=1,000,000, converted once on loading. It retains both columns of each original report as distinct dated vintages. TRY valuation uses raw TRY price * nominal units against annual TRY earnings, parent equity and net debt. The separate `fintables_observations.csv` contains earlier USD display values, already expanded from thousands; its valuation uses exact-date USDTRY. USD display values are not original functional-USD accounts. Calculated ratios are not claimed to be Fintables subscription exports.",
+      "source_type": "metric_definition",
+      "source_path": "docs/DATA_DICTIONARY.md",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-11-19",
+      "tickers": [],
+      "sector": null,
+      "sha256": "1502160c39d06e1b138a1b422b67fc7c2145bce221b8c5b11be33defb1203994"
+    },
+    {
+      "doc_id": "doc:data_dictionary:02",
+      "title": "DATA_DICTIONARY: Financial data dictionary",
+      "text": "Growth = current annual flow / positive prior-year flow - 1. ROE/ROA use two period-end averages. Margins divide by positive revenue. Debt/equity uses financial debt / parent equity. Current ratio = current assets / current liabilities; quick ratio subtracts inventory only. Invalid denominators return unavailable. TTM construction prefers explicit TTM/annual totals, then four standalone quarters, otherwise current YTD + prior annual - comparable prior YTD within one basis. It never sums four cumulative YTD totals. The included study uses annual data.",
+      "source_type": "metric_definition",
+      "source_path": "docs/DATA_DICTIONARY.md",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-11-19",
+      "tickers": [],
+      "sector": null,
+      "sha256": "48378e5369a6f67f16c7836029d5272845e2bed5d255b70020ad1d674cb6019b"
+    },
+    {
+      "doc_id": "doc:financial_interpretation:01",
+      "title": "FINANCIAL_INTERPRETATION: Findings and how to explain them",
+      "text": "**Final study:** THYAO, 2023-2025 trading; verified original annual Fintables statements; financial amounts and returns in nominal TRY. Latest annual period at 2025-12-31 is FY2024, released 2025-02-28 and usable from 2025-03-03.",
+      "source_type": "methodology",
+      "source_path": "docs/FINANCIAL_INTERPRETATION.md",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-11-19",
+      "tickers": [],
+      "sector": null,
+      "sha256": "f424858ff62afd6a92efc59f0861a29f45d50bdc8ae3ca1a754bbefb8b3bfc3e"
+    },
+    {
+      "doc_id": "doc:financial_interpretation:02",
+      "title": "FINANCIAL_INTERPRETATION: Financial business picture",
+      "text": "| Metric | TRY millions | | --- | --- | | revenue | 745,430.00 | | gross_profit | 142,908.00 | | ebitda | 136,256.00 | | operating_profit | 80,393.00 | | net_profit | 113,378.00 | | cash | 95,992.00 | | financial_debt | 489,939.00 | | net_debt | 236,664.00 | | total_assets | 1,399,606.00 | | equity | 679,887.00 | | operating_cash_flow | 135,580.00 | | investing_cash_flow | 10,003.00 | | financing_cash_flow | -75,360.00 | Revenue increased **47.79%** to TRY745.43 billion. Derived EBITDA increased **18.08%** to TRY136.256 billion. Revenue grew faster than operating cash earnings: EBITDA margin declined from 22.88% to **18.28%**. This is growth in nominal TRY presentation; it must not be described as real or functional-USD growth. Parent net profit declined **30.44%** to TRY113.378 billion despite higher revenue. The FY2023 income statement (PDF page 11) shows TRY73.456 billion of net deferred-tax income, including a TRY91.694 billion inflation-adjustment component offset by other deferred-tax expense. FY2024's net deferred-tax income is TRY5.281 billion. This large comparison-base effect is a concrete reason not to interpret the net-profit decline solely as weaker airline operations. Pre-tax profit increased from TRY91.282 billion to TRY121.421 billion. These figures are read from the same Fintables-hosted originals. Operating cash flow is TRY135.580 billion versus TRY113.378 billion parent earnings. Investing cash flow is a **TRY10.003 billion net inflow**, while capital purchases still consumed TRY43.963 billion. The investing subtotal includes TRY39.515 billion from other asset/investment movements and TRY37.304 billion interest received, as well as outflows. Positive investing cash flow therefore does not mean no capital spending. Financing cash flow is a TRY75.360 billion net outflow. All cash-flow descriptions follow PDF page 13.",
+      "source_type": "methodology",
+      "source_path": "docs/FINANCIAL_INTERPRETATION.md",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-11-19",
+      "tickers": [],
+      "sector": null,
+      "sha256": "3d9f601d2e557e0ddbeaaf752226628a7ed6e528faf279b7342827b58137fc02"
+    },
+    {
+      "doc_id": "doc:financial_interpretation:03",
+      "title": "FINANCIAL_INTERPRETATION: Financial business picture",
+      "text": "Cash is TRY95.992 billion, financial debt TRY489.939 billion and net debt TRY236.664 billion. The net-debt formula subtracts financial investments as well as cash. Net debt/EBITDA is **1.74x**, below the declared 4x threshold. Much of borrowing is aircraft lease debt. Current ratio **1.01x** and quick ratio **0.94x** indicate a small cushion under these simplified definitions; quick ratio removes inventory only and can overstate liquidity where prepayments or other illiquid assets matter. | Metric | Value | | --- | --- | | revenue_growth | 47.79% | | net_profit_growth | -30.44% | | ebitda_growth | 18.08% | | roe | 19.94% | | roa | 9.26% | | ebitda_margin | 18.28% | | net_margin | 15.21% | | net_debt_ebitda | 1.74 | | debt_equity | 0.72 | | current_ratio | 1.01 | | quick_ratio | 0.94 | | pe | 3.27 | | pb | 0.54 | | ev_ebitda | 4.46 | ROE **19.94%** narrowly misses the strict >20% point; ROA is **9.26%**. Both use average balances and parent profit. Small rounding or definition changes can matter near thresholds, so the sensitivity evidence and precise definitions are more useful than a confident label. P/E **3.27x**, P/B **0.54x** and EV/EBITDA **4.46x** use the **31 December 2025 price** with the latest available **FY2024 accounts**. They are not year-end-2024 valuation ratios or proof of undervaluation. The stock close is TRY268.50 and nominal market capitalization is TRY370.53 billion. FX gaps do not invalidate these TRY ratios; the optional USD market-cap column remains missing where FX is missing.",
+      "source_type": "methodology",
+      "source_path": "docs/FINANCIAL_INTERPRETATION.md",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-11-19",
+      "tickers": [],
+      "sector": null,
+      "sha256": "600b9486b6b3f20bf84a59e713d5d9ae74b23cb0bfca10ae51a4432dc3348c60"
+    },
+    {
+      "doc_id": "doc:financial_interpretation:04",
+      "title": "FINANCIAL_INTERPRETATION: Final rule decision",
+      "text": "The fundamental points are sales growth, leverage and P/E below its prior median: **F=3/5**. Profit growth and ROE do not pass. Technical points are RSI in range and proximity to confirmed support: **T=2/5**. Combined score is **0.48**. SMA20 is 271.1625 and SMA50 is 276.64, so the required upward trend is absent. RSI is 42.62, but MACD is below its signal and relative volume is only 0.69. The rule returns **HOLD for a flat position**, meaning remain in cash. This is a historical model decision, not an executed order or current recommendation.",
+      "source_type": "methodology",
+      "source_path": "docs/FINANCIAL_INTERPRETATION.md",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-11-19",
+      "tickers": [],
+      "sector": null,
+      "sha256": "48ee3032df4264f35e8dde78d16fb769e285792856fffa6ed643908d42b83fe8"
+    },
+    {
+      "doc_id": "doc:financial_interpretation:05",
+      "title": "FINANCIAL_INTERPRETATION: Backtest findings",
+      "text": "| Strategy | Return | Max drawdown | Sharpe (rf=0) | Closed trades | Win rate | Exposure | Sessions | | --- | --- | --- | --- | --- | --- | --- | --- | | combined | 65.32% | -13.85% | 1.08 | 8 | 87.50% | 20.16% | 749 | | technical | 61.19% | -13.16% | 1.0 | 11 | 63.64% | 26.70% | 749 | | buy_hold | 92.73% | -25.61% | 0.75 | 0 | Unavailable | 100.00% | 749 | | bist100 | 102.24% | -22.86% | 0.97 | — | Unavailable | Unavailable | 746 | TRY100,000 becomes **TRY165,317.12** under the combined strategy, after modeled costs. It exceeds technical-only return by **4.13 percentage points**, but trails buy-and-hold and BIST100. Its maximum drawdown is slightly deeper than technical-only drawdown, although much smaller than buy-and-hold's drawdown. Thus there is no across-the-board dominance. The strategy holds a position for **20.16%** of sessions and completes **eight trades**, seven profitable. That small sample limits what the 87.5% win rate can establish. Low exposure reduces participation in sustained stock appreciation and also changes risk. Zero interest on idle cash is consequential in a high-inflation market. The gross return using the **same executions** is **69.33%**, compared with 65.32% net. Modeled commission totals TRY2,115.87 and slippage TRY1,057.95; their opportunity/compounding effect contributes to the endpoint difference. A fresh zero-cost strategy run can change stop decisions, so it is a different comparison.",
+      "source_type": "methodology",
+      "source_path": "docs/FINANCIAL_INTERPRETATION.md",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-11-19",
+      "tickers": [],
+      "sector": null,
+      "sha256": "d187d0ce587a87325ddb5bef7163e1d3de3c52e7d5fa9a8ac38f562041df95d2"
+    },
+    {
+      "doc_id": "doc:financial_interpretation:06",
+      "title": "FINANCIAL_INTERPRETATION: Backtest findings",
+      "text": "| Year | Combined return % | Technical return % | Buy/hold return % | BIST100 return % | | --- | --- | --- | --- | --- | | 2023 | 15.26 | 15.48 | 60.29 | 34.15 | | 2024 | 24.81 | 23.98 | 20.16 | 30.34 | | 2025 | 8.26 | 6.43 | -2.77 | 14.24 | Each year starts independently with TRY100,000 and no position, retaining prior feature history. The annual returns therefore need not compound to the continuous full-period result. Predeclared 2023-2024 sensitivities are in `outputs/verified_only/sensitivity.csv`; no winner replaces the baseline.",
+      "source_type": "methodology",
+      "source_path": "docs/FINANCIAL_INTERPRETATION.md",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-11-19",
+      "tickers": [],
+      "sector": null,
+      "sha256": "ab686fe1e2ebf9d164517b67f5a4072a874a7056063e69a53f14cb38365c5525"
+    },
+    {
+      "doc_id": "doc:financial_interpretation:07",
+      "title": "FINANCIAL_INTERPRETATION: What changed from the first analysis",
+      "text": "The earlier displayed-USD, current-vintage study returned 26.24% for combined trading. Original TRY statements and real release dates produce different earnings growth, valuation histories and entry/exit decisions. The current analysis does not attribute the whole change to publication dates or claim that verification improved investment performance. It corrects the empirical source basis. Old data, results and model recordings remain preserved. The conclusion to defend is modest: adding this annual fundamental rule changed trading behavior; in this sample it modestly exceeded technical-only return but lagged long exposure to the stock and index. Source tracing, causal timing, reproducibility and honest interpretation are the project's stronger contributions.",
+      "source_type": "methodology",
+      "source_path": "docs/FINANCIAL_INTERPRETATION.md",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-11-19",
+      "tickers": [],
+      "sector": null,
+      "sha256": "dec2a3aa5f320cacb312b1f779c35c050e58247a617e596b74f74768f6ade2aa"
+    },
+    {
+      "doc_id": "doc:data_sources:01",
+      "title": "DATA_SOURCES: Primary financial values: post-TMS 29 Fintables-hosted originals only",
+      "text": "The primary dataset is `data/processed/fintables_tms29_observations.csv`, selected by `config/tms29.yaml` with TRY and `verified_only`. A FY2024 annual anchor and six reports covering 2025 Q1, Q2, Q3, FY2025, 2026 Q1, and 2026 Q2 are parsed on one basis. Both current and comparative columns are retained, producing 238 verified observations over eleven period ends. All 56 balance, sources, gross-profit, and cash-roll-forward checks reconcile within TRY 1 million. Exact disclosures are dated 28 April, 5 August, and 7 November 2025; and 4 March, 29 April, and 5 August 2026. The parser records the original attachment URL, Fintables/KAP evidence URL, statement pages, wrapper and payload hashes, and publication date in `data/raw/fintables/tms29_originals/tms29_manifest.json`. Values become usable at the first THYAO session close strictly after publication. The latest modeled financial period is 30 June 2026. YTD values are combined with FY2025 and comparative 2025 YTD values to construct same-basis TTM flows. Net debt matches the current Fintables convention: bank and lease debt minus cash and current financial investments. KAP disclosure text is kept in `data/raw/kap/thyao_context_events.csv` as timestamped context; it never replaces numerical statements or changes a trading score.",
+      "source_type": "data_provenance",
+      "source_path": "docs/DATA_SOURCES.md",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-11-19",
+      "tickers": [],
+      "sector": null,
+      "sha256": "cb34a725a647ec9d2ff6c8741386a40e8704333650a1a03beaaa89d814b3fab7"
+    },
+    {
+      "doc_id": "doc:data_sources:02",
+      "title": "DATA_SOURCES: Annual baseline financial values",
+      "text": "The baseline dataset is `data/processed/fintables_original_observations.csv`, selected by `config/project.yaml` with **TRY** and **verified_only**. Four user-downloaded original annual financial reports provide 136 verified observations including comparative vintages, covering FY2020-2024. Values come exclusively from the Fintables attachment bytes. KAP is used for publication metadata only, never as a replacement financial-value source. See [Original statement audit](ORIGINALS_AUDIT.md) for download URLs, verified releases, page references, hashes, 40 reconciliations and four comparative revisions. PDF pages 9, 10, 11 and 13 were visually read for each report. The source is **million TRY**, scaled to full TRY once. FY2020 comparative figures enter with the containing FY2021 release; FY2025 annual results released in 2026 do not enter 2025 trading. The original reports use monthly exchange rates for income translation. A single annual conversion cannot exactly reproduce functional-USD flows. The main study therefore retains original nominal TRY presentation. P/E, P/B and EV/EBITDA use raw TRY share price and TRY financial amounts. The economic limitations of nominal growth and translated average balances are disclosed. EBITDA, net debt and nominal share definitions are unchanged and documented in the original audit. The separate previous study below is not mixed into this dataset.",
+      "source_type": "data_provenance",
+      "source_path": "docs/DATA_SOURCES.md",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-11-19",
+      "tickers": [],
+      "sector": null,
+      "sha256": "9f6e6c4eb56135b2c234d53bba802119f10baf0c4ce7963d23d87a20bf544e40"
+    },
+    {
+      "doc_id": "doc:data_sources:03",
+      "title": "DATA_SOURCES: Earlier displayed-USD study (preserved separately)",
+      "text": "Captured manually through the authorized, signed-in browser on 15 September 2026. Local TSVs preserve selected Turkish row labels and formatted values. Parenthetical section names disambiguate duplicated balance-sheet labels. Monetary table units are **thousands** of the displayed currency; normalize once by multiplying by 1,000. | File | Source | Coverage | |---|---|---| | balance_annual_usd.tsv | [Balance sheet](https://fintables.com/sirketler/THYAO/finansal-tablolar/bilanco?period=12&type=&currency=usd&mode=adjusted) | 2020–2025 year ends | | income_annual_usd.tsv | [Income statement](https://fintables.com/sirketler/THYAO/finansal-tablolar/gelir-tablosu?period=12&type=&currency=usd&mode=adjusted) | 2020–2025 full years | | cashflow_annual_usd.tsv | [Cash flow](https://fintables.com/sirketler/THYAO/finansal-tablolar/nakit-akim-tablosu?period=12&type=&currency=usd&mode=adjusted) | 2020–2025 full years | | capital_annual_try.tsv | [TRY balance sheet](https://fintables.com/sirketler/THYAO/finansal-tablolar/bilanco?period=12&type=&currency=try&mode=adjusted) | 2020–2025 nominal capital | The files reside in `data/raw/fintables`. The import command records SHA-256 hashes. Values were captured from the displayed value element, excluding the adjacent percentage-change badge. Annual periods were explicitly selected. Monetary flow values are annual totals, not standalone fourth quarters. The 1,380,000 thousand TRY capital was independently read for all six years. Fintables' market-cap formula uses nominal capital times share price; we model 1.38 billion TRY-1 nominal units and disclose that treasury-share adjustments are not made. EBITDA and net debt are calculated from these inputs using [Fintables' published formulas](https://fintables.com/arastirma/yazilar/degerleme-analizi-101/fdfavok). Calculated growth, ratios and scores are project outputs; no subscription-only ratio values are invented or claimed to have been exported. ROE uses average parent equity and ROA average total assets, with parent-attributable net income. Quick ratio excludes inventory only; it can overstate liquidity where prepayments are material.",
+      "source_type": "data_provenance",
+      "source_path": "docs/DATA_SOURCES.md",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-11-19",
+      "tickers": [],
+      "sector": null,
+      "sha256": "4f1eea8651effca817ef9f502745639c682845817b29693e3a8e90f45f1fb954"
+    },
+    {
+      "doc_id": "doc:data_sources:04",
+      "title": "DATA_SOURCES: Release and vintage limitations",
+      "text": "- [Fintables' 2023 financial-report notice](https://fintables.com/borsa-haber-akisi/ca09fa43-446f-4c7e-8593-43eebea89e1b) is dated **3 April 2024, 19:00**, for the 2023 fourth-quarter/year-end results. - [Fintables' 2025 financial-report notice](https://fintables.com/borsa-haber-akisi/ac19e15a-2370-4ed9-86c7-0a67b6746841/thyao-finansal-rapor) is dated **4 March 2026, 18:55**. The [results announcement](https://fintables.com/borsa-haber-akisi/76b80e73-c31d-4ac7-96cd-c75d172bae3b/thyao-ozel-durum-aciklamasi-genel) at 19:08 confirms the annual results were disclosed. - Other annual release dates are unknown in this dataset. `published_at` stays empty; `assumed_published_at` explicitly records 30 June of the following year. This is not an actual publication date. - All table observations have `vintage_verified=false`. The original release notices do not verify every currently displayed financial value. Strict mode excludes all of them. Retrospective mode permits them with warnings. Results therefore remain exploratory and may contain revision bias despite causal code and delayed use. - No original THY/KAP financial values from a different service were imported. Paid subscription controls and browser protection were not bypassed; the user completed the robot check and sign-in.",
+      "source_type": "data_provenance",
+      "source_path": "docs/DATA_SOURCES.md",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-11-19",
+      "tickers": [],
+      "sector": null,
+      "sha256": "eb154270163f8cf4b6ace26b476968304a54df0c7f3fc544fbb17a754174d183"
+    },
+    {
+      "doc_id": "doc:data_sources:05",
+      "title": "DATA_SOURCES: Market data",
+      "text": "Selection-date BIST100 membership was verified in the [Fintables XU100 constituent table](https://fintables.com/endeksler/XU100), which contains THYAO, on 15 September 2026. `data/raw/fintables/membership.json` records this observation; it does not establish membership throughout the historical test window. Yahoo via `yfinance.download`, daily interval, explicit `auto_adjust=False`, actions enabled and repair disabled. Requests, retrieval timestamps, installed provider version and file hashes are in adjacent `.metadata.json` files under `data/raw/market`. - `THYAO.IS`: Turkish Airlines equity, TRY prices, volume and actions. - `XU100.IS`: BIST 100 **price index**, not a total-return index or a tradeable asset. - `TRY=X`: USD/TRY, TRY per USD. Exact-date positive close only is used for the secondary USD market cap and the earlier USD study. Primary TRY valuation does not require FX. Inconsistent provider FX OHLC ranges are counted; the unused bars are retained for audit. The current cached request window is 2021-01-01 to exclusive 2026-09-26. The primary evaluation ends on the last available stock session, 25 September 2026; the annual baseline still slices its fixed 2023–2025 window. Stock/index calendar differences are preserved in each run's quality report. No missing market price is fabricated. Raw files are for the user's academic project. Review provider/instructor redistribution rules before publishing datasets publicly. No public upload is performed by the pipeline.",
+      "source_type": "data_provenance",
+      "source_path": "docs/DATA_SOURCES.md",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-11-19",
+      "tickers": [],
+      "sector": null,
+      "sha256": "82ac0dd6669d6ba1ef5fb7d70df0e53cce730f8b3067854b9f8cbf92154ca415"
+    },
+    {
+      "doc_id": "universe:THYAO.IS",
+      "title": "THYAO.IS universe membership",
+      "text": "THYAO.IS belongs to the airlines sector of the research universe. Sector peers: PGSUS.IS. Flag carrier; primary case study with TMS 29 fundamentals verified. Benchmark index: XU100.IS.",
+      "source_type": "universe_metadata",
+      "source_path": "config/bist100_universe.yaml",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-11-19",
+      "tickers": [
+        "THYAO.IS"
+      ],
+      "sector": "airlines",
+      "sha256": "7d51c241969c48b440c03792059065a7d585be43a43b131315ec3db1bf5e9887"
+    },
+    {
+      "doc_id": "universe:PGSUS.IS",
+      "title": "PGSUS.IS universe membership",
+      "text": "PGSUS.IS belongs to the airlines sector of the research universe. Sector peers: THYAO.IS. Low-cost carrier; sector peer for THYAO. Benchmark index: XU100.IS.",
+      "source_type": "universe_metadata",
+      "source_path": "config/bist100_universe.yaml",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-11-19",
+      "tickers": [
+        "PGSUS.IS"
+      ],
+      "sector": "airlines",
+      "sha256": "d0963ba8684ce624e478d5c6367d0a0780ad28297c6fb9865d35fbd55ed01f28"
+    },
+    {
+      "doc_id": "universe:AKBNK.IS",
+      "title": "AKBNK.IS universe membership",
+      "text": "AKBNK.IS belongs to the banking sector of the research universe. Sector peers: GARAN.IS, YKBNK.IS, ISCTR.IS. Private bank; exempted from TMS 29 remeasurement (per instructor Q&A). Benchmark index: XU100.IS.",
+      "source_type": "universe_metadata",
+      "source_path": "config/bist100_universe.yaml",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-11-19",
+      "tickers": [
+        "AKBNK.IS"
+      ],
+      "sector": "banking",
+      "sha256": "bfab67ef0536b30891decd85c9c792683dc75a4c2e51398308aa722c76741d81"
+    },
+    {
+      "doc_id": "universe:GARAN.IS",
+      "title": "GARAN.IS universe membership",
+      "text": "GARAN.IS belongs to the banking sector of the research universe. Sector peers: AKBNK.IS, YKBNK.IS, ISCTR.IS. Private bank; sector peer for AKBNK. Benchmark index: XU100.IS.",
+      "source_type": "universe_metadata",
+      "source_path": "config/bist100_universe.yaml",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-11-19",
+      "tickers": [
+        "GARAN.IS"
+      ],
+      "sector": "banking",
+      "sha256": "464a8f4f9bd0d8b2642472724cdb32241b3438d89dfdbe10d1e78872acdb4610"
+    },
+    {
+      "doc_id": "universe:EREGL.IS",
+      "title": "EREGL.IS universe membership",
+      "text": "EREGL.IS belongs to the steel sector of the research universe. Sector peers: KRDMD.IS. Flat steel; commodity-cycle exposure. Benchmark index: XU100.IS.",
+      "source_type": "universe_metadata",
+      "source_path": "config/bist100_universe.yaml",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-11-19",
+      "tickers": [
+        "EREGL.IS"
+      ],
+      "sector": "steel",
+      "sha256": "8072e1558ae79f20b1bce6cd143a7037c37be19f30eaf472b82c130a2edef8ab"
+    },
+    {
+      "doc_id": "universe:KRDMD.IS",
+      "title": "KRDMD.IS universe membership",
+      "text": "KRDMD.IS belongs to the steel sector of the research universe. Sector peers: EREGL.IS. Long steel; sector peer for EREGL. Benchmark index: XU100.IS.",
+      "source_type": "universe_metadata",
+      "source_path": "config/bist100_universe.yaml",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-11-19",
+      "tickers": [
+        "KRDMD.IS"
+      ],
+      "sector": "steel",
+      "sha256": "2563d8afd5fca805614ab2a376bb4fc1584610d2558b5c3b57695499d87c9485"
+    },
+    {
+      "doc_id": "universe:BIMAS.IS",
+      "title": "BIMAS.IS universe membership",
+      "text": "BIMAS.IS belongs to the retail sector of the research universe. Sector peers: MGROS.IS. Discount grocery; defensive consumer staples. Benchmark index: XU100.IS.",
+      "source_type": "universe_metadata",
+      "source_path": "config/bist100_universe.yaml",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-11-19",
+      "tickers": [
+        "BIMAS.IS"
+      ],
+      "sector": "retail",
+      "sha256": "d852a9317d1dc088629d98665bec564b14c85f88999695f17bd366cbecf0d640"
+    },
+    {
+      "doc_id": "universe:MGROS.IS",
+      "title": "MGROS.IS universe membership",
+      "text": "MGROS.IS belongs to the retail sector of the research universe. Sector peers: BIMAS.IS. Supermarket chain; sector peer for BIMAS. Benchmark index: XU100.IS.",
+      "source_type": "universe_metadata",
+      "source_path": "config/bist100_universe.yaml",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-11-19",
+      "tickers": [
+        "MGROS.IS"
+      ],
+      "sector": "retail",
+      "sha256": "2336a49c63d96845502a449f2dd50928c1982223f4011000f03616656899e995"
+    },
+    {
+      "doc_id": "universe:TCELL.IS",
+      "title": "TCELL.IS universe membership",
+      "text": "TCELL.IS belongs to the telecom sector of the research universe. Sector peers: TTKOM.IS. Mobile operator; regulated-revenue profile. Benchmark index: XU100.IS.",
+      "source_type": "universe_metadata",
+      "source_path": "config/bist100_universe.yaml",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-11-19",
+      "tickers": [
+        "TCELL.IS"
+      ],
+      "sector": "telecom",
+      "sha256": "f25c861f70e8ec0f455fdebb3f6006a998e35e00c3cee6b97fd10b843eefae83"
+    },
+    {
+      "doc_id": "universe:TTKOM.IS",
+      "title": "TTKOM.IS universe membership",
+      "text": "TTKOM.IS belongs to the telecom sector of the research universe. Sector peers: TCELL.IS. Fixed + mobile; sector peer for TCELL. Benchmark index: XU100.IS.",
+      "source_type": "universe_metadata",
+      "source_path": "config/bist100_universe.yaml",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-11-19",
+      "tickers": [
+        "TTKOM.IS"
+      ],
+      "sector": "telecom",
+      "sha256": "b55218f1edf7855061ed307a25e96d6013500b9a530c54121f2ee57ceddf9845"
+    },
+    {
+      "doc_id": "universe:YKBNK.IS",
+      "title": "YKBNK.IS universe membership",
+      "text": "YKBNK.IS belongs to the banking sector of the research universe (live-question extension; prices only, no fundamentals). Sector peers: AKBNK.IS, GARAN.IS, ISCTR.IS. Benchmark index: XU100.IS.",
+      "source_type": "universe_metadata",
+      "source_path": "config/universe_live.yaml",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-11-19",
+      "tickers": [
+        "YKBNK.IS"
+      ],
+      "sector": "banking",
+      "sha256": "abfab907de8e124f21a139e7ca56fe81ee0c643d083a0003a396693d7e94702e"
+    },
+    {
+      "doc_id": "universe:ISCTR.IS",
+      "title": "ISCTR.IS universe membership",
+      "text": "ISCTR.IS belongs to the banking sector of the research universe (live-question extension; prices only, no fundamentals). Sector peers: AKBNK.IS, GARAN.IS, YKBNK.IS. Benchmark index: XU100.IS.",
+      "source_type": "universe_metadata",
+      "source_path": "config/universe_live.yaml",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-11-19",
+      "tickers": [
+        "ISCTR.IS"
+      ],
+      "sector": "banking",
+      "sha256": "87a02388185a5e782c18c49379a3a934e2e9a60276b3bb821cc2c95acc4c528e"
+    },
+    {
+      "doc_id": "universe:FROTO.IS",
+      "title": "FROTO.IS universe membership",
+      "text": "FROTO.IS belongs to the automotive sector of the research universe (live-question extension; prices only, no fundamentals). Sector peers: TOASO.IS. Benchmark index: XU100.IS.",
+      "source_type": "universe_metadata",
+      "source_path": "config/universe_live.yaml",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-11-19",
+      "tickers": [
+        "FROTO.IS"
+      ],
+      "sector": "automotive",
+      "sha256": "1d92ba3367b9562e05fbe323b37e6ab6380c156e88becdd7e94e82adbb16f485"
+    },
+    {
+      "doc_id": "universe:TOASO.IS",
+      "title": "TOASO.IS universe membership",
+      "text": "TOASO.IS belongs to the automotive sector of the research universe (live-question extension; prices only, no fundamentals). Sector peers: FROTO.IS. Benchmark index: XU100.IS.",
+      "source_type": "universe_metadata",
+      "source_path": "config/universe_live.yaml",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-11-19",
+      "tickers": [
+        "TOASO.IS"
+      ],
+      "sector": "automotive",
+      "sha256": "b553bb611f4e9b51a11ffce03397700e06b14f1a707a981ceebf3e5c26035467"
+    },
+    {
+      "doc_id": "universe:KCHOL.IS",
+      "title": "KCHOL.IS universe membership",
+      "text": "KCHOL.IS belongs to the holding sector of the research universe (live-question extension; prices only, no fundamentals). Sector peers: SAHOL.IS. Benchmark index: XU100.IS.",
+      "source_type": "universe_metadata",
+      "source_path": "config/universe_live.yaml",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-11-19",
+      "tickers": [
+        "KCHOL.IS"
+      ],
+      "sector": "holding",
+      "sha256": "8b8d6c5fce40f54581a72c3258a735918296e172cf18ad9f22c10751dfeffe27"
+    },
+    {
+      "doc_id": "universe:SAHOL.IS",
+      "title": "SAHOL.IS universe membership",
+      "text": "SAHOL.IS belongs to the holding sector of the research universe (live-question extension; prices only, no fundamentals). Sector peers: KCHOL.IS. Benchmark index: XU100.IS.",
+      "source_type": "universe_metadata",
+      "source_path": "config/universe_live.yaml",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-11-19",
+      "tickers": [
+        "SAHOL.IS"
+      ],
+      "sector": "holding",
+      "sha256": "6db6d5b007817bdf5352dc9e9e3966b665ba40fda7556620f9ceb884f95fedd4"
+    },
+    {
+      "doc_id": "universe:TUPRS.IS",
+      "title": "TUPRS.IS universe membership",
+      "text": "TUPRS.IS belongs to the energy sector of the research universe (live-question extension; prices only, no fundamentals). Sector peers: PETKM.IS. Benchmark index: XU100.IS.",
+      "source_type": "universe_metadata",
+      "source_path": "config/universe_live.yaml",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-11-19",
+      "tickers": [
+        "TUPRS.IS"
+      ],
+      "sector": "energy",
+      "sha256": "af91ff0b2ec14886844be76fdc31fa90a13ee2768a8ded1ab5a2d0e3918c0912"
+    },
+    {
+      "doc_id": "universe:PETKM.IS",
+      "title": "PETKM.IS universe membership",
+      "text": "PETKM.IS belongs to the energy sector of the research universe (live-question extension; prices only, no fundamentals). Sector peers: TUPRS.IS. Benchmark index: XU100.IS.",
+      "source_type": "universe_metadata",
+      "source_path": "config/universe_live.yaml",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-11-19",
+      "tickers": [
+        "PETKM.IS"
+      ],
+      "sector": "energy",
+      "sha256": "4c9d2484db33a10ee08fc42ba03d8d5ca53fad50b1b3cd35fe3f13b24cfe35ba"
+    },
+    {
+      "doc_id": "provenance:fintables",
+      "title": "Fintables fundamentals provenance",
+      "text": "Fundamental statements were imported from Fintables with release policy Two verified dates; other dates explicitly assumed at following June 30. Formula source: https://fintables.com/arastirma/yazilar/degerleme-analizi-101/fdfavok. Vintage verified: False. Observations: 102. Retrieved at 2026-09-15.",
+      "source_type": "data_provenance",
+      "source_path": "data/raw/fintables/manifest.json",
+      "source_url": null,
+      "published_at": null,
+      "retrieved_at": "2026-09-15",
+      "tickers": [],
+      "sector": null,
+      "sha256": "c7def997baadf7efc27a6faf9b84ad7dd6a9bab11fd745f10ea5a2cf68095ada"
+    }
+  ]
+}

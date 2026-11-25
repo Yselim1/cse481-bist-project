@@ -1,0 +1,26 @@
+{
+  "quality": {
+    "first": "2021-01-04",
+    "fx_usage": null,
+    "inconsistent_ohlc_rows": 0,
+    "large_close_moves": 0,
+    "last": "2026-10-30",
+    "rows": 1457,
+    "ticker": "PETKM.IS",
+    "zero_volume_sessions": 0
+  },
+  "request": {
+    "actions": true,
+    "auto_adjust": false,
+    "end": "2026-11-01",
+    "interval": "1d",
+    "repair": false,
+    "start": "2021-01-01"
+  },
+  "retrieved_at": "2026-11-25T12:28:57.297015+00:00",
+  "return_basis": "provider adjusted OHLC; preserve raw prices and actions",
+  "sha256": "abe0313387f45a43ce2f4279d4b44b4d898e360baf549b780d826e85a6006fb3",
+  "source": "Yahoo Finance via yfinance",
+  "ticker": "PETKM.IS",
+  "yfinance_version": "1.7.0"
+}

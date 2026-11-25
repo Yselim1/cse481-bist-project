@@ -1,0 +1,8 @@
+{
+  "project": "BIST multi-sector research agent: local fine-tuned LLM with MCP tools",
+  "course": "CSE481 Engineering Economics, Term Project 2026",
+  "group_members": ["Yavuz Selim"],
+  "repository": "https://github.com/Yselim1/cse481-bist-project",
+  "served_model_name": "bist-qwen",
+  "base_model_ollama_tag": "qwen2.5:3b-instruct"
+}

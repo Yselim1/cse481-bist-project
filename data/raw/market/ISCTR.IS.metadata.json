@@ -1,0 +1,26 @@
+{
+  "quality": {
+    "first": "2021-01-04",
+    "fx_usage": null,
+    "inconsistent_ohlc_rows": 0,
+    "large_close_moves": 0,
+    "last": "2026-10-30",
+    "rows": 1457,
+    "ticker": "ISCTR.IS",
+    "zero_volume_sessions": 0
+  },
+  "request": {
+    "actions": true,
+    "auto_adjust": false,
+    "end": "2026-11-01",
+    "interval": "1d",
+    "repair": false,
+    "start": "2021-01-01"
+  },
+  "retrieved_at": "2026-11-25T12:28:53.478799+00:00",
+  "return_basis": "provider adjusted OHLC; preserve raw prices and actions",
+  "sha256": "090d2ccde4723cda850e80de08fa715e820821b8d0bd8ee85a52ae744ed36f13",
+  "source": "Yahoo Finance via yfinance",
+  "ticker": "ISCTR.IS",
+  "yfinance_version": "1.7.0"
+}

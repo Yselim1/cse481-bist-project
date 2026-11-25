@@ -1,28 +1,119 @@
 {
+  "dataset_version": 2,
   "target": 400,
   "scenarios_target": {
     "sector_lag": 100,
     "weekday": 60,
-    "reversal": 120,
-    "fundamental": 24,
+    "reversal": 110,
+    "fundamental": 34,
     "analysis_unsafe": 96
   },
   "scenarios_built": {
     "sector_lag": 100,
     "weekday": 60,
-    "reversal": 120,
-    "fundamental": 24,
+    "reversal": 110,
+    "fundamental": 34,
     "analysis_unsafe": 96
   },
-  "rejections": {
-    "sector_lag": 23,
-    "weekday": 32,
-    "reversal": 40,
-    "fundamental": 73,
-    "analysis_unsafe": 31
+  "labels": {
+    "ANALYSIS_UNSAFE": 49,
+    "FUNDAMENTAL_IMPROVEMENT_CANDIDATE": 2,
+    "HOLD": 60,
+    "INVESTIGATE": 66,
+    "POTENTIAL_CATCH_UP_CANDIDATE": 28,
+    "REJECT_SIGNAL": 4,
+    "TECHNICAL_REVERSAL_CANDIDATE": 106,
+    "WATCH": 85
   },
+  "natural_share": 0.463,
+  "rejections": {
+    "sector_lag": 15,
+    "weekday": 23,
+    "reversal": 7,
+    "fundamental": 39,
+    "analysis_unsafe": 29
+  },
+  "ungrounded_rejections": [
+    {
+      "scenario": "sector_lag",
+      "ticker": "PGSUS.IS",
+      "as_of": "2026-09-26",
+      "ungrounded": [
+        "-0.0009"
+      ]
+    },
+    {
+      "scenario": "sector_lag",
+      "ticker": "THYAO.IS",
+      "as_of": "2026-09-26",
+      "ungrounded": [
+        "-0.0009"
+      ]
+    },
+    {
+      "scenario": "sector_lag",
+      "ticker": "THYAO.IS",
+      "as_of": "2026-09-26",
+      "ungrounded": [
+        "-0.0009"
+      ]
+    },
+    {
+      "scenario": "weekday",
+      "ticker": "PGSUS.IS",
+      "as_of": "2026-09-26",
+      "ungrounded": [
+        "0.0008"
+      ]
+    },
+    {
+      "scenario": "weekday",
+      "ticker": "PGSUS.IS",
+      "as_of": "2026-09-26",
+      "ungrounded": [
+        "0.0008"
+      ]
+    },
+    {
+      "scenario": "weekday",
+      "ticker": "BIMAS.IS",
+      "as_of": "2026-06-30",
+      "ungrounded": [
+        "0.0001"
+      ]
+    },
+    {
+      "scenario": "weekday",
+      "ticker": "AKBNK.IS",
+      "as_of": "2025-09-30",
+      "ungrounded": [
+        "0.0006"
+      ]
+    },
+    {
+      "scenario": "weekday",
+      "ticker": "PGSUS.IS",
+      "as_of": "2026-09-26",
+      "ungrounded": [
+        "0.0008"
+      ]
+    },
+    {
+      "scenario": "weekday",
+      "ticker": "THYAO.IS",
+      "as_of": "2025-12-31",
+      "ungrounded": [
+        "0.0007"
+      ]
+    }
+  ],
+  "grounding_check": "every final-answer figure traced to tool output (bist_analytics.harness.grounding)",
   "train_count": 320,
   "eval_count": 80,
+  "train_sha256": "53961a467b2fd8ef67d9fd503fd612f922c96d74edc7d70495820f3f712012f5",
+  "eval_sha256": "559329ae889f395fedf3184a33f469a46fe7fdde7936eb8308eb7b1eb7f49bc8",
+  "tool_char_cap": 3000,
+  "rag_top_k": 3,
   "seed": 17,
-  "elapsed_seconds": 43.2
+  "elapsed_seconds": 38.7
 }

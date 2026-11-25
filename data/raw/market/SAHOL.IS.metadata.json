@@ -1,0 +1,26 @@
+{
+  "quality": {
+    "first": "2021-01-04",
+    "fx_usage": null,
+    "inconsistent_ohlc_rows": 0,
+    "large_close_moves": 0,
+    "last": "2026-10-30",
+    "rows": 1457,
+    "ticker": "SAHOL.IS",
+    "zero_volume_sessions": 0
+  },
+  "request": {
+    "actions": true,
+    "auto_adjust": false,
+    "end": "2026-11-01",
+    "interval": "1d",
+    "repair": false,
+    "start": "2021-01-01"
+  },
+  "retrieved_at": "2026-11-25T12:28:56.103790+00:00",
+  "return_basis": "provider adjusted OHLC; preserve raw prices and actions",
+  "sha256": "f39e684548d103138b5d5a15aa7ca97d9298f058d99898c631ed5eddf9bd598f",
+  "source": "Yahoo Finance via yfinance",
+  "ticker": "SAHOL.IS",
+  "yfinance_version": "1.7.0"
+}

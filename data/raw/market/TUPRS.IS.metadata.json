@@ -1,0 +1,26 @@
+{
+  "quality": {
+    "first": "2021-01-04",
+    "fx_usage": null,
+    "inconsistent_ohlc_rows": 0,
+    "large_close_moves": 0,
+    "last": "2026-10-30",
+    "rows": 1457,
+    "ticker": "TUPRS.IS",
+    "zero_volume_sessions": 0
+  },
+  "request": {
+    "actions": true,
+    "auto_adjust": false,
+    "end": "2026-11-01",
+    "interval": "1d",
+    "repair": false,
+    "start": "2021-01-01"
+  },
+  "retrieved_at": "2026-11-25T12:28:56.742490+00:00",
+  "return_basis": "provider adjusted OHLC; preserve raw prices and actions",
+  "sha256": "4e33adc8cb61d66ba641407ed5bf416d9fb84cca170c8d089908056438fcf235",
+  "source": "Yahoo Finance via yfinance",
+  "ticker": "TUPRS.IS",
+  "yfinance_version": "1.7.0"
+}

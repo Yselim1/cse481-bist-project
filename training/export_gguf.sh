@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
-# Convert a trained LoRA adapter to GGUF so Ollama can load it.
+# Alternative serving path: convert the submitted LoRA adapter (safetensors) to a GGUF
+# *adapter* and load it on top of the 3B base with Ollama's ADAPTER directive:
+#   FROM qwen2.5:3b-instruct
+#   ADAPTER ./bist_lora_adapter.gguf
+# The default path (train_unsloth.py --gguf) instead exports a merged Q4_K_M model.
 # Run on Colab or any Linux box with ~6 GB free disk.
 set -euo pipefail
 
 ADAPTER_DIR=${1:-training/outputs/lora}
-OUT_GGUF=${2:-training/bist_lora.gguf}
+OUT_GGUF=${2:-training/bist_lora_adapter.gguf}
 LLAMA_CPP_DIR=${3:-/content/llama.cpp}
 
 if [[ ! -d "${LLAMA_CPP_DIR}" ]]; then
@@ -13,7 +17,7 @@ if [[ ! -d "${LLAMA_CPP_DIR}" ]]; then
 fi
 
 python "${LLAMA_CPP_DIR}/convert_lora_to_gguf.py" \
-  --base "Qwen/Qwen2.5-7B-Instruct" \
+  --base "Qwen/Qwen2.5-3B-Instruct" \
   --outfile "${OUT_GGUF}" \
   "${ADAPTER_DIR}"
 

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-CSE481 term project. The original THYAO.IS single-ticker research pipeline is still the deepest-worked example, but the repo has grown into a 10-ticker, multi-sector BIST research harness driven by a **locally hosted fine-tuned LLM** (Qwen 2.5 3B + LoRA via Ollama). It imports Fintables financials, caches Yahoo prices, computes technical/fundamental scores, backtests explicit rules, and exposes 20 MCP tools to the agent.
+CSE481 term project. The original THYAO.IS single-ticker research pipeline is still the deepest-worked example, but the repo has grown into a 10-ticker, multi-sector BIST research harness driven by a **locally hosted fine-tuned LLM** (Qwen 2.5 3B + LoRA via Ollama). It imports Fintables financials, caches Yahoo prices, computes technical/fundamental scores, backtests explicit rules, and exposes 21 MCP tools (including a BM25 knowledge-base search for RAG) to the agent.
 
 Three studies coexist:
 - **Primary THYAO study** (`config/tms29.yaml`): 2025–September 2026, 238 TMS 29 observations, preserved untouched as the "one worked example."
@@ -67,6 +67,14 @@ All commands use the `.venv` interpreter from the project root (PowerShell on Wi
 .\.venv\Scripts\python.exe training/eval/run_baseline.py --model bist-qwen
 ```
 
+**Presentation (5 scenario traces, live question, submission manifest)** — see `docs/PRESENTATION.md`:
+```powershell
+.\.venv\Scripts\python.exe scripts/run_presentation_scenarios.py   # outputs/presentation/traces/S1..S5
+.\.venv\Scripts\python.exe scripts/ask.py "<question>"              # live question, same code path
+.\.venv\Scripts\python.exe scripts/build_rag_kb.py                  # rag/knowledge_base.json
+.\.venv\Scripts\python.exe scripts/build_submission.py; .\.venv\Scripts\python.exe scripts/verify_submission.py
+```
+
 **Scenario reports:**
 ```powershell
 .\.venv\Scripts\python.exe scripts/build_scenarios.py
@@ -102,17 +110,20 @@ config/tms29.yaml → CLI → build_analysis() → evaluate() → create_report(
 - **`strategy/rules.py`** — BUY/SELL/HOLD signal generation from scores and indicator state; `INTERNAL_TO_EDUCATIONAL` maps to the 8 labels.
 - **`scenarios/`** — Four scenario builders: `sector_laggard`, `weekday_patterns`, `reversal_events`, `fundamental_reaction`. `scripts/build_scenarios.py` runs them.
 - **`data/`** — `market.py` (Yahoo wrapper; shape-validated — no hardcoded whitelist), `tms29.py`, `originals.py`, `context.py` (per-ticker KAP paths), `macro.py` (TCMB EVDS + TÜİK CPI release-date aligned; no series are cached under `data/raw/macro/`, so `get_macro_context` returns nulls).
-- **`mcp/server.py`** — 20 read-only MCP tools over stdio: the original 10 plus `get_index_history`, `detect_reversal_events`, `rank_sector_relative_strength`, `test_weekday_pattern`, `calculate_fundamental_change`, `get_macro_context`, `get_news_events`, `get_speech_features`, `check_data_quality`, `build_evidence_bundle`.
-- **`harness/evaluation.py`** — Multi-scenario deterministic scoring + §30 metric checks.
+- **`mcp/server.py`** — 21 read-only MCP tools over stdio: the original 10 plus `search_knowledge_base` (RAG) and `get_index_history`, `detect_reversal_events`, `rank_sector_relative_strength`, `test_weekday_pattern`, `calculate_fundamental_change`, `get_macro_context`, `get_news_events`, `get_speech_features`, `check_data_quality`, `build_evidence_bundle`.
+- **`harness/evaluation.py`** — Multi-scenario deterministic scoring + §30 metric checks (grader-only; never imported on the agent path).
+- **`harness/grounding.py`** — post-hoc audit: every figure in a final answer must match a tool output (stored in each trace; never rewrites the answer).
+- **`strategy/label_rules.py`** — single source of the educational-label thresholds; tools return them as `label_rule`, and the dataset builder imports them.
+- **`rag.py`** — offline BM25 over `rag/knowledge_base.json` with a point-in-time (`published_at <= as_of`) filter.
 - **`reporting.py`** — HTML / Markdown / PDF generation.
 - **`io.py`** — JSON serialization and hash verification.
 
 ### LLM stack (`scripts/local_agent.py` + `training/`)
 
-- `scripts/local_agent.py` — Python client against Ollama's OpenAI-compatible endpoint (`localhost:11434/v1`); launches the MCP server as a child process and shuttles tool calls.
+- `scripts/local_agent.py` — Python client against Ollama's OpenAI-compatible endpoint (`localhost:11434/v1`); launches the MCP server (with `BIST_CONFIG`, default `config/universe_live.yaml`) as a child process, does harness-side RAG, sends seed + temperature, and writes the full execution trace (`bist-execution-trace/1`).
 - `scripts/run_harness_experiments.py --backend ollama` — the 5-stage A–E experiment, local path (submission).
-- `training/dataset/build.py` — generates ~400 verified examples by replaying live MCP tool calls, 80/20 stratified split.
-- `training/train_lora.py` — QLoRA 4-bit (rank 16, alpha 32, 3 epochs, cosine LR 2e-4) via HuggingFace peft + trl; designed for Colab T4.
+- `training/dataset/build.py` — dataset v2: ~400 examples by replaying live MCP tool calls (config/universe10.yaml), ~half natural-language questions with the inference system prompt + RAG context, every answer figure grounding-checked; 80/20 stratified split.
+- `training/train_unsloth.py` — QLoRA 4-bit via Unsloth (rank 16, alpha 32, 3 epochs, cosine LR 2e-4, effective batch 16, max_len 3072, seed 17) on Colab T4; saves `adapter_model.safetensors`, writes `training/config/hyperparams.json`, exports the merged GGUF from the same run. (`train_lora.py` is the superseded peft/trl recipe.)
 - `training/export_gguf.sh` — adapter → GGUF via llama.cpp, loaded through `training/Modelfile.finetuned`.
 - `training/eval/run_baseline.py` + `compare.py` — 20-question §30 eval and base-vs-fine-tuned comparison.
 
@@ -124,9 +135,9 @@ config/tms29.yaml → CLI → build_analysis() → evaluate() → create_report(
 - **Execution model**: Close-of-day signal → next session open fill. Commission 10 bps + slippage 5 bps. Cash earns zero. Returns are nominal TRY.
 - **EMA seeding**: EMAs are SMA-seeded to avoid NaN on startup.
 
-### MCP Tools (20 read-only)
+### MCP Tools (21 read-only)
 
-Exposed by `bist_analytics.mcp.server`: `project_status`, `get_context_events`, `get_stock_history`, `calculate_indicators`, `find_support_resistance`, `get_fundamental_metrics`, `calculate_scores`, `run_backtest`, `generate_signal`, `generate_report`, `get_index_history`, `detect_reversal_events`, `rank_sector_relative_strength`, `test_weekday_pattern`, `calculate_fundamental_change`, `get_macro_context`, `get_news_events`, `get_speech_features`, `check_data_quality`, `build_evidence_bundle`.
+Exposed by `bist_analytics.mcp.server`: `project_status`, `get_context_events`, `get_stock_history`, `calculate_indicators`, `find_support_resistance`, `get_fundamental_metrics`, `calculate_scores`, `run_backtest`, `generate_signal`, `generate_report`, `get_index_history`, `detect_reversal_events`, `rank_sector_relative_strength`, `test_weekday_pattern`, `calculate_fundamental_change`, `get_macro_context`, `get_news_events`, `get_speech_features`, `check_data_quality`, `build_evidence_bundle`, `search_knowledge_base`.
 
 ### 8-label action space (frozen in `schemas.py`)
 
@@ -137,11 +148,13 @@ Exposed by `bist_analytics.mcp.server`: `project_status`, `get_context_events`, 
 - `config/tms29.yaml` — Primary THYAO study (2025–Sep 2026, 238 TMS29 observations)
 - `config/project.yaml` — Annual baseline (FY2020–FY2024, verified-only)
 - `config/retrospective.yaml` — Earlier USD-basis study
-- `config/universe10.yaml` — 10-ticker, 5-sector universe (airlines, banking, steel, retail, telecom)
+- `config/universe10.yaml` — 10-ticker, 5-sector universe (airlines, banking, steel, retail, telecom); scenario reports + fine-tuning dataset
+- `config/universe_live.yaml` — universe10 + 8 more tickers (automotive, holding, energy, 2 more banks); the agent's default for the scenarios and the live question
 - `config/bist100_universe.yaml` — 10-ticker manifest with liquidity/sector metadata
 
 ### Key Reference Docs
 
+- `docs/PRESENTATION.md` — presentation procedure, trace schema, integrity measures, submission.json
 - `docs/DECISIONS.md` — All frozen thresholds and methodological limitations
 - `docs/DATA_DICTIONARY.md` — Financial metric definitions and TTM calculation logic
 - `docs/WALKTHROUGH.md` — Code tour with a real trade example

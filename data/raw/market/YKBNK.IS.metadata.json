@@ -1,0 +1,26 @@
+{
+  "quality": {
+    "first": "2021-01-04",
+    "fx_usage": null,
+    "inconsistent_ohlc_rows": 0,
+    "large_close_moves": 0,
+    "last": "2026-10-30",
+    "rows": 1457,
+    "ticker": "YKBNK.IS",
+    "zero_volume_sessions": 1
+  },
+  "request": {
+    "actions": true,
+    "auto_adjust": false,
+    "end": "2026-11-01",
+    "interval": "1d",
+    "repair": false,
+    "start": "2021-01-01"
+  },
+  "retrieved_at": "2026-11-25T12:28:52.789865+00:00",
+  "return_basis": "provider adjusted OHLC; preserve raw prices and actions",
+  "sha256": "e69765b645d4aa9e4f49e540c9f9906417a3478344c6c98b0492bcf018ec849a",
+  "source": "Yahoo Finance via yfinance",
+  "ticker": "YKBNK.IS",
+  "yfinance_version": "1.7.0"
+}

@@ -11,14 +11,16 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def main():
     files = [ROOT/name for name in ["README.md","TASKS.md","IMPLEMENTATION_PLAN.md","pyproject.toml",
-        "uv.lock",".gitignore",".env.example","CSE481_Term_Project_BIST_Python_Fintables_MCP_Final.pdf"]]
+        "uv.lock",".gitignore",".env.example","CSE481_Term_Project_BIST_Python_Fintables_MCP_Final.pdf",
+        "submission.json","CLAUDE.md"]]
     exclude = {"__pycache__",".ipynb_checkpoints",".ruff_cache",".pytest_cache",
                "harness_codex_archive"}  # legacy cloud-LLM runs; submission is local-only
     # Working-session notes and their generator are not submission material.
     exclude_files = {"outputs/deliverables/session_summary_2026-11-23.pdf",
                      "scripts/_build_session_summary.py"}
     # training/outputs/ holds HF checkpoints (multi-GB) — zip only the exportable artefacts.
-    for directory in ["config","data","docs","notebooks","src","tests","scripts","outputs","output/pdf"]:
+    for directory in ["config","data","docs","notebooks","src","tests","scripts","outputs","output/pdf",
+                      "rag","presentation"]:
         base = ROOT/directory
         if not base.exists():
             continue

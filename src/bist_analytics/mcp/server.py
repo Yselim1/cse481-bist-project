@@ -14,6 +14,7 @@ from mcp.types import ToolAnnotations
 from bist_analytics.config import load_config, project_root
 from bist_analytics.io import clean_json, frame_records
 from bist_analytics.pipeline import build_analysis, evaluate
+from bist_analytics.strategy import label_rules
 
 server = MCPServer("THYAO Research",instructions="Read-only academic analysis. Use tools for numbers. Preserve dates, units and warnings. "
     "Read the active currency and vintage policy from tool metadata. Verified annual vintages do not imply a complete interim archive or validated investment performance. "
@@ -26,15 +27,45 @@ def analysis():
     return build_analysis(config=load_config(os.environ.get("BIST_CONFIG")))
 
 
-def envelope(data, as_of=None):
+def envelope(data, as_of=None, ticker=None, **extra):
+    """Standard tool envelope. ``extra`` keys (label_rule, summary) are placed before ``data``
+    so they survive any downstream truncation of long payloads."""
     a = analysis()
-    return clean_json({"ticker":a.config.ticker,"as_of":as_of,"data":data,"price_currency":"TRY",
+    return clean_json({"ticker":ticker,"primary_ticker":a.config.ticker,"as_of":as_of,**extra,"data":data,"price_currency":"TRY",
         "fundamental_currency":a.config.fundamental_currency, "vintage_policy":a.config.vintage_policy,
         "fundamental_dataset":a.config.fundamentals_file,
         "warnings":a.quality["warnings"],"source_document":"docs/DATA_SOURCES.md",
         "execution_assumptions":{"commission_bps_per_side":a.config.commission_bps,
             "slippage_bps_per_side":a.config.slippage_bps,"initial_capital_try":a.config.initial_capital,
             "signal_timing":"close decision, next stock-session open execution"}})
+
+
+def _technical_only_scores(ticker, as_of):
+    """Technical score for a universe ticker without fundamentals (same 5 components as add_scores)."""
+    from bist_analytics.analysis.indicators import calculate_indicators
+    from bist_analytics.analysis.levels import find_support_resistance
+    a = analysis()
+    config = a.config.strategy
+    prices = a.universe_prices[ticker]
+    levels, _, _ = find_support_resistance(prices, config)
+    frame = calculate_indicators(prices, config).join(levels).loc[:parsed_date(as_of)]
+    row = frame.iloc[-1]
+    checks = {"trend": (row.sma_fast > row.sma_slow, row.sma_slow),
+              "rsi": (35 <= row.rsi <= 55, row.rsi),
+              "macd": (row.macd > row.macd_signal, row.macd_signal),
+              "volume": (row.relative_volume >= 1, row.relative_volume),
+              "support": (row.support_distance <= config.support_distance, row.support_distance)}
+    points = {f"t_{k}": (float(ok) if pd.notna(v) else None) for k, (ok, v) in checks.items()}
+    valid = [p for p in points.values() if p is not None]
+    return {**points, "technical_score": float(sum(valid)) if len(valid) == 5 else None,
+            "fundamental_score": None, "combined_score": None, "fundamental_label": "unavailable",
+            "fundamentals_available": False, "reason": _no_fundamentals(ticker)}
+
+
+def _no_fundamentals(ticker):
+    config = analysis().config
+    return (f"NO_FUNDAMENTALS: {config.fundamentals_file} contains verified statements for "
+            f"{config.ticker} only; no fundamental data exists for {ticker}. Do not estimate.")
 
 
 def parsed_date(value):
@@ -65,7 +96,8 @@ def project_status() -> dict[str, Any]:
     """Return project scope and exact on-disk data readiness; no network or authentication data."""
     root = project_root()
     config = analysis().config
-    return {"ticker":"THYAO.IS","benchmark":"XU100.IS","fundamental_source":"Fintables",
+    return {"ticker":config.ticker,"benchmark":config.benchmark,"fundamental_source":"Fintables",
+            "universe":list(config.universe),
             "fundamentals_present":(root/config.fundamentals_file).exists(),
             "vintage_policy":config.vintage_policy,"fundamental_currency":config.fundamental_currency,
             "educational_only":True}
@@ -90,7 +122,7 @@ def get_stock_history(ticker: str = "THYAO.IS", as_of: str = "2025-12-31", sessi
     if not 1 <= sessions <= 252:
         raise ToolError("LIMIT_OUT_OF_RANGE: sessions must be 1–252")
     data = selected(ticker,as_of)[["open","high","low","close","raw_close","volume"]].tail(sessions)
-    return envelope(frame_records(data),str(data.index[-1].date()))
+    return envelope(frame_records(data),str(data.index[-1].date()), ticker=ticker)
 
 
 @server.tool(annotations=READ_ONLY)
@@ -98,7 +130,7 @@ def calculate_indicators(ticker: str = "THYAO.IS", as_of: str = "2025-12-31") ->
     """Get Python-calculated SMA, EMA, RSI, MACD and volume indicators for the last session on/before as_of."""
     data = selected(ticker,as_of)
     cols = ["close","sma_fast","sma_slow","ema_fast","ema_slow","rsi","macd","macd_signal","macd_histogram","relative_volume","obv"]
-    return envelope(data[cols].iloc[-1].to_dict(),str(data.index[-1].date()))
+    return envelope(data[cols].iloc[-1].to_dict(),str(data.index[-1].date()), ticker=ticker)
 
 
 @server.tool(annotations=READ_ONLY)
@@ -106,7 +138,7 @@ def find_support_resistance(ticker: str = "THYAO.IS", as_of: str = "2025-12-31")
     """Get zones known at that date; pivots require five future sessions to confirm before becoming usable."""
     data = selected(ticker,as_of)
     cols = ["support","resistance","support_distance","resistance_distance","in_zone","zone_count"]
-    return envelope(data[cols].iloc[-1].to_dict(),str(data.index[-1].date()))
+    return envelope(data[cols].iloc[-1].to_dict(),str(data.index[-1].date()), ticker=ticker)
 
 
 @server.tool(annotations=READ_ONLY)
@@ -115,15 +147,20 @@ def get_fundamental_metrics(ticker: str = "THYAO.IS", as_of: str = "2025-12-31")
     from bist_analytics.analysis.fundamentals import BASE_METRICS, DERIVED_METRICS
     data = selected(ticker,as_of)
     cols = BASE_METRICS+DERIVED_METRICS+["pe","pb","ev_ebitda","financial_period","financial_available_at","financial_status","financial_age_days","financial_source"]
-    return envelope(data[[c for c in cols if c in data]].iloc[-1].to_dict(),str(data.index[-1].date()))
+    values = data[[c for c in cols if c in data]].iloc[-1].to_dict()
+    if not any(v is not None and v == v for k, v in values.items() if k in BASE_METRICS):
+        values = {"available": False, **values, "reason": _no_fundamentals(ticker)}
+    return envelope(values,str(data.index[-1].date()), ticker=ticker)
 
 
 @server.tool(annotations=READ_ONLY)
 def calculate_scores(ticker: str = "THYAO.IS", as_of: str = "2025-12-31") -> dict[str, Any]:
     """Return explainable technical/fundamental/combined scores and individual component points."""
     data = selected(ticker,as_of)
+    if "technical_score" not in data:
+        return envelope(_technical_only_scores(ticker, as_of), str(data.index[-1].date()), ticker=ticker)
     cols = [c for c in data if c.startswith(("t_","f_"))]+["fundamental_score","technical_score","combined_score","fundamental_label","pe_history_median"]
-    return envelope(data[cols].iloc[-1].to_dict(),str(data.index[-1].date()))
+    return envelope(data[cols].iloc[-1].to_dict(),str(data.index[-1].date()), ticker=ticker)
 
 
 @server.tool(annotations=READ_ONLY)
@@ -147,7 +184,7 @@ def generate_signal(ticker: str = "THYAO.IS", as_of: str = "2025-12-31", holding
     data = selected(ticker,as_of)
     decision = decide(data.iloc[-1],holding,entry_price,holding_sessions,analysis().config.strategy)
     return envelope({"action":decision.action,"reason":decision.reason,"holding":holding,
-                     "execution":"next available stock-session open; not an executed order"},str(data.index[-1].date()))
+                     "execution":"next available stock-session open; not an executed order"},str(data.index[-1].date()), ticker=ticker)
 
 
 @server.tool(annotations=READ_ONLY)
@@ -187,7 +224,11 @@ def detect_reversal_events(ticker: str = "THYAO.IS", as_of: str = "2025-12-31",
     features = selected(ticker, as_of).tail(lookback + 30)  # include warm-up for indicators
     events = detect(features, ticker)
     events = events[(events.date >= features.index[-lookback]) & (events.date <= features.index[-1])]
-    return envelope(frame_records(events), as_of)
+    records = frame_records(events)
+    return envelope(records, as_of, ticker=ticker, lookback_sessions=lookback,
+                    window={"start": str(features.index[-lookback].date()), "end": str(features.index[-1].date())},
+                    summary=label_rules.summarize_reversal_events(records),
+                    label_rule=label_rules.REVERSAL_RULE)
 
 
 @server.tool(annotations=READ_ONLY)
@@ -201,7 +242,7 @@ def rank_sector_relative_strength(as_of: str = "2025-12-31", lookback: int = 63)
         raise ToolError("LIMIT_OUT_OF_RANGE: lookback must be 20–252")
     ranking = rank(a.universe_prices, a.config.sector_map, as_of=parsed_date(as_of),
                    lookback_sessions=lookback)
-    return envelope(frame_records(ranking), as_of)
+    return envelope(frame_records(ranking), as_of, label_rule=label_rules.SECTOR_RULE)
 
 
 @server.tool(annotations=READ_ONLY)
@@ -213,7 +254,9 @@ def test_weekday_pattern(ticker: str = "THYAO.IS", start: str = "2025-01-01",
     returns = features.close.pct_change(fill_method=None)
     window = returns.loc[(returns.index >= parsed_date(start)) & (returns.index < parsed_date(end))]
     stats = weekday_pattern_test(window.dropna(), min_count=10)
-    return envelope(frame_records(stats), end)
+    return envelope(frame_records(stats), end, ticker=ticker,
+                    window={"start": start, "end_exclusive": end, "sessions": int(window.notna().sum())},
+                    label_rule=label_rules.WEEKDAY_RULE)
 
 
 @server.tool(annotations=READ_ONLY)
@@ -228,7 +271,16 @@ def calculate_fundamental_change(ticker: str = "THYAO.IS", as_of: str = "2025-12
                 out[f"{metric}_yoy"] = float(series.iloc[-1] / series.iloc[-252] - 1) if series.iloc[-252] else None
             if len(series) >= 63:
                 out[f"{metric}_qoq"] = float(series.iloc[-1] / series.iloc[-63] - 1) if series.iloc[-63] else None
-    return envelope(out, as_of)
+    if not out:
+        out = {"available": False, "reason": _no_fundamentals(ticker)}
+    else:
+        latest = data.iloc[-1]
+        for key in ("financial_period", "financial_available_at", "financial_age_days"):
+            if key in data.columns:
+                out[key] = latest[key]
+    return envelope(out, as_of, ticker=ticker,
+                    comparison="qoq = latest value vs 63 sessions earlier; yoy = vs 252 sessions earlier",
+                    label_rule=label_rules.FUNDAMENTAL_RULE)
 
 
 @server.tool(annotations=READ_ONLY)
@@ -246,14 +298,14 @@ def get_news_events(ticker: str = "THYAO.IS", as_of: str = "2026-09-27", limit: 
     from bist_analytics.data.context import context_as_of, context_path_for, load_context_events
     path = Path(project_root()) / context_path_for(ticker)
     if not path.exists():
-        return envelope([], as_of)
+        return envelope([], as_of, ticker=ticker)
     try:
         events = context_as_of(load_context_events(path), as_of, limit)
     except (ValueError, TypeError) as exc:
         raise ToolError(f"INVALID_CONTEXT_QUERY: {exc}") from exc
     records = events.copy()
     records["published_at"] = records.published_at.dt.tz_convert("Europe/Istanbul").astype(str)
-    return envelope(records.to_dict("records"), as_of)
+    return envelope(records.to_dict("records"), as_of, ticker=ticker)
 
 
 @server.tool(annotations=READ_ONLY)
@@ -280,7 +332,22 @@ def check_data_quality(ticker: str = "THYAO.IS", as_of: str = "2025-12-31") -> d
     """Run the 5-state data-quality gate on an auto-built evidence bundle for ticker@as_of."""
     from bist_analytics.analysis.evidence import build_evidence_bundle, summarize_from_features
     from bist_analytics.analysis.gate import check_data_quality as run_gate
-    features = selected(ticker, as_of)
+    try:
+        features = selected(ticker, as_of)
+    except ToolError as exc:
+        message = str(exc)
+        if message.startswith("DATE_OUT_OF_SNAPSHOT") and parsed_date(as_of) > pd.Timestamp.today().normalize():
+            block = f"FUTURE_STATEMENT: as_of {as_of} is after today; no point-in-time data can exist"
+        elif message.startswith("DATE_OUT_OF_SNAPSHOT"):
+            block = f"PRICE_HISTORY_BROKEN: {message}"
+        elif message.startswith("INVALID_SYMBOL"):
+            block = f"PRICE_HISTORY_BROKEN: no cached price history for {ticker} ({message})"
+        else:
+            raise
+        return envelope({"gate_status": "HARD_BLOCK", "reasons": [block], "hard_blocks": [block],
+                         "warnings": [], "observed_count": 0, "committed_count": 0,
+                         "required_label": "ANALYSIS_UNSAFE"}, as_of, ticker=ticker,
+                        label_rule=label_rules.GATE_RULE)
     observed = summarize_from_features(features, as_of)
     committed = [i for i in observed if i.note in {"combined_score", "technical_score", "fundamental_score"}]
     bundle = build_evidence_bundle(ticker=ticker, as_of=as_of, observed=observed, committed=committed,
@@ -288,7 +355,8 @@ def check_data_quality(ticker: str = "THYAO.IS", as_of: str = "2025-12-31") -> d
     decision = run_gate(bundle, max_fundamental_age_days=analysis().config.max_fundamental_age_days)
     return envelope({"gate_status": decision.status, "reasons": decision.reasons,
                      "hard_blocks": decision.hard_blocks, "warnings": decision.warnings,
-                     "observed_count": len(observed), "committed_count": len(committed)}, as_of)
+                     "observed_count": len(observed), "committed_count": len(committed)}, as_of, ticker=ticker,
+                    label_rule=label_rules.GATE_RULE)
 
 
 @server.tool(annotations=READ_ONLY)
@@ -314,7 +382,23 @@ def build_evidence_bundle(ticker: str = "THYAO.IS", as_of: str = "2025-12-31",
     bundle_dict["warnings"] = decision.warnings + bundle_dict.get("warnings", [])
     bundle_dict["gate_reasons"] = decision.reasons
     bundle_dict["hard_blocks"] = decision.hard_blocks
-    return envelope(bundle_dict, as_of)
+    return envelope(bundle_dict, as_of, ticker=ticker)
+
+
+@server.tool(annotations=READ_ONLY)
+def search_knowledge_base(query: str, ticker: str | None = None, as_of: str | None = None,
+                          top_k: int = 4) -> dict[str, Any]:
+    """BM25 search over rag/knowledge_base.json (KAP disclosures, methodology, metric definitions,
+    universe/sector metadata, data provenance). Documents published after as_of are excluded.
+    Cite the returned doc_id; use the other tools for numbers."""
+    from bist_analytics.rag import default_kb
+    if as_of is not None:
+        parsed_date(as_of)
+    try:
+        hits = default_kb().search(query, top_k=max(1, min(int(top_k), 10)), as_of=as_of, ticker=ticker)
+    except FileNotFoundError as exc:
+        raise ToolError("KB_MISSING: run scripts/build_rag_kb.py") from exc
+    return envelope({"query": query, "hits": [h.as_dict() for h in hits]}, as_of, ticker=ticker)
 
 
 def main():

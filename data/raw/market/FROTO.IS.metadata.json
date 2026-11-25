@@ -1,0 +1,26 @@
+{
+  "quality": {
+    "first": "2021-01-04",
+    "fx_usage": null,
+    "inconsistent_ohlc_rows": 0,
+    "large_close_moves": 0,
+    "last": "2026-10-30",
+    "rows": 1458,
+    "ticker": "FROTO.IS",
+    "zero_volume_sessions": 1
+  },
+  "request": {
+    "actions": true,
+    "auto_adjust": false,
+    "end": "2026-11-01",
+    "interval": "1d",
+    "repair": false,
+    "start": "2021-01-01"
+  },
+  "retrieved_at": "2026-11-25T12:28:54.080124+00:00",
+  "return_basis": "provider adjusted OHLC; preserve raw prices and actions",
+  "sha256": "b0dba882e764f0ddb0d5898d63188fecf37c78bf50c378374f150b234fce5692",
+  "source": "Yahoo Finance via yfinance",
+  "ticker": "FROTO.IS",
+  "yfinance_version": "1.7.0"
+}

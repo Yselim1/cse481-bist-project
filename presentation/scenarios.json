@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "description": "The five pre-run presentation scenarios. Questions are written the way a user would ask them. They do not name the tools to call, so each trace shows the model's own tool choice. Expected behaviour is recorded for the reviewer only; the agent never reads this file's 'expected_behaviour' field.",
+  "defaults": {"model": "bist-qwen", "seed": 17, "temperature": 0.0, "config": "config/universe_live.yaml", "rag_top_k": 3, "max_turns": 10},
+  "scenarios": [
+    {
+      "id": "S1",
+      "scenario": "sector_laggard",
+      "title": "Sector laggard / catch-up candidate",
+      "question": "As of 2025-12-31, which stock in the banking sector of the research universe has lagged its sector the most over the last 63 trading sessions? Is there evidence that it could be a catch-up candidate? Give one educational label.",
+      "tickers": ["AKBNK.IS", "GARAN.IS", "YKBNK.IS", "ISCTR.IS"],
+      "date_range": {"as_of": "2025-12-31", "lookback_sessions": 63},
+      "expected_behaviour": "Calls rank_sector_relative_strength; names the banking laggard and its relative_vs_sector value; label from the 8-label set."
+    },
+    {
+      "id": "S2",
+      "scenario": "weekday_patterns",
+      "title": "Day-of-week return pattern",
+      "question": "Using EREGL.IS daily returns from 2025-01-01 to 2025-12-31, is there a day-of-the-week effect? Name the weekday with the highest and the lowest mean return and say whether either is statistically significant.",
+      "tickers": ["EREGL.IS"],
+      "date_range": {"start": "2025-01-01", "end": "2025-12-31"},
+      "expected_behaviour": "Calls test_weekday_pattern; reports per-weekday means and uncorrected p-values; mentions multiple testing."
+    },
+    {
+      "id": "S3",
+      "scenario": "reversal_events",
+      "title": "Technical reversal events",
+      "question": "For TCELL.IS, which technical reversal signals appeared in the 120 trading sessions up to 2025-12-31, and how did the price behave over the following 5 sessions on average?",
+      "tickers": ["TCELL.IS"],
+      "date_range": {"as_of": "2025-12-31", "lookback_sessions": 120},
+      "expected_behaviour": "Calls detect_reversal_events; counts events by type; reports forward_5d returns."
+    },
+    {
+      "id": "S4",
+      "scenario": "fundamental_reaction",
+      "title": "Fundamental change and price reaction",
+      "question": "As of 2025-12-31, how did THYAO.IS's revenue and net profit change compared with the previous quarter, when were the latest statements published, and how did the stock price move in the sessions around that publication?",
+      "tickers": ["THYAO.IS"],
+      "date_range": {"as_of": "2025-12-31"},
+      "expected_behaviour": "Calls calculate_fundamental_change and get_fundamental_metrics (publication date); optionally get_stock_history / get_news_events."
+    },
+    {
+      "id": "S5",
+      "scenario": "analysis_unsafe",
+      "title": "Unsafe analysis (future information horizon)",
+      "question": "Is BIMAS.IS a fundamental improvement candidate as of 2027-03-31? Give one educational label.",
+      "tickers": ["BIMAS.IS"],
+      "date_range": {"as_of": "2027-03-31"},
+      "expected_behaviour": "check_data_quality returns HARD_BLOCK (FUTURE_STATEMENT); label ANALYSIS_UNSAFE; no numbers invented."
+    }
+  ]
+}

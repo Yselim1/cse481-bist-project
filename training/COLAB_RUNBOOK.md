@@ -1,53 +1,46 @@
-# QLoRA training runbook (Colab T4) — Unsloth + Qwen 2.5 3B
+# QLoRA training runbook (Colab T4): Unsloth + Qwen 2.5 3B
 
-End-to-end instructions for the user who runs the actual GPU training. The earlier
-`train_lora.py` + raw `peft/trl/bitsandbytes` recipe kept colliding with Colab's moving
-base image (torch 2.5.1+cu121 one boot, 2.14.1+cu130 the next — bnb wheels could not
-track the drift) and 7B QLoRA sits at the T4 memory cliff anyway. This runbook uses
-**Unsloth** (which owns its own tested compatibility matrix per Colab image) and
-**Qwen 2.5 3B Instruct** (the project plan's D2 fallback for <12 GB effective VRAM).
+This is the end-to-end procedure for the GPU training run. It produces the three things
+the submission needs from one run:
 
-- Same chat template and tokenizer as Qwen 7B → downstream harness/eval code unchanged.
-- ~20 min training vs ~70 min on 7B; leaves ~8 GB VRAM headroom at seq_len 2048.
+| Output | Where it ends up locally | Used for |
+|---|---|---|
+| `adapter_model.safetensors` + `adapter_config.json` | `training/adapter/` | submitted LoRA adapter (SHA-256 in `submission.json`) |
+| `training_run.json` (hyperparameters, base-model revision, losses, versions) | `training/config/hyperparams.json` | submitted fine-tuning config |
+| merged Q4_K_M GGUF (base + this adapter) | `training/bist_lora.gguf` (not committed) | served by Ollama as `bist-qwen` |
 
-## 0. Prerequisites
+The GGUF is exported **from the same in-memory model** right after the adapter is saved.
+So the model answering in class is the submitted base model plus the submitted adapter.
 
-- A free Google Colab account with a T4 runtime.
-- This repo pushed to a Git host the Colab runtime can clone.
-- Dataset built locally first:
+Why Unsloth and 3B: the raw `peft/trl/bitsandbytes` recipe kept breaking on Colab's
+changing base image, and 7B QLoRA is at the T4 memory limit. Unsloth ships a tested
+dependency set, and Qwen 2.5 3B trains in about 25 min with room to spare. The chat
+template and tool-call format are the same as 7B.
+
+## 0. Before Colab (Windows)
+
+The dataset (v2) is already built and committed: `training/dataset/{train,eval}.jsonl`
+and `audit.json`. To rebuild it, start Ollama and run:
 
 ```powershell
-# On Windows, with Ollama already able to answer basic smoke questions:
-.\.venv\Scripts\python.exe scripts\local_agent.py --smoke
-# Build dataset by hitting the live MCP server (takes ~10 min):
 .\.venv\Scripts\python.exe training\dataset\build.py --target 400 --seed 17
-# Commit the resulting training/dataset/{train,eval}.jsonl to the repo so Colab can pull them.
-git add training/dataset/*.jsonl training/dataset/audit.json
-git commit -m "dataset: initial 400-example corpus"
-git push
 ```
 
-## 1. Colab session setup
+It is deterministic for a given seed and data snapshot. `audit.json` records the SHA-256 of both splits.
 
-**Create a new Colab notebook. Set runtime type → T4 GPU.**
+Push the repo so Colab can clone it (or upload a zip of the repo in Cell 2 instead).
 
-Cell 1 — install Unsloth (it brings its own compatible torch/bnb/triton pins):
+## 1. Colab session
+
+Create a new notebook and set **Runtime → Change runtime type → T4 GPU**.
+
+**Cell 1: install Unsloth** (it brings compatible torch/bnb/triton/trl/peft pins; do not pin them yourself):
 
 ```python
 !pip install -q "unsloth[colab-new] @ git+https://github.com/unslothai/unsloth.git"
 ```
 
-Do **not** pin xformers, trl, peft, accelerate, or bitsandbytes here — the
-`unsloth[colab-new]` extra already pulls a torch-compatible set of all of them,
-and manually pinning older versions either forces a source build that fails on
-recent Colab base images (xformers) or downgrades `trl` below the version
-Unsloth's own `SFTConfig` import expects. `train_on_responses_only` is re-exported
-from `unsloth.chat_templates`, not from `trl`, so no manual `trl` pin is needed.
-
-If Unsloth prints a compatibility warning about torch or triton, follow its on-screen
-instructions — it emits the exact `pip install` line needed for the current Colab image.
-
-Cell 2 — clone the repo:
+**Cell 2: get the repo:**
 
 ```python
 import getpass, subprocess, os
@@ -56,10 +49,19 @@ repo = "Yselim1/cse481-bist-project"
 url = f"https://{token}@github.com/{repo}.git" if token else f"https://github.com/{repo}.git"
 subprocess.check_call(["git", "clone", url, "/content/bist"])
 os.chdir("/content/bist")
-!ls training/dataset
+!git log --oneline -1 && head -c 400 training/dataset/audit.json
 ```
 
-Cell 3 — train + export GGUF in one go:
+**Cell 3: mount Google Drive.** Every artifact is copied here, so a closed tab never loses the adapter again:
+
+```python
+from google.colab import drive
+drive.mount("/content/drive")
+RUN_DIR = "/content/drive/MyDrive/bist_lora_run_v2"
+os.makedirs(RUN_DIR, exist_ok=True)
+```
+
+**Cell 4: train, save the adapter, and export the GGUF** (about 25–35 min):
 
 ```python
 !python training/train_unsloth.py \
@@ -67,64 +69,72 @@ Cell 3 — train + export GGUF in one go:
    --eval  training/dataset/eval.jsonl \
    --output training/outputs/lora \
    --gguf training/bist_lora.gguf \
-   --epochs 3 --batch 4 --grad-accum 4 --max-length 2048 --lr 2e-4
+   --epochs 3 --batch 2 --grad-accum 8 --max-length 3072 --lr 2e-4 --seed 17
 ```
 
-Expected wall-clock: ~20 min for 400 examples on T4. If OOM still occurs (unusual on 3B),
-drop `--batch` to 2 and raise `--grad-accum` to 8; drop `--max-length` to 1024 if that
-is not enough.
+If it runs out of memory (unlikely), use `--batch 1 --grad-accum 16`. That keeps the
+effective batch at 16 and the run comparable. If you have to restart more than twice,
+stop and start again from a fresh runtime rather than patching.
 
-Cell 4 — rename the Unsloth-exported GGUF to the stable path the Modelfile expects,
-then download:
+**Cell 5: copy everything to Drive immediately:**
 
 ```python
-import shutil, glob, os
-# Unsloth writes to training/bist_lora_gguf/<BaseName>.Q4_K_M.gguf — pick it up by glob
-# so the exact base-model filename does not matter.
-src = glob.glob("training/bist_lora_gguf/*.Q4_K_M.gguf")[0]
-dst = "training/bist_lora.gguf"
-shutil.move(src, dst)
-print(f"Moved {src} -> {dst} ({os.path.getsize(dst) / 1e9:.2f} GB)")
-
-from google.colab import files
-files.download(dst)
+import glob, shutil, json
+lora = "training/outputs/lora"
+for name in ["adapter_model.safetensors", "adapter_config.json", "training_run.json",
+             "eval_metrics.json", "tokenizer_config.json", "special_tokens_map.json",
+             "tokenizer.json", "chat_template.jinja"]:
+    if os.path.exists(f"{lora}/{name}"):
+        shutil.copy(f"{lora}/{name}", RUN_DIR)
+gguf = sorted(glob.glob("training/bist_lora*/**/*Q4_K_M*.gguf", recursive=True)
+              + glob.glob("training/*Q4_K_M*.gguf"))[0]
+shutil.copy(gguf, f"{RUN_DIR}/bist_lora.gguf")
+rec = json.load(open(f"{lora}/training_run.json"))
+print("adapter sha256:", rec["adapter"]["sha256"])
+print("train_loss:", rec["results"]["train_loss"], "eval:", rec["results"]["eval"].get("eval_loss"))
+!ls -la {RUN_DIR}
 ```
 
-## 2. Local install (back on Windows)
+**Cell 6: download.** You can also fetch the files from Drive later:
 
-Drop `bist_lora.gguf` into `training/`, pull the 3B base model (one-time, ~2 GB), and
-build the Ollama tag:
+```python
+from google.colab import files
+# The zip holds the adapter + run record only; the 2 GB GGUF is downloaded separately.
+!cd {RUN_DIR} && zip -q /content/bist_adapter.zip adapter_model.safetensors adapter_config.json training_run.json eval_metrics.json
+files.download("/content/bist_adapter.zip")
+files.download(f"{RUN_DIR}/bist_lora.gguf")
+```
+
+## 2. Install locally (Windows)
 
 ```powershell
-Move-Item ~/Downloads/bist_lora.gguf training/bist_lora.gguf
-ollama pull qwen2.5:3b-instruct
+Expand-Archive ~/Downloads/bist_adapter.zip -DestinationPath training/adapter -Force
+Move-Item training/adapter/training_run.json training/config/hyperparams.json -Force
+Move-Item ~/Downloads/bist_lora.gguf training/bist_lora.gguf -Force
 ollama create bist-qwen -f training/Modelfile.finetuned
-ollama run bist-qwen "project_status"
+(Get-FileHash training/adapter/adapter_model.safetensors -Algorithm SHA256).Hash   # must equal hyperparams.json adapter.sha256
+.\.venv\Scripts\python.exe scripts\local_agent.py --smoke --model bist-qwen
 ```
 
 ## 3. Evaluate base vs fine-tuned
 
-The baseline eval was recorded against `qwen2.5:7b-instruct`
-(`outputs/harness/baseline_local.score.json`). For the apples-to-apples base-vs-tuned
-comparison use the 3B baseline so the only variable is fine-tuning:
+The only variable is the adapter. Both runs use the same 3B base, prompts and harness:
 
 ```powershell
-ollama pull qwen2.5:3b-instruct
 .\.venv\Scripts\python.exe training\eval\run_baseline.py --model qwen2.5:3b-instruct
-Rename-Item outputs\harness\baseline_local.score.json outputs\harness\base_3b.score.json
+Rename-Item outputs\harness\baseline_local.score.json base_3b.score.json -Force
 .\.venv\Scripts\python.exe training\eval\run_baseline.py --model bist-qwen
-Rename-Item outputs\harness\baseline_local.score.json outputs\harness\finetuned.score.json
-.\.venv\Scripts\python.exe training\eval\compare.py --base outputs\harness\base_3b.score.json \
+Rename-Item outputs\harness\baseline_local.score.json finetuned.score.json -Force
+.\.venv\Scripts\python.exe training\eval\compare.py --base outputs\harness\base_3b.score.json `
     --finetuned outputs\harness\finetuned.score.json
 ```
 
-The comparison report lands at `outputs/training/base_vs_finetuned.md` and must show
-improvement on ≥3 of the §30 metrics (invalid tool-call rate, missing-required-tool
-rate, label mismatch, advice leak, reproducibility). The original 7B baseline is kept
-for reference as the stronger-base comparison point.
+The report lands at `outputs/training/base_vs_finetuned.md`. Refresh `docs/MODEL_CARD.md` from it.
 
-## 4. Submission wiring
+## 4. Presentation traces and submission
 
-After the comparison passes, Phase G re-runs the 5-stage harness under the `bist-qwen`
-tag, Phase H bundles the GGUF + updated Modelfile into the submission zip via
-`scripts/package_project.py`.
+```powershell
+.\.venv\Scripts\python.exe scripts\run_presentation_scenarios.py     # 5 traces + traces.html
+.\.venv\Scripts\python.exe scripts\build_submission.py               # submission.json
+.\.venv\Scripts\python.exe scripts\verify_submission.py              # recomputes every SHA-256
+```

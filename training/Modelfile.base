@@ -1,4 +1,5 @@
-# Base Qwen 2.5 7B Instruct Modelfile — unmodified baseline for the harness.
+# Base Qwen 2.5 3B Instruct Modelfile — the unmodified base the LoRA adapter was trained on.
+# Used for the base-vs-fine-tuned comparison (same base, only the adapter differs).
 # Build:  ollama create bist-qwen-base -f training/Modelfile.base
 # Smoke:  ollama run bist-qwen-base "project_status"
 #
@@ -6,7 +7,7 @@
 # at call-time; the Modelfile only pins the system prompt so the default `ollama run`
 # behaviour matches the harness.
 
-FROM qwen2.5:7b-instruct
+FROM qwen2.5:3b-instruct
 
 PARAMETER temperature 0.0
 PARAMETER top_p 0.9
