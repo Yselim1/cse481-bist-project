@@ -253,8 +253,11 @@ def _git_state() -> dict:
                                   check=True).stdout.strip()
         except (OSError, subprocess.CalledProcessError):
             return ""
+    # "dirty" covers code, configs, data and models; generated outputs (including the trace
+    # files this run is writing) are excluded so one scenario cannot mark the next as dirty.
     return {"commit": git("rev-parse", "HEAD") or None,
-            "dirty": bool(git("status", "--porcelain", "--untracked-files=no"))}
+            "dirty": bool(git("status", "--porcelain", "--untracked-files=no", "--", ".",
+                              ":(exclude)outputs"))}
 
 
 _ISO_DATE = re.compile(r"\b(\d{4}-\d{2}-\d{2})\b")

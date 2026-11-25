@@ -81,6 +81,12 @@ Coverage for unseen questions:
 Expect about 20–30 s per question with the model fully on a 4 GB GPU (settings above), or
 35–45 s when part of it runs on the CPU.
 
+Re-running gives the same tool calls, labels and figures. On the GPU the wording can differ
+slightly between runs (for example "1 session after publication" vs "1 session from
+publication"): flash attention does not guarantee bit-identical floating-point sums, so seed 17
+at temperature 0 is reproducible in substance, not byte for byte. The submitted traces are the
+record; their `harness.git` field names the clean commit they ran on.
+
 Known weak spot from a dry run: on a sector question the conclusion was right, but the
 explanation quoted another sector's figures. Those figures are in the tool output, so the
 grounding audit passes them. Read sector answers before presenting them.
