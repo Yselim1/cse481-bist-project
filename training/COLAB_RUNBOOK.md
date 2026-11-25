@@ -19,7 +19,7 @@ template and tool-call format are the same as 7B.
 
 ## 0. Before Colab (Windows)
 
-The dataset (v2) is already built and committed: `training/dataset/{train,eval}.jsonl`
+The dataset (v3) is already built and committed: `training/dataset/{train,eval}.jsonl`
 and `audit.json`. To rebuild it, start Ollama and run:
 
 ```powershell
@@ -57,7 +57,7 @@ os.chdir("/content/bist")
 ```python
 from google.colab import drive
 drive.mount("/content/drive")
-RUN_DIR = "/content/drive/MyDrive/bist_lora_run_v2"
+RUN_DIR = "/content/drive/MyDrive/bist_lora_run_v3"
 os.makedirs(RUN_DIR, exist_ok=True)
 ```
 
@@ -69,7 +69,7 @@ os.makedirs(RUN_DIR, exist_ok=True)
    --eval  training/dataset/eval.jsonl \
    --output training/outputs/lora \
    --gguf training/bist_lora.gguf \
-   --epochs 3 --batch 2 --grad-accum 8 --max-length 3072 --lr 2e-4 --seed 17
+   --epochs 3 --batch 2 --grad-accum 8 --max-length 4096 --lr 2e-4 --seed 17
 ```
 
 If it runs out of memory (unlikely), use `--batch 1 --grad-accum 16`. That keeps the

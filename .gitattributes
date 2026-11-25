@@ -1,0 +1,3 @@
+# Dataset files are hashed in training/config/hyperparams.json and submission.json;
+# keep them byte-identical on every OS.
+training/dataset/*.jsonl text eol=lf

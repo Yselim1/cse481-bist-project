@@ -18,6 +18,19 @@ tool output"):
 * new analysis_unsafe patterns: varied future dates, varied unknown tickers, and
   "fundamentals unavailable" for tickers outside the fundamentals dataset.
 
+Dataset v3 (2026-11-25), after the v2 model gave grounded but wrongly reasoned answers
+(wrong laggard among 4 banks, a dropped minus sign, a label that broke its threshold):
+* the tools now return their comparisons precomputed (sector_summary, weekday summary,
+  best_family, labels_by_rule, publication_reaction); every answer copies from those
+  blocks and states the tool's label_by_rule, so the model learns to read, not compute;
+* built on config/universe_live.yaml (18 tickers, 8 sectors, 4 banks), the same universe
+  the agent uses at presentation time;
+* tool text is trimmed to PRESENTATION_TOOL_CHAR_CAP, the same cap the presentation path uses;
+* the five presentation scenarios' exact tool settings are held out (HELD_OUT below), so
+  the pre-run questions are never in the training or evaluation data;
+* a combined fundamental question (revenue + net profit + publication date + price
+  reaction around publication) answered from one calculate_fundamental_change call.
+
 Outputs:
     training/dataset/train.jsonl   (80 % stratified by scenario)
     training/dataset/eval.jsonl    (20 %)
@@ -39,6 +52,8 @@ import time
 from pathlib import Path
 from typing import Any
 
+import yaml
+
 ROOT = Path(__file__).resolve().parents[2]
 for extra in (ROOT, ROOT / "src"):
     if str(extra) not in sys.path:
@@ -47,6 +62,7 @@ for extra in (ROOT, ROOT / "src"):
 from bist_analytics.strategy import label_rules  # noqa: E402
 from scripts.local_agent import (  # noqa: E402
     PRESENTATION_SYSTEM_PROMPT,
+    PRESENTATION_TOOL_CHAR_CAP,
     SYSTEM_PROMPT,
     MCPStdioClient,
     _format_reference_context,
@@ -55,13 +71,13 @@ from scripts.local_agent import (  # noqa: E402
     model_view,
 )
 
-DATASET_VERSION = 2
+DATASET_VERSION = 3
 SCENARIO_TARGETS = {
     "sector_lag": 100,
     "weekday": 60,
-    "reversal": 110,
-    "fundamental": 34,  # THYAO-only (the fundamentals dataset covers THYAO alone)
-    "analysis_unsafe": 96,
+    "reversal": 100,
+    "fundamental": 50,  # THYAO-only (the fundamentals dataset covers THYAO alone)
+    "analysis_unsafe": 90,
 }
 NATURAL_SHARE = 0.5
 RAG_TOP_K = 3
@@ -73,14 +89,36 @@ FUND_METRICS = ["net_profit_qoq", "revenue_qoq", "operating_profit_qoq", "ebitda
 FUND_METRIC_LABELS = {"net_profit_qoq": "net profit", "revenue_qoq": "revenue",
                       "operating_profit_qoq": "operating profit", "ebitda_qoq": "EBITDA"}
 
-UNIVERSE = ["THYAO.IS", "PGSUS.IS", "AKBNK.IS", "GARAN.IS", "EREGL.IS",
-            "KRDMD.IS", "BIMAS.IS", "MGROS.IS", "TCELL.IS", "TTKOM.IS"]
-SECTORS = {"THYAO.IS": "airlines", "PGSUS.IS": "airlines", "AKBNK.IS": "banking",
-           "GARAN.IS": "banking", "EREGL.IS": "steel", "KRDMD.IS": "steel",
-           "BIMAS.IS": "retail", "MGROS.IS": "retail", "TCELL.IS": "telecom",
-           "TTKOM.IS": "telecom"}
+CONFIG = "config/universe_live.yaml"
+_LIVE = yaml.safe_load((ROOT / CONFIG).read_text(encoding="utf-8"))
+UNIVERSE = list(_LIVE["universe"])
+SECTORS = dict(_LIVE["sector_map"])
 AS_OF_DATES = ["2025-03-31", "2025-06-30", "2025-09-30", "2025-12-31",
                "2026-03-31", "2026-06-30", "2026-09-26"]
+# THYAO is the only ticker with fundamentals, so its examples vary the date instead.
+# Dates whose latest statements are S4's (period 2025-09-30, published 2025-11-10) are left
+# out, so the presentation's fundamental answer is not in the data.
+FUND_AS_OF_DATES = ["2025-02-28", "2025-03-31", "2025-04-30", "2025-05-15", "2025-05-30",
+                    "2025-06-30", "2025-07-31", "2025-08-15", "2025-08-29", "2025-09-30",
+                    "2025-10-31", "2026-03-16", "2026-03-31", "2026-04-30", "2026-05-15",
+                    "2026-05-29", "2026-06-30", "2026-07-31", "2026-08-14", "2026-08-31",
+                    "2026-09-30"]
+S4_STATEMENT_PERIOD = "2025-09-30"
+
+# The five presentation scenarios (presentation/scenarios.json) are held out: no example
+# uses the same tool with the same settings.
+HELD_OUT = [
+    ("rank_sector_relative_strength", {"as_of": "2025-12-31", "lookback": 63}),
+    ("test_weekday_pattern", {"ticker": "EREGL.IS", "start": "2025-01-01", "end": "2025-12-31"}),
+    ("detect_reversal_events", {"ticker": "TCELL.IS", "as_of": "2025-12-31"}),
+    ("calculate_fundamental_change", {"ticker": "THYAO.IS", "as_of": "2025-12-31"}),
+    (None, {"ticker": "BIMAS.IS", "as_of": "2027-03-31"}),
+]
+
+
+def _held_out(tool: str, args: dict) -> bool:
+    return any((name is None or name == tool) and all(args.get(k) == v for k, v in spec.items())
+               for name, spec in HELD_OUT)
 FUTURE_DATES = ["2026-12-31", "2027-03-31", "2027-06-30", "2028-01-15", "2030-01-01"]
 UNKNOWN_TICKERS = ["ZZZ.IS", "ABCDE.IS", "QWRTY.IS", "XYZ.IS"]
 
@@ -115,6 +153,11 @@ NATURAL = {
         "Did {ticker}'s {metric_name} improve quarter over quarter as of {as_of}? Give one educational label.",
         "{as_of} itibarıyla {ticker} {metric_name} bir önceki çeyreğe göre nasıl değişti?",
     ],
+    "fundamental_full": [
+        "As of {as_of}, how did {ticker}'s revenue and net profit change versus the prior quarter, when were the latest statements published, and how did the share price react?",
+        "For {ticker} as of {as_of}: quarter-over-quarter revenue and net profit change, the publication date of the latest statements, and the price move around that date?",
+        "{as_of} itibarıyla {ticker} gelir ve net kârı bir önceki çeyreğe göre nasıl değişti, son finansallar ne zaman yayımlandı ve fiyat nasıl tepki verdi?",
+    ],
     "future_date": [
         "Is {ticker} a fundamental improvement candidate as of {as_of}? Give one educational label.",
         "Analyze {ticker} as of {as_of} and give one educational label.",
@@ -132,7 +175,7 @@ NATURAL = {
 
 # Tool text in training is trimmed tighter than at inference (12 KB) to fit max_seq_length;
 # label_rule/summary sit before `data`, so they always survive the trim.
-TRAIN_TOOL_CHAR_CAP = 3000
+TRAIN_TOOL_CHAR_CAP = PRESENTATION_TOOL_CHAR_CAP
 
 
 def _mcp_call(mcp: MCPStdioClient, name: str, arguments: dict) -> dict | None:
@@ -226,36 +269,42 @@ def build_sector_lag_example(mcp: MCPStdioClient, ticker: str, as_of: str) -> di
     natural = random.random() < NATURAL_SHARE
     sector_question = natural and random.random() < 0.5
     args = {"as_of": as_of, "lookback": lookback}
+    if _held_out("rank_sector_relative_strength", args):
+        return None
     result = _mcp_call(mcp, "rank_sector_relative_strength", args)
     if not result or _is_error(result):
         return None
     rows = _unwrap(result)
     if not isinstance(rows, list):
         return None
+    summaries = {x["sector"]: x for x in _structured(result).get("sector_summary") or []}
     rule = label_rules.SECTOR_RULE
     rule_text = (f"label_rule: relative_vs_sector < {rule['catch_up_below']} → POTENTIAL_CATCH_UP_CANDIDATE; "
                  f"> {rule['watch_above']} → WATCH; otherwise HOLD.")
     if sector_question:
         sector = SECTORS[ticker]
-        members = [r for r in rows if r.get("sector") == sector and r.get("relative_vs_sector") is not None]
-        if len(members) < 2:
+        sm = summaries.get(sector)
+        if not sm or len(sm["members"]) < 2:
             return None
-        laggard = min(members, key=lambda r: r["relative_vs_sector"])
-        ticker = laggard["ticker"]
-        label = label_rules.sector_label(laggard["relative_vs_sector"])
+        ticker = sm["laggard"]
+        label = sm["laggard_label_by_rule"]
         question = _natural("sector_lag_sector", sector=sector, lookback=lookback, as_of=as_of)
-        peers = "; ".join(f"{r['ticker']} cum_return {_f(r['cum_return'])}, relative_vs_sector "
-                          f"{_f(r['relative_vs_sector'])}" for r in members)
-        explanation = (f"rank_sector_relative_strength ({lookback} sessions to {as_of}), {sector} "
-                       f"sector mean {_f(laggard['sector_mean'])}: {peers}. The laggard is {ticker} "
-                       f"at {_f(laggard['relative_vs_sector'])}. {rule_text} Selected: {label}.")
+        peers = "; ".join(f"{m['ticker']} cum_return {_f(m['cum_return'])}, relative_vs_sector "
+                          f"{_f(m['relative_vs_sector'])}" for m in sm["members"])
+        explanation = (f"rank_sector_relative_strength ({lookback} sessions to {as_of}), sector_summary "
+                       f"for {sector}: sector_mean {_f(sm['sector_mean'])}; {peers}. Laggard {ticker} "
+                       f"(relative_vs_sector {_f(sm['laggard_relative_vs_sector'])}); leader "
+                       f"{sm['leader']} ({_f(sm['leader_relative_vs_sector'])}). {rule_text} "
+                       f"laggard_label_by_rule: {label}. Selected: {label}.")
         variant = f"sector-{sector}-lb{lookback}"
     else:
-        row = next((r for r in rows if r.get("ticker") == ticker), None)
+        sm = summaries.get(SECTORS[ticker]) or {}
+        row = next((m for m in sm.get("members", []) if m["ticker"] == ticker), None)
         if row is None or row.get("relative_vs_sector") is None:
             return None
+        row = {**row, "sector": SECTORS[ticker], "sector_mean": sm["sector_mean"]}
         rel = row["relative_vs_sector"]
-        label = label_rules.sector_label(rel)
+        label = row.get("label_by_rule") or label_rules.sector_label(rel)
         if natural:
             question = _natural("sector_lag_ticker", ticker=ticker, lookback=lookback, as_of=as_of)
         else:
@@ -264,8 +313,9 @@ def build_sector_lag_example(mcp: MCPStdioClient, ticker: str, as_of: str) -> di
                         f"evidence, pick one educational label.")
         explanation = (f"rank_sector_relative_strength ({lookback} sessions to {as_of}): {ticker} "
                        f"({row.get('sector')}) cum_return {_f(row['cum_return'])} vs sector_mean "
-                       f"{_f(row['sector_mean'])}, relative_vs_sector {_f(rel)}, sector_rank "
-                       f"{row.get('sector_rank'):g}. {rule_text} Selected: {label}.")
+                       f"{_f(row['sector_mean'])}, relative_vs_sector {_f(rel)} (sector_summary). "
+                       f"{rule_text} label_by_rule: {label}. "
+                       f"Selected: {label}.")
         variant = f"lb{lookback}"
     evidence_id = f"rank_sector_relative_strength:{ticker}:{as_of}:lb{lookback}"
     messages = _opening(mcp, natural, question)
@@ -284,23 +334,22 @@ def build_weekday_example(mcp: MCPStdioClient, ticker: str, as_of: str) -> dict 
         return None
     natural = random.random() < NATURAL_SHARE
     args = {"ticker": ticker, "start": start, "end": as_of}
+    if _held_out("test_weekday_pattern", args):
+        return None
     result = _mcp_call(mcp, "test_weekday_pattern", args)
     if not result or _is_error(result):
         return None
-    rows = [r for r in (_unwrap(result) or []) if isinstance(r, dict) and r.get("mean") is not None]
-    if len(rows) < 2:
+    sm = _structured(result).get("summary") or {}
+    if sm.get("available") is False or sm.get("highest_mean_weekday") is None:
         return None
-    weakest = min(rows, key=lambda r: r["mean"])
-    strongest = max(rows, key=lambda r: r["mean"])
-    p_values = [r["p_value_uncorrected"] for r in rows if r.get("p_value_uncorrected") is not None]
-    p_min = min(p_values) if p_values else None
-    label = label_rules.weekday_label(p_min)
+    p_min = sm.get("smallest_p_value")
+    label = sm["label_by_rule"]
     rule = label_rules.WEEKDAY_RULE
 
-    def describe(r: dict) -> str:
-        p = r.get("p_value_uncorrected")
-        return (f"{r['weekday']} mean {_f(r['mean'])} (n={r['count']}, uncorrected p="
-                f"{_p(p) if p is not None else 'n/a'})")
+    def describe(prefix: str) -> str:
+        p = sm.get(f"{prefix}_p_value")
+        return (f"{sm[prefix + '_weekday']} mean {_f(sm[prefix], 6)} (n={sm[prefix + '_count']}, "
+                f"uncorrected p={_p(p) if p is not None else 'n/a'})")
 
     if p_min is None:
         verdict = "No p-values were available."
@@ -313,7 +362,7 @@ def build_weekday_example(mcp: MCPStdioClient, ticker: str, as_of: str) -> dict 
                    f"{rule['weekdays_tested']} weekdays, so it is not significant after correction.")
     else:
         verdict = (f"No weekday has uncorrected p below {rule['screen_p_value']} (smallest "
-                   f"{_p(p_min)}); with {rule['weekdays_tested']} weekdays tested, Bonferroni would "
+                   f"{_p(p_min)}, {sm['smallest_p_weekday']}); with {rule['weekdays_tested']} weekdays tested, Bonferroni would "
                    f"need p < {rule['bonferroni_p_threshold']}. No significant weekday effect.")
     if natural:
         question = _natural("weekday", ticker=ticker, start=start, as_of=as_of)
@@ -321,10 +370,10 @@ def build_weekday_example(mcp: MCPStdioClient, ticker: str, as_of: str) -> dict 
         question = (f"For {ticker} between {start} and {as_of}, call test_weekday_pattern. "
                     f"Commit the weakest-weekday evidence, pick an educational label, and note "
                     f"the multiple-testing caveat.")
-    explanation = (f"test_weekday_pattern for {ticker}, {start} to {as_of}: highest "
-                   f"{describe(strongest)}; lowest {describe(weakest)}. {verdict} "
+    explanation = (f"test_weekday_pattern for {ticker}, {start} to {as_of} (summary): highest "
+                   f"{describe('highest_mean')}; lowest {describe('lowest_mean')}. {verdict} "
                    f"label_rule: uncorrected p < {rule['screen_p_value']} → INVESTIGATE, otherwise "
-                   f"WATCH. Selected: {label}.")
+                   f"WATCH. label_by_rule: {label}. Selected: {label}.")
     evidence_id = f"test_weekday_pattern:{ticker}:{start}:{as_of}"
     messages = _opening(mcp, natural, question)
     messages += _tool_message("test_weekday_pattern", args, result)
@@ -340,21 +389,25 @@ def build_reversal_example(mcp: MCPStdioClient, ticker: str, as_of: str) -> dict
     lookback = random.choice(REVERSAL_LOOKBACKS)
     natural = random.random() < NATURAL_SHARE
     args = {"ticker": ticker, "as_of": as_of, "lookback": lookback}
+    if _held_out("detect_reversal_events", args):
+        return None
     result = _mcp_call(mcp, "detect_reversal_events", args)
     if not result or _is_error(result):
         return None
-    summary = _structured(result).get("summary") or []
+    payload = _structured(result)
+    summary = payload.get("summary") or []
     families = [s for s in summary if s.get("mean_forward_5d") is not None]
     if not families:
         return None
     rule = label_rules.REVERSAL_RULE
-    eligible = [s for s in families if s["n_forward_5d"] >= rule["min_events"]]
-    best = max(eligible, key=lambda s: s["mean_forward_5d"]) if eligible else None
-    label = label_rules.reversal_label(best["mean_forward_5d"], best["n_forward_5d"]) if best else "WATCH"
+    bf = payload.get("best_family") or {}
+    best = bf if bf.get("event_type") else None
+    label = bf.get("label_by_rule", "WATCH")
     listed = "; ".join(f"{s['event_type']}: {s['count']} events, mean_forward_5d "
                        f"{_f(s['mean_forward_5d'])}" for s in families[:4])
-    best_text = (f"The best family with at least {rule['min_events']} forward returns is "
-                 f"{best['event_type']} at {_f(best['mean_forward_5d'])}." if best else
+    best_text = (f"best_family (at least {rule['min_events']} forward returns): "
+                 f"{best['event_type']}, {best['count']} events, mean_forward_5d "
+                 f"{_f(best['mean_forward_5d'])}." if best else
                  f"No family has at least {rule['min_events']} forward returns.")
     if natural:
         question = _natural("reversal", ticker=ticker, lookback=lookback, as_of=as_of)
@@ -362,10 +415,11 @@ def build_reversal_example(mcp: MCPStdioClient, ticker: str, as_of: str) -> dict
         question = (f"For {ticker} as of {as_of} with lookback {lookback} days, call "
                     f"detect_reversal_events. Compare event-family forward-5d returns, commit the "
                     f"strongest signal, pick a label.")
-    explanation = (f"detect_reversal_events for {ticker}, {lookback} sessions to {as_of} (summary): "
-                   f"{listed}. {best_text} label_rule: mean_forward_5d > {rule['candidate_above']} → "
-                   f"TECHNICAL_REVERSAL_CANDIDATE, otherwise WATCH. Selected: {label}. "
-                   f"In-sample only; not a trading signal.")
+    explanation = (f"detect_reversal_events for {ticker}, {lookback} sessions to {as_of}: "
+                   f"{payload.get('event_count', len(payload.get('data') or []))} events. By family "
+                   f"(summary): {listed}. {best_text} label_rule: mean_forward_5d > "
+                   f"{rule['candidate_above']} → TECHNICAL_REVERSAL_CANDIDATE, otherwise WATCH. "
+                   f"label_by_rule: {label}. Selected: {label}. In-sample only; not a trading signal.")
     evidence_id = f"detect_reversal_events:{ticker}:{as_of}:lb{lookback}"
     messages = _opening(mcp, natural, question)
     messages += _tool_message("detect_reversal_events", args, result)
@@ -374,8 +428,25 @@ def build_reversal_example(mcp: MCPStdioClient, ticker: str, as_of: str) -> dict
             "label": label, "ticker": ticker, "as_of": as_of, "natural": natural}
 
 
+def _reaction_text(reaction: dict | None) -> str:
+    if not reaction or reaction.get("available") is False or "close_before" not in reaction:
+        return "publication_reaction: not available before as_of."
+    parts = [f"publication_reaction: close_before {_f(reaction['close_before'], 2)} on "
+             f"{reaction['close_before_date']}"]
+    for k in (1, 5):
+        if f"close_after_{k}_sessions" in reaction:
+            parts.append(f"{k} session{'s' if k > 1 else ''} from publication close "
+                         f"{_f(reaction[f'close_after_{k}_sessions'], 2)} on "
+                         f"{reaction[f'close_after_{k}_sessions_date']} (return "
+                         f"{_f(reaction[f'return_{k}_sessions'])})")
+    return "; ".join(parts) + "."
+
+
 def build_fundamental_example(mcp: MCPStdioClient, ticker: str, as_of: str) -> dict | None:
+    as_of = random.choice(FUND_AS_OF_DATES)
     args = {"ticker": ticker, "as_of": as_of}
+    if _held_out("calculate_fundamental_change", args):
+        return None
     natural = random.random() < NATURAL_SHARE
     result = _mcp_call(mcp, "calculate_fundamental_change", args)
     if not result or _is_error(result):
@@ -383,13 +454,42 @@ def build_fundamental_example(mcp: MCPStdioClient, ticker: str, as_of: str) -> d
     data = _unwrap(result)
     if not isinstance(data, dict) or data.get("available") is False:
         return None
+    if str(data.get("financial_period", "")).startswith(S4_STATEMENT_PERIOD):
+        return None
+    labels = data.get("labels_by_rule") or {}
+    rule = label_rules.FUNDAMENTAL_RULE
+    rule_text = (f"label_rule: qoq > {rule['improvement_above']} → FUNDAMENTAL_IMPROVEMENT_CANDIDATE "
+                 f"(net_profit_qoq also needs revenue_qoq > 0); < {rule['reject_below']} → "
+                 f"REJECT_SIGNAL; otherwise WATCH.")
+    period = str(data.get("financial_period", ""))[:10]
+    published = str(data.get("financial_available_at", ""))[:10]
+    if random.random() < 0.5 and data.get("revenue_qoq") is not None \
+            and data.get("net_profit_qoq") is not None:
+        label = labels.get("net_profit_qoq") or "WATCH"
+        if natural:
+            question = _natural("fundamental_full", ticker=ticker, as_of=as_of)
+        else:
+            question = (f"For {ticker} as of {as_of}, call calculate_fundamental_change. Report the "
+                        f"revenue and net profit qoq changes, the statements' publication date and the "
+                        f"price reaction around it, and pick an educational label.")
+        explanation = (f"calculate_fundamental_change for {ticker} as of {as_of}: revenue_qoq "
+                       f"{_f(data['revenue_qoq'])} (label_by_rule {labels.get('revenue_qoq')}); "
+                       f"net_profit_qoq {_f(data['net_profit_qoq'])} (label_by_rule "
+                       f"{labels.get('net_profit_qoq')}). Latest statements: period {period}, "
+                       f"published {published}. {_reaction_text(data.get('publication_reaction'))} "
+                       f"{rule_text} Selected (net profit): {label}. The price reaction is "
+                       f"descriptive only.")
+        evidence_id = f"calculate_fundamental_change:{ticker}:{as_of}:full"
+        messages = _opening(mcp, natural, question)
+        messages += _tool_message("calculate_fundamental_change", args, result)
+        messages.append(_assistant_finalize(label, explanation, [evidence_id]))
+        return {"scenario": "fundamental", "messages": messages, "variant": f"full-{int(natural)}",
+                "label": label, "ticker": ticker, "as_of": as_of, "natural": natural}
     metric = random.choice(FUND_METRICS)
     value = data.get(metric)
     if value is None:
         return None
-    rev_qoq = data.get("revenue_qoq")
-    label = label_rules.fundamental_label(metric, value, rev_qoq)
-    rule = label_rules.FUNDAMENTAL_RULE
+    label = labels.get(metric) or label_rules.fundamental_label(metric, value, data.get("revenue_qoq"))
     name = FUND_METRIC_LABELS[metric]
     others = "; ".join(f"{k} {_f(v)}" for k, v in data.items()
                        if k.endswith("_qoq") and k != metric and v is not None)
@@ -402,9 +502,7 @@ def build_fundamental_example(mcp: MCPStdioClient, ticker: str, as_of: str) -> d
                     f"quarter-over-quarter {name} change and pick an educational label.")
     explanation = (f"calculate_fundamental_change for {ticker} as of {as_of}: {metric} {_f(value)} "
                    f"(other qoq: {others}). Latest statements: period {period}, published {published}. "
-                   f"label_rule: qoq > {rule['improvement_above']} → FUNDAMENTAL_IMPROVEMENT_CANDIDATE "
-                   f"(net_profit_qoq also needs revenue_qoq > 0); < {rule['reject_below']} → "
-                   f"REJECT_SIGNAL; otherwise WATCH. Selected: {label}.")
+                   f"{rule_text} label_by_rule: {label}. Selected: {label}.")
     evidence_id = f"calculate_fundamental_change:{ticker}:{as_of}:{metric}"
     messages = _opening(mcp, natural, question)
     messages += _tool_message("calculate_fundamental_change", args, result)
@@ -426,6 +524,8 @@ def build_analysis_unsafe_example(mcp: MCPStdioClient, ticker: str, as_of: str) 
     natural = random.random() < NATURAL_SHARE and pattern != "incomplete"
     if pattern == "future_date":
         as_of = random.choice(FUTURE_DATES)
+        if _held_out("check_data_quality", {"ticker": ticker, "as_of": as_of}):
+            return None
         gate_args = {"ticker": ticker, "as_of": as_of}
         gate = _mcp_call(mcp, "check_data_quality", gate_args)
         if gate is None or _is_error(gate):
@@ -542,7 +642,7 @@ def main() -> None:
     targets = {k: max(1, int(round(v * scale))) for k, v in SCENARIO_TARGETS.items()}
 
     mcp = MCPStdioClient([sys.executable, "-m", "bist_analytics.mcp.server"],
-                         env={"BIST_CONFIG": str(ROOT/"config/universe10.yaml")})
+                         env={"BIST_CONFIG": str(ROOT / CONFIG)})
     examples: list[dict] = []
     rejects = {k: 0 for k in SCENARIO_TARGETS}
     ungrounded_rejects: list[dict] = []
@@ -605,7 +705,8 @@ def main() -> None:
         "grounding_check": "every final-answer figure traced to tool output (bist_analytics.harness.grounding)",
         "train_count": len(train), "eval_count": len(eval_),
         "train_sha256": _sha256(Path(args.train_out)), "eval_sha256": _sha256(Path(args.eval_out)),
-        "tool_char_cap": TRAIN_TOOL_CHAR_CAP, "rag_top_k": RAG_TOP_K,
+        "tool_char_cap": TRAIN_TOOL_CHAR_CAP, "rag_top_k": RAG_TOP_K, "config": CONFIG,
+        "held_out_presentation_settings": [{"tool": t, "arguments": a} for t, a in HELD_OUT],
         "seed": args.seed, "elapsed_seconds": round(time.time() - started, 1),
     }
     Path(args.audit).write_text(json.dumps(audit, indent=2, default=str), encoding="utf-8")

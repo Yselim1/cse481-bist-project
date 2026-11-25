@@ -20,7 +20,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from scripts.local_agent import PRESENTATION_SYSTEM_PROMPT, run_agent  # noqa: E402
+from scripts.local_agent import (  # noqa: E402
+    PRESENTATION_SYSTEM_PROMPT,
+    PRESENTATION_TOOL_CHAR_CAP,
+    run_agent,
+)
 
 DEFAULTS = json.loads((ROOT / "presentation" / "scenarios.json").read_text(encoding="utf-8"))["defaults"]
 
@@ -50,7 +54,7 @@ def main() -> None:
     print(f"model={args.model} seed={args.seed} temperature={args.temperature} config={args.config}")
     result = run_agent(args.question, model=args.model, seed=args.seed, temperature=args.temperature,
                        config=args.config, retrieval_top_k=args.rag_top_k, max_turns=args.max_turns,
-                       system_prompt=PRESENTATION_SYSTEM_PROMPT, scenario_id="LIVE",
+                       system_prompt=PRESENTATION_SYSTEM_PROMPT, tool_char_cap=PRESENTATION_TOOL_CHAR_CAP, scenario_id="LIVE",
                        trace_path=path, on_event=on_event)
     t = result["execution_trace"]
     g = t["grounding_audit"]

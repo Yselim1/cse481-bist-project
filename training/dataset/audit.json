@@ -1,119 +1,85 @@
 {
-  "dataset_version": 2,
+  "dataset_version": 3,
   "target": 400,
   "scenarios_target": {
     "sector_lag": 100,
     "weekday": 60,
-    "reversal": 110,
-    "fundamental": 34,
-    "analysis_unsafe": 96
+    "reversal": 100,
+    "fundamental": 50,
+    "analysis_unsafe": 90
   },
   "scenarios_built": {
     "sector_lag": 100,
     "weekday": 60,
-    "reversal": 110,
-    "fundamental": 34,
-    "analysis_unsafe": 96
+    "reversal": 100,
+    "fundamental": 50,
+    "analysis_unsafe": 90
   },
   "labels": {
-    "ANALYSIS_UNSAFE": 49,
-    "FUNDAMENTAL_IMPROVEMENT_CANDIDATE": 2,
-    "HOLD": 60,
-    "INVESTIGATE": 66,
-    "POTENTIAL_CATCH_UP_CANDIDATE": 28,
-    "REJECT_SIGNAL": 4,
-    "TECHNICAL_REVERSAL_CANDIDATE": 106,
-    "WATCH": 85
+    "ANALYSIS_UNSAFE": 45,
+    "FUNDAMENTAL_IMPROVEMENT_CANDIDATE": 13,
+    "HOLD": 58,
+    "INVESTIGATE": 70,
+    "POTENTIAL_CATCH_UP_CANDIDATE": 26,
+    "REJECT_SIGNAL": 5,
+    "TECHNICAL_REVERSAL_CANDIDATE": 92,
+    "WATCH": 91
   },
-  "natural_share": 0.463,
+  "natural_share": 0.465,
   "rejections": {
-    "sector_lag": 15,
-    "weekday": 23,
-    "reversal": 7,
-    "fundamental": 39,
-    "analysis_unsafe": 29
+    "sector_lag": 9,
+    "weekday": 22,
+    "reversal": 6,
+    "fundamental": 38,
+    "analysis_unsafe": 19
   },
-  "ungrounded_rejections": [
-    {
-      "scenario": "sector_lag",
-      "ticker": "PGSUS.IS",
-      "as_of": "2026-09-26",
-      "ungrounded": [
-        "-0.0009"
-      ]
-    },
-    {
-      "scenario": "sector_lag",
-      "ticker": "THYAO.IS",
-      "as_of": "2026-09-26",
-      "ungrounded": [
-        "-0.0009"
-      ]
-    },
-    {
-      "scenario": "sector_lag",
-      "ticker": "THYAO.IS",
-      "as_of": "2026-09-26",
-      "ungrounded": [
-        "-0.0009"
-      ]
-    },
-    {
-      "scenario": "weekday",
-      "ticker": "PGSUS.IS",
-      "as_of": "2026-09-26",
-      "ungrounded": [
-        "0.0008"
-      ]
-    },
-    {
-      "scenario": "weekday",
-      "ticker": "PGSUS.IS",
-      "as_of": "2026-09-26",
-      "ungrounded": [
-        "0.0008"
-      ]
-    },
-    {
-      "scenario": "weekday",
-      "ticker": "BIMAS.IS",
-      "as_of": "2026-06-30",
-      "ungrounded": [
-        "0.0001"
-      ]
-    },
-    {
-      "scenario": "weekday",
-      "ticker": "AKBNK.IS",
-      "as_of": "2025-09-30",
-      "ungrounded": [
-        "0.0006"
-      ]
-    },
-    {
-      "scenario": "weekday",
-      "ticker": "PGSUS.IS",
-      "as_of": "2026-09-26",
-      "ungrounded": [
-        "0.0008"
-      ]
-    },
-    {
-      "scenario": "weekday",
-      "ticker": "THYAO.IS",
-      "as_of": "2025-12-31",
-      "ungrounded": [
-        "0.0007"
-      ]
-    }
-  ],
+  "ungrounded_rejections": [],
   "grounding_check": "every final-answer figure traced to tool output (bist_analytics.harness.grounding)",
   "train_count": 320,
   "eval_count": 80,
-  "train_sha256": "53961a467b2fd8ef67d9fd503fd612f922c96d74edc7d70495820f3f712012f5",
-  "eval_sha256": "559329ae889f395fedf3184a33f469a46fe7fdde7936eb8308eb7b1eb7f49bc8",
-  "tool_char_cap": 3000,
+  "train_sha256": "409fd1000dc298558ec14ef9e645766a37a7a77bfcfb765fbbb721c5b102f35c",
+  "eval_sha256": "c1ff1005b0ff3aeb34dabb126ffc0e8d31fdfd0c27eaf8521852d0d79ab3d021",
+  "tool_char_cap": 4500,
   "rag_top_k": 3,
+  "config": "config/universe_live.yaml",
+  "held_out_presentation_settings": [
+    {
+      "tool": "rank_sector_relative_strength",
+      "arguments": {
+        "as_of": "2025-12-31",
+        "lookback": 63
+      }
+    },
+    {
+      "tool": "test_weekday_pattern",
+      "arguments": {
+        "ticker": "EREGL.IS",
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      }
+    },
+    {
+      "tool": "detect_reversal_events",
+      "arguments": {
+        "ticker": "TCELL.IS",
+        "as_of": "2025-12-31"
+      }
+    },
+    {
+      "tool": "calculate_fundamental_change",
+      "arguments": {
+        "ticker": "THYAO.IS",
+        "as_of": "2025-12-31"
+      }
+    },
+    {
+      "tool": null,
+      "arguments": {
+        "ticker": "BIMAS.IS",
+        "as_of": "2027-03-31"
+      }
+    }
+  ],
   "seed": 17,
-  "elapsed_seconds": 38.7
+  "elapsed_seconds": 30.0
 }

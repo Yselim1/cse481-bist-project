@@ -122,8 +122,8 @@ config/tms29.yaml → CLI → build_analysis() → evaluate() → create_report(
 
 - `scripts/local_agent.py` — Python client against Ollama's OpenAI-compatible endpoint (`localhost:11434/v1`); launches the MCP server (with `BIST_CONFIG`, default `config/universe_live.yaml`) as a child process, does harness-side RAG, sends seed + temperature, and writes the full execution trace (`bist-execution-trace/1`).
 - `scripts/run_harness_experiments.py --backend ollama` — the 5-stage A–E experiment, local path (submission).
-- `training/dataset/build.py` — dataset v2: ~400 examples by replaying live MCP tool calls (config/universe10.yaml), ~half natural-language questions with the inference system prompt + RAG context, every answer figure grounding-checked; 80/20 stratified split.
-- `training/train_unsloth.py` — QLoRA 4-bit via Unsloth (rank 16, alpha 32, 3 epochs, cosine LR 2e-4, effective batch 16, max_len 3072, seed 17) on Colab T4; saves `adapter_model.safetensors`, writes `training/config/hyperparams.json`, exports the merged GGUF from the same run. (`train_lora.py` is the superseded peft/trl recipe.)
+- `training/dataset/build.py` — dataset v3: 400 examples by replaying live MCP tool calls (config/universe_live.yaml; the 5 presentation settings held out; answers copy the tools' precomputed summary / label_by_rule blocks), ~half natural-language questions with the inference system prompt + RAG context, every answer figure grounding-checked; 80/20 stratified split.
+- `training/train_unsloth.py` — QLoRA 4-bit via Unsloth (rank 16, alpha 32, 3 epochs, cosine LR 2e-4, effective batch 16, max_len 4096, seed 17) on Colab T4; saves `adapter_model.safetensors`, writes `training/config/hyperparams.json`, exports the merged GGUF from the same run. (`train_lora.py` is the superseded peft/trl recipe.)
 - `training/export_gguf.sh` — adapter → GGUF via llama.cpp, loaded through `training/Modelfile.finetuned`.
 - `training/eval/run_baseline.py` + `compare.py` — 20-question §30 eval and base-vs-fine-tuned comparison.
 

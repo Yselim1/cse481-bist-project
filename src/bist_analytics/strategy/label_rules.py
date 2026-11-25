@@ -75,6 +75,67 @@ def fundamental_label(metric: str, value: float, revenue_qoq: float | None) -> s
     return "WATCH"
 
 
+def _r(value, places: int = 4):
+    return None if value is None else round(float(value), places)
+
+
+def summarize_sectors(rows: list[dict]) -> list[dict]:
+    """Per sector: members, mean, laggard and leader (by relative_vs_sector), and the label the
+    SECTOR_RULE gives the laggard. Deterministic arithmetic over the returned rows."""
+    groups: dict[str, list[dict]] = {}
+    for row in rows:
+        if row.get("sector") and row.get("relative_vs_sector") is not None:
+            groups.setdefault(row["sector"], []).append(row)
+    out = []
+    for sector, members in sorted(groups.items()):
+        ordered = sorted(members, key=lambda r: (r["relative_vs_sector"], r["ticker"]))
+        lag, lead = ordered[0], ordered[-1]
+        out.append({"sector": sector, "sector_mean": _r(lag.get("sector_mean")),
+                    "laggard": lag["ticker"],
+                    "laggard_relative_vs_sector": _r(lag["relative_vs_sector"]),
+                    "laggard_label_by_rule": sector_label(lag["relative_vs_sector"]),
+                    "leader": lead["ticker"],
+                    "leader_relative_vs_sector": _r(lead["relative_vs_sector"]),
+                    "members": [{"ticker": r["ticker"], "cum_return": _r(r.get("cum_return")),
+                                 "relative_vs_sector": _r(r["relative_vs_sector"]),
+                                 "label_by_rule": sector_label(r["relative_vs_sector"])}
+                                for r in members]})
+    return out
+
+
+def summarize_weekdays(rows: list[dict]) -> dict:
+    """Highest/lowest mean weekday, smallest uncorrected p-value, and the WEEKDAY_RULE label."""
+    rows = [r for r in rows if r.get("mean") is not None]
+    if not rows:
+        return {"available": False}
+    hi = max(rows, key=lambda r: r["mean"])
+    lo = min(rows, key=lambda r: r["mean"])
+    with_p = [r for r in rows if r.get("p_value_uncorrected") is not None]
+    sp = min(with_p, key=lambda r: r["p_value_uncorrected"]) if with_p else None
+    p = sp["p_value_uncorrected"] if sp else None
+    return {"highest_mean_weekday": hi["weekday"], "highest_mean": _r(hi["mean"], 6),
+            "highest_mean_p_value": _r(hi.get("p_value_uncorrected"), 3), "highest_mean_count": hi.get("count"),
+            "lowest_mean_weekday": lo["weekday"], "lowest_mean": _r(lo["mean"], 6),
+            "lowest_mean_p_value": _r(lo.get("p_value_uncorrected"), 3), "lowest_mean_count": lo.get("count"),
+            "smallest_p_weekday": sp["weekday"] if sp else None, "smallest_p_value": _r(p, 3),
+            "any_below_screen_p": p is not None and p < WEEKDAY_RULE["screen_p_value"],
+            "any_below_bonferroni_p": p is not None and p < WEEKDAY_RULE["bonferroni_p_threshold"],
+            "label_by_rule": weekday_label(p)}
+
+
+def best_reversal_family(summary: list[dict]) -> dict:
+    """The family with the highest mean_forward_5d among those with >= min_events forward returns."""
+    eligible = [s for s in summary if s.get("mean_forward_5d") is not None
+                and s.get("n_forward_5d", 0) >= REVERSAL_RULE["min_events"]]
+    if not eligible:
+        return {"event_type": None, "label_by_rule": "WATCH",
+                "note": "no event family has >= 2 forward 5-day returns"}
+    best = max(eligible, key=lambda s: s["mean_forward_5d"])
+    return {"event_type": best["event_type"], "count": best["count"],
+            "mean_forward_5d": best["mean_forward_5d"],
+            "label_by_rule": reversal_label(best["mean_forward_5d"], best["n_forward_5d"])}
+
+
 def summarize_reversal_events(events: list[dict]) -> list[dict]:
     """Per event_type: count and mean forward 1/3/5-day return (only non-null values)."""
     groups: dict[str, list[dict]] = {}

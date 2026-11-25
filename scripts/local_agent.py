@@ -64,7 +64,10 @@ PRESENTATION_SYSTEM_PROMPT = SYSTEM_PROMPT + (
     "- dates beyond the data, unknown tickers, missing data: check_data_quality (ticker, as_of); "
     "gate_status HARD_BLOCK means the label must be ANALYSIS_UNSAFE\n"
     "- methodology, definitions, disclosures: search_knowledge_base\n"
-    "Apply the label_rule returned by the tool. If a tool returns an error or available=false, "
+    "Apply the label_rule returned by the tool. When the tool returns a summary, sector_summary "
+    "or best_family block, take the laggard/leader, highest/lowest and best values from it and "
+    "use its *label_by_rule field as the label; do not re-derive them from the rows. "
+    "If a tool returns an error or available=false, "
     "say the data is unavailable; never estimate it. Copy numbers exactly as the tools return "
     "them (you may round, or convert fractions to percentages)."
 )
@@ -147,6 +150,10 @@ def _mcp_tool_to_openai_schema(tool: dict) -> dict:
 # which leaves headroom for 6-7 rounds under 32k. Both baseline and fine-tuned models
 # see the same cap, so comparisons stay apples-to-apples.
 _TOOL_RESULT_CHAR_CAP = 12_000
+# The presentation path (scenarios + live question) uses the same cap as the fine-tuning
+# data (training/dataset/build.py TRAIN_TOOL_CHAR_CAP), so the model sees tool results the
+# way it was trained to. Summaries and label rules sit before `data`, so they survive it.
+PRESENTATION_TOOL_CHAR_CAP = 4_500
 
 
 def _truncate_tool_result(payload: str, cap: int = _TOOL_RESULT_CHAR_CAP) -> str:
@@ -319,7 +326,8 @@ def run_agent(prompt: str, *, model: str = DEFAULT_MODEL, max_turns: int = 10,
               force_answer_after: int = 10, temperature: float = DEFAULT_TEMPERATURE,
               seed: int | None = DEFAULT_SEED, config: str | None = DEFAULT_CONFIG,
               retrieval_top_k: int = 3, system_prompt: str = SYSTEM_PROMPT,
-              scenario_id: str | None = None, on_event: Any = None) -> dict:
+              scenario_id: str | None = None, on_event: Any = None,
+              tool_char_cap: int = _TOOL_RESULT_CHAR_CAP) -> dict:
     """Run a tool-calling loop against a local Ollama model and the BIST MCP server.
 
     If ``allow_tools`` is False the MCP server is still launched for schema listing but
@@ -371,7 +379,7 @@ def run_agent(prompt: str, *, model: str = DEFAULT_MODEL, max_turns: int = 10,
                       "started_at": started_at, "finished_at": _now(),
                       "duration_s": round(seconds, 3), "result": result,
                       "result_sha256": _sha256(result),
-                      "truncated_for_model": sent is not None and len(sent) > _TOOL_RESULT_CHAR_CAP})
+                      "truncated_for_model": sent is not None and len(sent) > tool_char_cap})
         emit("tool", name, args)
 
     try:
@@ -469,7 +477,7 @@ def run_agent(prompt: str, *, model: str = DEFAULT_MODEL, max_turns: int = 10,
                           time.perf_counter() - tct, sent)
                 messages.append({"role": "tool", "tool_call_id": call.get("id", str(time.time())),
                                  "name": call["function"]["name"],
-                                 "content": _truncate_tool_result(sent)})
+                                 "content": _truncate_tool_result(sent, tool_char_cap)})
             # On first dedup hit, disable tools so next turn forces a text answer.
             if dedup_fired and tools_active:
                 nudge = "You already have all the evidence you need. Write your final answer now."
@@ -496,7 +504,7 @@ def run_agent(prompt: str, *, model: str = DEFAULT_MODEL, max_turns: int = 10,
             "sampling": sampling,
             "harness": {"script": "scripts/local_agent.py", "config_file": config,
                         "max_turns": max_turns, "force_answer_after": force_answer_after,
-                        "tool_result_char_cap": _TOOL_RESULT_CHAR_CAP,
+                        "tool_result_char_cap": tool_char_cap,
                         "tools_offered": [t["function"]["name"] for t in openai_tools],
                         "git": _git_state(), "python": sys.version.split()[0]},
             "system_prompt": system_prompt,

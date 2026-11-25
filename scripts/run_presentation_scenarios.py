@@ -27,7 +27,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from scripts.local_agent import PRESENTATION_SYSTEM_PROMPT, run_agent  # noqa: E402
+from scripts.local_agent import (  # noqa: E402
+    PRESENTATION_SYSTEM_PROMPT,
+    PRESENTATION_TOOL_CHAR_CAP,
+    run_agent,
+)
 
 SCENARIOS = ROOT / "presentation" / "scenarios.json"
 OUT = ROOT / "outputs" / "presentation"
@@ -62,7 +66,7 @@ def run(ids: list[str] | None, model: str | None) -> None:
         result = run_agent(sc["question"], model=model or d["model"], seed=d["seed"],
                            temperature=d["temperature"], config=d["config"],
                            retrieval_top_k=d["rag_top_k"], max_turns=d["max_turns"],
-                           system_prompt=PRESENTATION_SYSTEM_PROMPT, scenario_id=sc["id"],
+                           system_prompt=PRESENTATION_SYSTEM_PROMPT, tool_char_cap=PRESENTATION_TOOL_CHAR_CAP, scenario_id=sc["id"],
                            trace_path=path,
                            on_event=lambda kind, name, args: kind == "tool" and print(
                                f"    -> {name} {json.dumps(args, ensure_ascii=False)}", flush=True))

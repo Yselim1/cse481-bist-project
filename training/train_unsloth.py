@@ -64,8 +64,8 @@ def main() -> None:
     parser.add_argument("--lora-rank", type=int, default=16)
     parser.add_argument("--lora-alpha", type=int, default=32)
     parser.add_argument("--lora-dropout", type=float, default=0.05)
-    parser.add_argument("--max-length", type=int, default=3072,
-                        help="Dataset v2 conversations peak at ~2.6k Qwen tokens.")
+    parser.add_argument("--max-length", type=int, default=4096,
+                        help="Dataset v3 conversations peak at ~3.6k Qwen tokens.")
     parser.add_argument("--warmup-ratio", type=float, default=0.03)
     parser.add_argument("--seed", type=int, default=17)
     parser.add_argument("--run-record", default="training/config/hyperparams.json")

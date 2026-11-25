@@ -225,10 +225,11 @@ def detect_reversal_events(ticker: str = "THYAO.IS", as_of: str = "2025-12-31",
     events = detect(features, ticker)
     events = events[(events.date >= features.index[-lookback]) & (events.date <= features.index[-1])]
     records = frame_records(events)
+    summary = label_rules.summarize_reversal_events(records)
     return envelope(records, as_of, ticker=ticker, lookback_sessions=lookback,
                     window={"start": str(features.index[-lookback].date()), "end": str(features.index[-1].date())},
-                    summary=label_rules.summarize_reversal_events(records),
-                    label_rule=label_rules.REVERSAL_RULE)
+                    event_count=len(records), label_rule=label_rules.REVERSAL_RULE,
+                    best_family=label_rules.best_reversal_family(summary), summary=summary)
 
 
 @server.tool(annotations=READ_ONLY)
@@ -242,7 +243,12 @@ def rank_sector_relative_strength(as_of: str = "2025-12-31", lookback: int = 63)
         raise ToolError("LIMIT_OUT_OF_RANGE: lookback must be 20–252")
     ranking = rank(a.universe_prices, a.config.sector_map, as_of=parsed_date(as_of),
                    lookback_sessions=lookback)
-    return envelope(frame_records(ranking), as_of, label_rule=label_rules.SECTOR_RULE)
+    records = frame_records(ranking)
+    for row in records:
+        if row.get("relative_vs_sector") is not None:
+            row["label_by_rule"] = label_rules.sector_label(row["relative_vs_sector"])
+    return envelope(records, as_of, lookback_sessions=lookback, label_rule=label_rules.SECTOR_RULE,
+                    sector_summary=label_rules.summarize_sectors(records))
 
 
 @server.tool(annotations=READ_ONLY)
@@ -254,9 +260,33 @@ def test_weekday_pattern(ticker: str = "THYAO.IS", start: str = "2025-01-01",
     returns = features.close.pct_change(fill_method=None)
     window = returns.loc[(returns.index >= parsed_date(start)) & (returns.index < parsed_date(end))]
     stats = weekday_pattern_test(window.dropna(), min_count=10)
-    return envelope(frame_records(stats), end, ticker=ticker,
+    records = frame_records(stats)
+    return envelope(records, end, ticker=ticker,
                     window={"start": start, "end_exclusive": end, "sessions": int(window.notna().sum())},
-                    label_rule=label_rules.WEEKDAY_RULE)
+                    label_rule=label_rules.WEEKDAY_RULE,
+                    summary=label_rules.summarize_weekdays(records))
+
+
+def _publication_reaction(data, published) -> dict[str, Any]:
+    """Adjusted close on the last session before the statements were published and 1 / 5
+    sessions from publication (sessions after as_of are never used)."""
+    if published is None or pd.isna(published):
+        return {"available": False, "reason": "no publication date"}
+    pub = pd.Timestamp(published)
+    pub = (pub.tz_convert(None) if pub.tzinfo else pub).normalize()
+    before = data.close[data.index < pub]
+    after = data.close[data.index >= pub]
+    if before.empty or after.empty:
+        return {"available": False, "reason": "no sessions on both sides of publication before as_of"}
+    out: dict[str, Any] = {"publication_date": str(pub.date()),
+                           "close_before_date": str(before.index[-1].date()),
+                           "close_before": round(float(before.iloc[-1]), 4)}
+    for k in (1, 5):
+        if len(after) >= k:
+            out[f"close_after_{k}_sessions_date"] = str(after.index[k - 1].date())
+            out[f"close_after_{k}_sessions"] = round(float(after.iloc[k - 1]), 4)
+            out[f"return_{k}_sessions"] = round(float(after.iloc[k - 1] / before.iloc[-1] - 1), 4)
+    return out
 
 
 @server.tool(annotations=READ_ONLY)
@@ -278,6 +308,10 @@ def calculate_fundamental_change(ticker: str = "THYAO.IS", as_of: str = "2025-12
         for key in ("financial_period", "financial_available_at", "financial_age_days"):
             if key in data.columns:
                 out[key] = latest[key]
+        out["labels_by_rule"] = {k: label_rules.fundamental_label(k, v, out.get("revenue_qoq"))
+                                 for k, v in out.items() if k.endswith("_qoq") and v is not None}
+        if "financial_available_at" in data.columns:
+            out["publication_reaction"] = _publication_reaction(data, latest["financial_available_at"])
     return envelope(out, as_of, ticker=ticker,
                     comparison="qoq = latest value vs 63 sessions earlier; yoy = vs 252 sessions earlier",
                     label_rule=label_rules.FUNDAMENTAL_RULE)
