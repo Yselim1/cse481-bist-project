@@ -68,7 +68,7 @@ Head-to-head report: `outputs/training/base_vs_finetuned.md`.
   signals, so the model generalizes "after a successful call, call another one" rather
   than "after a successful call, answer." See `outputs/training/base_vs_finetuned.md`
   for the per-question breakdown. First candidate for any future dataset iteration.
-- Turkish economic news beyond KAP is absent; macro context is limited to TCMB / TÜİK series.
+- Turkish economic news beyond KAP is absent; macro context is limited to cached USD/TRY; the TCMB / TÜİK reader exists, but no series are cached in this submission.
 - Period mismatch (pre/post TMS 29) is hard-blocked by the gate; the model will refuse rather
   than fuse incompatible-presentation statements.
 - No safety RLHF — relies entirely on the system prompt and the data-quality gate for

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-CSE481 term project. The original THYAO.IS single-ticker research pipeline is still the deepest-worked example, but the repo has grown into a 10-ticker, multi-sector BIST research harness driven by a **locally hosted fine-tuned LLM** (Qwen 2.5 7B + LoRA via Ollama). It imports Fintables financials, caches Yahoo prices, computes technical/fundamental scores, backtests explicit rules, and exposes 19 MCP tools to the agent.
+CSE481 term project. The original THYAO.IS single-ticker research pipeline is still the deepest-worked example, but the repo has grown into a 10-ticker, multi-sector BIST research harness driven by a **locally hosted fine-tuned LLM** (Qwen 2.5 3B + LoRA via Ollama). It imports Fintables financials, caches Yahoo prices, computes technical/fundamental scores, backtests explicit rules, and exposes 20 MCP tools to the agent.
 
 Three studies coexist:
 - **Primary THYAO study** (`config/tms29.yaml`): 2025–September 2026, 238 TMS 29 observations, preserved untouched as the "one worked example."
@@ -62,7 +62,7 @@ All commands use the `.venv` interpreter from the project root (PowerShell on Wi
 
 **Local LLM (requires Ollama + `qwen2.5:7b-instruct` or `bist-qwen`):**
 ```powershell
-.\.venv\Scripts\python.exe scripts/local_agent.py --smoke
+.\.venv\Scripts\python.exe scripts/local_agent.py --smoke --model bist-qwen   # without --model the default is qwen2.5:7b-instruct
 .\.venv\Scripts\python.exe scripts/run_harness_experiments.py --backend ollama --model bist-qwen
 .\.venv\Scripts\python.exe training/eval/run_baseline.py --model bist-qwen
 ```
@@ -101,8 +101,8 @@ config/tms29.yaml → CLI → build_analysis() → evaluate() → create_report(
 - **`backtest/`** — `engine.py` (order execution, persistent position state, next-open fills), `metrics.py` (Sharpe, drawdown, win rate, exposure, costs).
 - **`strategy/rules.py`** — BUY/SELL/HOLD signal generation from scores and indicator state; `INTERNAL_TO_EDUCATIONAL` maps to the 8 labels.
 - **`scenarios/`** — Four scenario builders: `sector_laggard`, `weekday_patterns`, `reversal_events`, `fundamental_reaction`. `scripts/build_scenarios.py` runs them.
-- **`data/`** — `market.py` (Yahoo wrapper; shape-validated — no hardcoded whitelist), `tms29.py`, `originals.py`, `context.py` (per-ticker KAP paths), `macro.py` (TCMB EVDS + TÜİK CPI release-date aligned).
-- **`mcp/server.py`** — 19 read-only MCP tools over stdio: the original 9 plus `get_index_history`, `detect_reversal_events`, `rank_sector_relative_strength`, `test_weekday_pattern`, `calculate_fundamental_change`, `get_macro_context`, `get_news_events`, `get_speech_features`, `check_data_quality`, `build_evidence_bundle`.
+- **`data/`** — `market.py` (Yahoo wrapper; shape-validated — no hardcoded whitelist), `tms29.py`, `originals.py`, `context.py` (per-ticker KAP paths), `macro.py` (TCMB EVDS + TÜİK CPI release-date aligned; no series are cached under `data/raw/macro/`, so `get_macro_context` returns nulls).
+- **`mcp/server.py`** — 20 read-only MCP tools over stdio: the original 10 plus `get_index_history`, `detect_reversal_events`, `rank_sector_relative_strength`, `test_weekday_pattern`, `calculate_fundamental_change`, `get_macro_context`, `get_news_events`, `get_speech_features`, `check_data_quality`, `build_evidence_bundle`.
 - **`harness/evaluation.py`** — Multi-scenario deterministic scoring + §30 metric checks.
 - **`reporting.py`** — HTML / Markdown / PDF generation.
 - **`io.py`** — JSON serialization and hash verification.
@@ -124,7 +124,7 @@ config/tms29.yaml → CLI → build_analysis() → evaluate() → create_report(
 - **Execution model**: Close-of-day signal → next session open fill. Commission 10 bps + slippage 5 bps. Cash earns zero. Returns are nominal TRY.
 - **EMA seeding**: EMAs are SMA-seeded to avoid NaN on startup.
 
-### MCP Tools (19 read-only)
+### MCP Tools (20 read-only)
 
 Exposed by `bist_analytics.mcp.server`: `project_status`, `get_context_events`, `get_stock_history`, `calculate_indicators`, `find_support_resistance`, `get_fundamental_metrics`, `calculate_scores`, `run_backtest`, `generate_signal`, `generate_report`, `get_index_history`, `detect_reversal_events`, `rank_sector_relative_strength`, `test_weekday_pattern`, `calculate_fundamental_change`, `get_macro_context`, `get_news_events`, `get_speech_features`, `check_data_quality`, `build_evidence_bundle`.
 

@@ -164,7 +164,7 @@ The fifth stage remains `pending_human_review` after a successful model run. Thi
 | Benchmarks and metrics | technical ablation, buy-and-hold, BIST 100; return/risk/trade metrics | Complete |
 | KAP/news context | 13 exact-timestamp events plus read-only MCP tool | Complete |
 | Speech-to-text | instructor allows selected examples; no approved recording supplied | Optional extension |
-| MCP AI agent | ten read-only bounded tools using the same calculation layer | Complete |
+| MCP AI agent | read-only bounded tools using the same calculation layer (ten at this upgrade; 20 in the final submission) | Complete |
 | Five harness architectures | fixed-model traces, state, gate, memory, scores, review queue | Complete; final student review pending |
 | Machine learning | original brief treats this as optional | Not selected |
 | Presentation | requested after implementation | Next phase |

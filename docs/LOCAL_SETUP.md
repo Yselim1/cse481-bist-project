@@ -41,8 +41,10 @@ ollama create bist-qwen -f training/Modelfile.base
 ## 4. Smoke the local agent (1 min)
 
 ```powershell
-.\.venv\Scripts\python.exe scripts\local_agent.py --smoke
+.\.venv\Scripts\python.exe scripts\local_agent.py --smoke --model bist-qwen
 ```
+
+Without `--model` (or `$env:BIST_LOCAL_MODEL`) the script falls back to `qwen2.5:7b-instruct`.
 
 The command launches the MCP server as a child process and runs one tool call against
 Ollama. Expect a two-sentence summary and `outputs/agent/local_agent.result.json` on disk.

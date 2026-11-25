@@ -28,7 +28,7 @@ async def main():
                               "run_backtest", "generate_signal", "generate_report"}
             assert original_nine.issubset(tool_names), (
                 f"original tools missing from catalogue: {original_nine - tool_names}")
-            assert len(listing.tools) >= 19, f"expected ≥19 tools, got {len(listing.tools)}"
+            assert len(listing.tools) >= 20, f"expected ≥20 tools, got {len(listing.tools)}"
             for tool in listing.tools:
                 assert tool.annotations.read_only_hint is True
             for name,args in [("project_status",{}),("calculate_indicators",{}),("get_fundamental_metrics",{}),

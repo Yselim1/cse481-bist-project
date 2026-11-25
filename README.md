@@ -21,7 +21,7 @@ CSE481 term project for **Turkish Airlines (THYAO.IS)**. The package imports Fin
 - `outputs/verified_only/report.md`: report text.
 - `output/pdf/THYAO_Term_Project_Report.pdf`: verified eight-page printable report.
 - `notebooks/THYAO_walkthrough.ipynb`: executed nine-code-cell walkthrough, zero errors.
-- `outputs/agent/analysis_demo.md` and `.jsonl`: genuine AI explanation and MCP trace.
+- `outputs/agent/analysis_demo.md` and `.jsonl`: earlier Codex-host explanation and MCP trace (development history; the submission agent is the local `bist-qwen`).
 - `docs/DECISIONS.md`: frozen parameters and methodological limitations.
 - `docs/DATA_SOURCES.md`: source URLs, units and release/vintage evidence.
 - `docs/FINANCIAL_INTERPRETATION.md`: earnings, cash generation, liquidity, valuation and strategy interpretation.
@@ -89,21 +89,21 @@ See `docs/DECISIONS.md` for all thresholds. Strategy parameters are not selected
 
 ## Actual MCP AI agent
 
-Ten read-only tools expose status, history, indicators, zones, fundamentals, scores, signal, backtest, saved report, and timestamped KAP context. Inputs are bounded; outputs contain dates, units, warnings and missing values. No tool trades.
+Twenty read-only tools expose status, history, indicators, zones, fundamentals, scores, signal, backtest, saved report and timestamped KAP context, plus the benchmark index, reversal events, sector ranking, weekday tests, fundamental change, macro context, news, speech features, data-quality checks and evidence bundles. The TCMB/TÜİK macro and speech tools are built, but no data for them is cached in this submission, so they return empty values. Inputs are bounded; outputs contain dates, units, warnings and missing values. No tool trades.
 
 ```powershell
 .\.venv\Scripts\python.exe -m bist_analytics.mcp.server
 ```
 
-After signing into the official Codex CLI yourself:
+The submission agent is the locally hosted fine-tuned model `bist-qwen` (Qwen 2.5 3B + LoRA), served by Ollama on localhost; no cloud AI is called:
 
 ```powershell
-.\.venv\Scripts\python.exe scripts/run_agent_demo.py --smoke
-.\.venv\Scripts\python.exe scripts/run_agent_demo.py
-.\.venv\Scripts\python.exe scripts/run_agent_demo.py --missing
+ollama create bist-qwen -f training/Modelfile.finetuned
+.\.venv\Scripts\python.exe scripts/local_agent.py --smoke --model bist-qwen
+.\.venv\Scripts\python.exe scripts/local_agent.py --ticker THYAO.IS --as-of 2025-12-31 --model bist-qwen
 ```
 
-These runs use the existing account/model and consume model usage. Scripts never read credentials or change global MCP settings; they pass temporary local-server configuration. Tools explicitly advertise read-only, idempotent, closed-world behavior. The host uses a read-only filesystem sandbox. The runner requires successful MCP calls before reporting success.
+Without `--model` (or `BIST_LOCAL_MODEL`), `local_agent.py` uses the base `qwen2.5:7b-instruct`. It launches the MCP server as a stdio child process and passes the tools to the model in OpenAI tool-calling format. Tools explicitly advertise read-only, idempotent, closed-world behavior. See `docs/LOCAL_MODEL.md` and `docs/MODEL_CARD.md`. `scripts/run_agent_demo.py` is the earlier Codex CLI runner; its sessions in `outputs/agent/analysis_demo.*` are kept as development history.
 
 `verify_mcp.py` separately checks the real stdio protocol and equality with direct Python output. It does not call an LLM and is labeled accordingly. Host setup and audit: `docs/MCP_DEMO.md`.
 

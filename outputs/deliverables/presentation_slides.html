@@ -81,7 +81,7 @@ hr { border: none; border-top: 1px solid rgba(255,255,255,0.12);
   </div>
   <div>
     <p><strong>10</strong> tickers · <strong>5</strong> sectors</p>
-    <p><strong>19</strong> MCP tools · <strong>400</strong> training examples</p>
+    <p><strong>20</strong> MCP tools · <strong>400</strong> training examples</p>
     <p><strong>5-stage</strong> architecture harness</p>
   </div>
 </div>
@@ -124,11 +124,11 @@ BIST equity analysis — without inventing numbers or giving investment advice?<
     <p>Yahoo Finance OHLCV</p>
     <p>Fintables TMS29 financials</p>
     <p>KAP context events</p>
-    <p>TCMB / TÜİK macro</p>
+    <p>USD/TRY FX (Yahoo)</p>
   </div>
   <div class="card">
     <h3>Layer 2 — MCP Server</h3>
-    <p>19 read-only tools</p>
+    <p>20 read-only tools</p>
     <p>stdio transport (subprocess)</p>
     <p>No network calls during analysis</p>
     <p>All tools return JSON evidence</p>
@@ -147,7 +147,7 @@ BIST equity analysis — without inventing numbers or giving investment advice?<
   <tr><th>A: raw_llm</th><th>B: llm_tools</th><th>C: stateful</th>
       <th>D: evidence_gate</th><th>E: memory_review</th></tr>
   <tr><td>Base LLM only<br>No tools</td>
-      <td>+ 19 MCP tools<br>Tool-calling enabled</td>
+      <td>+ 20 MCP tools<br>Tool-calling enabled</td>
       <td>+ State context<br>as_of, financial period</td>
       <td>+ Quality gate<br>ANALYSIS_UNSAFE blocking</td>
       <td>+ Memory layer<br>Human review sign-off</td></tr>
@@ -174,10 +174,10 @@ BIST equity analysis — without inventing numbers or giving investment advice?<
   </div>
   <div class="card">
     <h3>Tier 3: Macro Context</h3>
-    <p><strong>TCMB:</strong> Policy rate series</p>
-    <p><strong>TÜİK:</strong> CPI release-date aligned</p>
-    <p><strong>KAP:</strong> Per-ticker corporate events</p>
-    <p><strong>Speech:</strong> Selected examples (approved)</p>
+    <p><strong>FX:</strong> USD/TRY (Yahoo TRY=X), cached</p>
+    <p><strong>TCMB / TÜİK:</strong> reader and MCP tool built; no series cached in this submission</p>
+    <p><strong>KAP:</strong> 13 THYAO corporate events</p>
+    <p><strong>Speech:</strong> tool built; no data cached</p>
   </div>
 </div>
 <hr>
@@ -189,7 +189,7 @@ not recomputed, not approximated.</p>
 
 <section class="slide"><span class="slide-num">5 / 12</span>
 <div class="tag">Tools</div>
-<h1>19 MCP Tools — The Agent's Calculator</h1>
+<h1>20 MCP Tools — The Agent's Calculator</h1>
 <div class="cols" style="margin-top:0.8rem">
   <div>
     <table>
@@ -212,7 +212,7 @@ not recomputed, not approximated.</p>
       <tr><td><code>test_weekday_pattern</code></td><td>Day-of-week pattern test</td></tr>
       <tr><td><code>detect_reversal_events</code></td><td>BB / RSI / Supertrend signals</td></tr>
       <tr><td><code>calculate_fundamental_change</code></td><td>QoQ / YoY change</td></tr>
-      <tr><td><code>get_macro_context</code></td><td>TCMB / TÜİK data</td></tr>
+      <tr><td><code>get_macro_context</code></td><td>TCMB / TÜİK reader (no cache shipped)</td></tr>
       <tr><td><code>get_news_events</code></td><td>KAP news events</td></tr>
       <tr><td><code>get_speech_features</code></td><td>Speech text features</td></tr>
       <tr><td><code>check_data_quality</code></td><td>Gate: future date / unknown ticker</td></tr>
@@ -282,7 +282,7 @@ not recomputed, not approximated.</p>
     <td><strong>S1 — Sector Laggards</strong><br><em>Catch-up analysis</em></td>
     <td><code>rank_sector_relative_strength</code></td>
     <td>5 sectors, all 10 tickers</td>
-    <td>92 laggard anchors. Banking sector: 50.4% 20-day hit rate for AKBNK/GARAN lagging sector median.</td>
+    <td>92 weekly anchors. Laggard beat its sector peers over 20 days: steel 60.9%, banking 54.3%, airlines 44.6%.</td>
   </tr>
   <tr>
     <td><strong>S2 — Weekday Patterns</strong><br><em>Day-of-week bias</em></td>
@@ -294,13 +294,13 @@ not recomputed, not approximated.</p>
     <td><strong>S3 — Reversal Events</strong><br><em>Technical bounce signals</em></td>
     <td><code>detect_reversal_events</code></td>
     <td>All 10 tickers</td>
-    <td>1,458 events detected. BB lower-touch: 59% 10-day bounce rate. RSI oversold: 59% bounce rate.</td>
+    <td>1,458 events detected. 5-day bounce rate: BB lower-touch 58.7% (230 events), RSI oversold recovery 59.1% (44 events).</td>
   </tr>
   <tr>
     <td><strong>S4 — Fundamental Reaction</strong><br><em>Post-earnings price move</em></td>
     <td><code>calculate_fundamental_change</code></td>
-    <td>All 10 tickers</td>
-    <td>19 fundamental releases mapped. Post-announcement price reactions linked to QoQ/YoY changes.</td>
+    <td>THYAO.IS only</td>
+    <td>7 THYAO release dates (19 panel rows). Mean 5-day return vs BIST100 after a release: −1.29%.</td>
   </tr>
 </table>
 <p style="margin-top:0.8rem; font-size:0.82rem; color:#889">
@@ -488,10 +488,10 @@ not recomputed, not approximated.</p>
     <p style="font-size:0.85rem; color:#aab; margin-bottom:0.5rem">
       LLM + MCP tools in a Claude-Code-style loop. One question in, tool calls fire, one grounded answer out.
     </p>
-    <p><strong>Smoke:</strong> <code>python scripts/local_agent.py --smoke</code></p>
+    <p><strong>Smoke:</strong> <code>python scripts/local_agent.py --smoke --model bist-qwen</code></p>
     <p style="font-size:0.8rem">→ One <code>project_status</code> call, ~30&nbsp;s, proves the wiring works.</p>
     <p style="margin-top:0.5rem"><strong>Real question:</strong><br>
-       <code>python scripts/local_agent.py --ticker THYAO.IS --as-of 2025-12-31</code></p>
+       <code>python scripts/local_agent.py --ticker THYAO.IS --as-of 2025-12-31 --model bist-qwen</code></p>
     <p style="font-size:0.8rem">→ 3–6 tool calls · one of 8 educational labels · trace in <code>outputs/agent/</code></p>
   </div>
   <div class="card">

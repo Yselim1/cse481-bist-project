@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>CSE481 Video Script</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* VOICE work: a broadcast run-of-show for one presenter recording a course video
+   IDEA a TV rundown sheet: every segment timed, with what is on screen, what to say, and the proof file
+   PICTURE the run-of-show band drawn at true time scale, coloured by act, clickable
+   COLOUR white, ink #14161a, deep teal #0b5d63 leading, amber for "say it honestly" notes, rule grey
+   TYPE Libre Caslon Text for titles + Inter for everything read while recording
+   LAYOUT title and runtime across the top, the band full width beneath, then sticky rundown list left and segment cards right; phone stacks */
+:root{color-scheme:light dark;--bg:light-dark(#ffffff,#0d1416);--ink:light-dark(#14161a,#e7ecec);--mute:light-dark(#5a6168,#9aa6a8);--rule:light-dark(#dfe3e6,#24302f);--teal:light-dark(#0b5d63,#5cc3c9);--tealbg:light-dark(#e8f2f2,#12282a);--amber:light-dark(#8a5a00,#f0b64b);--amberbg:light-dark(#fff5e0,#2a2112);--panel:light-dark(#f6f8f8,#121c1e);--a1:#0b5d63;--a2:#3d8f7a;--a3:#b07a1a;--a4:#5a6168}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif;overflow-x:clip}
+.band{padding-block:clamp(24px,3.5vw,48px);padding-left:max(5vw,16px,env(safe-area-inset-left,0px));padding-right:max(5vw,16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1240px;margin:0 auto}
+h1,h2{font-family:"Libre Caslon Text",Georgia,serif;font-weight:400;letter-spacing:-.02em;line-height:1.08;margin:0}
+h1{font-size:clamp(32px,4.6vw,50px)}
+h2{font-size:clamp(24px,2.6vw,30px)}
+h3{font-size:17px;margin:0 0 6px}
+.top{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:32px;align-items:end;border-bottom:2px solid var(--ink);padding-bottom:20px}
+.lede{color:var(--mute);margin:12px 0 0;max-width:62ch}
+.figs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-left:1px solid var(--rule)}
+.figs div{padding:4px 14px;border-right:1px solid var(--rule)}
+.figs b{display:block;font:400 clamp(26px,3vw,36px)/1.1 "Libre Caslon Text",Georgia,serif;color:var(--teal)}
+.figs span{font-size:13px;color:var(--mute)}
+.ros{margin-top:22px}
+.ros-bar{display:flex;height:64px;border-radius:3px;overflow:hidden;gap:2px}
+.ros-bar a{display:flex;align-items:flex-end;padding:6px;color:#fff;text-decoration:none;font-size:13px;font-weight:600;line-height:1.1;overflow:hidden;position:relative}
+.ros-bar a.done{opacity:.35}
+.ros-bar a:hover,.ros-bar a:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
+.ros-axis{display:flex;justify-content:space-between;font-size:13px;color:var(--mute);margin-top:6px;font-variant-numeric:tabular-nums}
+.ros-key{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;margin-top:8px;color:var(--mute)}
+.ros-key i{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;align-items:center}
+button{font:600 14px Inter,system-ui,sans-serif;min-height:40px;padding:0 16px;border-radius:4px;border:1px solid var(--teal);background:var(--bg);color:var(--teal);cursor:pointer}
+button:hover{background:var(--tealbg)}
+button.primary{background:var(--teal);color:var(--bg)}
+.prog{flex:1 1 200px;font-size:14px;color:var(--mute)}
+.prog .track{height:6px;background:var(--rule);border-radius:3px;margin-top:4px;overflow:hidden}
+.prog .fill{height:100%;background:var(--teal);width:0}
+.prep{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px}
+.prep ul{margin:8px 0 0;padding-left:20px}
+.prep li{margin:4px 0}
+.honest{background:var(--amberbg);border-left:3px solid var(--amber);padding:10px 14px;margin:12px 0;border-radius:0 4px 4px 0}
+.honest b{color:var(--amber)}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-weight:600;border-bottom:1.5px solid var(--ink)}
+td.n,th.n{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+.st{white-space:nowrap;font-size:13px;font-weight:600;padding:2px 8px;border-radius:3px}
+.st.ok{background:var(--tealbg);color:var(--teal)}
+.st.part{background:var(--amberbg);color:var(--amber)}
+.st.no{background:var(--panel);color:var(--mute);border:1px solid var(--rule)}
+.main{display:grid;grid-template-columns:260px minmax(0,1fr);gap:36px}
+nav.rundown{position:sticky;top:12px;align-self:start;max-height:calc(100vh - 24px);overflow:auto;border-top:2px solid var(--ink)}
+nav.rundown ol{list-style:none;margin:0;padding:0}
+nav.rundown li{display:grid;grid-template-columns:auto 52px minmax(0,1fr);gap:8px;align-items:baseline;padding:7px 0;border-bottom:1px solid var(--rule);font-size:14px}
+nav.rundown a{color:var(--ink);text-decoration:none}
+nav.rundown a:hover{color:var(--teal)}
+nav.rundown .t{font-variant-numeric:tabular-nums;color:var(--mute);font-size:13px}
+nav.rundown li.done a{color:var(--mute);text-decoration:line-through}
+input[type=checkbox]{width:18px;height:18px;accent-color:var(--teal);margin:0}
+.scene{border-top:2px solid var(--ink);padding:18px 0 30px;scroll-margin-top:12px}
+.scene-h{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:baseline;margin-bottom:14px}
+.scene-h .tc{font:600 14px Inter,sans-serif;color:var(--teal);font-variant-numeric:tabular-nums;white-space:nowrap}
+.scene-h label{margin-left:auto;font-size:13px;color:var(--mute);display:flex;gap:6px;align-items:center;cursor:pointer}
+.cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:24px}
+.lbl{font-size:13px;font-weight:700;color:var(--teal);margin:0 0 6px}
+.screen{background:var(--panel);border:1px solid var(--rule);border-radius:4px;padding:12px 14px;font-size:15px}
+.screen ul{margin:0;padding-left:18px}
+.say p{margin:0 0 12px;font-size:17px;line-height:1.65}
+.say p:last-child{margin-bottom:0}
+.meta{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin-top:14px;font-size:13px;color:var(--mute)}
+.meta code{font-size:12.5px}
+.tags{display:flex;flex-wrap:wrap;gap:4px}
+.tags span{border:1px solid var(--rule);border-radius:3px;padding:1px 6px;color:var(--ink);font-size:12.5px}
+code{font:13.5px/1.5 ui-monospace,Consolas,monospace;overflow-wrap:anywhere}
+.cmd{display:flex;gap:8px;align-items:flex-start;background:light-dark(#14161a,#050909);color:#e7ecec;border-radius:4px;padding:8px 10px;margin:8px 0}
+.cmd code{flex:1;color:#e7ecec;white-space:pre-wrap}
+.cmd button{min-height:28px;padding:0 10px;font-size:12.5px;border-color:#5cc3c9;color:#5cc3c9;background:transparent}
+.shot{margin:10px 0 0;border:1px solid var(--rule);border-radius:4px;overflow:hidden;background:#fff}
+.shot img{display:block;width:100%}
+.shot figcaption{font-size:13px;color:#5a6168;padding:6px 10px;background:var(--panel)}
+.missing{padding:24px;text-align:center;color:#5a6168;font-size:13px}
+.say table{font-size:14px;margin:4px 0 12px}
+footer{color:var(--mute);font-size:13px;border-top:1px solid var(--rule)}
+/* teleprompter */
+.tpbar{position:fixed;left:0;right:0;bottom:0;display:none;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));background:#0d1416;border-top:1px solid #24302f;z-index:5;color:#e7ecec;font-size:14px}
+.tpbar button{border-color:#5cc3c9;color:#5cc3c9;background:transparent}
+body.tp{background:#000;color:#f2f2f2}
+body.tp .top,body.tp .ros,body.tp .toolbar,body.tp #prep,body.tp #matrix,body.tp nav.rundown,body.tp .screen-col,body.tp .meta,body.tp footer,body.tp .shot{display:none}
+body.tp .tpbar{display:flex}
+body.tp .main{display:block;max-width:900px;margin:0 auto;padding-bottom:50vh}
+body.tp .cols{display:block}
+body.tp .scene{border-color:#333}
+body.tp .scene-h h2{color:#5cc3c9;font-size:22px}
+body.tp .lbl{display:none}
+body.tp .say p{font-size:var(--tpsize,34px);line-height:1.45}
+body.tp .say table{font-size:calc(var(--tpsize,34px)*.6)}
+body.tp .honest{background:#2a2112;color:#f2f2f2}
+@media(max-width:900px){.main{grid-template-columns:minmax(0,1fr)}nav.rundown{position:static;max-height:none}.top{grid-template-columns:minmax(0,1fr)}.cols{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:600px){.prep{grid-template-columns:minmax(0,1fr)}.meta{grid-template-columns:minmax(0,1fr)}.ros-bar a{font-size:0;padding:0}table{font-size:13px}th,td{padding:6px 4px}.stack thead{display:none}.stack tr{display:grid;padding-block:8px;border-bottom:1px solid var(--rule)}.stack td{display:flex;justify-content:space-between;gap:12px;border:0;padding:2px 0}.stack td::before{content:attr(data-l);color:var(--mute);font-weight:600}}
+@media print{.toolbar,.tpbar,nav.rundown,.cmd button,.scene-h label{display:none!important}.main{display:block}.scene{break-inside:avoid-page}body{font-size:12pt}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="band"><div class="wrap">
+  <div class="top">
+    <div>
+      <h1>CSE481 term project: YouTube video script</h1>
+      <p class="lede">A segment-by-segment rundown for recording the presentation of the BIST analytics pipeline and its locally hosted fine-tuned agent. Each segment lists what to show, what to say and which repo file backs every number. Every claim has been checked against the project outputs.</p>
+    </div>
+    <div class="figs">
+      <div><b id="fig-run">23:00</b><span>planned runtime</span></div>
+      <div><b id="fig-seg">19</b><span>segments</span></div>
+      <div><b>100%</b><span>instructor items mapped</span></div>
+    </div>
+  </div>
+  <div class="ros">
+    <div class="ros-bar" id="rosbar" aria-label="Run of show"></div>
+    <div class="ros-axis" id="rosaxis"></div>
+    <div class="ros-key"><span><i style="background:var(--a1)"></i>Act 1 · Pipeline</span><span><i style="background:var(--a2)"></i>Act 2 · Results</span><span><i style="background:var(--a3)"></i>Act 3 · MCP and local LLM</span><span><i style="background:var(--a4)"></i>Act 4 · Quality and close</span></div>
+  </div>
+  <div class="toolbar">
+    <button class="primary" id="tpOn">Teleprompter mode</button>
+    <button id="resetBtn">Reset progress</button>
+    <div class="prog"><span id="progtxt">0 of 19 segments recorded</span><div class="track"><div class="fill" id="progfill"></div></div></div>
+  </div>
+</div></header>
+
+<section class="band" id="prep" style="padding-top:0"><div class="wrap prep">
+  <div>
+    <h2>Before you press record</h2>
+    <ul>
+      <li>Start Ollama and check that <code>ollama list</code> shows <code>bist-qwen</code>. If it doesn't, run <code>ollama create bist-qwen -f training/Modelfile.finetuned</code>.</li>
+      <li>Set <code>$env:BIST_LOCAL_MODEL="bist-qwen"</code> or pass <code>--model bist-qwen</code>. <code>local_agent.py</code> falls back to <code>qwen2.5:7b-instruct</code> when neither is given.</li>
+      <li>Run the 5-stage harness before recording; it takes about 8–15 minutes. During the video, only show <code>outputs/harness/</code>.</li>
+      <li>Run the smoke test once so the model is already loaded in memory. The first call is slow.</li>
+      <li>Open these tabs in advance: <code>outputs/tms29_primary/report.html</code>, <code>outputs/deliverables/presentation_slides.html</code>, the three figures, <code>docs/MODEL_CARD.md</code>, <code>outputs/training/base_vs_finetuned.md</code> and VS Code at the repo root.</li>
+      <li>Turn off notifications, close the browser profile that shows your email, and set the terminal font to 18pt or larger.</li>
+    </ul>
+  </div>
+  <div>
+    <h2>Recording tips</h2>
+    <ul>
+      <li>Record one segment per take. The checkboxes save your progress in this browser.</li>
+      <li>Teleprompter mode hides everything except the narration. Use the arrow keys or the bottom bar to change size and scroll speed.</li>
+      <li>Amber boxes mark limitations to <b>say out loud</b>. The instructor asked for honest limitations, and they count in your favour.</li>
+      <li>If a live model run misbehaves on camera, keep it in the video and explain it. The dedup guard segment covers why this happens.</li>
+      <li>Read numbers exactly as they appear in the tables here. They are copied from the repo outputs.</li>
+    </ul>
+  </div>
+</div></section>
+
+<section class="band" id="matrix" style="padding-top:0"><div class="wrap">
+  <h2>Requirement coverage: every instructor item has a segment</h2>
+  <p class="lede" style="margin-bottom:12px">Sources: the project spec PDF (§2 objectives, §3.3, §5.4, §6, §7, §8 methodology, §9.1, §11 deliverables) and the instructor Q&amp;A on the fine-tuned model.</p>
+  <div class="scroll"><table class="stack">
+    <thead><tr><th>Instructor item</th><th>Status</th><th>Segment</th></tr></thead>
+    <tbody id="mrows"></tbody>
+  </table></div>
+</div></section>
+
+<div class="band" style="padding-top:0"><div class="wrap main">
+<nav class="rundown" aria-label="Segments"><ol id="navlist"></ol></nav>
+<main id="scenes">
+
+<section class="scene" id="s1" data-dur="60" data-act="1" data-title="Intro and disclaimer">
+  <div class="scene-h"><h2>1 · Intro and disclaimer</h2></div>
+  <div class="cols">
+    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li>Title slide (slide 1 of <code>presentation_slides.html</code>)</li><li>Your face cam, if you're using one</li></ul></div></div>
+    <div class="say"><p class="lbl">SAY</p>
+      <p>Hi, I'm Yavuz Selim Gezginci, and this is my CSE481 Engineering Economics term project for Doç. Dr. Alper Özcan at Akdeniz University.</p>
+      <p>I built a Python system that analyses Turkish Airlines, THYAO, on Borsa Istanbul. It combines Yahoo Finance prices with Fintables financial statements, computes technical and fundamental scores, backtests a rule-based strategy against BIST 100 and buy-and-hold, and exposes all of it as MCP tools to an AI agent. The agent is a model I fine-tuned myself, and it runs entirely on my laptop with no cloud AI.</p>
+      <p>One note before we start: this is an educational research project. Nothing in this video is investment advice. The agent is restricted to eight educational labels and never says "buy".</p>
+    </div>
+  </div>
+  <div class="meta"><div><b>Proof:</b> <code>docs/PROPOSAL.md</code>, <code>src/bist_analytics/schemas.py</code> (EDUCATIONAL_LABELS)</div><div class="tags"><span>§12 disclaimer</span><span>§1 overview</span></div></div>
+</section>
+
+<section class="scene" id="s2" data-dur="60" data-act="1" data-title="Research question">
+  <div class="scene-h"><h2>2 · Research question and why THYAO</h2></div>
+  <div class="cols">
+    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li><code>docs/PROPOSAL.md</code>, "Title and question" section</li></ul></div></div>
+    <div class="say"><p class="lbl">SAY</p>
+      <p>My research question: does adding a financial-statement filter change the exposure, risk, trading activity and returns of a technical strategy for THYAO? I compare it with technical-only trading, buy-and-hold and the BIST 100 index. I did not assume up front that adding fundamentals would improve returns.</p>
+      <p>I chose Turkish Airlines because it has a long financial history, heavy lease and debt exposure, foreign-currency reporting and cyclical profits, which makes it an interesting test of a fundamental filter. It is one hand-picked company, though, not an unbiased stock-selection experiment.</p>
+    </div>
+  </div>
+  <div class="meta"><div><b>Proof:</b> <code>docs/PROPOSAL.md</code></div><div class="tags"><span>§8.1 select stock</span><span>Proposal</span></div></div>
+</section>
+
+<section class="scene" id="s3" data-dur="75" data-act="1" data-title="Architecture">
+  <div class="scene-h"><h2>3 · Architecture</h2></div>
+  <div class="cols">
+    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li>Slide 3, "System Architecture"</li><li>VS Code tree of <code>src/bist_analytics/</code></li></ul></div></div>
+    <div class="say"><p class="lbl">SAY</p>
+      <p>The architecture follows the instructor's recommended pipeline. Yahoo Finance and Fintables feed a data layer in <code>data/</code>. Technical and fundamental analysis live in <code>analysis/</code>. Their outputs meet in a combined scoring layer. The rule set in <code>strategy/rules.py</code> turns scores into signals, the engine in <code>backtest/</code> simulates them, and <code>reporting.py</code> writes the HTML, Markdown and PDF reports.</p>
+      <p>On top of that, <code>mcp/server.py</code> wraps the same Python functions as read-only MCP tools. The AI agent calls those tools and explains what they return. It never computes a financial number on its own.</p>
+      <p>Everything runs from cached data, so the whole study reproduces offline with no network calls during the backtest or reporting.</p>
+    </div>
+  </div>
+  <div class="meta"><div><b>Proof:</b> <code>src/bist_analytics/pipeline.py</code>, <code>cli.py</code></div><div class="tags"><span>§4 architecture</span><span>§4 modular functions</span></div></div>
+</section>
+
+<section class="scene" id="s4" data-dur="60" data-act="1" data-title="Market data">
+  <div class="scene-h"><h2>4 · Market data from Yahoo Finance</h2></div>
+  <div class="cols">
+    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li><code>data/raw/market/THYAO.IS.csv</code> (Date, Open, High, Low, Close, Volume)</li><li><code>THYAO.IS.metadata.json</code> (provenance)</li></ul></div>
+      <div class="cmd"><code>.\.venv\Scripts\python.exe -m bist_analytics.cli fetch --refresh</code><button data-copy>Copy</button></div></div>
+    <div class="say"><p class="lbl">SAY</p>
+      <p>Prices come from Yahoo Finance through yfinance: THYAO.IS for the stock, XU100.IS for the BIST 100 benchmark and TRY=X for the dollar-lira rate. Each file has the OHLCV columns the spec asks for, plus a metadata file that records where and when it was downloaded.</p>
+      <p>The fetch command refreshes them, but the submitted results use the cached snapshot, because Yahoo can revise history. Prices start in 2021 to warm up the indicators. The evaluation runs from 1 January 2025 to 25 September 2026, which is 437 trading sessions, and the strategy starts with 100,000 lira.</p>
+      <p>The cache also holds nine other BIST tickers across five sectors. I come back to those in the scenario reports.</p>
+    </div>
+  </div>
+  <div class="meta"><div><b>Proof:</b> <code>src/bist_analytics/data/market.py</code>, <code>outputs/tms29_primary/report.md</code> §2</div><div class="tags"><span>§2 Yahoo data</span><span>§3.1 OHLCV</span><span>§8.2</span></div></div>
+</section>
+
+<section class="scene" id="s5" data-dur="90" data-act="1" data-title="Fintables fundamentals">
+  <div class="scene-h"><h2>5 · Fintables financial statements</h2></div>
+  <div class="cols">
+    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li><code>data/processed/fintables_tms29_observations.csv</code></li><li><code>output/pdf/originals/</code> (original reports)</li><li><code>docs/DATA_SOURCES.md</code></li></ul></div>
+      <div class="cmd"><code>.\.venv\Scripts\python.exe -m bist_analytics.cli --config config/tms29.yaml import-tms29</code><button data-copy>Copy</button></div></div>
+    <div class="say"><p class="lbl">SAY</p>
+      <p>For fundamentals I used Fintables-hosted original financial reports. After Turkey adopted inflation accounting, TMS 29, older and newer statements are presented on different bases and can't be mixed. So, following the instructor's guidance, the main study uses a FY2024 annual report plus six 2025 and 2026 reports.</p>
+      <p>The importer checks seven PDF versions and 56 accounting identities. For example, assets must equal liabilities plus equity. Only then does it write 238 observations covering income statement, balance sheet and cash-flow items.</p>
+      <p>Every observation records its period, its type (annual or year-to-date), its units and its publication date. That last field is important: a financial number enters the strategy only after the report was actually published, and a restated comparative figure only arrives with the later report that restated it. That is how the project avoids look-ahead bias on the fundamental side.</p>
+      <p>An earlier FY2020 to FY2024 annual study with 136 verified observations is kept as a separate, reproducible baseline. All values are in nominal Turkish lira.</p>
+    </div>
+  </div>
+  <div class="meta"><div><b>Proof:</b> <code>src/bist_analytics/data/tms29.py</code>, <code>README.md</code>, <code>docs/INSTRUCTOR_QA_UPGRADE.md</code></div><div class="tags"><span>§2 Fintables</span><span>§3.2</span><span>§8.3–8.4 clean and align</span><span>§11 Fintables dataset</span></div></div>
+</section>
+
+<section class="scene" id="s6" data-dur="75" data-act="1" data-title="Indicators and zones">
+  <div class="scene-h"><h2>6 · Technical indicators and support/resistance</h2></div>
+  <div class="cols">
+    <div class="screen-col"><p class="lbl">ON SCREEN</p>
+      <figure class="shot"><img src="../tms29_primary/figures/technical.png" alt="THYAO technical chart" loading="lazy"><figcaption>outputs/tms29_primary/figures/technical.png</figcaption></figure></div>
+    <div class="say"><p class="lbl">SAY</p>
+      <p>This is the technical layer: 20- and 50-day simple and exponential moving averages, a 14-day RSI using Wilder's smoothing, MACD 12-26-9, and volume features: relative volume, volume change and on-balance volume. Every one of them uses only past prices.</p>
+      <p>Support and resistance are detected automatically. A pivot high or low needs five sessions on each side, so it can only be used five sessions after it happened. Confirmed pivots from the past 252 sessions are clustered into zones no wider than 1.5 percent, with at least two touches.</p>
+      <p>A pivot is never painted back into an earlier decision. The tests check this with a prefix-invariance check: adding future data must not change past signals.</p>
+    </div>
+  </div>
+  <div class="meta"><div><b>Proof:</b> <code>analysis/indicators.py</code>, <code>analysis/levels.py</code>, <code>tests/test_indicators_levels.py</code></div><div class="tags"><span>§2 indicators</span><span>§2 pivots + clustering</span><span>§8.5–8.6</span></div></div>
+</section>
+
+<section class="scene" id="s7" data-dur="75" data-act="1" data-title="Fundamental metrics">
+  <div class="scene-h"><h2>7 · Growth, profitability, leverage, liquidity and valuation</h2></div>
+  <div class="cols">
+    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li><code>outputs/tms29_primary/report.html</code> §4</li><li><code>ratio_analysis.csv</code></li></ul></div></div>
+    <div class="say"><p class="lbl">SAY</p>
+      <p>From the statements the code calculates the ratios in the spec. Growth is this period over the prior period minus one, on trailing-twelve-month flows rebuilt from same-basis year-to-date figures. If the prior value is a loss, growth is marked unavailable rather than reported as a misleading percentage.</p>
+      <p>At the last date, 25 September 2026, using the June 2026 statements:</p>
+      <div class="scroll"><table><thead><tr><th>Metric</th><th class="n">Value</th><th>Metric</th><th class="n">Value</th></tr></thead><tbody>
+        <tr><td>Revenue growth</td><td class="n">37.55%</td><td>Net debt / EBITDA</td><td class="n">4.25</td></tr>
+        <tr><td>Net profit growth</td><td class="n">10.88%</td><td>Debt / equity</td><td class="n">0.90</td></tr>
+        <tr><td>EBITDA growth</td><td class="n">2.09%</td><td>Current ratio</td><td class="n">0.90</td></tr>
+        <tr><td>ROE</td><td class="n">12.66%</td><td>Quick ratio</td><td class="n">0.81</td></tr>
+        <tr><td>ROA</td><td class="n">5.59%</td><td>P/E</td><td class="n">3.58</td></tr>
+        <tr><td>EBITDA margin</td><td class="n">12.88%</td><td>P/B</td><td class="n">0.39</td></tr>
+        <tr><td>Net margin</td><td class="n">9.89%</td><td>EV / EBITDA</td><td class="n">7.00</td></tr>
+      </tbody></table></div>
+      <p>So revenue is growing fast and the valuation multiples are low, but profit growth and ROE are weaker and leverage is high. That is typical for an airline with large aircraft leases. The figures are nominal lira, so part of the growth is inflation, not real growth.</p>
+    </div>
+  </div>
+  <div class="meta"><div><b>Proof:</b> <code>outputs/tms29_primary/report.md</code> §4, <code>analysis/fundamentals.py</code></div><div class="tags"><span>§2 fundamental indicators</span><span>§5.1 growth</span><span>§5.2 ratios</span><span>§8.7</span></div></div>
+</section>
+
+<section class="scene" id="s8" data-dur="60" data-act="1" data-title="Scores">
+  <div class="scene-h"><h2>8 · Fundamental score, technical score, combined score</h2></div>
+  <div class="cols">
+    <div class="screen-col"><p class="lbl">ON SCREEN</p>
+      <figure class="shot"><img src="../tms29_primary/figures/scores.png" alt="Score chart" loading="lazy"><figcaption>outputs/tms29_primary/figures/scores.png</figcaption></figure></div>
+    <div class="say"><p class="lbl">SAY</p>
+      <p>The fundamental score follows the spec's 0-to-5 design, with one point each for: revenue growth above 15 percent, net profit growth above 15 percent, ROE above 20 percent, net debt to EBITDA below 4, and a positive P/E at or below its own past median.</p>
+      <p>I changed one threshold on purpose. The example uses net debt to EBITDA below 2, but an airline carries large lease debt, so I declared 4 times as a case-study assumption before testing. It is not an industry-validated cutoff, and I also ran the 2x version as a sensitivity check.</p>
+      <p>The technical score also has five points: SMA20 above SMA50, RSI between 35 and 55, MACD above its signal line, relative volume at least 1, and price near support. The combined score is 0.6 times technical over 5 plus 0.4 times fundamental over 5.</p>
+      <div class="honest"><b>Say it honestly:</b> the spec's example also gives 10 percent weight to macro. My score doesn't include a macro term. The USD/TRY rate is cached and used for currency conversion, and there's a get_macro_context tool for TCMB and TÜİK series, but this submission doesn't include cached TCMB or TÜİK data, so that tool returns empty values. Macro is the optional part of the spec, and I implemented only part of it.</div>
+    </div>
+  </div>
+  <div class="meta"><div><b>Proof:</b> <code>analysis/scoring.py</code>, <code>docs/DECISIONS.md</code> items 9–10, <code>data/macro.py</code></div><div class="tags"><span>§2 score</span><span>§5.3</span><span>§5.4 weights</span><span>§3.3 macro (partial)</span><span>§8.8</span></div></div>
+</section>
+
+<section class="scene" id="s9" data-dur="75" data-act="1" data-title="Strategy and look-ahead">
+  <div class="scene-h"><h2>9 · Trading rules, with no look-ahead</h2></div>
+  <div class="cols">
+    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li><code>src/bist_analytics/strategy/rules.py</code></li><li><code>backtest/engine.py</code> (next-open fill)</li><li><code>outputs/tms29_primary/combined_trades.csv</code></li></ul></div></div>
+    <div class="say"><p class="lbl">SAY</p>
+      <p>The rule is explicit and testable. Buy when the fundamental score is at least 3, the combined score is at least 0.70, the fundamentals are complete and recent, the trend is up, and the price is near support.</p>
+      <p>Exit on an 8 percent loss measured at the close, after 40 sessions in the trade, when the fundamentals become stale or weak, when the trend reverses, or when RSI reaches 70. If an entry and an exit fire on the same day, the exit wins.</p>
+      <p>To avoid look-ahead, the signal is computed at today's close and executed at the next session's open. The position state carries forward from day to day. Every trade pays 10 basis points of commission and 5 of slippage on each side, and idle cash earns nothing.</p>
+      <p>All thresholds were frozen before evaluation and were not tuned on 2025 returns.</p>
+    </div>
+  </div>
+  <div class="meta"><div><b>Proof:</b> <code>docs/DECISIONS.md</code>, <code>tests/test_backtest.py</code>, <code>tests/test_data_boundaries.py</code></div><div class="tags"><span>§2 rule-based strategy</span><span>§3.4</span><span>§6 no look-ahead</span><span>§8.9–8.10</span></div></div>
+</section>
+
+<section class="scene" id="s10" data-dur="105" data-act="2" data-title="Backtest results">
+  <div class="scene-h"><h2>10 · Backtest results against the benchmarks</h2></div>
+  <div class="cols">
+    <div class="screen-col"><p class="lbl">ON SCREEN</p>
+      <figure class="shot"><img src="../tms29_primary/figures/performance.png" alt="Equity curves" loading="lazy"><figcaption>outputs/tms29_primary/figures/performance.png</figcaption></figure>
+      <div class="screen" style="margin-top:10px"><ul><li><code>performance_table.csv</code></li><li><code>outputs/verified_only/sensitivity.csv</code></li></ul></div></div>
+    <div class="say"><p class="lbl">SAY</p>
+      <p>Here are the results for 1 January 2025 to 25 September 2026:</p>
+      <div class="scroll"><table><thead><tr><th>Strategy</th><th class="n">Return</th><th class="n">Max DD</th><th class="n">Sharpe</th><th class="n">Trades</th><th class="n">Win</th><th class="n">Exposure</th></tr></thead><tbody>
+        <tr><td>Combined</td><td class="n">−11.03%</td><td class="n">−13.66%</td><td class="n">−0.76</td><td class="n">4</td><td class="n">25.00%</td><td class="n">6.64%</td></tr>
+        <tr><td>Technical only</td><td class="n">6.42%</td><td class="n">−15.45%</td><td class="n">0.29</td><td class="n">13</td><td class="n">53.85%</td><td class="n">34.55%</td></tr>
+        <tr><td>Buy and hold</td><td class="n">5.29%</td><td class="n">−24.40%</td><td class="n">0.25</td><td class="n">0</td><td class="n">–</td><td class="n">100.00%</td></tr>
+        <tr><td>BIST 100</td><td class="n">30.85%</td><td class="n">−17.06%</td><td class="n">0.76</td><td class="n">–</td><td class="n">–</td><td class="n">–</td></tr>
+      </tbody></table></div>
+      <p>The honest finding is that the fundamental filter made the strategy far more selective. It was in the market only 6.64 percent of the time, against 34.55 percent for technical-only, with the smallest drawdown of the three. But it returned minus 11.03 percent, 41.88 percentage points behind BIST 100. Technical-only and buy-and-hold both made small gains, and the index beat all of them.</p>
+      <p>Four closed trades is far too few to support any conclusion, and the report flags low activity instead of treating it as robustness. Results are net of costs. Before costs, on the same executions, the combined strategy would have returned −9.96 percent. Year by year, the combined strategy made no trades in 2025, so its return that year was 0.00 percent, and returned −11.03 percent in partial 2026. BIST 100 gained 14.24 percent and 14.19 percent in those two years.</p>
+      <p>The spec asks for sensitivity testing of the weights. On the 2023–2024 annual-baseline data I ran variants I had declared before testing: the baseline returned 46.91 percent, zero costs 49.80, 20 basis-point commission 45.01, entry threshold 0.65 55.09, entry 0.75 46.91, and the 2x debt limit 43.17. I report all of them and don't pick a winner, because choosing the best variant after the fact would be overfitting.</p>
+    </div>
+  </div>
+  <div class="meta"><div><b>Proof:</b> <code>outputs/tms29_primary/report.md</code> §6–7, <code>performance_table.csv</code>, <code>outputs/verified_only/sensitivity.csv</code></div><div class="tags"><span>§2 benchmark</span><span>§6 backtest</span><span>§7 financial metrics</span><span>§5.4 sensitivity</span><span>§8.11–8.12</span><span>§11 tables + charts</span></div></div>
+</section>
+
+<section class="scene" id="s11" data-dur="20" data-act="2" data-title="Optional ML">
+  <div class="scene-h"><h2>11 · Optional machine-learning model</h2></div>
+  <div class="cols">
+    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li><code>docs/PROPOSAL.md</code>, "Deliverables" line: "ML is excluded from the core scope"</li></ul></div></div>
+    <div class="say"><p class="lbl">SAY</p>
+      <p>Section 7 of the spec offers an optional machine-learning direction-prediction model. I didn't build one. My proposal excluded it from scope, and I put that effort into the local fine-tuned language model instead, which I'll show next. So there are no accuracy or confusion-matrix results in this project.</p>
+    </div>
+  </div>
+  <div class="meta"><div><b>Proof:</b> <code>docs/PROPOSAL.md</code></div><div class="tags"><span>§7 optional, not done</span><span>§8.13 optional</span></div></div>
+</section>
+
+<section class="scene" id="s12" data-dur="60" data-act="3" data-title="MCP server">
+  <div class="scene-h"><h2>12 · The MCP server: 20 read-only tools</h2></div>
+  <div class="cols">
+    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li>Slide 5, "MCP Tools"</li><li><code>src/bist_analytics/mcp/server.py</code></li></ul></div>
+      <div class="cmd"><code>.\.venv\Scripts\python.exe scripts/verify_mcp.py</code><button data-copy>Copy</button></div></div>
+    <div class="say"><p class="lbl">SAY</p>
+      <p>The MCP server exposes the analysis as 20 read-only tools over standard input and output. The core set matches the spec's list: get_stock_history, calculate_indicators, find_support_resistance, get_fundamental_metrics, calculate_scores, generate_signal and run_backtest. Extra tools cover the benchmark index, reversal events, sector ranking, weekday tests, fundamental change, KAP news, data-quality checks and evidence bundles.</p>
+      <p>Each tool takes bounded inputs and returns values with dates, units, warnings and explicit missing values. They are marked read-only and idempotent, and none of them can place a trade.</p>
+      <p>The verify_mcp script runs the real protocol and checks the tool results against the direct Python calculation. It doesn't involve any language model; it checks only the tool layer.</p>
+    </div>
+  </div>
+  <div class="meta"><div><b>Proof:</b> <code>mcp/server.py</code> (20 <code>@server.tool</code>), <code>scripts/verify_mcp.py</code></div><div class="tags"><span>§2 MCP agent</span><span>§8.14 expose as tools</span><span>§9.1 controlled tools</span></div></div>
+</section>
+
+<section class="scene" id="s13" data-dur="120" data-act="3" data-title="Fine-tuned local LLM">
+  <div class="scene-h"><h2>13 · The fine-tuned local model: the six instructor points</h2></div>
+  <div class="cols">
+    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li>Slide 6, "Fine-Tuning Pipeline"</li><li><code>docs/MODEL_CARD.md</code></li><li><code>outputs/training/base_vs_finetuned.md</code></li><li>Slide 8 table</li></ul></div></div>
+    <div class="say"><p class="lbl">SAY</p>
+      <p><b>One, the base model.</b> I started from Qwen 2.5 3B Instruct. It is Apache 2.0 licensed, it supports tool calling, and it can be fine-tuned on a free Colab T4 GPU. I first planned the 7B model, but its QLoRA training didn't reliably fit in the T4's memory, so I switched to 3B. It uses the same chat template and tool-call format, so none of the other code had to change.</p>
+      <p><b>Two, the data.</b> The dataset builder replays live MCP tool calls to create 400 verified examples, so every number in a training answer matches the real tool output. That is 80 sector-laggard, 60 weekday, 100 reversal and 80 fundamental-reaction examples, plus 80 negative examples where the correct answer is ANALYSIS_UNSAFE. The split is 80/20 train and eval, stratified by scenario.</p>
+      <p><b>Three, the training settings.</b> QLoRA with a 4-bit base, LoRA rank 16, alpha 32, dropout 0.05 on the attention and MLP projections, 3 epochs, a cosine learning-rate schedule starting at 2e-4, and loss computed only on the assistant's responses. Training took about 20 minutes and ended at an eval loss of 0.031. There's no RLHF; this is supervised fine-tuning only.</p>
+      <p><b>Four, running it locally.</b> The adapter was merged into the base model and exported as a 1.8 GB q4_k_m GGUF file. One ollama create command registers it as bist-qwen, and Ollama serves it on localhost. I'll show it live in a moment.</p>
+      <p><b>Five, base versus fine-tuned.</b> On a 20-question evaluation set:</p>
+      <div class="scroll"><table><thead><tr><th>Metric (lower is better unless marked)</th><th class="n">Base 3B</th><th class="n">Fine-tuned</th></tr></thead><tbody>
+        <tr><td>Invalid tool-call rate</td><td class="n">0.450</td><td class="n">0.450</td></tr>
+        <tr><td>Missing required tool rate</td><td class="n">0.050</td><td class="n">0.050</td></tr>
+        <tr><td>Label mismatch rate</td><td class="n">0.000</td><td class="n">0.200</td></tr>
+        <tr><td>Advice-leak rate</td><td class="n">0.000</td><td class="n">0.000</td></tr>
+        <tr><td>Unknown-label rate</td><td class="n">0.050</td><td class="n">0.300</td></tr>
+        <tr><td>Reproducibility rate (higher is better)</td><td class="n">1.000</td><td class="n">1.000</td></tr>
+      </tbody></table></div>
+      <div class="honest"><b>Say it honestly:</b> on these numbers the fine-tune did not beat the base model. Against the earlier fine-tuned run, invalid tool calls improved; against the base, two metrics tie and three get worse. The base's perfect label score is a vacuous pass, because it almost never outputs a label at all, while the fine-tune learned to give one. The unknown-label rate is partly a measurement artefact: the fine-tune quotes tool identifiers such as BB_LOWER_TOUCH, and the evaluator's regex counts them as labels.</div>
+      <p><b>Six, limitations.</b> 400 examples is a small corpus, and it covers only my ten tickers. The model doesn't reliably run the data-quality check first for unknown tickers or future dates. It writes rich narratives but doesn't fill the strict numeric output fields. And because there's no RLHF, the no-advice rule depends on the system prompt and the data-quality gate.</p>
+    </div>
+  </div>
+  <div class="meta"><div><b>Proof:</b> <code>docs/MODEL_CARD.md</code>, <code>training/train_unsloth.py</code>, <code>training/dataset/build.py</code>, <code>outputs/training/base_vs_finetuned.md</code></div><div class="tags"><span>Q&amp;A-1 base model</span><span>Q&amp;A-2 data</span><span>Q&amp;A-3 training</span><span>Q&amp;A-4 run locally</span><span>Q&amp;A-5 comparison</span><span>Q&amp;A-6 limitations</span></div></div>
+</section>
+
+<section class="scene" id="s14" data-dur="150" data-act="3" data-title="Live demo">
+  <div class="scene-h"><h2>14 · Live demo: the agent calls tools and explains</h2></div>
+  <div class="cols">
+    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li>PowerShell at the repo root, font at 18pt or larger</li><li>Optional: <code>.\scripts\presentation_launch.ps1</code> opens four windows</li></ul></div>
+      <div class="cmd"><code>ollama create bist-qwen -f training/Modelfile.finetuned</code><button data-copy>Copy</button></div>
+      <div class="cmd"><code>.\.venv\Scripts\python.exe scripts/local_agent.py --smoke --model bist-qwen</code><button data-copy>Copy</button></div>
+      <div class="cmd"><code>.\.venv\Scripts\python.exe scripts/local_agent.py --ticker THYAO.IS --as-of 2025-12-31 --model bist-qwen</code><button data-copy>Copy</button></div>
+      <div class="cmd"><code>netstat -ano | findstr 11434</code><button data-copy>Copy</button></div></div>
+    <div class="say"><p class="lbl">SAY</p>
+      <p>Now the live run. Ollama is serving bist-qwen locally. First a smoke test: the agent makes one project_status call to prove the connection works.</p>
+      <p>Next, a real question: analyse THYAO as of 31 December 2025. Watch the terminal. Each line is a real MCP tool call with its arguments: price history, indicators, support zones, fundamentals, scores. The model doesn't make up a single number; it reads the tool results and explains them.</p>
+      <p><i>[Pause while it runs. When it finishes:]</i> The answer is built from the tools it used. Its conclusion should be one of the eight educational labels, and it doesn't contain "I recommend buying". The advice-leak rate in the evaluation was zero.</p>
+      <p>Finally, netstat shows the model endpoint listening on 127.0.0.1 port 11434, on this machine. No cloud AI is involved at any point.</p>
+      <div class="honest"><b>If it stumbles:</b> a 3B model sometimes makes a broken tool call or loops. Keep it in the video and say: "this is exactly the tool-loop behaviour I'll explain in a minute, and the dedup guard stops it."</div>
+    </div>
+  </div>
+  <div class="meta"><div><b>Proof:</b> <code>scripts/local_agent.py</code> (flags: --smoke, --ticker, --as-of, --model, --output, --prompt), <code>scripts/presentation_launch.ps1</code>, traces in <code>outputs/agent/</code></div><div class="tags"><span>§8.15 agent explains</span><span>§9.1 no invented values</span><span>§11 MCP demo</span><span>Q&amp;A-4 live</span></div></div>
+</section>
+
+<section class="scene" id="s15" data-dur="60" data-act="3" data-title="A–E harness">
+  <div class="scene-h"><h2>15 · The five-stage evaluation harness</h2></div>
+  <div class="cols">
+    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li>Slide 9</li><li><code>outputs/training/phase_g_harness_summary.md</code></li></ul></div>
+      <div class="cmd"><code>.\.venv\Scripts\python.exe scripts/run_harness_experiments.py --backend ollama --model bist-qwen</code><button data-copy>Copy</button></div></div>
+    <div class="say"><p class="lbl">SAY</p>
+      <p>To measure what the architecture contributes, the harness runs the same question through five stages, each adding one layer. A is the raw model with no tools. B adds the MCP tools. C adds state such as the as-of date and financial period. D adds the evidence-quality gate. E adds a memory and human-review layer.</p>
+      <p>The headline result: going from A to B, evidence coverage and workflow completion jump from 0 to 1.0, and they stay at 1.0 in every later stage. Constraint compliance passes in three of the five stages.</p>
+      <div class="honest"><b>Say it honestly:</b> numeric exactness stays at 0 in every stage, and temporal validity never passes. The model calls the right tools but doesn't copy the exact numbers and dates into the strict output fields. It's a demonstration of the architecture, not proof of model quality.</div>
+    </div>
+  </div>
+  <div class="meta"><div><b>Proof:</b> <code>outputs/training/phase_g_harness_summary.md</code>, <code>outputs/harness/</code>, <code>harness/evaluation.py</code></div><div class="tags"><span>§9.1 agent orchestration</span><span>Q&amp;A-5 evaluation</span></div></div>
+</section>
+
+<section class="scene" id="s16" data-dur="60" data-act="2" data-title="Scenario reports">
+  <div class="scene-h"><h2>16 · Extra: four scenario studies on ten tickers</h2></div>
+  <div class="cols">
+    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li><code>outputs/universe10/scenarios/*.md</code></li><li>Slide 7</li></ul></div>
+      <div class="cmd"><code>.\.venv\Scripts\python.exe scripts/build_scenarios.py</code><button data-copy>Copy</button></div></div>
+    <div class="say"><p class="lbl">SAY</p>
+      <p>Beyond the spec, I extended the pipeline to ten BIST tickers in five sectors (airlines, banking, steel, retail and telecom) from January 2025 to November 2026. These four studies also generated the scenarios for the fine-tuning data.</p>
+      <p><b>Sector laggards:</b> over 92 weekly checkpoints, I took the weakest stock in each sector and checked whether it caught up. Steel's laggard beat its peers over 20 days 60.9 percent of the time. The airline laggard did so only 44.6 percent of the time, which is worse than a coin flip.</p>
+      <p><b>Weekday patterns:</b> 50 ticker-weekday tests. The strongest is Pegasus on Wednesdays, with an uncorrected p-value of 0.0099. With 50 tests, a few small p-values are expected by chance alone, so I don't claim a weekday edge.</p>
+      <p><b>Reversals:</b> 1,458 technical events. A touch of the lower Bollinger band bounced within five days 58.7 percent of the time, and an RSI oversold recovery 59.1 percent.</p>
+      <p><b>Fundamental reaction:</b> this one covers THYAO only, with seven release dates and 19 panel rows. Averaged over those rows, the stock underperformed BIST 100 by 1.29 percent in the five days after a release.</p>
+    </div>
+  </div>
+  <div class="meta"><div><b>Proof:</b> <code>s1_sector_laggard.md</code>, <code>s2_weekday.md</code>, <code>s3_reversals.md</code>, <code>s4_fundamental_reaction.md</code>, <code>scenarios_summary.json</code></div><div class="tags"><span>Additional work</span><span>§3.1 one or more stocks</span></div></div>
+</section>
+
+<section class="scene" id="s17" data-dur="45" data-act="3" data-title="Dedup guard">
+  <div class="scene-h"><h2>17 · Engineering detail: stopping tool loops</h2></div>
+  <div class="cols">
+    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li>Slide 10</li><li><code>scripts/local_agent.py</code> around <code>seen_calls</code></li></ul></div></div>
+    <div class="say"><p class="lbl">SAY</p>
+      <p>One real problem I had to solve: the 3B model learned "after a successful tool call, make another one", and on some questions it called the same tool over and over without ever answering.</p>
+      <p>The fix is in the agent loop. It remembers every tool name and argument pair. On the first repeat, it returns a dedup note instead of an error, turns off further tool calls and asks for the final answer. As a safety net, it forces an answer after turn 10.</p>
+      <p>On question 6, fifteen identical calls dropped to two. On question 16, more than twenty calls dropped to three.</p>
+    </div>
+  </div>
+  <div class="meta"><div><b>Proof:</b> <code>scripts/local_agent.py</code> (<code>force_answer_after=10</code>), <code>outputs/training/base_vs_finetuned.md</code></div><div class="tags"><span>Engineering</span></div></div>
+</section>
+
+<section class="scene" id="s18" data-dur="45" data-act="4" data-title="Verification">
+  <div class="scene-h"><h2>18 · Tests and reproducibility</h2></div>
+  <div class="cols">
+    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li>Terminal running the tests</li><li><code>SUBMISSION_MANIFEST.json</code></li></ul></div>
+      <div class="cmd"><code>.\.venv\Scripts\pytest.exe</code><button data-copy>Copy</button></div>
+      <div class="cmd"><code>.\.venv\Scripts\ruff.exe check src tests scripts</code><button data-copy>Copy</button></div>
+      <div class="cmd"><code>.\.venv\Scripts\python.exe scripts/verify_reproduction.py</code><button data-copy>Copy</button></div></div>
+    <div class="say"><p class="lbl">SAY</p>
+      <p>All 68 tests pass. They check indicator recurrences, pivot confirmation, release-date boundaries, later restatements, invalid denominators, next-open gaps, fees and position state. A clean-environment reproduction compares every feature, metric and daily ledger. Dependencies are pinned in uv.lock, and the submission manifest records a SHA-256 hash for every file.</p>
+      <p>These tests confirm the code is correct. They say nothing about future investment performance.</p>
+    </div>
+  </div>
+  <div class="meta"><div><b>Proof:</b> <code>tests/</code>, <code>outputs/verification/reproduction.json</code>, <code>SUBMISSION_MANIFEST.json</code></div><div class="tags"><span>§10 reproducible pipeline</span></div></div>
+</section>
+
+<section class="scene" id="s19" data-dur="85" data-act="4" data-title="Limitations and close">
+  <div class="scene-h"><h2>19 · Limitations, deliverables, closing</h2></div>
+  <div class="cols">
+    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li>Slide 11, "Honest Limitations"</li><li>File explorer showing the deliverables listed on the right</li></ul></div></div>
+    <div class="say"><p class="lbl">SAY</p>
+      <p>The main limitations: one selected company, a short evaluation period and only four trades for the combined strategy. Returns are in nominal lira, with no adjustment for inflation. Cash earns zero, slippage is simple, and taxes are ignored. The fine-tuned model is small, and so is its training set.</p>
+      <p>The deliverables are all in the package:</p>
+      <div class="scroll"><table><tbody>
+        <tr><td>Source code and notebook</td><td><code>src/</code>, <code>notebooks/THYAO_walkthrough.ipynb</code></td></tr>
+        <tr><td>README and setup guide</td><td><code>README.md</code>, <code>docs/LOCAL_SETUP.md</code></td></tr>
+        <tr><td>Proposal</td><td><code>docs/PROPOSAL.md</code></td></tr>
+        <tr><td>Final report</td><td><code>output/pdf/THYAO_Term_Project_Report.pdf</code>, <code>requirements_report.pdf</code></td></tr>
+        <tr><td>Fintables dataset</td><td><code>data/processed/fintables_tms29_observations.csv</code></td></tr>
+        <tr><td>Backtest tables and charts</td><td><code>outputs/tms29_primary/</code></td></tr>
+        <tr><td>MCP agent demo</td><td><code>outputs/agent/</code>, <code>outputs/harness/</code>, this video</td></tr>
+        <tr><td>Presentation</td><td><code>outputs/deliverables/presentation_slides.html</code></td></tr>
+      </tbody></table></div>
+      <p>To sum up: I learned how to put price data and company financials into one engineering workflow, and how an AI agent can drive reliable tools instead of inventing financial conclusions. In this study the fundamental filter reduced exposure but did not beat the market, and I report that as it is. Thanks for watching.</p>
+    </div>
+  </div>
+  <div class="meta"><div><b>Proof:</b> <code>outputs/tms29_primary/report.md</code> §9, <code>docs/ACCEPTANCE.md</code></div><div class="tags"><span>§11 deliverables</span><span>§12 learning outcome</span><span>§8.16 report + presentation</span></div></div>
+</section>
+
+</main>
+</div></div>
+
+<footer class="band"><div class="wrap">Built from the repository outputs on 25 November 2026. Every number above appears in the cited file. If you rerun the pipeline, recheck <code>performance_table.csv</code> before recording.</div></footer>
+
+<div class="tpbar" role="toolbar" aria-label="Teleprompter controls">
+  <button id="tpPlay">Play scroll</button>
+  <button id="tpSlow">Slower</button><span id="tpSpeed">speed 2</span><button id="tpFast">Faster</button>
+  <button id="tpSmall">A−</button><button id="tpBig">A+</button>
+  <button id="tpOff">Exit</button>
+</div>
+
+<script>
+{
+const acts={1:'var(--a1)',2:'var(--a2)',3:'var(--a3)',4:'var(--a4)'};
+const scenes=[...document.querySelectorAll('.scene')];
+const fmt=s=>Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
+let store={};
+try{store=JSON.parse(localStorage.getItem('cse481-video')||'{}')}catch(e){store={}}
+const save=()=>{try{localStorage.setItem('cse481-video',JSON.stringify(store))}catch(e){}};
+let t=0;const total=scenes.reduce((a,s)=>a+ +s.dataset.dur,0);
+const bar=document.getElementById('rosbar'),nav=document.getElementById('navlist');
+scenes.forEach((s,i)=>{
+  const d=+s.dataset.dur,start=t;t+=d;
+  const h=s.querySelector('.scene-h');
+  const tc=document.createElement('span');tc.className='tc';tc.textContent=fmt(start)+' – '+fmt(t)+'  ('+d+' s)';
+  h.appendChild(tc);
+  const lb=document.createElement('label');const cb=document.createElement('input');cb.type='checkbox';cb.id='done-'+s.id;
+  lb.appendChild(cb);lb.appendChild(document.createTextNode('Recorded'));h.appendChild(lb);
+  const a=document.createElement('a');a.href='#'+s.id;a.style.flex=d+' 1 0';a.style.background=acts[s.dataset.act];a.textContent=i+1;a.title=(i+1)+'. '+s.dataset.title+' · '+fmt(start);
+  bar.appendChild(a);
+  const li=document.createElement('li');
+  const c2=document.createElement('input');c2.type='checkbox';c2.setAttribute('aria-label','Recorded '+s.dataset.title);
+  const tt=document.createElement('span');tt.className='t';tt.textContent=fmt(start);
+  const na=document.createElement('a');na.href='#'+s.id;na.textContent=(i+1)+'. '+s.dataset.title;
+  li.append(c2,tt,na);nav.appendChild(li);
+  const set=v=>{cb.checked=v;c2.checked=v;li.classList.toggle('done',v);a.classList.toggle('done',v);store[s.id]=v;save();prog()};
+  cb.onchange=()=>set(cb.checked);c2.onchange=()=>set(c2.checked);
+  if(store[s.id]){cb.checked=c2.checked=true;li.classList.add('done');a.classList.add('done')}
+});
+document.getElementById('fig-run').textContent=fmt(total);
+document.getElementById('fig-seg').textContent=scenes.length;
+const ax=document.getElementById('rosaxis');
+ax.innerHTML=[0,.25,.5,.75,1].map(f=>'<span>'+fmt(Math.round(total*f/15)*15)+'</span>').join('');
+function prog(){const n=scenes.filter(s=>store[s.id]).length;document.getElementById('progtxt').textContent=n+' of '+scenes.length+' segments recorded';document.getElementById('progfill').style.width=(100*n/scenes.length)+'%'}
+prog();
+document.getElementById('resetBtn').onclick=()=>{store={};save();document.querySelectorAll('input[type=checkbox]').forEach(c=>c.checked=false);document.querySelectorAll('.done').forEach(e=>e.classList.remove('done'));prog()};
+const M=[
+['§2 / §3.1 Yahoo Finance OHLCV for a BIST 100 stock and the index','ok','s4'],
+['§2 Pandas/NumPy time-series processing','ok','s4, s6'],
+['§2 SMA, EMA, RSI, MACD, volume indicators','ok','s6'],
+['§2 Support/resistance from pivots and clustering','ok','s6'],
+['§2 / §3.2 Fintables income, balance sheet, cash flow (with dates/periods)','ok','s5'],
+['§2 / §5.1–5.2 Growth, ROE, P/E, P/B, Net Debt/EBITDA, liquidity','ok','s7'],
+['§2 / §5.3 Fundamental score 0–5, explained thresholds','ok','s8'],
+['§5.4 Combined score weights + sensitivity','ok','s8, s10'],
+['§3.3 Optional macro (rates, inflation, USD/TRY, index)','part','s8'],
+['§2 / §3.4 Explicit rule-based strategy','ok','s9'],
+['§2 / §6 Backtest without look-ahead bias','ok','s9, s10'],
+['§2 / §6 Compare with BIST 100 and buy-and-hold','ok','s10'],
+['§7 Financial metrics: return, drawdown, Sharpe, win rate, benchmark difference','ok','s10'],
+['§7 Optional ML direction model','no','s11'],
+['§2 / §9.1 MCP agent calls Python tools and explains; no invented values','ok','s12, s14'],
+['Q&A 1–6 Base model, data, training, run locally, comparison, limitations','ok','s13, s14'],
+['§11 Deliverables (code, README, proposal, report, dataset, tables, charts, demo, presentation)','ok','s19'],
+['§12 Educational use, not investment advice','ok','s1']];
+const lab={ok:'Implemented',part:'Partial',no:'Optional, not done'};
+document.getElementById('mrows').innerHTML=M.map(r=>'<tr><td data-l="Item">'+r[0]+'</td><td data-l="Status"><span class="st '+r[1]+'">'+lab[r[1]]+'</span></td><td data-l="Segment">'+r[2].split(', ').map(x=>'<a href="#'+x+'">'+x.slice(1)+'</a>').join(', ')+'</td></tr>').join('');
+document.querySelectorAll('[data-copy]').forEach(b=>b.onclick=async()=>{const txt=b.previousElementSibling.textContent;try{await navigator.clipboard.writeText(txt);b.textContent='Copied'}catch(e){b.textContent='Select text'}setTimeout(()=>b.textContent='Copy',1500)});
+document.querySelectorAll('.shot img').forEach(img=>img.onerror=()=>{const d=document.createElement('div');d.className='missing';d.textContent='Open '+img.getAttribute('src').replace('../','outputs/')+' on screen';img.replaceWith(d)});
+let size=34,speed=2,playing=false,raf=0,acc=0;
+const root=document.documentElement;
+const tpSet=()=>{root.style.setProperty('--tpsize',size+'px');document.getElementById('tpSpeed').textContent='speed '+speed};
+const loop=()=>{acc+=speed*.35;if(acc>=1){window.scrollBy(0,Math.floor(acc));acc%=1}raf=requestAnimationFrame(loop)};
+const play=v=>{playing=v;document.getElementById('tpPlay').textContent=v?'Pause':'Play scroll';cancelAnimationFrame(raf);if(v)raf=requestAnimationFrame(loop)};
+document.getElementById('tpOn').onclick=()=>{document.body.classList.add('tp');tpSet();window.scrollTo(0,0)};
+document.getElementById('tpOff').onclick=()=>{play(false);document.body.classList.remove('tp')};
+document.getElementById('tpPlay').onclick=()=>play(!playing);
+document.getElementById('tpFast').onclick=()=>{speed=Math.min(10,speed+1);tpSet()};
+document.getElementById('tpSlow').onclick=()=>{speed=Math.max(1,speed-1);tpSet()};
+document.getElementById('tpBig').onclick=()=>{size=Math.min(64,size+4);tpSet()};
+document.getElementById('tpSmall').onclick=()=>{size=Math.max(20,size-4);tpSet()};
+document.addEventListener('keydown',e=>{if(!document.body.classList.contains('tp'))return;
+  if(e.key===' '){e.preventDefault();play(!playing)}else if(e.key==='ArrowUp'){speed=Math.min(10,speed+1);tpSet()}else if(e.key==='ArrowDown'){speed=Math.max(1,speed-1);tpSet()}else if(e.key==='Escape'){play(false);document.body.classList.remove('tp')}});
+}
+</script>
+</body>
+</html>

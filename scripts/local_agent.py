@@ -5,8 +5,9 @@ Replaces the Codex CLI subprocess in `run_agent_demo.py` with an Ollama-hosted m
 
 Usage (PowerShell):
     ollama serve   # in another terminal, if not already a service
-    .\.venv\Scripts\python.exe scripts/local_agent.py --smoke
-    .\.venv\Scripts\python.exe scripts/local_agent.py --ticker THYAO.IS --as-of 2025-12-31
+    .\.venv\Scripts\python.exe scripts/local_agent.py --smoke --model bist-qwen
+    .\.venv\Scripts\python.exe scripts/local_agent.py --ticker THYAO.IS --as-of 2025-12-31 --model bist-qwen
+    (without --model or BIST_LOCAL_MODEL the default is qwen2.5:7b-instruct)
 
 The script bridges the model to our stdio MCP server by launching the server as a child
 process and shuttling JSON-RPC messages. All inference is local; no cloud calls.

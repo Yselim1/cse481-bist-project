@@ -112,7 +112,7 @@ Write-Host 'loop (model -> MCP -> cached data -> response) end-to-end.' -Foregro
 Write-Host 'Expect: ~30-60 s of tool-call log lines, then a short JSON answer.' -ForegroundColor DarkGray;
 Write-Host 'Artefacts: outputs/agent/local_agent.result.json and .trace.json'    -ForegroundColor DarkGray;
 Write-Host '';
-& '$Python' scripts\local_agent.py --smoke
+& '$Python' scripts\local_agent.py --smoke --model '$Model'
 "@
 Start-Step -Title "3/4 local_agent --smoke" -Color "Magenta" -Command $smokeBanner
 
@@ -124,7 +124,7 @@ if (-not $SkipHarness) {
 `$ErrorActionPreference = 'Stop';
 `$stages = @(
     @{ name = 'raw_llm';               desc = 'LLM alone, no tools: should be weak / mostly null' },
-    @{ name = 'llm_tools';             desc = 'LLM + 19 MCP tools: numbers from real data' },
+    @{ name = 'llm_tools';             desc = 'LLM + 20 MCP tools: numbers from real data' },
     @{ name = 'stateful_harness';      desc = 'As above + immutable run state (as_of, window)' },
     @{ name = 'evidence_quality_gate'; desc = '+ quality gate: reject if any number is uncited' },
     @{ name = 'memory_human_review';   desc = '+ reviewed project memory for human presentation' }

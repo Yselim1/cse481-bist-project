@@ -206,7 +206,7 @@ def build_requirements_report(out: Path) -> None:
         HRFlowable(width=TW, thickness=1, color=_NAVY_HEX, spaceAfter=8),
         P(
             "A locally-hosted fine-tuned LLM (Qwen 2.5 3B + LoRA) drives a BIST "
-            "financial-analysis agent over 19 MCP tools. All inference runs offline "
+            "financial-analysis agent over 20 MCP tools. All inference runs offline "
             "via Ollama (localhost:11434); no cloud AI calls are made.",
             S["body"],
         ),
@@ -218,8 +218,8 @@ def build_requirements_report(out: Path) -> None:
         [P("Tickers", S["cell"]),        P("10 (THYAO, AKBNK, GARAN, EREGL, KRDMD, BIMAS, MGROS, TCELL, TTKOM, PGSUS)", S["cell"])],
         [P("Sectors", S["cell"]),        P("Airlines · Banking · Steel · Retail · Telecom", S["cell"])],
         [P("Fundamental data", S["cell"]), P("Fintables TMS29 (2025–2026), 238 verified observations", S["cell"])],
-        [P("Context events", S["cell"]), P("13 KAP timestamped events + TCMB/TÜİK macro", S["cell"])],
-        [P("MCP tools", S["cell"]),      P("19 read-only tools (stdio transport)", S["cell"])],
+        [P("Context events", S["cell"]), P("13 KAP timestamped events + USD/TRY FX (central-bank/CPI macro reader built, no series cached)", S["cell"])],
+        [P("MCP tools", S["cell"]),      P("20 read-only tools (stdio transport)", S["cell"])],
         [P("Training examples", S["cell"]), P("400 verified SFT traces (80/20 train/eval split)", S["cell"])],
         [P("Training method", S["cell"]), P("QLoRA rank 16 / alpha 32 on Colab T4 (~20 min, eval_loss 0.031)", S["cell"])],
         [P("Harness stages", S["cell"]), P("5 (raw_llm → llm_tools → stateful → evidence_gate → memory_review)", S["cell"])],
@@ -287,7 +287,7 @@ def build_requirements_report(out: Path) -> None:
          "4-way: combined, technical-only, buy-and-hold, BIST100. "
          "Sharpe, max drawdown, win rate, exposure, annual/holdout splits."],
         ["R17\nReal MCP AI agent", "PASS",
-         "19 MCP tools; fine-tuned bist-qwen via Ollama; scripts/local_agent.py; "
+         "20 MCP tools; fine-tuned bist-qwen via Ollama; scripts/local_agent.py; "
          "5-stage harness A-E; full tool-call traces in outputs/harness/."],
         ["R18\nVisuals / explanation", "PASS",
          "HTML/MD/PDF report, technical/scores/equity-drawdown charts, "
@@ -332,7 +332,7 @@ def build_requirements_report(out: Path) -> None:
          "training/train_unsloth.py, training/bist_lora.gguf (1.8 GB GGUF)."],
         ["LLM interprets questions and calls correct MCP tools",
          "DONE",
-         "scripts/local_agent.py wires 19 MCP tools in OpenAI tool-calling format. "
+         "scripts/local_agent.py wires 20 MCP tools in OpenAI tool-calling format. "
          "Baseline eval: 95% required-tool coverage (missing_required_tool_rate = 0.05)."],
         ["LLM writes explanations from tool outputs only — no invented numbers",
          "DONE",
@@ -566,7 +566,7 @@ def build_requirements_report(out: Path) -> None:
         ["5. Live demo", ".\\scripts\\presentation_launch.ps1 opens one window per step "
                          "(defaults to model bist-qwen)."],
         ["How it works", "scripts/local_agent.py starts the MCP server as a stdio child process, "
-                         "exposes its 19 tools in OpenAI tool-calling format to Ollama's "
+                         "exposes its 20 tools in OpenAI tool-calling format to Ollama's "
                          "/v1/chat/completions endpoint, and loops tool calls until the model "
                          "answers. Traces land in outputs/agent/."],
         ["Offline check", "Disable the network adapter during the demo; the only connection is "
@@ -613,17 +613,17 @@ def build_requirements_report(out: Path) -> None:
         [P("Scenario", S["cell_hdr"]), P("Output file", S["cell_hdr"]),
          P("Key statistics", S["cell_hdr"])],
         ["S1 — Sector Laggards (catch-up)", "s1_sector_laggard.md / .csv",
-         "92 laggard anchors across 5 sectors. Banking sector 50.4% 20-day hit rate. "
-         "Largest cohort: banking (AKBNK, GARAN lag sector median)."],
+         "92 weekly anchors across 5 sectors. 20-day hit rate vs sector peers: "
+         "steel 60.9%, banking 54.3%, airlines 44.6%."],
         ["S2 — Weekday Patterns", "s2_weekday.md / .csv",
          "50 weekday observations across 10 tickers. "
          "Pattern significance tested via test_weekday_pattern MCP tool."],
         ["S3 — Reversal Events", "s3_reversals.md / .csv",
-         "1458 reversal events detected. BB lower-touch: 59% 10-day bounce rate. "
-         "RSI oversold: 59% 10-day bounce rate. SUPERTREND_FLIP_UP also captured."],
+         "1458 reversal events detected. 5-day bounce rate: BB lower-touch 58.7%, "
+         "RSI oversold recovery 59.1%. SUPERTREND_FLIP_UP also captured."],
         ["S4 — Fundamental Reaction", "s4_fundamental_reaction.md / .csv",
-         "19 fundamental releases mapped. Post-earnings price reactions "
-         "linked to calculate_fundamental_change results."],
+         "THYAO.IS only: 7 release dates (19 panel rows). Mean 5-day return "
+         "vs BIST100 after a release: -1.29%."],
     ]
 
     s_data = [scenario_data[0]]
@@ -730,7 +730,7 @@ hr { border: none; border-top: 1px solid rgba(255,255,255,0.12);
   </div>
   <div>
     <p><strong>10</strong> tickers · <strong>5</strong> sectors</p>
-    <p><strong>19</strong> MCP tools · <strong>400</strong> training examples</p>
+    <p><strong>20</strong> MCP tools · <strong>400</strong> training examples</p>
     <p><strong>5-stage</strong> architecture harness</p>
   </div>
 </div>""")
@@ -773,11 +773,11 @@ BIST equity analysis — without inventing numbers or giving investment advice?<
     <p>Yahoo Finance OHLCV</p>
     <p>Fintables TMS29 financials</p>
     <p>KAP context events</p>
-    <p>TCMB / TÜİK macro</p>
+    <p>USD/TRY FX (Yahoo)</p>
   </div>
   <div class="card">
     <h3>Layer 2 — MCP Server</h3>
-    <p>19 read-only tools</p>
+    <p>20 read-only tools</p>
     <p>stdio transport (subprocess)</p>
     <p>No network calls during analysis</p>
     <p>All tools return JSON evidence</p>
@@ -796,7 +796,7 @@ BIST equity analysis — without inventing numbers or giving investment advice?<
   <tr><th>A: raw_llm</th><th>B: llm_tools</th><th>C: stateful</th>
       <th>D: evidence_gate</th><th>E: memory_review</th></tr>
   <tr><td>Base LLM only<br>No tools</td>
-      <td>+ 19 MCP tools<br>Tool-calling enabled</td>
+      <td>+ 20 MCP tools<br>Tool-calling enabled</td>
       <td>+ State context<br>as_of, financial period</td>
       <td>+ Quality gate<br>ANALYSIS_UNSAFE blocking</td>
       <td>+ Memory layer<br>Human review sign-off</td></tr>
@@ -823,10 +823,10 @@ BIST equity analysis — without inventing numbers or giving investment advice?<
   </div>
   <div class="card">
     <h3>Tier 3: Macro Context</h3>
-    <p><strong>TCMB:</strong> Policy rate series</p>
-    <p><strong>TÜİK:</strong> CPI release-date aligned</p>
-    <p><strong>KAP:</strong> Per-ticker corporate events</p>
-    <p><strong>Speech:</strong> Selected examples (approved)</p>
+    <p><strong>FX:</strong> USD/TRY (Yahoo TRY=X), cached</p>
+    <p><strong>TCMB / TÜİK:</strong> reader and MCP tool built; no series cached in this submission</p>
+    <p><strong>KAP:</strong> 13 THYAO corporate events</p>
+    <p><strong>Speech:</strong> tool built; no data cached</p>
   </div>
 </div>
 <hr>
@@ -838,7 +838,7 @@ not recomputed, not approximated.</p>""")
     # ── Slide 5 — MCP Tools ───────────────────────────────────────────────────
     slides.append("""\
 <div class="tag">Tools</div>
-<h1>19 MCP Tools — The Agent's Calculator</h1>
+<h1>20 MCP Tools — The Agent's Calculator</h1>
 <div class="cols" style="margin-top:0.8rem">
   <div>
     <table>
@@ -861,7 +861,7 @@ not recomputed, not approximated.</p>""")
       <tr><td><code>test_weekday_pattern</code></td><td>Day-of-week pattern test</td></tr>
       <tr><td><code>detect_reversal_events</code></td><td>BB / RSI / Supertrend signals</td></tr>
       <tr><td><code>calculate_fundamental_change</code></td><td>QoQ / YoY change</td></tr>
-      <tr><td><code>get_macro_context</code></td><td>TCMB / TÜİK data</td></tr>
+      <tr><td><code>get_macro_context</code></td><td>TCMB / TÜİK reader (no cache shipped)</td></tr>
       <tr><td><code>get_news_events</code></td><td>KAP news events</td></tr>
       <tr><td><code>get_speech_features</code></td><td>Speech text features</td></tr>
       <tr><td><code>check_data_quality</code></td><td>Gate: future date / unknown ticker</td></tr>
@@ -931,7 +931,7 @@ not recomputed, not approximated.</p>""")
     <td><strong>S1 — Sector Laggards</strong><br><em>Catch-up analysis</em></td>
     <td><code>rank_sector_relative_strength</code></td>
     <td>5 sectors, all 10 tickers</td>
-    <td>92 laggard anchors. Banking sector: 50.4% 20-day hit rate for AKBNK/GARAN lagging sector median.</td>
+    <td>92 weekly anchors. Laggard beat its sector peers over 20 days: steel 60.9%, banking 54.3%, airlines 44.6%.</td>
   </tr>
   <tr>
     <td><strong>S2 — Weekday Patterns</strong><br><em>Day-of-week bias</em></td>
@@ -943,13 +943,13 @@ not recomputed, not approximated.</p>""")
     <td><strong>S3 — Reversal Events</strong><br><em>Technical bounce signals</em></td>
     <td><code>detect_reversal_events</code></td>
     <td>All 10 tickers</td>
-    <td>1,458 events detected. BB lower-touch: 59% 10-day bounce rate. RSI oversold: 59% bounce rate.</td>
+    <td>1,458 events detected. 5-day bounce rate: BB lower-touch 58.7% (230 events), RSI oversold recovery 59.1% (44 events).</td>
   </tr>
   <tr>
     <td><strong>S4 — Fundamental Reaction</strong><br><em>Post-earnings price move</em></td>
     <td><code>calculate_fundamental_change</code></td>
-    <td>All 10 tickers</td>
-    <td>19 fundamental releases mapped. Post-announcement price reactions linked to QoQ/YoY changes.</td>
+    <td>THYAO.IS only</td>
+    <td>7 THYAO release dates (19 panel rows). Mean 5-day return vs BIST100 after a release: −1.29%.</td>
   </tr>
 </table>
 <p style="margin-top:0.8rem; font-size:0.82rem; color:#889">
@@ -1132,12 +1132,12 @@ not recomputed, not approximated.</p>""")
   <div>
     <h2>Smoke Test</h2>
     <p>Verifies Ollama is running and MCP server is healthy:</p>
-    <p><code>.\\.venv\\Scripts\\python.exe scripts/local_agent.py --smoke</code></p>
+    <p><code>.\\.venv\\Scripts\\python.exe scripts/local_agent.py --smoke --model bist-qwen</code></p>
     <p style="margin-top:0.6rem">Expected: calls <code>project_status</code> once, prints ticker + source, stops.</p>
 
     <h2 style="margin-top:1.2rem">Full Analysis</h2>
     <p><code>.\\.venv\\Scripts\\python.exe scripts/local_agent.py<br>
-       &nbsp;&nbsp;--ticker THYAO.IS --as-of 2025-12-31</code></p>
+       &nbsp;&nbsp;--ticker THYAO.IS --as-of 2025-12-31 --model bist-qwen</code></p>
     <p style="margin-top:0.6rem">Expected: 3–6 tool calls, one of the 8 educational labels, no invented numbers.</p>
   </div>
   <div>
@@ -1309,7 +1309,7 @@ def build_qa_prep(out: Path) -> None:
         "Q7. What does each of the 5 harness stages add? Why not just go straight to stage E?",
         "The harness isolates contributions: "
         "(A) raw_llm shows the LLM alone — it hallucinated, got 0.0 evidence_coverage. "
-        "(B) llm_tools adds 19 MCP tools — evidence_coverage jumps to 1.0 immediately. "
+        "(B) llm_tools adds 20 MCP tools — evidence_coverage jumps to 1.0 immediately. "
         "(C) stateful adds an as_of date and financial period in the system context. "
         "(D) evidence_quality_gate adds the ANALYSIS_UNSAFE / quality-gate blocking layer. "
         "(E) memory_review adds a persistent memory layer and human sign-off. "
@@ -1317,12 +1317,12 @@ def build_qa_prep(out: Path) -> None:
         "exactly what the instructor's requirement (§5 of instructorQA.txt) asks us to demonstrate.",
     )
     story += qa(
-        "Q8. Why 19 MCP tools? Can't the LLM just calculate these itself?",
+        "Q8. Why 20 MCP tools? Can't the LLM just calculate these itself?",
         "The core principle of the project is that the LLM reasons and explains while Python "
         "tools calculate. Letting the LLM compute RSI or run a backtest would introduce "
         "hallucinated numbers with no audit trail. MCP tools are deterministic, versioned, and "
         "cache-reproducible. The agent can be re-run on the same data and get bit-identical "
-        "results. The 19 tools cover: market data retrieval, technical indicators, scoring, "
+        "results. The 20 tools cover: market data retrieval, technical indicators, scoring, "
         "backtesting, the 4 scenario analyses, data quality gating, and evidence bundling.",
     )
     story += qa(
@@ -1425,14 +1425,14 @@ def build_qa_prep(out: Path) -> None:
     story += qa(
         "Q17. What are the 4 mandatory scenarios and what did each find?",
         "S1 Sector Laggards: used rank_sector_relative_strength to find stocks lagging their "
-        "sector median. 92 anchors across 5 sectors; banking showed a 50.4% 20-day hit rate "
-        "for laggard reversal. — "
+        "sector median. 92 weekly anchors across 5 sectors; the laggard beat its sector peers "
+        "over 20 days 60.9% of the time in steel, 54.3% in banking and 44.6% in airlines. — "
         "S2 Weekday Patterns: used test_weekday_pattern to identify day-of-week return biases. "
         "No universal weekday edge; pattern significance varied by ticker. — "
         "S3 Reversal Events: used detect_reversal_events to flag technical bounces. 1,458 events; "
-        "BB lower-touch and RSI oversold both showed ~59% 10-day bounce rates. — "
+        "BB lower-touch and RSI oversold recovery bounced within 5 days 58.7% and 59.1% of the time. — "
         "S4 Fundamental Reaction: used calculate_fundamental_change to link QoQ changes to "
-        "post-announcement price moves. 19 releases across 10 tickers mapped.",
+        "post-announcement price moves. THYAO.IS only: 7 release dates (19 panel rows).",
     )
     story += qa(
         "Q18. What is the 'gate_unsafe' scenario and why does the model struggle with it?",
