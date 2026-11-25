@@ -1,10 +1,10 @@
 {
   "schema_version": "bist-execution-trace/1",
-  "run_id": "e2df4231-aa69-4954-b0d3-4ed827a966e7",
+  "run_id": "506b7992-621c-41d7-ac5d-351cbc9dc861",
   "scenario_id": "S3",
-  "started_at": "2026-11-25T16:45:48.700+00:00",
-  "finished_at": "2026-11-25T16:46:14.039+00:00",
-  "wall_time_s": 25.339,
+  "started_at": "2026-11-25T18:11:35.706+00:00",
+  "finished_at": "2026-11-25T18:12:08.193+00:00",
+  "wall_time_s": 32.486,
   "model": {
     "name": "bist-qwen",
     "endpoint": "http://localhost:11434/v1",
@@ -70,8 +70,8 @@
       "search_knowledge_base"
     ],
     "git": {
-      "commit": "db82984c0a9edb678f1b39a8390f21333188813b",
-      "dirty": true
+      "commit": "928958c7cf5a5609fff555f6b15350df90da0109",
+      "dirty": false
     },
     "python": "3.12.14"
   },
@@ -106,9 +106,9 @@
       "date_range": {
         "as_of": "2025-12-31"
       },
-      "started_at": "2026-11-25T16:45:57.774+00:00",
-      "finished_at": "2026-11-25T16:46:02.208+00:00",
-      "duration_s": 4.434,
+      "started_at": "2026-11-25T18:11:45.856+00:00",
+      "finished_at": "2026-11-25T18:11:56.269+00:00",
+      "duration_s": 10.409,
       "result": {
         "content": [
           {
@@ -187,9 +187,9 @@
       "index": 1,
       "turn": 0,
       "type": "assistant",
-      "started_at": "2026-11-25T16:46:02.208+00:00",
-      "finished_at": "2026-11-25T16:46:05.537+00:00",
-      "duration_s": 3.329,
+      "started_at": "2026-11-25T18:11:56.269+00:00",
+      "finished_at": "2026-11-25T18:11:59.416+00:00",
+      "duration_s": 3.146,
       "content": "<tool_call>\n{\"name\": \"detect_reversal_events\", \"arguments\": {\"ticker\": \"TCELL.IS\", \"as_of\": \"2025-12-31\", \"lookback\": 120}}\n</tool_call>",
       "tool_calls": [
         {
@@ -223,9 +223,9 @@
         "as_of": "2025-12-31",
         "lookback": 120
       },
-      "started_at": "2026-11-25T16:46:05.537+00:00",
-      "finished_at": "2026-11-25T16:46:05.631+00:00",
-      "duration_s": 0.095,
+      "started_at": "2026-11-25T18:11:59.416+00:00",
+      "finished_at": "2026-11-25T18:11:59.544+00:00",
+      "duration_s": 0.128,
       "result": {
         "content": [
           {
@@ -757,10 +757,10 @@
       "index": 3,
       "turn": 1,
       "type": "assistant",
-      "started_at": "2026-11-25T16:46:05.632+00:00",
-      "finished_at": "2026-11-25T16:46:14.034+00:00",
-      "duration_s": 8.402,
-      "content": "<final_answer>\n{\"educational_label\": \"TECHNICAL_REVERSAL_CANDIDATE\", \"committed_evidence_ids\": [\"detect_reversal_events:TCELL.IS:2025-12-31:lb120\"], \"explanation\": \"detect_reversal_events for TCELL.IS, 120 sessions to 2025-12-31: 35 events. By family (summary): supertrend_flip_up: count 2, mean_forward_5d 0.0207; supertrend_flip_down: count 3, mean_forward_5d 0.0102; kama_slope_up: count 9, mean_forward_5d 0.0087; bb_lower_touch: count 4, mean_forward_5d 0.0077; kama_slope_down: count 9, mean_forward_5d -0.0145. label_rule: mean_forward_5d > 0.005 → TECHNICAL_REVERSAL_CANDIDATE, otherwise WATCH. best_family (at least 2 forward returns): supertrend_flip_up, count 2, mean_forward_5d 0.0207. label_by_rule: TECHNICAL_REVERSAL_CANDIDATE. Selected: TECHNICAL_REVERSAL_CANDIDATE. In-sample only; not a trading signal.\"}\n</final_answer>",
+      "started_at": "2026-11-25T18:11:59.544+00:00",
+      "finished_at": "2026-11-25T18:12:08.187+00:00",
+      "duration_s": 8.643,
+      "content": "<final_answer>\n{\"educational_label\": \"TECHNICAL_REVERSAL_CANDIDATE\", \"committed_evidence_ids\": [\"detect_reversal_events:TCELL.IS:2025-12-31:lb120\"], \"explanation\": \"detect_reversal_events for TCELL.IS, 120 sessions to 2025-12-31: 35 events. By family (summary): supertrend_flip_up: 2 events, mean_forward_5d 0.0207; supertrend_flip_down: 3 events, mean_forward_5d 0.0102; kama_slope_up: 9 events, mean_forward_5d 0.0087; bb_lower_touch: 4 events, mean_forward_5d 0.0077; kama_slope_down: 9 events, mean_forward_5d -0.0145. best_family (at least 2 forward returns): supertrend_flip_up, 2 events, mean_forward_5d 0.0207. label_rule: mean_forward_5d > 0.005 → TECHNICAL_REVERSAL_CANDIDATE, otherwise WATCH. label_by_rule: TECHNICAL_REVERSAL_CANDIDATE. Selected: TECHNICAL_REVERSAL_CANDIDATE. In-sample only; not a trading signal.\"}\n</final_answer>",
       "tool_calls": [],
       "finish_reason": "stop",
       "usage": {
@@ -777,7 +777,7 @@
   "tools_called": [
     "detect_reversal_events"
   ],
-  "final_answer": "<final_answer>\n{\"educational_label\": \"TECHNICAL_REVERSAL_CANDIDATE\", \"committed_evidence_ids\": [\"detect_reversal_events:TCELL.IS:2025-12-31:lb120\"], \"explanation\": \"detect_reversal_events for TCELL.IS, 120 sessions to 2025-12-31: 35 events. By family (summary): supertrend_flip_up: count 2, mean_forward_5d 0.0207; supertrend_flip_down: count 3, mean_forward_5d 0.0102; kama_slope_up: count 9, mean_forward_5d 0.0087; bb_lower_touch: count 4, mean_forward_5d 0.0077; kama_slope_down: count 9, mean_forward_5d -0.0145. label_rule: mean_forward_5d > 0.005 → TECHNICAL_REVERSAL_CANDIDATE, otherwise WATCH. best_family (at least 2 forward returns): supertrend_flip_up, count 2, mean_forward_5d 0.0207. label_by_rule: TECHNICAL_REVERSAL_CANDIDATE. Selected: TECHNICAL_REVERSAL_CANDIDATE. In-sample only; not a trading signal.\"}\n</final_answer>",
+  "final_answer": "<final_answer>\n{\"educational_label\": \"TECHNICAL_REVERSAL_CANDIDATE\", \"committed_evidence_ids\": [\"detect_reversal_events:TCELL.IS:2025-12-31:lb120\"], \"explanation\": \"detect_reversal_events for TCELL.IS, 120 sessions to 2025-12-31: 35 events. By family (summary): supertrend_flip_up: 2 events, mean_forward_5d 0.0207; supertrend_flip_down: 3 events, mean_forward_5d 0.0102; kama_slope_up: 9 events, mean_forward_5d 0.0087; bb_lower_touch: 4 events, mean_forward_5d 0.0077; kama_slope_down: 9 events, mean_forward_5d -0.0145. best_family (at least 2 forward returns): supertrend_flip_up, 2 events, mean_forward_5d 0.0207. label_rule: mean_forward_5d > 0.005 → TECHNICAL_REVERSAL_CANDIDATE, otherwise WATCH. label_by_rule: TECHNICAL_REVERSAL_CANDIDATE. Selected: TECHNICAL_REVERSAL_CANDIDATE. In-sample only; not a trading signal.\"}\n</final_answer>",
   "turns_used": 2,
   "grounding_audit": {
     "numbers_found": 16,
@@ -906,16 +906,6 @@
         "abs_match": false
       },
       {
-        "text": "0.005",
-        "value": 0.005,
-        "decimals": 3,
-        "percent": false,
-        "is_year": false,
-        "tool_value": 0.005,
-        "scale": 1.0,
-        "abs_match": false
-      },
-      {
         "text": "2",
         "value": 2.0,
         "decimals": 0,
@@ -942,6 +932,16 @@
         "percent": false,
         "is_year": false,
         "tool_value": 0.0207,
+        "scale": 1.0,
+        "abs_match": false
+      },
+      {
+        "text": "0.005",
+        "value": 0.005,
+        "decimals": 3,
+        "percent": false,
+        "is_year": false,
+        "tool_value": 0.005,
         "scale": 1.0,
         "abs_match": false
       }

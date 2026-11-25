@@ -1,7 +1,7 @@
 {
   "schema": "cse481-submission/1",
   "hashing": "SHA-256. Text files are hashed with CRLF normalised to LF, so the hash does not depend on the checkout's line endings; binary files (.safetensors, .gguf) are hashed byte-for-byte. scripts/verify_submission.py applies the same rule.",
-  "created_at": "2026-11-25T16:39:10+00:00",
+  "created_at": "2026-11-25T18:13:19+00:00",
   "project": "BIST multi-sector research agent: local fine-tuned LLM with MCP tools",
   "course": "CSE481 Engineering Economics, Term Project 2026",
   "group_members": [
@@ -9,7 +9,7 @@
   ],
   "repository": "https://github.com/Yselim1/cse481-bist-project",
   "git": {
-    "commit": "e4a96c22eee609248e742c9135de68451ed33624",
+    "commit": "928958c7cf5a5609fff555f6b15350df90da0109",
     "dirty": true
   },
   "base_model": {
@@ -69,7 +69,7 @@
   },
   "served_model": {
     "ollama_name": "bist-qwen",
-    "digest": "03815952dddc6ff1489e9910c93a872c32be7f09095ffa09c810065f67b66b72",
+    "digest": "2ea69e9a076b8b5b83109ffe51879c523f34d16d4cce05d7aa4a531699c42814",
     "quantization": "Q4_K_M",
     "family": "qwen2",
     "parameter_size": "3.1B",
@@ -77,8 +77,8 @@
     "modelfile": {
       "path": "training/Modelfile.finetuned",
       "role": "modelfile",
-      "bytes": 2281,
-      "sha256": "6c5667e51b83590268a85f36f387d1b30d8caf63f3aa46da71829161e5862da7"
+      "bytes": 2296,
+      "sha256": "1dca5817f68e47043f502a8af500bd7aeb051f0450d78a2388a8167d9808587c"
     },
     "gguf": {
       "path": "training/bist_lora.gguf",
@@ -170,16 +170,16 @@
       {
         "path": "outputs/presentation/traces/S1.trace.json",
         "role": "execution_trace",
-        "bytes": 51981,
-        "sha256": "6c2b704a208117f526e10feab15075cd8ee9077d30a792f8eea08f31b04d227d",
+        "bytes": 55670,
+        "sha256": "244af1ac062256f6263e54efa906f77cc445f9cf5d286cac0d83c80d3e137aa8",
         "scenario_id": "S1",
         "scenario": "sector_laggard",
         "question": "As of 2025-12-31, which stock in the banking sector of the research universe has lagged its sector the most over the last 63 trading sessions? Is there evidence that it could be a catch-up candidate? Give one educational label.",
         "model": "bist-qwen",
-        "model_digest": "03815952dddc6ff1489e9910c93a872c32be7f09095ffa09c810065f67b66b72",
+        "model_digest": "2ea69e9a076b8b5b83109ffe51879c523f34d16d4cce05d7aa4a531699c42814",
         "seed": 17,
         "temperature": 0.0,
-        "started_at": "2026-11-25T16:29:09.865+00:00",
+        "started_at": "2026-11-25T18:10:37.288+00:00",
         "label": "HOLD",
         "tools_called": [
           "rank_sector_relative_strength"
@@ -189,16 +189,16 @@
       {
         "path": "outputs/presentation/traces/S2.trace.json",
         "role": "execution_trace",
-        "bytes": 38349,
-        "sha256": "4a65b39b895d0e11720fe06f2ca95441fe9d1aa3b62e7faf8501c8a2df235a16",
+        "bytes": 39035,
+        "sha256": "93788c10e62cc8b19f15ea4baa278877e9b5af7f227450582ee77d860c1dc373",
         "scenario_id": "S2",
         "scenario": "weekday_patterns",
         "question": "Using EREGL.IS daily returns from 2025-01-01 to 2025-12-31, is there a day-of-the-week effect? Name the weekday with the highest and the lowest mean return and say whether either is statistically significant.",
         "model": "bist-qwen",
-        "model_digest": "03815952dddc6ff1489e9910c93a872c32be7f09095ffa09c810065f67b66b72",
+        "model_digest": "2ea69e9a076b8b5b83109ffe51879c523f34d16d4cce05d7aa4a531699c42814",
         "seed": 17,
         "temperature": 0.0,
-        "started_at": "2026-11-25T16:29:41.275+00:00",
+        "started_at": "2026-11-25T18:11:07.022+00:00",
         "label": "WATCH",
         "tools_called": [
           "test_weekday_pattern"
@@ -208,16 +208,16 @@
       {
         "path": "outputs/presentation/traces/S3.trace.json",
         "role": "execution_trace",
-        "bytes": 63222,
-        "sha256": "3cb91c4638d25b83684064bf6b0c54268bfb8ac0e3711de6e1299952702b2a43",
+        "bytes": 63921,
+        "sha256": "e2a3fbf7c080798f1fd05373106a72c5fdd1363f7dfe7c7de81ec58c7a6c50ae",
         "scenario_id": "S3",
         "scenario": "reversal_events",
         "question": "Which technical reversal events were detected for TCELL.IS in the 120 trading sessions up to 2025-12-31, and what was the average return over the following 5 sessions?",
         "model": "bist-qwen",
-        "model_digest": "03815952dddc6ff1489e9910c93a872c32be7f09095ffa09c810065f67b66b72",
+        "model_digest": "2ea69e9a076b8b5b83109ffe51879c523f34d16d4cce05d7aa4a531699c42814",
         "seed": 17,
         "temperature": 0.0,
-        "started_at": "2026-11-25T16:35:46.422+00:00",
+        "started_at": "2026-11-25T18:11:35.706+00:00",
         "label": "TECHNICAL_REVERSAL_CANDIDATE",
         "tools_called": [
           "detect_reversal_events"
@@ -227,16 +227,16 @@
       {
         "path": "outputs/presentation/traces/S4.trace.json",
         "role": "execution_trace",
-        "bytes": 34105,
-        "sha256": "a5aa1723f94ff264ecc45a6961a6eec222b8485e5816a1f239be5eff9069fd0c",
+        "bytes": 34792,
+        "sha256": "25455f3b3e3aee6f1235d476c4bd9df47aecfb491fa3c7293a32e878f0836a51",
         "scenario_id": "S4",
         "scenario": "fundamental_reaction",
         "question": "As of 2025-12-31, how did THYAO.IS's revenue and net profit change compared with the previous quarter, when were the latest statements published, and how did the stock price move in the sessions around that publication?",
         "model": "bist-qwen",
-        "model_digest": "03815952dddc6ff1489e9910c93a872c32be7f09095ffa09c810065f67b66b72",
+        "model_digest": "2ea69e9a076b8b5b83109ffe51879c523f34d16d4cce05d7aa4a531699c42814",
         "seed": 17,
         "temperature": 0.0,
-        "started_at": "2026-11-25T16:30:47.228+00:00",
+        "started_at": "2026-11-25T18:12:08.268+00:00",
         "label": "WATCH",
         "tools_called": [
           "calculate_fundamental_change"
@@ -246,16 +246,16 @@
       {
         "path": "outputs/presentation/traces/S5.trace.json",
         "role": "execution_trace",
-        "bytes": 20302,
-        "sha256": "adfd427f16cdb061bc326b8fa6db7a154217ad71c94872cf688c23e37fa0a4df",
+        "bytes": 20988,
+        "sha256": "14cf4c5c5ed38bc3bf3bbc339af8fedea004c880b07b0055ab994e7382a65e13",
         "scenario_id": "S5",
         "scenario": "analysis_unsafe",
         "question": "Is BIMAS.IS a fundamental improvement candidate as of 2027-03-31? Give one educational label.",
         "model": "bist-qwen",
-        "model_digest": "03815952dddc6ff1489e9910c93a872c32be7f09095ffa09c810065f67b66b72",
+        "model_digest": "2ea69e9a076b8b5b83109ffe51879c523f34d16d4cce05d7aa4a531699c42814",
         "seed": 17,
         "temperature": 0.0,
-        "started_at": "2026-11-25T16:31:21.973+00:00",
+        "started_at": "2026-11-25T18:12:40.858+00:00",
         "label": "ANALYSIS_UNSAFE",
         "tools_called": [
           "calculate_fundamental_change"
@@ -283,6 +283,82 @@
       "started_at",
       "finished_at"
     ]
+  },
+  "evaluation": {
+    "files": [
+      {
+        "path": "outputs/training/base_vs_finetuned.md",
+        "role": "evaluation_report",
+        "bytes": 12220,
+        "sha256": "015ce6b0386ac6f362db2d8505492f95833ca67af50cd5b38c05c394360283b1"
+      },
+      {
+        "path": "outputs/training/figures/base_vs_finetuned.png",
+        "role": "evaluation_chart",
+        "bytes": 97364,
+        "sha256": "beb69e1b68b3382bcabebf39dd4f2f4ed81a9139d17fd0e12559192a2c70284f"
+      },
+      {
+        "path": "outputs/harness/eval_v3/summary.json",
+        "role": "evaluation_summary",
+        "bytes": 4516,
+        "sha256": "4c1a87230ad1f8d3eacdd367d1dc69234fa780633db59af11f8620bd920926be"
+      },
+      {
+        "path": "outputs/harness/eval_v3/base.original.score.json",
+        "role": "evaluation_scores",
+        "bytes": 13337,
+        "sha256": "8ae46fb7fed7aa7127d08a560326a64640da059fbe22dba5536cd137d5d17d27",
+        "model": "base",
+        "protocol": "original"
+      },
+      {
+        "path": "outputs/harness/eval_v3/base.presentation.score.json",
+        "role": "evaluation_scores",
+        "bytes": 12150,
+        "sha256": "b14f7b412a6c0b1260a427d0850862d29a0f37be1d1a4be35aabbbdd1dd6de7f",
+        "model": "base",
+        "protocol": "presentation"
+      },
+      {
+        "path": "outputs/harness/eval_v3/finetuned.original.score.json",
+        "role": "evaluation_scores",
+        "bytes": 15557,
+        "sha256": "763cfb723b54204caac8970d460febb08fa432edb4fc8ef2ddb0f266e3de6887",
+        "model": "finetuned",
+        "protocol": "original"
+      },
+      {
+        "path": "outputs/harness/eval_v3/finetuned.presentation.score.json",
+        "role": "evaluation_scores",
+        "bytes": 13878,
+        "sha256": "e57c34d7acb8528190761c260a31a6692123d698842e3143afe2856372ad18dc",
+        "model": "finetuned",
+        "protocol": "presentation"
+      },
+      {
+        "path": "outputs/harness/comparison.base.json",
+        "role": "harness_comparison",
+        "bytes": 4504,
+        "sha256": "75086b42fe1300e389ec6ff78130857a7d0dfea7367a38be6c1310fe5b7bd888",
+        "model": "base"
+      },
+      {
+        "path": "outputs/harness/comparison.finetuned.json",
+        "role": "harness_comparison",
+        "bytes": 5331,
+        "sha256": "3eaaaf8209779787d0fde5043ee1776f39a057c3b494fc8dd87c5eaaa8a09aa0",
+        "model": "finetuned"
+      },
+      {
+        "path": "outputs/training/phase_g_harness_summary.md",
+        "role": "harness_report",
+        "bytes": 4356,
+        "sha256": "88f897e24914b0f91972847ebb4d90608e1ed8ad8b4ae1071b0f4389b4f9f2e2"
+      }
+    ],
+    "base_comparison_model": "bist-qwen-base (training/Modelfile.base: qwen2.5:3b-instruct, same num_ctx 16384 and sampling as bist-qwen)",
+    "per_question_traces": "outputs/harness/eval_v3/traces/"
   },
   "live_question": {
     "cli": "scripts/ask.py \"<question>\"",
@@ -500,8 +576,8 @@
       {
         "path": "scripts/local_agent.py",
         "role": "source_code:agent_harness",
-        "bytes": 33820,
-        "sha256": "a4c99eba8fc0c3114136cafb52eeef24dd71899661753c97e6da173e2e113276"
+        "bytes": 34734,
+        "sha256": "75199517b2c17dabe9061cfaa01a12eb2e8e324d9cfaa5d7c12260e64d46c85f"
       },
       {
         "path": "src/bist_analytics/harness/grounding.py",
@@ -532,8 +608,8 @@
       {
         "path": "scripts/build_submission.py",
         "role": "source_code:run_scripts",
-        "bytes": 14280,
-        "sha256": "0ed06eadf6a2e4c23cd26f36c66eb1721bf629f5700820e0a18abfa1b3569b2f"
+        "bytes": 15309,
+        "sha256": "30b90139508992f140c34d522d43ac0b2b2c9a45c5b1b9646f9f91c03a2fd810"
       },
       {
         "path": "scripts/verify_submission.py",
@@ -558,14 +634,14 @@
       {
         "path": "training/Modelfile.finetuned",
         "role": "source_code:training_code",
-        "bytes": 2281,
-        "sha256": "6c5667e51b83590268a85f36f387d1b30d8caf63f3aa46da71829161e5862da7"
+        "bytes": 2296,
+        "sha256": "1dca5817f68e47043f502a8af500bd7aeb051f0450d78a2388a8167d9808587c"
       },
       {
         "path": "training/Modelfile.base",
         "role": "source_code:training_code",
-        "bytes": 1129,
-        "sha256": "58023578d29d25d0dcda37e85c652653da7c2ed3fe10388eab52132e2fcbaef5"
+        "bytes": 1130,
+        "sha256": "af5d7ade1065a0fd478d61ff2ab845588c1594ea24dab9a9021e4921452ce752"
       },
       {
         "path": "training/export_gguf.sh",
@@ -578,14 +654,26 @@
       {
         "path": "training/eval/run_baseline.py",
         "role": "source_code:evaluation_code",
-        "bytes": 6115,
-        "sha256": "1fa1d6bf1430c34fa5f988f25de7b044b23acec70a757049d97bcb2ca4459c28"
+        "bytes": 9840,
+        "sha256": "0ee9bdab0eab23e918652a2ba60a0d01ab59d674ad21d430e5446139d72c436b"
       },
       {
         "path": "training/eval/compare.py",
         "role": "source_code:evaluation_code",
-        "bytes": 3829,
-        "sha256": "53514596542f83a99d68675f6ded6626acbf4189b8454663584cf05b63d213d1"
+        "bytes": 10819,
+        "sha256": "2b412cb1069c50ae550504c78152f52e0ebfde52c5498bf5dcfa18d190acfd3a"
+      },
+      {
+        "path": "scripts/run_harness_experiments.py",
+        "role": "source_code:evaluation_code",
+        "bytes": 11776,
+        "sha256": "4c245f5eec804984229a4e3a43bed1fb332bf20fbbd2973da2fe521ca5532a3c"
+      },
+      {
+        "path": "scripts/generate_deliverables.py",
+        "role": "source_code:evaluation_code",
+        "bytes": 86830,
+        "sha256": "6bd529408281c91309ed9cd256dde1672ec16996ebf91f6797f598e7007afee8"
       },
       {
         "path": "src/bist_analytics/harness/evaluation.py",
@@ -706,28 +794,28 @@
     {
       "path": "outputs/presentation/index.json",
       "role": "trace_index",
-      "bytes": 4923,
-      "sha256": "1db0d5503b39102781ace2d61c48dbdee173643d80f9e8400dd9555df25f3d7f"
+      "bytes": 4924,
+      "sha256": "4ac3aa0c6ffb70b488141dd8da4783b6d6a7a6046f9bedc7fbeb0e556d0d38d4"
     },
     {
       "path": "outputs/presentation/traces.html",
       "role": "trace_viewer",
-      "bytes": 102290,
-      "sha256": "cae580f3cfb9c0bc484ae6194c233e560c555d37337369ffbfee789b35881fc5"
+      "bytes": 103377,
+      "sha256": "74e033756b532f0bbdcf178dd5cb74769fb0ec7404b6e8c58c0e83f60692f8c6"
     },
     {
       "path": "outputs/presentation/traces/S1.trace.json",
       "role": "execution_trace",
-      "bytes": 51981,
-      "sha256": "6c2b704a208117f526e10feab15075cd8ee9077d30a792f8eea08f31b04d227d",
+      "bytes": 55670,
+      "sha256": "244af1ac062256f6263e54efa906f77cc445f9cf5d286cac0d83c80d3e137aa8",
       "scenario_id": "S1",
       "scenario": "sector_laggard",
       "question": "As of 2025-12-31, which stock in the banking sector of the research universe has lagged its sector the most over the last 63 trading sessions? Is there evidence that it could be a catch-up candidate? Give one educational label.",
       "model": "bist-qwen",
-      "model_digest": "03815952dddc6ff1489e9910c93a872c32be7f09095ffa09c810065f67b66b72",
+      "model_digest": "2ea69e9a076b8b5b83109ffe51879c523f34d16d4cce05d7aa4a531699c42814",
       "seed": 17,
       "temperature": 0.0,
-      "started_at": "2026-11-25T16:29:09.865+00:00",
+      "started_at": "2026-11-25T18:10:37.288+00:00",
       "label": "HOLD",
       "tools_called": [
         "rank_sector_relative_strength"
@@ -737,16 +825,16 @@
     {
       "path": "outputs/presentation/traces/S2.trace.json",
       "role": "execution_trace",
-      "bytes": 38349,
-      "sha256": "4a65b39b895d0e11720fe06f2ca95441fe9d1aa3b62e7faf8501c8a2df235a16",
+      "bytes": 39035,
+      "sha256": "93788c10e62cc8b19f15ea4baa278877e9b5af7f227450582ee77d860c1dc373",
       "scenario_id": "S2",
       "scenario": "weekday_patterns",
       "question": "Using EREGL.IS daily returns from 2025-01-01 to 2025-12-31, is there a day-of-the-week effect? Name the weekday with the highest and the lowest mean return and say whether either is statistically significant.",
       "model": "bist-qwen",
-      "model_digest": "03815952dddc6ff1489e9910c93a872c32be7f09095ffa09c810065f67b66b72",
+      "model_digest": "2ea69e9a076b8b5b83109ffe51879c523f34d16d4cce05d7aa4a531699c42814",
       "seed": 17,
       "temperature": 0.0,
-      "started_at": "2026-11-25T16:29:41.275+00:00",
+      "started_at": "2026-11-25T18:11:07.022+00:00",
       "label": "WATCH",
       "tools_called": [
         "test_weekday_pattern"
@@ -756,16 +844,16 @@
     {
       "path": "outputs/presentation/traces/S3.trace.json",
       "role": "execution_trace",
-      "bytes": 63222,
-      "sha256": "3cb91c4638d25b83684064bf6b0c54268bfb8ac0e3711de6e1299952702b2a43",
+      "bytes": 63921,
+      "sha256": "e2a3fbf7c080798f1fd05373106a72c5fdd1363f7dfe7c7de81ec58c7a6c50ae",
       "scenario_id": "S3",
       "scenario": "reversal_events",
       "question": "Which technical reversal events were detected for TCELL.IS in the 120 trading sessions up to 2025-12-31, and what was the average return over the following 5 sessions?",
       "model": "bist-qwen",
-      "model_digest": "03815952dddc6ff1489e9910c93a872c32be7f09095ffa09c810065f67b66b72",
+      "model_digest": "2ea69e9a076b8b5b83109ffe51879c523f34d16d4cce05d7aa4a531699c42814",
       "seed": 17,
       "temperature": 0.0,
-      "started_at": "2026-11-25T16:35:46.422+00:00",
+      "started_at": "2026-11-25T18:11:35.706+00:00",
       "label": "TECHNICAL_REVERSAL_CANDIDATE",
       "tools_called": [
         "detect_reversal_events"
@@ -775,16 +863,16 @@
     {
       "path": "outputs/presentation/traces/S4.trace.json",
       "role": "execution_trace",
-      "bytes": 34105,
-      "sha256": "a5aa1723f94ff264ecc45a6961a6eec222b8485e5816a1f239be5eff9069fd0c",
+      "bytes": 34792,
+      "sha256": "25455f3b3e3aee6f1235d476c4bd9df47aecfb491fa3c7293a32e878f0836a51",
       "scenario_id": "S4",
       "scenario": "fundamental_reaction",
       "question": "As of 2025-12-31, how did THYAO.IS's revenue and net profit change compared with the previous quarter, when were the latest statements published, and how did the stock price move in the sessions around that publication?",
       "model": "bist-qwen",
-      "model_digest": "03815952dddc6ff1489e9910c93a872c32be7f09095ffa09c810065f67b66b72",
+      "model_digest": "2ea69e9a076b8b5b83109ffe51879c523f34d16d4cce05d7aa4a531699c42814",
       "seed": 17,
       "temperature": 0.0,
-      "started_at": "2026-11-25T16:30:47.228+00:00",
+      "started_at": "2026-11-25T18:12:08.268+00:00",
       "label": "WATCH",
       "tools_called": [
         "calculate_fundamental_change"
@@ -794,21 +882,91 @@
     {
       "path": "outputs/presentation/traces/S5.trace.json",
       "role": "execution_trace",
-      "bytes": 20302,
-      "sha256": "adfd427f16cdb061bc326b8fa6db7a154217ad71c94872cf688c23e37fa0a4df",
+      "bytes": 20988,
+      "sha256": "14cf4c5c5ed38bc3bf3bbc339af8fedea004c880b07b0055ab994e7382a65e13",
       "scenario_id": "S5",
       "scenario": "analysis_unsafe",
       "question": "Is BIMAS.IS a fundamental improvement candidate as of 2027-03-31? Give one educational label.",
       "model": "bist-qwen",
-      "model_digest": "03815952dddc6ff1489e9910c93a872c32be7f09095ffa09c810065f67b66b72",
+      "model_digest": "2ea69e9a076b8b5b83109ffe51879c523f34d16d4cce05d7aa4a531699c42814",
       "seed": 17,
       "temperature": 0.0,
-      "started_at": "2026-11-25T16:31:21.973+00:00",
+      "started_at": "2026-11-25T18:12:40.858+00:00",
       "label": "ANALYSIS_UNSAFE",
       "tools_called": [
         "calculate_fundamental_change"
       ],
       "all_grounded": true
+    },
+    {
+      "path": "outputs/training/base_vs_finetuned.md",
+      "role": "evaluation_report",
+      "bytes": 12220,
+      "sha256": "015ce6b0386ac6f362db2d8505492f95833ca67af50cd5b38c05c394360283b1"
+    },
+    {
+      "path": "outputs/training/figures/base_vs_finetuned.png",
+      "role": "evaluation_chart",
+      "bytes": 97364,
+      "sha256": "beb69e1b68b3382bcabebf39dd4f2f4ed81a9139d17fd0e12559192a2c70284f"
+    },
+    {
+      "path": "outputs/harness/eval_v3/summary.json",
+      "role": "evaluation_summary",
+      "bytes": 4516,
+      "sha256": "4c1a87230ad1f8d3eacdd367d1dc69234fa780633db59af11f8620bd920926be"
+    },
+    {
+      "path": "outputs/harness/eval_v3/base.original.score.json",
+      "role": "evaluation_scores",
+      "bytes": 13337,
+      "sha256": "8ae46fb7fed7aa7127d08a560326a64640da059fbe22dba5536cd137d5d17d27",
+      "model": "base",
+      "protocol": "original"
+    },
+    {
+      "path": "outputs/harness/eval_v3/base.presentation.score.json",
+      "role": "evaluation_scores",
+      "bytes": 12150,
+      "sha256": "b14f7b412a6c0b1260a427d0850862d29a0f37be1d1a4be35aabbbdd1dd6de7f",
+      "model": "base",
+      "protocol": "presentation"
+    },
+    {
+      "path": "outputs/harness/eval_v3/finetuned.original.score.json",
+      "role": "evaluation_scores",
+      "bytes": 15557,
+      "sha256": "763cfb723b54204caac8970d460febb08fa432edb4fc8ef2ddb0f266e3de6887",
+      "model": "finetuned",
+      "protocol": "original"
+    },
+    {
+      "path": "outputs/harness/eval_v3/finetuned.presentation.score.json",
+      "role": "evaluation_scores",
+      "bytes": 13878,
+      "sha256": "e57c34d7acb8528190761c260a31a6692123d698842e3143afe2856372ad18dc",
+      "model": "finetuned",
+      "protocol": "presentation"
+    },
+    {
+      "path": "outputs/harness/comparison.base.json",
+      "role": "harness_comparison",
+      "bytes": 4504,
+      "sha256": "75086b42fe1300e389ec6ff78130857a7d0dfea7367a38be6c1310fe5b7bd888",
+      "model": "base"
+    },
+    {
+      "path": "outputs/harness/comparison.finetuned.json",
+      "role": "harness_comparison",
+      "bytes": 5331,
+      "sha256": "3eaaaf8209779787d0fde5043ee1776f39a057c3b494fc8dd87c5eaaa8a09aa0",
+      "model": "finetuned"
+    },
+    {
+      "path": "outputs/training/phase_g_harness_summary.md",
+      "role": "harness_report",
+      "bytes": 4356,
+      "sha256": "88f897e24914b0f91972847ebb4d90608e1ed8ad8b4ae1071b0f4389b4f9f2e2"
     },
     {
       "path": "src/bist_analytics/mcp/server.py",
@@ -1011,8 +1169,8 @@
     {
       "path": "scripts/local_agent.py",
       "role": "source_code:agent_harness",
-      "bytes": 33820,
-      "sha256": "a4c99eba8fc0c3114136cafb52eeef24dd71899661753c97e6da173e2e113276"
+      "bytes": 34734,
+      "sha256": "75199517b2c17dabe9061cfaa01a12eb2e8e324d9cfaa5d7c12260e64d46c85f"
     },
     {
       "path": "src/bist_analytics/harness/grounding.py",
@@ -1041,8 +1199,8 @@
     {
       "path": "scripts/build_submission.py",
       "role": "source_code:run_scripts",
-      "bytes": 14280,
-      "sha256": "0ed06eadf6a2e4c23cd26f36c66eb1721bf629f5700820e0a18abfa1b3569b2f"
+      "bytes": 15309,
+      "sha256": "30b90139508992f140c34d522d43ac0b2b2c9a45c5b1b9646f9f91c03a2fd810"
     },
     {
       "path": "scripts/verify_submission.py",
@@ -1065,14 +1223,14 @@
     {
       "path": "training/Modelfile.finetuned",
       "role": "source_code:training_code",
-      "bytes": 2281,
-      "sha256": "6c5667e51b83590268a85f36f387d1b30d8caf63f3aa46da71829161e5862da7"
+      "bytes": 2296,
+      "sha256": "1dca5817f68e47043f502a8af500bd7aeb051f0450d78a2388a8167d9808587c"
     },
     {
       "path": "training/Modelfile.base",
       "role": "source_code:training_code",
-      "bytes": 1129,
-      "sha256": "58023578d29d25d0dcda37e85c652653da7c2ed3fe10388eab52132e2fcbaef5"
+      "bytes": 1130,
+      "sha256": "af5d7ade1065a0fd478d61ff2ab845588c1594ea24dab9a9021e4921452ce752"
     },
     {
       "path": "training/export_gguf.sh",
@@ -1083,14 +1241,26 @@
     {
       "path": "training/eval/run_baseline.py",
       "role": "source_code:evaluation_code",
-      "bytes": 6115,
-      "sha256": "1fa1d6bf1430c34fa5f988f25de7b044b23acec70a757049d97bcb2ca4459c28"
+      "bytes": 9840,
+      "sha256": "0ee9bdab0eab23e918652a2ba60a0d01ab59d674ad21d430e5446139d72c436b"
     },
     {
       "path": "training/eval/compare.py",
       "role": "source_code:evaluation_code",
-      "bytes": 3829,
-      "sha256": "53514596542f83a99d68675f6ded6626acbf4189b8454663584cf05b63d213d1"
+      "bytes": 10819,
+      "sha256": "2b412cb1069c50ae550504c78152f52e0ebfde52c5498bf5dcfa18d190acfd3a"
+    },
+    {
+      "path": "scripts/run_harness_experiments.py",
+      "role": "source_code:evaluation_code",
+      "bytes": 11776,
+      "sha256": "4c245f5eec804984229a4e3a43bed1fb332bf20fbbd2973da2fe521ca5532a3c"
+    },
+    {
+      "path": "scripts/generate_deliverables.py",
+      "role": "source_code:evaluation_code",
+      "bytes": 86830,
+      "sha256": "6bd529408281c91309ed9cd256dde1672ec16996ebf91f6797f598e7007afee8"
     },
     {
       "path": "src/bist_analytics/harness/evaluation.py",

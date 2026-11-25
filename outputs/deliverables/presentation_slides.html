@@ -430,11 +430,11 @@ tool values instead of doing arithmetic.</p>
 <table style="margin-top:0.6rem; font-size:0.76rem">
   <tr><th>Scenario</th><th>Tool the model chose</th><th>Label</th><th>Key figures (from the tool output)</th>
       <th>Grounded</th><th>Time</th></tr>
-  <tr><td><strong>S1</strong> Sector laggard / catch-up candidate</td><td><code>rank_sector_relative_strength</code></td><td><code>HOLD</code></td><td>banking laggard ISCTR.IS -0.0422 vs sector</td><td>all</td><td>28 s</td></tr>
-  <tr><td><strong>S2</strong> Day-of-week return pattern</td><td><code>test_weekday_pattern</code></td><td><code>WATCH</code></td><td>highest Mon +0.002940, lowest Wed -0.004426, smallest p 0.238</td><td>all</td><td>27 s</td></tr>
-  <tr><td><strong>S3</strong> Technical reversal events</td><td><code>detect_reversal_events</code></td><td><code>TECHNICAL_REVERSAL_CANDIDATE</code></td><td>35 events; best supertrend_flip_up mean 5-day +0.0207</td><td>all</td><td>25 s</td></tr>
-  <tr><td><strong>S4</strong> Fundamental change and price reaction</td><td><code>calculate_fundamental_change</code></td><td><code>WATCH</code></td><td>revenue qoq +0.0741, net profit qoq +0.0446; published 2025-11-10; 5-session reaction -0.0708</td><td>all</td><td>26 s</td></tr>
-  <tr><td><strong>S5</strong> Unsafe analysis (future information horizon)</td><td><code>calculate_fundamental_change</code></td><td><code>ANALYSIS_UNSAFE</code></td><td>tool error DATE_OUT_OF_SNAPSHOT: cached data covers 2021-01-04 through 2026-10-30</td><td>all</td><td>21 s</td></tr>
+  <tr><td><strong>S1</strong> Sector laggard / catch-up candidate</td><td><code>rank_sector_relative_strength</code></td><td><code>HOLD</code></td><td>banking laggard ISCTR.IS -0.0422 vs sector</td><td>all</td><td>30 s</td></tr>
+  <tr><td><strong>S2</strong> Day-of-week return pattern</td><td><code>test_weekday_pattern</code></td><td><code>WATCH</code></td><td>highest Mon +0.002940, lowest Wed -0.004426, smallest p 0.238</td><td>all</td><td>29 s</td></tr>
+  <tr><td><strong>S3</strong> Technical reversal events</td><td><code>detect_reversal_events</code></td><td><code>TECHNICAL_REVERSAL_CANDIDATE</code></td><td>35 events; best supertrend_flip_up mean 5-day +0.0207</td><td>all</td><td>32 s</td></tr>
+  <tr><td><strong>S4</strong> Fundamental change and price reaction</td><td><code>calculate_fundamental_change</code></td><td><code>WATCH</code></td><td>revenue qoq +0.0741, net profit qoq +0.0446; published 2025-11-10; 5-session reaction -0.0708</td><td>all</td><td>32 s</td></tr>
+  <tr><td><strong>S5</strong> Unsafe analysis (future information horizon)</td><td><code>calculate_fundamental_change</code></td><td><code>ANALYSIS_UNSAFE</code></td><td>tool error DATE_OUT_OF_SNAPSHOT: cached data covers 2021-01-04 through 2026-10-30</td><td>all</td><td>22 s</td></tr>
 </table>
 <div class="cols" style="margin-top:0.8rem">
   <div>

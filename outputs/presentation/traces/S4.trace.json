@@ -1,10 +1,10 @@
 {
   "schema_version": "bist-execution-trace/1",
-  "run_id": "1907682c-de47-4e88-8423-20760cb844d5",
+  "run_id": "5cfa9290-c47b-4a1a-8cba-74b8253b5ba6",
   "scenario_id": "S4",
-  "started_at": "2026-11-25T16:46:14.134+00:00",
-  "finished_at": "2026-11-25T16:46:40.441+00:00",
-  "wall_time_s": 26.307,
+  "started_at": "2026-11-25T18:12:08.268+00:00",
+  "finished_at": "2026-11-25T18:12:40.729+00:00",
+  "wall_time_s": 32.461,
   "model": {
     "name": "bist-qwen",
     "endpoint": "http://localhost:11434/v1",
@@ -70,8 +70,8 @@
       "search_knowledge_base"
     ],
     "git": {
-      "commit": "db82984c0a9edb678f1b39a8390f21333188813b",
-      "dirty": true
+      "commit": "928958c7cf5a5609fff555f6b15350df90da0109",
+      "dirty": false
     },
     "python": "3.12.14"
   },
@@ -106,9 +106,9 @@
       "date_range": {
         "as_of": "2025-12-31"
       },
-      "started_at": "2026-11-25T16:46:23.121+00:00",
-      "finished_at": "2026-11-25T16:46:28.773+00:00",
-      "duration_s": 5.651,
+      "started_at": "2026-11-25T18:12:18.913+00:00",
+      "finished_at": "2026-11-25T18:12:30.025+00:00",
+      "duration_s": 11.112,
       "result": {
         "content": [
           {
@@ -185,9 +185,9 @@
       "index": 1,
       "turn": 0,
       "type": "assistant",
-      "started_at": "2026-11-25T16:46:28.773+00:00",
-      "finished_at": "2026-11-25T16:46:31.834+00:00",
-      "duration_s": 3.06,
+      "started_at": "2026-11-25T18:12:30.025+00:00",
+      "finished_at": "2026-11-25T18:12:32.759+00:00",
+      "duration_s": 2.731,
       "content": "<tool_call>\n{\"name\": \"calculate_fundamental_change\", \"arguments\": {\"ticker\": \"THYAO.IS\", \"as_of\": \"2025-12-31\"}}\n</tool_call>",
       "tool_calls": [
         {
@@ -199,7 +199,7 @@
       "usage": {
         "prompt_tokens": 821,
         "prompt_tokens_details": {
-          "cached_tokens": 408
+          "cached_tokens": 820
         },
         "completion_tokens": 42,
         "total_tokens": 863
@@ -219,9 +219,9 @@
       "date_range": {
         "as_of": "2025-12-31"
       },
-      "started_at": "2026-11-25T16:46:31.834+00:00",
-      "finished_at": "2026-11-25T16:46:31.842+00:00",
-      "duration_s": 0.009,
+      "started_at": "2026-11-25T18:12:32.759+00:00",
+      "finished_at": "2026-11-25T18:12:32.765+00:00",
+      "duration_s": 0.011,
       "result": {
         "content": [
           {
@@ -296,10 +296,10 @@
       "index": 3,
       "turn": 1,
       "type": "assistant",
-      "started_at": "2026-11-25T16:46:31.843+00:00",
-      "finished_at": "2026-11-25T16:46:40.437+00:00",
-      "duration_s": 8.595,
-      "content": "<final_answer>\n{\"educational_label\": \"WATCH\", \"committed_evidence_ids\": [\"calculate_fundamental_change:THYAO.IS:2025-12-31:full\"], \"explanation\": \"calculate_fundamental_change for THYAO.IS as of 2025-12-31: revenue_qoq 0.0741 (label_by_rule WATCH); net_profit_qoq 0.0446 (label_by_rule WATCH). Latest statements: period 2025-09-30, published 2025-11-10. publication_reaction: close_before 289.50 on 2025-11-07, 1 session from publication; close_after_1_sessions 278.25 on 2025-11-10, return_1_sessions -0.0389; close_after_5_sessions 269.00 on 2025-11-14, return_5_sessions -0.0708. label_rule: qoq change > 0.1 → FUNDAMENTAL_IMPROVEMENT_CANDIDATE (net_profit_qoq also needs revenue_qoq > 0); < -0.1 → REJECT_SIGNAL; otherwise WATCH. Selected (net profit): WATCH. The price reaction is descriptive only.\"}\n</final_answer>",
+      "started_at": "2026-11-25T18:12:32.765+00:00",
+      "finished_at": "2026-11-25T18:12:40.726+00:00",
+      "duration_s": 7.956,
+      "content": "<final_answer>\n{\"educational_label\": \"WATCH\", \"committed_evidence_ids\": [\"calculate_fundamental_change:THYAO.IS:2025-12-31:full\"], \"explanation\": \"calculate_fundamental_change for THYAO.IS as of 2025-12-31: revenue_qoq 0.0741 (label_by_rule WATCH); net_profit_qoq 0.0446 (label_by_rule WATCH). Latest statements: period 2025-09-30, published 2025-11-10. publication_reaction: close_before 289.50 on 2025-11-07, 1 session after publication close 278.25 on 2025-11-10 (return -0.0389); 5 sessions after publication close 269.00 on 2025-11-14 (return -0.0708). label_rule: qoq change > 0.1 → FUNDAMENTAL_IMPROVEMENT_CANDIDATE (net_profit_qoq also needs revenue_qoq > 0); < -0.1 → REJECT_SIGNAL; otherwise WATCH. Selected (net profit): WATCH. The price reaction is descriptive only.\"}\n</final_answer>",
       "tool_calls": [],
       "finish_reason": "stop",
       "usage": {
@@ -307,8 +307,8 @@
         "prompt_tokens_details": {
           "cached_tokens": 862
         },
-        "completion_tokens": 315,
-        "total_tokens": 1902
+        "completion_tokens": 305,
+        "total_tokens": 1892
       },
       "system_fingerprint": "fp_ollama"
     }
@@ -316,11 +316,11 @@
   "tools_called": [
     "calculate_fundamental_change"
   ],
-  "final_answer": "<final_answer>\n{\"educational_label\": \"WATCH\", \"committed_evidence_ids\": [\"calculate_fundamental_change:THYAO.IS:2025-12-31:full\"], \"explanation\": \"calculate_fundamental_change for THYAO.IS as of 2025-12-31: revenue_qoq 0.0741 (label_by_rule WATCH); net_profit_qoq 0.0446 (label_by_rule WATCH). Latest statements: period 2025-09-30, published 2025-11-10. publication_reaction: close_before 289.50 on 2025-11-07, 1 session from publication; close_after_1_sessions 278.25 on 2025-11-10, return_1_sessions -0.0389; close_after_5_sessions 269.00 on 2025-11-14, return_5_sessions -0.0708. label_rule: qoq change > 0.1 → FUNDAMENTAL_IMPROVEMENT_CANDIDATE (net_profit_qoq also needs revenue_qoq > 0); < -0.1 → REJECT_SIGNAL; otherwise WATCH. Selected (net profit): WATCH. The price reaction is descriptive only.\"}\n</final_answer>",
+  "final_answer": "<final_answer>\n{\"educational_label\": \"WATCH\", \"committed_evidence_ids\": [\"calculate_fundamental_change:THYAO.IS:2025-12-31:full\"], \"explanation\": \"calculate_fundamental_change for THYAO.IS as of 2025-12-31: revenue_qoq 0.0741 (label_by_rule WATCH); net_profit_qoq 0.0446 (label_by_rule WATCH). Latest statements: period 2025-09-30, published 2025-11-10. publication_reaction: close_before 289.50 on 2025-11-07, 1 session after publication close 278.25 on 2025-11-10 (return -0.0389); 5 sessions after publication close 269.00 on 2025-11-14 (return -0.0708). label_rule: qoq change > 0.1 → FUNDAMENTAL_IMPROVEMENT_CANDIDATE (net_profit_qoq also needs revenue_qoq > 0); < -0.1 → REJECT_SIGNAL; otherwise WATCH. Selected (net profit): WATCH. The price reaction is descriptive only.\"}\n</final_answer>",
   "turns_used": 2,
   "grounding_audit": {
-    "numbers_found": 11,
-    "grounded_count": 11,
+    "numbers_found": 12,
+    "grounded_count": 12,
     "ungrounded_count": 0,
     "all_grounded": true,
     "grounded": [
@@ -381,6 +381,16 @@
         "percent": false,
         "is_year": false,
         "tool_value": -0.0389,
+        "scale": 1.0,
+        "abs_match": false
+      },
+      {
+        "text": "5",
+        "value": 5.0,
+        "decimals": 0,
+        "percent": false,
+        "is_year": false,
+        "tool_value": 5.0,
         "scale": 1.0,
         "abs_match": false
       },

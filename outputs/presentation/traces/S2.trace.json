@@ -1,10 +1,10 @@
 {
   "schema_version": "bist-execution-trace/1",
-  "run_id": "aa0b9a36-119b-4448-a82b-838b3eb7d1ea",
+  "run_id": "15c4c68a-89f5-477e-be94-735124dc62ac",
   "scenario_id": "S2",
-  "started_at": "2026-11-25T16:45:21.653+00:00",
-  "finished_at": "2026-11-25T16:45:48.584+00:00",
-  "wall_time_s": 26.928,
+  "started_at": "2026-11-25T18:11:07.022+00:00",
+  "finished_at": "2026-11-25T18:11:35.638+00:00",
+  "wall_time_s": 28.614,
   "model": {
     "name": "bist-qwen",
     "endpoint": "http://localhost:11434/v1",
@@ -70,8 +70,8 @@
       "search_knowledge_base"
     ],
     "git": {
-      "commit": "db82984c0a9edb678f1b39a8390f21333188813b",
-      "dirty": true
+      "commit": "928958c7cf5a5609fff555f6b15350df90da0109",
+      "dirty": false
     },
     "python": "3.12.14"
   },
@@ -106,9 +106,9 @@
       "date_range": {
         "as_of": "2025-12-31"
       },
-      "started_at": "2026-11-25T16:45:30.934+00:00",
-      "finished_at": "2026-11-25T16:45:37.948+00:00",
-      "duration_s": 7.015,
+      "started_at": "2026-11-25T18:11:16.784+00:00",
+      "finished_at": "2026-11-25T18:11:26.086+00:00",
+      "duration_s": 9.302,
       "result": {
         "content": [
           {
@@ -187,9 +187,9 @@
       "index": 1,
       "turn": 0,
       "type": "assistant",
-      "started_at": "2026-11-25T16:45:37.949+00:00",
-      "finished_at": "2026-11-25T16:45:41.369+00:00",
-      "duration_s": 3.419,
+      "started_at": "2026-11-25T18:11:26.086+00:00",
+      "finished_at": "2026-11-25T18:11:29.413+00:00",
+      "duration_s": 3.327,
       "content": "<tool_call>\n{\"name\": \"test_weekday_pattern\", \"arguments\": {\"ticker\": \"EREGL.IS\", \"start\": \"2025-01-01\", \"end\": \"2025-12-31\"}}\n</tool_call>",
       "tool_calls": [
         {
@@ -201,7 +201,7 @@
       "usage": {
         "prompt_tokens": 764,
         "prompt_tokens_details": {
-          "cached_tokens": 408
+          "cached_tokens": 763
         },
         "completion_tokens": 54,
         "total_tokens": 818
@@ -223,9 +223,9 @@
         "start": "2025-01-01",
         "end": "2025-12-31"
       },
-      "started_at": "2026-11-25T16:45:41.369+00:00",
-      "finished_at": "2026-11-25T16:45:41.474+00:00",
-      "duration_s": 0.105,
+      "started_at": "2026-11-25T18:11:29.414+00:00",
+      "finished_at": "2026-11-25T18:11:29.509+00:00",
+      "duration_s": 0.096,
       "result": {
         "content": [
           {
@@ -346,9 +346,9 @@
       "index": 3,
       "turn": 1,
       "type": "assistant",
-      "started_at": "2026-11-25T16:45:41.474+00:00",
-      "finished_at": "2026-11-25T16:45:48.578+00:00",
-      "duration_s": 7.104,
+      "started_at": "2026-11-25T18:11:29.509+00:00",
+      "finished_at": "2026-11-25T18:11:35.634+00:00",
+      "duration_s": 6.125,
       "content": "<final_answer>\n{\"educational_label\": \"WATCH\", \"committed_evidence_ids\": [\"test_weekday_pattern:EREGL.IS:2025-01-01:2025-12-31\"], \"explanation\": \"test_weekday_pattern for EREGL.IS, 2025-01-01 to 2025-12-31 (summary): highest Mon mean 0.002940 (n=49, uncorrected p=0.367); lowest Wed mean -0.004426 (n=49, uncorrected p=0.257). No weekday has uncorrected p below 0.1 (smallest 0.238 for Thu), so no significant weekday effect. label_rule: uncorrected p < 0.1 → INVESTIGATE, otherwise WATCH. label_by_rule: WATCH. Label: WATCH.\"}\n</final_answer>",
       "tool_calls": [],
       "finish_reason": "stop",
