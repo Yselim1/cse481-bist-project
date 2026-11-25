@@ -1,30 +1,42 @@
 {
   "schema_version": "bist-execution-trace/1",
-  "run_id": "1e1146a4-6c89-484e-b259-e51fbe98ab6f",
+  "run_id": "aa0b9a36-119b-4448-a82b-838b3eb7d1ea",
   "scenario_id": "S2",
-  "started_at": "2026-11-25T16:29:41.275+00:00",
-  "finished_at": "2026-11-25T16:30:11.726+00:00",
-  "wall_time_s": 30.452,
+  "started_at": "2026-11-25T16:45:21.653+00:00",
+  "finished_at": "2026-11-25T16:45:48.584+00:00",
+  "wall_time_s": 26.928,
   "model": {
     "name": "bist-qwen",
     "endpoint": "http://localhost:11434/v1",
     "ollama_version": "0.40.16",
-    "digest": "03815952dddc6ff1489e9910c93a872c32be7f09095ffa09c810065f67b66b72",
+    "digest": "2ea69e9a076b8b5b83109ffe51879c523f34d16d4cce05d7aa4a531699c42814",
     "size_bytes": 1929903359,
-    "modified_at": "2026-11-25T19:13:21.6186539+03:00",
+    "modified_at": "2026-11-25T19:44:13.5817669+03:00",
     "family": "qwen2",
     "parameter_size": "3.1B",
     "quantization_level": "Q4_K_M",
     "format": "gguf",
-    "modelfile_parameters": "top_p                          0.9\nnum_ctx                        65536\ntemperature                    0",
-    "modelfile_sha256": "c7d4eab0ee20daca5cd1bcb148a5991550602e6e48594be4498d69d9acd87dcc"
+    "modelfile_parameters": "num_ctx                        16384\ntemperature                    0\ntop_p                          0.9",
+    "modelfile_sha256": "d671e9ae7188711279a3f45d934da4630f9935194858a7d966867f8d3a6d0d85",
+    "base_model": {
+      "name": "Qwen2.5-3B-Instruct",
+      "version": "Qwen2.5, 3B parameters, instruct",
+      "huggingface_repo": "Qwen/Qwen2.5-3B-Instruct",
+      "huggingface_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+      "training_checkpoint": "unsloth/Qwen2.5-3B-Instruct-bnb-4bit",
+      "training_checkpoint_revision": "2672b588848527e456d320c11926c794539f47d5",
+      "download_source": "https://huggingface.co/Qwen/Qwen2.5-3B-Instruct",
+      "ollama_base_tag": "qwen2.5:3b-instruct",
+      "license": "Qwen Research License (qwen2.5-3b-instruct)"
+    },
+    "adapter_sha256": "ad3716e908060dc87c3095d5a20ac9811f557cf293ead4f80a2497d143908e53"
   },
   "sampling": {
     "temperature": 0.0,
     "seed": 17,
     "max_tokens": 1536,
     "top_p": "0.9",
-    "num_ctx": "65536",
+    "num_ctx": "16384",
     "endpoint": "http://localhost:11434/v1/chat/completions"
   },
   "harness": {
@@ -58,7 +70,7 @@
       "search_knowledge_base"
     ],
     "git": {
-      "commit": "f052f85ddb9484da9694a3e7e53b970f03bbbaa1",
+      "commit": "db82984c0a9edb678f1b39a8390f21333188813b",
       "dirty": true
     },
     "python": "3.12.14"
@@ -94,9 +106,9 @@
       "date_range": {
         "as_of": "2025-12-31"
       },
-      "started_at": "2026-11-25T16:29:50.040+00:00",
-      "finished_at": "2026-11-25T16:29:54.932+00:00",
-      "duration_s": 4.892,
+      "started_at": "2026-11-25T16:45:30.934+00:00",
+      "finished_at": "2026-11-25T16:45:37.948+00:00",
+      "duration_s": 7.015,
       "result": {
         "content": [
           {
@@ -175,9 +187,9 @@
       "index": 1,
       "turn": 0,
       "type": "assistant",
-      "started_at": "2026-11-25T16:29:54.932+00:00",
-      "finished_at": "2026-11-25T16:29:59.488+00:00",
-      "duration_s": 4.556,
+      "started_at": "2026-11-25T16:45:37.949+00:00",
+      "finished_at": "2026-11-25T16:45:41.369+00:00",
+      "duration_s": 3.419,
       "content": "<tool_call>\n{\"name\": \"test_weekday_pattern\", \"arguments\": {\"ticker\": \"EREGL.IS\", \"start\": \"2025-01-01\", \"end\": \"2025-12-31\"}}\n</tool_call>",
       "tool_calls": [
         {
@@ -211,9 +223,9 @@
         "start": "2025-01-01",
         "end": "2025-12-31"
       },
-      "started_at": "2026-11-25T16:29:59.488+00:00",
-      "finished_at": "2026-11-25T16:29:59.583+00:00",
-      "duration_s": 0.095,
+      "started_at": "2026-11-25T16:45:41.369+00:00",
+      "finished_at": "2026-11-25T16:45:41.474+00:00",
+      "duration_s": 0.105,
       "result": {
         "content": [
           {
@@ -334,9 +346,9 @@
       "index": 3,
       "turn": 1,
       "type": "assistant",
-      "started_at": "2026-11-25T16:29:59.583+00:00",
-      "finished_at": "2026-11-25T16:30:11.723+00:00",
-      "duration_s": 12.14,
+      "started_at": "2026-11-25T16:45:41.474+00:00",
+      "finished_at": "2026-11-25T16:45:48.578+00:00",
+      "duration_s": 7.104,
       "content": "<final_answer>\n{\"educational_label\": \"WATCH\", \"committed_evidence_ids\": [\"test_weekday_pattern:EREGL.IS:2025-01-01:2025-12-31\"], \"explanation\": \"test_weekday_pattern for EREGL.IS, 2025-01-01 to 2025-12-31 (summary): highest Mon mean 0.002940 (n=49, uncorrected p=0.367); lowest Wed mean -0.004426 (n=49, uncorrected p=0.257). No weekday has uncorrected p below 0.1 (smallest 0.238 for Thu), so no significant weekday effect. label_rule: uncorrected p < 0.1 → INVESTIGATE, otherwise WATCH. label_by_rule: WATCH. Label: WATCH.\"}\n</final_answer>",
       "tool_calls": [],
       "finish_reason": "stop",

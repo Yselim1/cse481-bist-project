@@ -1,2 +1,40 @@
 Could not parse JSON from model output. Raw text:
-MAX_TURNS_EXCEEDED
+{
+  "as_of": "2026-09-25",
+  "financial_period": "2025-01-01 - 2026-09-26",
+  "revenue_try_million": 106849.24441847636,
+  "net_profit_try_million": 4476.254705612882,
+  "net_debt_try_million": -236640.0,
+  "combined_return": -0.10672196625331909,
+  "technical_return": 0.06849244418476363,
+  "buy_hold_return": 0.04476254705612881,
+  "bist100_return": 0.3073817789827118,
+  "signal_action": "REJECT_SIGNAL",
+  "context_event_ids": [
+    "air-europa-offer",
+    "air-europa-talks",
+    "air-europa-agreement",
+    "fin-2025q1",
+    "fin-2025q2",
+    "fin-2025q3",
+    "fin-2025fy",
+    "fin-2026q1",
+    "fin-2026q2",
+    "boeing-2025",
+    "boeing-2026"
+  ],
+  "evidence_tools": [
+    "get_fundamental_metrics",
+    "calculate_indicators",
+    "calculate_scores",
+    "generate_signal",
+    "run_backtest",
+    "get_context_events",
+    "get_macro_context",
+    "get_news_events",
+    "rank_sector_relative_strength",
+    "search_knowledge_base"
+  ],
+  "educational_caveat": "This analysis is based on the verified original annual Fintables statements, which are in nominal TRY. The latest modeled financial period is 30 June 2026. YTD values are combined with FY2025 and comparative 2025 YTD values to construct same-basis TTM flows. Net debt matches the current Fintables convention: bank and lease debt minus cash and current financial investments. KAP disclosure text is kept in kap/thyao_context_events.csv as timestamped context; it never replaces numerical statements or changes a trading score.",
+  "investment_recommendation": "REJECT_SIGNAL",
+  "narrative": "THYAO's latest available trailing financial state shows a revenue of TRY106,849.24 million, net profit of TRY4,476.25 million, and net debt of TRY23,664.00 million. The combined return over the period is -10.67%. The technical return is 6.85%, the buy-hold return is 4.48%, and the BIST100 return is 30.74%. The latest available financial report is the 2025 annual financial report, released on March 4, 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30 June 2026. The latest available financial period is 30

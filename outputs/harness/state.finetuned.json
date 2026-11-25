@@ -8,17 +8,17 @@
   ],
   "runs": [
     {
-      "answer_sha256": "81b3ad8e0aa8d11e68c2a5220fb22158026c501c72d45c60c686d6c9ddb6ef9a",
+      "answer_sha256": "ccb76f99dfe8e14657937958468e9a93a4743a22ed1a15a52cf13e2b0e8cd034",
       "backend": "ollama",
       "called_tools": [],
-      "completed_at": "2026-11-20T10:16:09.088732+00:00",
+      "completed_at": "2026-11-25T17:29:06.146995+00:00",
       "model": "bist-qwen",
       "quality_gate_pass": false,
       "stage": "raw_llm",
-      "trace_sha256": "27129edb63bc94552ad2f5bbd81413c644c21a76c0f6387ff4e28dc3196f8b72"
+      "trace_sha256": "10c139c93cca206e7e73ec286055829dfe9bc6b35ee177994797d84aa976b1af"
     },
     {
-      "answer_sha256": "3c5a43a6c2344be7d25cdd8edbcb9dbca63c74ad845ed7210c5b7e21d5ec3af2",
+      "answer_sha256": "6b5650903baecee1bf91fac730fff50fe4f35fc9639af8ddd8aa4e34d25dfc4b",
       "backend": "ollama",
       "called_tools": [
         "calculate_indicators",
@@ -26,71 +26,65 @@
         "generate_signal",
         "get_context_events",
         "get_fundamental_metrics",
-        "get_macro_context",
-        "run_backtest"
-      ],
-      "completed_at": "2026-11-20T10:20:46.199918+00:00",
-      "model": "bist-qwen",
-      "quality_gate_pass": false,
-      "stage": "llm_tools",
-      "trace_sha256": "487a1c85f60f40871aa5a56c66af001035855ff9b5a39cddb276c17a3196060f"
-    },
-    {
-      "answer_sha256": "6510be054cca4ce25dc5849211c7f6925a7eec8bbd691b33bb1797b52d9ac1c3",
-      "backend": "ollama",
-      "called_tools": [
-        "calculate_indicators",
-        "calculate_scores",
-        "generate_signal",
-        "get_context_events",
-        "get_fundamental_metrics",
-        "run_backtest"
-      ],
-      "completed_at": "2026-11-20T10:36:39.660678+00:00",
-      "model": "bist-qwen",
-      "quality_gate_pass": false,
-      "stage": "stateful_harness",
-      "trace_sha256": "b47af3d5ebcafc50a02e9adb6a35778b506291b3eedac10327d6237ff06ec506"
-    },
-    {
-      "answer_sha256": "6505aae1fc8406685f3b933aea4dcff9a61b52acc5b901236012ffb603150ab8",
-      "backend": "ollama",
-      "called_tools": [
-        "build_evidence_bundle",
-        "calculate_indicators",
-        "calculate_scores",
-        "generate_signal",
-        "get_context_events",
-        "get_fundamental_metrics",
-        "run_backtest"
-      ],
-      "completed_at": "2026-11-20T10:37:33.879969+00:00",
-      "model": "bist-qwen",
-      "quality_gate_pass": false,
-      "stage": "evidence_quality_gate",
-      "trace_sha256": "a795889de914743583d98ffe3457a31f167b5d432625c6304e5991d9721f651e"
-    },
-    {
-      "answer_sha256": "fe606ce8bac35516c5b54181f79f1f52de20617f7753c34b627079631434c4a6",
-      "backend": "ollama",
-      "called_tools": [
-        "calculate_indicators",
-        "calculate_scores",
-        "find_support_resistance",
-        "generate_report",
-        "generate_signal",
-        "get_context_events",
-        "get_fundamental_metrics",
-        "get_index_history",
-        "get_macro_context",
         "get_speech_features",
         "run_backtest"
       ],
-      "completed_at": "2026-11-20T10:39:23.465236+00:00",
+      "completed_at": "2026-11-25T17:29:52.807902+00:00",
+      "model": "bist-qwen",
+      "quality_gate_pass": false,
+      "stage": "llm_tools",
+      "trace_sha256": "86000f45a33377c6a040eb008b68616a6348e708fb03b186fa89a60062531c8f"
+    },
+    {
+      "answer_sha256": "b991006efa92ebf453dde4edffb7c6f8ce34957a2291102b3c80f351a38998f2",
+      "backend": "ollama",
+      "called_tools": [
+        "calculate_indicators",
+        "calculate_scores",
+        "generate_signal",
+        "get_context_events",
+        "get_fundamental_metrics",
+        "run_backtest"
+      ],
+      "completed_at": "2026-11-25T17:30:38.897097+00:00",
+      "model": "bist-qwen",
+      "quality_gate_pass": false,
+      "stage": "stateful_harness",
+      "trace_sha256": "84e9210eaccaee7f669d969c1bdcbf4e38b2eed06dbcde346bd61aececa87a9c"
+    },
+    {
+      "answer_sha256": "0ba39b84a53e0e89c04c393c2ff29543d76afd974e22900811465c291d4a065d",
+      "backend": "ollama",
+      "called_tools": [
+        "calculate_indicators",
+        "calculate_scores",
+        "generate_signal",
+        "get_context_events",
+        "get_fundamental_metrics",
+        "run_backtest"
+      ],
+      "completed_at": "2026-11-25T17:31:29.480587+00:00",
+      "model": "bist-qwen",
+      "quality_gate_pass": false,
+      "stage": "evidence_quality_gate",
+      "trace_sha256": "11fb306c6e4613a23a610800c3b9285d49c2b3acf0d01c2e9e3130a89e332e38"
+    },
+    {
+      "answer_sha256": "73d1d55dde2eb96886adfde6423d3f0cc030f6f4c06ced3b2746b83853e47bf5",
+      "backend": "ollama",
+      "called_tools": [
+        "calculate_indicators",
+        "calculate_scores",
+        "generate_signal",
+        "get_context_events",
+        "get_fundamental_metrics",
+        "run_backtest"
+      ],
+      "completed_at": "2026-11-25T17:32:03.622715+00:00",
       "model": "bist-qwen",
       "quality_gate_pass": false,
       "stage": "memory_human_review",
-      "trace_sha256": "82df7a9506aa558a78fa770dd8a7038dfacff57dd192810ed5237cd3895e4dd6"
+      "trace_sha256": "78ef244e33e984edb47411446cd467e18e2b5f84a68df0789d185e2a8a7dca77"
     }
   ]
 }

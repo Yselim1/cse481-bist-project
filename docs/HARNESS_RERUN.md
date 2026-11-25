@@ -8,15 +8,20 @@ Codex/dev-cloud traces.
 ## Prerequisites
 
 1. `ollama serve` is running (port 11434).
-2. Either `qwen2.5:7b-instruct` or the fine-tuned tag `bist-qwen` is present
+2. `bist-qwen` (fine-tuned) and `bist-qwen-base` (base) are present
    (`ollama list`).
 3. The repo's venv is bootstrapped (`docs/LOCAL_SETUP.md` §1).
 
-## Baseline run (Qwen 2.5 7B, pre-fine-tune)
+The Ollama path always loads `config/tms29.yaml` (the question is about the TMS 29 THYAO study)
+and does no harness-side RAG, so stages stay comparable across runs. Results of the
+2026-11-25 run: `outputs/training/phase_g_harness_summary.md`.
+
+## Baseline run (Qwen 2.5 3B base, same context as the fine-tune)
 
 ```powershell
+ollama create bist-qwen-base -f training/Modelfile.base
 .\.venv\Scripts\python.exe scripts\run_harness_experiments.py `
-    --backend ollama --model qwen2.5:7b-instruct
+    --backend ollama --model bist-qwen-base
 # Preserve for the comparison table:
 Copy-Item outputs\harness\comparison.json outputs\harness\comparison.base.json
 Copy-Item outputs\harness\state.json outputs\harness\state.base.json
@@ -31,7 +36,7 @@ Copy-Item outputs\harness\comparison.json outputs\harness\comparison.finetuned.j
 Copy-Item outputs\harness\state.json     outputs\harness\state.finetuned.json
 ```
 
-Expected wall clock: ~8–15 min per run on a workstation with 8 GB VRAM.
+Expected wall clock: about 5 min per run with the 3B model fully on a 4 GB GPU (see docs/PRESENTATION.md for the Ollama GPU settings).
 
 ## What to inspect
 

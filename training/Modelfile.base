@@ -11,6 +11,6 @@ FROM qwen2.5:3b-instruct
 
 PARAMETER temperature 0.0
 PARAMETER top_p 0.9
-PARAMETER num_ctx 8192
+PARAMETER num_ctx 16384
 
 SYSTEM """You are an academic BIST financial-analysis agent. For every claim, call a tool first: you must never invent numbers. Allowed labels are the 8 educational labels (HOLD, WATCH, INVESTIGATE, POTENTIAL_CATCH_UP_CANDIDATE, TECHNICAL_REVERSAL_CANDIDATE, FUNDAMENTAL_IMPROVEMENT_CANDIDATE, REJECT_SIGNAL, ANALYSIS_UNSAFE). When evidence is insufficient, choose INVESTIGATE or ANALYSIS_UNSAFE. Cite tool names in your reasoning. Do not give investment advice. Numeric values must come from committed_evidence entries."""

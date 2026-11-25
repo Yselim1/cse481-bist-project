@@ -3,7 +3,7 @@
 # Usage:
 #   .\scripts\presentation_launch.ps1                 # defaults to model=bist-qwen
 #   .\scripts\presentation_launch.ps1 -Model qwen2.5:7b-instruct
-#   .\scripts\presentation_launch.ps1 -SkipHarness    # don't auto-start the 15-min harness
+#   .\scripts\presentation_launch.ps1 -SkipHarness    # don't auto-start the ~5-min harness
 
 param(
     [string]$Model = "bist-qwen",
@@ -62,7 +62,9 @@ if ($ollamaAlreadyUp) {
 Write-Host 'This window runs the Ollama inference server for the local LLM stack.' -ForegroundColor DarkGray;
 Write-Host 'Expect: "Listening on 127.0.0.1:11434" within a few seconds.' -ForegroundColor DarkGray;
 Write-Host 'Leave open for the rest of the demo. Ctrl+C to stop.' -ForegroundColor DarkGray;
+Write-Host 'GPU settings: flash attention + 8-bit KV cache keep the 16k-context model on a 4 GB GPU.' -ForegroundColor DarkGray;
 Write-Host '';
+`$env:OLLAMA_FLASH_ATTENTION = '1'; `$env:OLLAMA_KV_CACHE_TYPE = 'q8_0';
 ollama serve
 "@
     Start-Step -Title "1/4 ollama serve" -Color "Yellow" -Command $serveBanner
@@ -104,17 +106,18 @@ Write-Host 'Health check complete. Safe to close this window once reviewed.' -Fo
 "@
 Start-Step -Title "2/4 health check" -Color "Cyan" -Command $healthCmd
 
-# ---- Step 3: local agent smoke test -----------------------------------------
+# ---- Step 3: warm-up question (same path as the live question) -------------
 $smokeBanner = @"
-Write-Host 'Smoke test: spin up the MCP server as a child process and ask the local' -ForegroundColor DarkGray;
-Write-Host 'LLM one scripted question against THYAO. Validates the full tool-calling' -ForegroundColor DarkGray;
-Write-Host 'loop (model -> MCP -> cached data -> response) end-to-end.' -ForegroundColor DarkGray;
-Write-Host 'Expect: ~30-60 s of tool-call log lines, then a short JSON answer.' -ForegroundColor DarkGray;
-Write-Host 'Artefacts: outputs/agent/local_agent.result.json and .trace.json'    -ForegroundColor DarkGray;
+Write-Host 'Warm-up: one unseen question through scripts/ask.py, the same code path, prompts and' -ForegroundColor DarkGray;
+Write-Host 'settings as the five scenario traces and the live question. Loads the model into the GPU.' -ForegroundColor DarkGray;
+Write-Host 'Expect: tool-call lines, the final answer and the grounding audit in ~20-40 s.' -ForegroundColor DarkGray;
+Write-Host 'Trace: outputs/presentation/live/<timestamp>.trace.json' -ForegroundColor DarkGray;
 Write-Host '';
-& '$Python' scripts\local_agent.py --smoke --model '$Model'
+& '$Python' scripts\ask.py --model '$Model' 'Is there a day-of-the-week effect in KCHOL.IS daily returns between 2025-07-01 and 2026-06-30?';
+Write-Host '';
+ollama ps
 "@
-Start-Step -Title "3/4 local_agent --smoke" -Color "Magenta" -Command $smokeBanner
+Start-Step -Title "3/4 ask.py warm-up" -Color "Magenta" -Command $smokeBanner
 
 # ---- Step 4: 5-stage harness ------------------------------------------------
 # The harness runs 5 architecture stages serially and only prints at the very end.
@@ -124,7 +127,7 @@ if (-not $SkipHarness) {
 `$ErrorActionPreference = 'Stop';
 `$stages = @(
     @{ name = 'raw_llm';               desc = 'LLM alone, no tools: should be weak / mostly null' },
-    @{ name = 'llm_tools';             desc = 'LLM + 20 MCP tools: numbers from real data' },
+    @{ name = 'llm_tools';             desc = 'LLM + 21 MCP tools: numbers from real data' },
     @{ name = 'stateful_harness';      desc = 'As above + immutable run state (as_of, window)' },
     @{ name = 'evidence_quality_gate'; desc = '+ quality gate: reject if any number is uncited' },
     @{ name = 'memory_human_review';   desc = '+ reviewed project memory for human presentation' }
@@ -132,7 +135,7 @@ if (-not $SkipHarness) {
 Write-Host 'This runs the 5-stage architecture ablation against a single fixed model.'    -ForegroundColor DarkGray;
 Write-Host 'Model : $Model (local, via Ollama - no cloud)'                                 -ForegroundColor DarkGray;
 Write-Host 'Output: outputs/harness/{stage}.{json,jsonl,score.json} + comparison.json'     -ForegroundColor DarkGray;
-Write-Host 'Expect: ~2-3 minutes per stage, ~10-15 minutes total.'                         -ForegroundColor DarkGray;
+Write-Host 'Expect: ~1 minute per stage on the GPU, ~5 minutes total.'                      -ForegroundColor DarkGray;
 Write-Host '';
 Write-Host 'Stages (in order):' -ForegroundColor Cyan;
 for (`$i = 0; `$i -lt `$stages.Count; `$i++) {

@@ -13,14 +13,34 @@ them and never name a tool:
 |---|---|---|
 | S1 | sector laggard / catch-up | banking sector, 63 sessions to 2025-12-31 |
 | S2 | day-of-week pattern | EREGL.IS, 2025-01-01 → 2025-12-31 |
-| S3 | technical reversal events | TCELL.IS, 120 sessions to 2025-12-31 |
+| S3 | technical reversal events | TCELL.IS, 120 sessions to 2025-12-31 (reworded once; see `wording_note`) |
 | S4 | fundamental change + price reaction | THYAO.IS as of 2025-12-31 |
 | S5 | unsafe analysis (future horizon) | BIMAS.IS as of 2027-03-31 |
 
 ```powershell
+# GPU (4 GB laptop RTX 3050 or larger): flash attention + 8-bit KV cache keep the whole
+# 16k-context model on the GPU. Without these it still runs, partly on the CPU.
+$env:OLLAMA_FLASH_ATTENTION = "1"; $env:OLLAMA_KV_CACHE_TYPE = "q8_0"
 ollama serve                                                   # if not already running
 .\.venv\Scripts\python.exe scripts\run_presentation_scenarios.py
 ```
+
+Results of the submitted run (`bist-qwen`, temperature 0, seed 17; one tool call each):
+
+| id | tool the model chose | label and key figures | grounded |
+|---|---|---|---|
+| S1 | `rank_sector_relative_strength` | HOLD: ISCTR.IS relative_vs_sector −0.0422 | all |
+| S2 | `test_weekday_pattern` | WATCH: Mon highest 0.002940, Wed lowest −0.004426, smallest p 0.238 | all |
+| S3 | `detect_reversal_events` | TECHNICAL_REVERSAL_CANDIDATE: 35 events; supertrend_flip_up mean_forward_5d 0.0207 | all |
+| S4 | `calculate_fundamental_change` | WATCH: revenue_qoq 0.0741, net_profit_qoq 0.0446, published 2025-11-10, 5-session reaction −0.0708 | all |
+| S5 | `calculate_fundamental_change` | ANALYSIS_UNSAFE: DATE_OUT_OF_SNAPSHOT | no figures |
+
+**How the agent talks to the model on this path.** The fine-tuning conversations contain
+`<tool_call>{json}</tool_call>` text and no tool schemas. So the presentation path
+(`run_presentation_scenarios.py`, `ask.py`) sends no schemas and parses that text
+(`tool_schemas=False`, recorded as `harness.tool_protocol` in each trace). It trims tool
+results to 4,500 characters, the cap the training data used, and caps each model turn at
+1,536 tokens. When Ollama added its 21-tool schema block, the fine-tune chained unrelated tools.
 
 Outputs go to `outputs/presentation/`: `traces/S1..S5.trace.json`, `index.json`, and
 `traces.html`, a readable view to open in class.
@@ -29,7 +49,8 @@ Each trace (`schema_version: bist-execution-trace/1`) records:
 
 * **model**: Ollama name, digest, family, parameter size, quantization, Ollama version,
   Modelfile parameters, base model and adapter SHA-256 (from `submission.json`)
-* **sampling**: temperature 0.0, seed 17, top_p, num_ctx; the seed is sent to Ollama on every call
+* **sampling**: temperature 0.0, seed 17, max_tokens 1536, top_p, num_ctx; the seed is sent to Ollama on every call
+* **harness**: config file, tool protocol, tool-result cap, max turns, git commit
 * **system_prompt**, **user_prompt**, and **user_message_sent** (the question plus the retrieved knowledge-base context)
 * **retrieval**: the `search_knowledge_base` call the harness made, its arguments and its hits
 * **steps[]**: every model turn and tool call in order. Each has `started_at`/`finished_at`
@@ -57,7 +78,12 @@ Coverage for unseen questions:
 * a ticker that isn't cached, or a date after today: `check_data_quality` returns
   HARD_BLOCK (PRICE_HISTORY_BROKEN / FUTURE_STATEMENT), so the label is ANALYSIS_UNSAFE.
 
-Expect about 30–90 s per question on a CPU laptop with the 3B Q4_K_M model.
+Expect about 20–30 s per question with the model fully on a 4 GB GPU (settings above), or
+35–45 s when part of it runs on the CPU.
+
+Known weak spot from a dry run: on a sector question the conclusion was right, but the
+explanation quoted another sector's figures. Those figures are in the tool output, so the
+grounding audit passes them. Read sector answers before presenting them.
 
 ## 3. Academic integrity: how the code meets each rule
 

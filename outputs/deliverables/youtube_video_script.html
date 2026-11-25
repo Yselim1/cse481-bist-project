@@ -147,11 +147,10 @@ body.tp .honest{background:#2a2112;color:#f2f2f2}
       <li>In OBS, go to <b>Scene Collection → Import</b> and choose <code>Desktop\CSE481_Video_OBS_Scenes.json</code>, then switch to the "CSE481 Video" collection. It has one scene per screen in this script, with a hotkey for each (shown in each segment).</li>
       <li>Check that <b>Mic/Aux</b> moves in the OBS audio mixer. Desktop audio starts muted so notification sounds stay out.</li>
       <li>Open Windows Terminal and VS Code before switching to scenes 02b, 07 and 09a, and don't minimise them. The captures use the "Windows 10 (1903 and up)" method; if one is still black, open the source and pick the window again from the list.</li>
-      <li>Start Ollama and check that <code>ollama list</code> shows <code>bist-qwen</code>. If it doesn't, run <code>ollama create bist-qwen -f training/Modelfile.finetuned</code>.</li>
-      <li>Set <code>$env:BIST_LOCAL_MODEL="bist-qwen"</code> or pass <code>--model bist-qwen</code>. <code>local_agent.py</code> falls back to <code>qwen2.5:7b-instruct</code> when neither is given.</li>
-      <li>Run the 5-stage harness before recording; it takes about 8–15 minutes. During the video, only show <code>outputs/harness/</code>.</li>
-      <li>Run the smoke test once so the model is already loaded in memory. The first call is slow.</li>
-      <li>Open these tabs in advance: <code>outputs/tms29_primary/report.html</code>, <code>outputs/deliverables/presentation_slides.html</code>, the three figures, <code>docs/MODEL_CARD.md</code>, <code>outputs/training/base_vs_finetuned.md</code> and VS Code at the repo root.</li>
+      <li>Start Ollama on the GPU: in PowerShell run <code>$env:OLLAMA_FLASH_ATTENTION="1"; $env:OLLAMA_KV_CACHE_TYPE="q8_0"; ollama serve</code>. Check that <code>ollama list</code> shows <code>bist-qwen</code>; if it doesn't, run <code>ollama create bist-qwen -f training/Modelfile.finetuned</code>.</li>
+      <li>Ask one warm-up question with <code>scripts/ask.py</code> so the model is already loaded; the first call is slow. Then <code>ollama ps</code> should show <b>100% GPU</b>.</li>
+      <li>The harness results and the five scenario traces are already in the repo (<code>outputs/harness/</code>, <code>outputs/presentation/</code>). Don't re-run them on camera.</li>
+      <li>Open these tabs in advance: <code>outputs/tms29_primary/report.html</code>, <code>outputs/deliverables/presentation_slides.html</code>, the three figures, <code>outputs/presentation/traces.html</code>, <code>outputs/training/base_vs_finetuned.md</code> and VS Code at the repo root.</li>
       <li>Turn off notifications, close the browser profile that shows your email, and set the terminal font to 18pt or larger.</li>
     </ul>
   </div>
@@ -161,7 +160,7 @@ body.tp .honest{background:#2a2112;color:#f2f2f2}
       <li>Record one segment per take. The checkboxes save your progress in this browser.</li>
       <li>Teleprompter mode hides everything except the narration. Use the arrow keys or the bottom bar to change size and scroll speed.</li>
       <li>Amber boxes mark limitations to <b>say out loud</b>. The instructor asked for honest limitations, and they count in your favour.</li>
-      <li>If a live model run misbehaves on camera, keep it in the video and explain it. The dedup guard segment covers why this happens.</li>
+      <li>If a live model run misbehaves on camera, keep it in the video and explain it. The amber box in segment 7 has the wording.</li>
       <li>Read numbers exactly as they appear in the tables here. They are copied from the repo outputs.</li>
     </ul>
   </div>
@@ -261,36 +260,36 @@ body.tp .honest{background:#2a2112;color:#f2f2f2}
   <div class="meta"><div><b>Proof:</b> <code>outputs/tms29_primary/performance_table.csv</code>, <code>report.md</code> §6, <code>outputs/verified_only/sensitivity.csv</code>, <code>docs/PROPOSAL.md</code></div><div class="tags"><span>§6 backtest</span><span>§2 benchmarks</span><span>§7 financial metrics</span><span>§5.4 sensitivity</span><span>§7 ML not done</span><span>§8.11–8.13</span></div></div>
 </section>
 
-<section class="scene" id="s6" data-dur="95" data-act="3" data-title="MCP and fine-tuned model">
+<section class="scene" id="s6" data-dur="115" data-act="3" data-title="MCP and fine-tuned model">
   <div class="scene-h"><h2>6 · MCP tools and the fine-tuned model</h2></div>
   <div class="cols">
     <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li class="obs"><b>OBS:</b> 06a · MCP tools <kbd>Ctrl+Shift+F7</kbd>, 06b · Fine-tuning <kbd>Ctrl+Shift+F8</kbd>, 06c · Base vs fine-tuned <kbd>Ctrl+Shift+F9</kbd></li><li class="obs"><b>OBS:</b> 05 · Performance chart <kbd>Ctrl+Shift+F6</kbd></li><li class="obs"><b>OBS:</b> 04 · Scores chart <kbd>Ctrl+Shift+F5</kbd></li><li class="obs"><b>OBS:</b> 03 · Technical chart <kbd>Ctrl+Shift+F4</kbd></li><li>Slide 5, "MCP Tools"</li><li>Slide 6, "Fine-Tuning Pipeline"</li><li>Slide 8, base vs fine-tuned table</li></ul></div></div>
     <div class="say"><p class="lbl">SAY</p>
-      <p>The MCP server exposes the same Python functions as 20 read-only tools, including the ones the spec lists: stock history, indicators, support and resistance, fundamentals, scores, signals and backtest. No tool can trade, and the agent gets every number from a tool.</p>
-      <p>The agent model covers the instructor's six points. The <b>base model</b> is Qwen 2.5 3B Instruct, Apache-licensed, with tool calling. I picked 3B because 7B didn't reliably fit on a free Colab T4.</p>
-      <p>The <b>data</b> is 400 examples built by replaying real tool calls, across four scenarios plus 80 unsafe-data cases, split 80/20. The <b>training</b> is QLoRA, rank 16, alpha 32, 3 epochs, about 20 minutes, final eval loss 0.031. It <b>runs locally</b> as a 1.8 GB GGUF file in Ollama under the name bist-qwen.</p>
-      <p>In the <b>comparison</b> on 20 questions, both models had zero advice leaks and always answered. The fine-tune learned to give educational labels, but it didn't beat the base: four metrics tie and two are worse, partly because the evaluator counts tool identifiers as labels.</p>
-      <p>The <b>limitations</b> are a small dataset, a model that doesn't always check data quality first, and no RLHF.</p>
+      <p>The MCP server exposes the same Python functions as 21 read-only tools, including the ones the spec lists: stock history, indicators, support and resistance, fundamentals, scores, signals and backtest, plus a knowledge-base search. No tool can trade, and the agent gets every number from a tool. The scenario tools also return their comparisons already worked out, like which bank lagged most and the label its rule gives, so the model copies results instead of doing arithmetic.</p>
+      <p>The agent model covers the instructor's six points. The <b>base model</b> is Qwen 2.5 3B Instruct, under the Qwen Research License. I picked 3B because 7B didn't reliably fit on a free Colab T4.</p>
+      <p>The <b>data</b> is 400 conversations built by replaying real tool calls on 18 stocks: 100 sector, 60 weekday, 100 reversal, 50 fundamental and 90 unsafe or unavailable-data cases, split 80/20. Every number in a training answer had to appear in the tool output, and the five presentation questions were held out. The <b>training</b> is QLoRA, rank 16, alpha 32, 3 epochs, 50 minutes on a T4, final eval loss 0.0032. It <b>runs locally</b> as a 1.9 GB GGUF file in Ollama under the name bist-qwen, fully on my laptop's 4 GB GPU.</p>
+      <p>In the <b>comparison</b> on 20 questions, I tested both models two ways. In the setup my agent uses, the base model never calls a tool and 7 of its 20 answers contain invented numbers; the fine-tune calls the planned tool in 19 of 20, with one ungrounded answer. But if the tool definitions are sent the standard way, the base model is the better agent, because my fine-tune was trained without them and starts chaining extra tools. Both models had zero advice leaks.</p>
+      <p>The <b>limitations</b>: it reads tool results well but can attach a figure to the wrong stock, it's over-cautious outside its five question types, eleven of twenty eval answers said "analysis unsafe" when only two should, and there's no RLHF.</p>
     </div>
   </div>
-  <div class="meta"><div><b>Proof:</b> <code>mcp/server.py</code>, <code>docs/MODEL_CARD.md</code>, <code>outputs/training/base_vs_finetuned.md</code></div><div class="tags"><span>§8.14 tools</span><span>§9.1</span><span>Q&amp;A-1 to Q&amp;A-6</span></div></div>
+  <div class="meta"><div><b>Proof:</b> <code>mcp/server.py</code>, <code>docs/MODEL_CARD.md</code>, <code>training/config/hyperparams.json</code>, <code>outputs/training/base_vs_finetuned.md</code></div><div class="tags"><span>§8.14 tools</span><span>§9.1</span><span>Q&amp;A-1 to Q&amp;A-6</span></div></div>
 </section>
 
 <section class="scene" id="s7" data-dur="80" data-act="3" data-title="Live demo">
   <div class="scene-h"><h2>7 · Live demo</h2></div>
   <div class="cols">
     <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li class="obs"><b>OBS:</b> 07 · Live demo (terminal) <kbd>Ctrl+Shift+F10</kbd></li><li>PowerShell at the repo root, font at 18pt or larger</li></ul></div>
-      <div class="cmd"><code>.\.venv\Scripts\python.exe scripts/local_agent.py --smoke --model bist-qwen</code><button data-copy>Copy</button></div>
-      <div class="cmd"><code>.\.venv\Scripts\python.exe scripts/local_agent.py --ticker THYAO.IS --as-of 2025-12-31 --model bist-qwen</code><button data-copy>Copy</button></div>
+      <div class="cmd"><code>.\.venv\Scripts\python.exe scripts/ask.py "Is there a day-of-the-week effect in KCHOL.IS daily returns between 2025-07-01 and 2026-06-30?"</code><button data-copy>Copy</button></div>
+      <div class="cmd"><code>ollama ps</code><button data-copy>Copy</button></div>
       <div class="cmd"><code>netstat -ano | findstr 11434</code><button data-copy>Copy</button></div></div>
     <div class="say"><p class="lbl">SAY</p>
-      <p>Now it's live. The smoke test makes one tool call to prove the connection works.</p>
-      <p>Next, a real question: analyse THYAO as of the end of 2025. Each line here is a real MCP call: prices, indicators, zones, fundamentals, scores. The model reads the results and explains them without making up numbers.</p>
-      <p><i>[When it finishes:]</i> The conclusion should be one of the eight educational labels, with no buy recommendation. And netstat shows the model is served on localhost port 11434, so no cloud AI is involved.</p>
-      <div class="honest"><b>If it stumbles:</b> say "small models can loop on tool calls. My agent has a dedup guard that blocks repeated calls and forces an answer, which cut one question from fifteen calls to two."</div>
+      <p>Now it's live, with a question the model hasn't seen in this form: is there a day-of-the-week effect for Koç Holding? The question doesn't name a tool, so the model has to pick one.</p>
+      <p>Each line here is a real MCP call. The model chose the weekday test. It reads the tool's summary and writes the answer without making up numbers.</p>
+      <p><i>[When it finishes:]</i> The answer is one of the eight educational labels, and under it the grounding audit lists every figure in the answer and confirms each one appears in a tool output. <code>ollama ps</code> shows the model running 100 percent on my laptop GPU, and netstat shows it's served on localhost port 11434, so no cloud AI is involved.</p>
+      <div class="honest"><b>If it stumbles:</b> say "this is a 3-billion-parameter model. When it goes wrong, it's usually reading the wrong part of a long tool output, not inventing numbers. The grounding audit under the answer shows that every figure still comes from a tool."</div>
     </div>
   </div>
-  <div class="meta"><div><b>Proof:</b> <code>scripts/local_agent.py</code>, <code>outputs/agent/</code>, <code>outputs/training/base_vs_finetuned.md</code> (dedup)</div><div class="tags"><span>§8.15 agent explains</span><span>§9.1 no invented values</span><span>§11 MCP demo</span><span>Q&amp;A-4 live</span></div></div>
+  <div class="meta"><div><b>Proof:</b> <code>scripts/ask.py</code>, <code>scripts/local_agent.py</code>, <code>outputs/presentation/live/</code>, <code>docs/PRESENTATION.md</code></div><div class="tags"><span>§8.15 agent explains</span><span>§9.1 no invented values</span><span>§11 MCP demo</span><span>Q&amp;A-4 live</span></div></div>
 </section>
 
 <section class="scene" id="s8" data-dur="40" data-act="3" data-title="Harness and extras">
@@ -298,11 +297,11 @@ body.tp .honest{background:#2a2112;color:#f2f2f2}
   <div class="cols">
     <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li class="obs"><b>OBS:</b> 08a · Harness (slide 9) <kbd>Ctrl+Shift+F11</kbd>, then 08b · Scenarios (slide 7) <kbd>Ctrl+Shift+F12</kbd></li><li>Slide 9, harness table</li><li>Slide 7, scenarios</li></ul></div></div>
     <div class="say"><p class="lbl">SAY</p>
-      <p>A five-stage harness measures what each layer adds. Giving the model tools raises evidence coverage from 0 to 1.0, and it stays there. Numeric exactness stays at 0, though, so this shows the architecture works, not that the model is precise.</p>
-      <p>I also ran four scenario studies on ten BIST stocks in five sectors, for example 1,458 technical reversal events. These became the fine-tuning data.</p>
+      <p>A five-stage harness measures what each layer adds. Giving the model tools raises evidence coverage from 0 to 1.0, and it stays there. The fine-tuned model also keeps the rules in all five stages, with an educational caveat and no recommendation, while the base model does that in two of five. Numeric exactness stays at 0 for both: neither 3B model fills all eleven strict fields of that question exactly. So this shows the architecture works, not that a small model is precise.</p>
+      <p>I also ran four scenario studies on ten BIST stocks in five sectors, for example 1,458 technical reversal events. The same tools generated the fine-tuning data, over an 18-stock universe.</p>
     </div>
   </div>
-  <div class="meta"><div><b>Proof:</b> <code>outputs/training/phase_g_harness_summary.md</code>, <code>outputs/universe10/scenarios/</code></div><div class="tags"><span>Additional work</span><span>Q&amp;A-5</span></div></div>
+  <div class="meta"><div><b>Proof:</b> <code>outputs/training/phase_g_harness_summary.md</code>, <code>outputs/harness/comparison.finetuned.json</code>, <code>comparison.base.json</code>, <code>outputs/universe10/scenarios/</code></div><div class="tags"><span>Additional work</span><span>Q&amp;A-5</span></div></div>
 </section>
 
 <section class="scene" id="s9" data-dur="45" data-act="4" data-title="Quality and close">
@@ -311,8 +310,8 @@ body.tp .honest{background:#2a2112;color:#f2f2f2}
     <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li class="obs"><b>OBS:</b> 09a · Tests (terminal) <kbd>Ctrl+Alt+Shift+F1</kbd>, then 09b · Limitations (slide 11) <kbd>Ctrl+Alt+Shift+F2</kbd></li><li><code>pytest</code> output</li><li>Slide 11, limitations</li><li>File explorer showing the deliverables</li></ul></div>
       <div class="cmd"><code>.\.venv\Scripts\pytest.exe</code><button data-copy>Copy</button></div></div>
     <div class="say"><p class="lbl">SAY</p>
-      <p>All 68 tests pass, checking things like indicator maths, pivot timing, publication dates, costs and next-open execution, and a clean-environment reproduction matches the results.</p>
-      <p>The main limitations: one company, a short period, four trades, nominal lira returns and a small model.</p>
+      <p>All 93 tests pass. They check things like indicator maths, pivot timing, publication dates, costs and next-open execution, the knowledge-base search, the label rules and the grounding audit. A clean-environment reproduction matches the results.</p>
+      <p>The main limitations: one company's fundamentals, a short period, four trades, nominal lira returns, and a small model that reads tool results well but can attach a figure to the wrong stock.</p>
       <p>The package contains the code, notebook, README, proposal, report, Fintables dataset, backtest tables, charts, agent traces and slides. The main lesson: an AI agent is most useful when it drives reliable tools instead of inventing financial conclusions. Thanks for watching.</p>
     </div>
   </div>

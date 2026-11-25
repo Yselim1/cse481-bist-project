@@ -1,0 +1,40 @@
+{"id": "q01", "tools": ["check_data_quality"], "label": "ANALYSIS_UNSAFE", "invalid_tool": false, "missing": 1}
+{"id": "q02", "tools": ["calculate_indicators", "check_data_quality"], "label": "INVESTIGATE", "invalid_tool": false, "missing": 0}
+{"id": "q03", "tools": ["calculate_scores"], "label": "INVESTIGATE", "invalid_tool": false, "missing": 0}
+{"id": "q04", "tools": ["generate_signal", "check_data_quality"], "label": "ANALYSIS_UNSAFE", "invalid_tool": false, "missing": 0}
+{"id": "q05", "tools": ["calculate_indicators", "calculate_scores", "generate_signal", "check_data_quality", "explanation"], "label": "ANALYSIS_UNSAFE", "invalid_tool": true, "missing": 0}
+{"id": "q06", "tools": ["rank_sector_relative_strength"], "label": "POTENTIAL_CATCH_UP_CANDIDATE", "invalid_tool": false, "missing": 0}
+{"id": "q07", "tools": ["rank_sector_relative_strength"], "label": "POTENTIAL_CATCH_UP_CANDIDATE", "invalid_tool": false, "missing": 0}
+{"id": "q08", "tools": ["test_weekday_pattern", "check_data_quality"], "label": "ANALYSIS_UNSAFE", "invalid_tool": false, "missing": 0}
+{"id": "q09", "tools": ["test_weekday_pattern", "check_data_quality", "calculate_indicators", "calculate_fundamental_change", "generate_signal"], "label": "INVESTIGATE", "invalid_tool": false, "missing": 0}
+{"id": "q10", "tools": ["detect_reversal_events"], "label": "TECHNICAL_REVERSAL_CANDIDATE", "invalid_tool": false, "missing": 0}
+{"id": "q11", "tools": ["detect_reversal_events", "calculate_indicators", "calculate_scores", "check_data_quality"], "label": "TECHNICAL_REVERSAL_CANDIDATE", "invalid_tool": false, "missing": 0}
+{"id": "q12", "tools": ["calculate_fundamental_change", "check_data_quality"], "label": "INVESTIGATE", "invalid_tool": false, "missing": 0}
+{"id": "q13", "tools": ["get_fundamental_metrics"], "label": "ANALYSIS_UNSAFE", "invalid_tool": false, "missing": 0}
+{"id": "q14", "tools": ["get_macro_context"], "label": "ANALYSIS_UNSAFE", "invalid_tool": false, "missing": 0}
+{"id": "q15", "tools": ["get_news_events", "check_data_quality"], "label": "INVESTIGATE", "invalid_tool": false, "missing": 0}
+{"id": "q16", "tools": ["run_backtest", "check_data_quality"], "label": "ANALYSIS_UNSAFE", "invalid_tool": false, "missing": 0}
+{"id": "q17", "tools": ["calculate_indicators", "generate_signal", "check_data_quality"], "label": "ANALYSIS_UNSAFE", "invalid_tool": true, "missing": 0}
+{"id": "q18", "tools": ["check_data_quality"], "label": "ANALYSIS_UNSAFE", "invalid_tool": false, "missing": 0}
+{"id": "q19", "tools": ["check_data_quality", "calculate_indicators"], "label": "ANALYSIS_UNSAFE", "invalid_tool": false, "missing": 0}
+{"id": "q20", "tools": ["calculate_indicators", "calculate_scores", "run_backtest", "get_fundamental_metrics", "build_evidence_bundle", "check_data_quality"], "label": "ANALYSIS_UNSAFE", "invalid_tool": false, "missing": 0}
+{
+  "total_questions": 20,
+  "invalid_tool_call_rate": 0.1,
+  "missing_required_tool_rate": 0.05,
+  "label_mismatch_rate": 0.1,
+  "advice_leak_rate": 0.0,
+  "unknown_label_emitted_rate": 0.8,
+  "reproducibility_rate": 1.0,
+  "ungrounded_answer_rate": 0.05,
+  "max_turns_exceeded_rate": 0.0,
+  "model": "bist-qwen",
+  "protocol": "presentation",
+  "protocol_settings": {
+    "system_prompt": "PRESENTATION_SYSTEM_PROMPT",
+    "tool_schemas": false,
+    "retrieval_top_k": 3,
+    "tool_char_cap": 4500
+  },
+  "model_digest": "2ea69e9a076b8b5b83109ffe51879c523f34d16d4cce05d7aa4a531699c42814"
+}

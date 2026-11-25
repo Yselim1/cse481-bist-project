@@ -1,0 +1,161 @@
+{
+  "models": {
+    "base": "bist-qwen-base",
+    "finetuned": "bist-qwen",
+    "base_digest": "42d669669e6df7b0247578b37f75bf8ad5e167a52eae899cad06036003cde163",
+    "finetuned_digest": "2ea69e9a076b8b5b83109ffe51879c523f34d16d4cce05d7aa4a531699c42814"
+  },
+  "protocols": {
+    "original": {
+      "description": "Original eval protocol: Ollama sends the 21 tool schemas, base system prompt, 12 KB tool-result cap, no RAG (same settings as the earlier v1 evaluation).",
+      "metrics": {
+        "invalid_tool_call_rate": {
+          "base": 0.05,
+          "finetuned": 0.45,
+          "verdict": "regressed",
+          "lower_is_better": true
+        },
+        "missing_required_tool_rate": {
+          "base": 0.1,
+          "finetuned": 0.0,
+          "verdict": "improved",
+          "lower_is_better": true
+        },
+        "label_mismatch_rate": {
+          "base": 0.05,
+          "finetuned": 0.1,
+          "verdict": "regressed",
+          "lower_is_better": true
+        },
+        "advice_leak_rate": {
+          "base": 0.0,
+          "finetuned": 0.0,
+          "verdict": "tie",
+          "lower_is_better": true
+        },
+        "unknown_label_emitted_rate": {
+          "base": 0.05,
+          "finetuned": 0.2,
+          "verdict": "regressed",
+          "lower_is_better": true
+        },
+        "ungrounded_answer_rate": {
+          "base": 0.0,
+          "finetuned": 0.05,
+          "verdict": "regressed",
+          "lower_is_better": true
+        },
+        "max_turns_exceeded_rate": {
+          "base": 0.0,
+          "finetuned": 0.0,
+          "verdict": "tie",
+          "lower_is_better": true
+        },
+        "reproducibility_rate": {
+          "base": 1.0,
+          "finetuned": 1.0,
+          "verdict": "tie",
+          "lower_is_better": false
+        }
+      },
+      "tally": {
+        "improved": 1,
+        "tie": 3,
+        "regressed": 4
+      },
+      "mean_wall_time_s": {
+        "base": 27.9,
+        "finetuned": 42.3
+      }
+    },
+    "presentation": {
+      "description": "Presentation protocol: no schemas (the model writes `<tool_call>` text, as in its fine-tuning data), presentation system prompt, RAG context, 4.5 KB cap; the settings of `scripts/ask.py` and the five scenario traces.",
+      "metrics": {
+        "invalid_tool_call_rate": {
+          "base": 0.0,
+          "finetuned": 0.1,
+          "verdict": "regressed",
+          "lower_is_better": true
+        },
+        "missing_required_tool_rate": {
+          "base": 1.0,
+          "finetuned": 0.05,
+          "verdict": "improved",
+          "lower_is_better": true
+        },
+        "label_mismatch_rate": {
+          "base": 0.05,
+          "finetuned": 0.1,
+          "verdict": "regressed",
+          "lower_is_better": true
+        },
+        "advice_leak_rate": {
+          "base": 0.0,
+          "finetuned": 0.0,
+          "verdict": "tie",
+          "lower_is_better": true
+        },
+        "unknown_label_emitted_rate": {
+          "base": 0.25,
+          "finetuned": 0.45,
+          "verdict": "regressed",
+          "lower_is_better": true
+        },
+        "ungrounded_answer_rate": {
+          "base": 0.35,
+          "finetuned": 0.05,
+          "verdict": "improved",
+          "lower_is_better": true
+        },
+        "max_turns_exceeded_rate": {
+          "base": 0.0,
+          "finetuned": 0.0,
+          "verdict": "tie",
+          "lower_is_better": true
+        },
+        "reproducibility_rate": {
+          "base": 1.0,
+          "finetuned": 1.0,
+          "verdict": "tie",
+          "lower_is_better": false
+        }
+      },
+      "tally": {
+        "improved": 2,
+        "tie": 3,
+        "regressed": 3
+      },
+      "mean_wall_time_s": {
+        "base": 22.6,
+        "finetuned": 30.0
+      }
+    }
+  },
+  "source_dir": "outputs/harness/eval_v3",
+  "v1_reference": {
+    "invalid_tool_call_rate": {
+      "base": 0.45,
+      "finetuned_v1": 0.45
+    },
+    "missing_required_tool_rate": {
+      "base": 0.05,
+      "finetuned_v1": 0.05
+    },
+    "label_mismatch_rate": {
+      "base": 0.0,
+      "finetuned_v1": 0.2
+    },
+    "advice_leak_rate": {
+      "base": 0.0,
+      "finetuned_v1": 0.0
+    },
+    "unknown_label_emitted_rate": {
+      "base": 0.05,
+      "finetuned_v1": 0.3
+    },
+    "reproducibility_rate": {
+      "base": 1.0,
+      "finetuned_v1": 1.0
+    }
+  }
+}

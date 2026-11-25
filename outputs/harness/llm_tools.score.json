@@ -1,10 +1,10 @@
 {
   "checks": {
-    "as_of": false,
+    "as_of": true,
     "bist100_return": false,
     "buy_hold_return": false,
     "combined_return": false,
-    "context_event": false,
+    "context_event": true,
     "financial_period": false,
     "net_debt_try_million": false,
     "net_profit_try_million": false,
@@ -12,13 +12,18 @@
     "signal_action": false,
     "technical_return": false
   },
-  "constraint_compliance": false,
+  "constraint_compliance": true,
   "evidence_coverage": 1.0,
   "missing_data_honesty": false,
   "numeric_exactness": 0.0,
   "quality_gate_pass": false,
   "structured_reproducibility": true,
   "temporal_validity": false,
-  "unsupported_tool_claims": [],
+  "unsupported_tool_claims": [
+    "calculate_indicators:THYAO:2026-09-25",
+    "calculate_scores:THYAO:2026-09-25",
+    "generate_signal:THYAO:2026-09-25:holding:false:entry_price:0",
+    "run_backtest:2025-01-01:2026-09-25"
+  ],
   "workflow_completion": 1.0
 }

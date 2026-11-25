@@ -80,9 +80,9 @@ hr { border: none; border-top: 1px solid rgba(255,255,255,0.12);
     <p><strong>Model:</strong> <code>bist-qwen</code> (Qwen 2.5 3B + LoRA via Ollama)</p>
   </div>
   <div>
-    <p><strong>10</strong> tickers · <strong>5</strong> sectors</p>
-    <p><strong>20</strong> MCP tools · <strong>400</strong> training examples</p>
-    <p><strong>5-stage</strong> architecture harness</p>
+    <p><strong>18</strong> tickers · <strong>8</strong> sectors (agent universe)</p>
+    <p><strong>21</strong> MCP tools · <strong>400</strong> training examples</p>
+    <p><strong>5</strong> pre-run scenario traces · every figure audited</p>
   </div>
 </div>
 </section>
@@ -96,13 +96,13 @@ BIST equity analysis — without inventing numbers or giving investment advice?<
 <div class="cols">
   <div class="card">
     <h3>Two Hard Constraints</h3>
-    <p>🔢 <strong>Never invent numbers</strong> — every numeric claim must cite a tool call</p>
+    <p>🔢 <strong>Never invent numbers</strong> — every numeric claim must come from a tool output</p>
     <p>⚠️ <strong>No investment advice</strong> — only 8 educational labels allowed</p>
   </div>
   <div class="card">
     <h3>Why Local?</h3>
     <p>✓ Fully verifiable — offline, no cloud dependency</p>
-    <p>✓ Reproducible — same model, same tools, same answers</p>
+    <p>✓ Reproducible — same model, seed 17, temperature 0, same answers</p>
     <p>✓ Student-controlled — no API keys, no costs</p>
   </div>
 </div>
@@ -121,23 +121,23 @@ BIST equity analysis — without inventing numbers or giving investment advice?<
 <div class="cols3" style="margin-top:1rem">
   <div class="card">
     <h3>Layer 1 — Data</h3>
-    <p>Yahoo Finance OHLCV</p>
+    <p>Yahoo Finance OHLCV (18 tickers)</p>
     <p>Fintables TMS29 financials</p>
     <p>KAP context events</p>
-    <p>USD/TRY FX (Yahoo)</p>
+    <p>RAG knowledge base (48 docs)</p>
   </div>
   <div class="card">
     <h3>Layer 2 — MCP Server</h3>
-    <p>20 read-only tools</p>
+    <p>21 read-only tools (incl. BM25 search)</p>
     <p>stdio transport (subprocess)</p>
-    <p>No network calls during analysis</p>
+    <p>Comparisons precomputed in Python</p>
     <p>All tools return JSON evidence</p>
   </div>
   <div class="card">
     <h3>Layer 3 — LLM Agent</h3>
-    <p><code>bist-qwen</code> via Ollama</p>
-    <p>OpenAI-compat. tool-calling</p>
-    <p>Dedup guard (loop prevention)</p>
+    <p><code>bist-qwen</code> via Ollama, on the laptop GPU</p>
+    <p>Tool calls in its training format</p>
+    <p>Grounding audit on every answer</p>
     <p>8-label action space</p>
   </div>
 </div>
@@ -147,7 +147,7 @@ BIST equity analysis — without inventing numbers or giving investment advice?<
   <tr><th>A: raw_llm</th><th>B: llm_tools</th><th>C: stateful</th>
       <th>D: evidence_gate</th><th>E: memory_review</th></tr>
   <tr><td>Base LLM only<br>No tools</td>
-      <td>+ 20 MCP tools<br>Tool-calling enabled</td>
+      <td>+ 21 MCP tools<br>Tool-calling enabled</td>
       <td>+ State context<br>as_of, financial period</td>
       <td>+ Quality gate<br>ANALYSIS_UNSAFE blocking</td>
       <td>+ Memory layer<br>Human review sign-off</td></tr>
@@ -161,35 +161,34 @@ BIST equity analysis — without inventing numbers or giving investment advice?<
   <div class="card">
     <h3>Tier 1: Market Data</h3>
     <p><strong>Source:</strong> Yahoo Finance (cached)</p>
-    <p><strong>Tickers:</strong> 10 BIST stocks + XU100.IS</p>
-    <p><strong>Sectors:</strong> Airlines, Banking, Steel, Retail, Telecom</p>
-    <p><strong>OHLCV:</strong> 1250+ sessions per ticker</p>
+    <p><strong>Tickers:</strong> 18 BIST stocks + XU100.IS</p>
+    <p><strong>Sectors:</strong> Airlines, Automotive, Banking, Energy, Holding, Retail, Steel, Telecom</p>
+    <p><strong>OHLCV:</strong> daily, 2021-01-04 to 2026-10-30</p>
   </div>
   <div class="card">
     <h3>Tier 2: Fundamental Data</h3>
     <p><strong>Source:</strong> Fintables TMS29</p>
-    <p><strong>Scope:</strong> 2025–2026 (post-inflation-adjustment)</p>
+    <p><strong>Scope:</strong> THYAO, 2025–2026 (post-inflation-adjustment)</p>
     <p><strong>Observations:</strong> 238 verified</p>
-    <p><strong>Events:</strong> 13 KAP timestamped disclosures</p>
+    <p><strong>Other tickers:</strong> tools return <code>available: false</code></p>
   </div>
   <div class="card">
-    <h3>Tier 3: Macro Context</h3>
-    <p><strong>FX:</strong> USD/TRY (Yahoo TRY=X), cached</p>
-    <p><strong>TCMB / TÜİK:</strong> reader and MCP tool built; no series cached in this submission</p>
+    <h3>Tier 3: Context &amp; Knowledge</h3>
     <p><strong>KAP:</strong> 13 THYAO corporate events</p>
-    <p><strong>Speech:</strong> tool built; no data cached</p>
+    <p><strong>RAG:</strong> 48 documents with source metadata</p>
+    <p><strong>FX:</strong> USD/TRY (Yahoo TRY=X), cached</p>
+    <p><strong>TCMB / TÜİK, speech:</strong> tools built; no series cached</p>
   </div>
 </div>
 <hr>
 <p><strong>Key design rule:</strong> All analysis runs from <em>cached</em> data.
-No network calls during backtest or reporting.
-Fundamental values come <em>exclusively</em> from the student-downloaded Fintables documents —
-not recomputed, not approximated.</p>
+No network calls during backtest or reporting. Knowledge-base hits are filtered to documents
+published on or before the question's date (point-in-time).</p>
 </section>
 
 <section class="slide"><span class="slide-num">5 / 12</span>
 <div class="tag">Tools</div>
-<h1>20 MCP Tools — The Agent's Calculator</h1>
+<h1>21 MCP Tools — The Agent's Calculator</h1>
 <div class="cols" style="margin-top:0.8rem">
   <div>
     <table>
@@ -203,15 +202,16 @@ not recomputed, not approximated.</p>
       <tr><td><code>generate_signal</code></td><td>BUY / SELL / HOLD signal</td></tr>
       <tr><td><code>run_backtest</code></td><td>Strategy backtest + metrics</td></tr>
       <tr><td><code>generate_report</code></td><td>HTML / Markdown output</td></tr>
+      <tr><td><code>search_knowledge_base</code></td><td>BM25 RAG, point-in-time</td></tr>
     </table>
   </div>
   <div>
     <table>
       <tr><th colspan="2">Scenario &amp; Quality</th></tr>
-      <tr><td><code>rank_sector_relative_strength</code></td><td>Sector laggard ranking</td></tr>
-      <tr><td><code>test_weekday_pattern</code></td><td>Day-of-week pattern test</td></tr>
-      <tr><td><code>detect_reversal_events</code></td><td>BB / RSI / Supertrend signals</td></tr>
-      <tr><td><code>calculate_fundamental_change</code></td><td>QoQ / YoY change</td></tr>
+      <tr><td><code>rank_sector_relative_strength</code></td><td>Laggard/leader per sector + rule label</td></tr>
+      <tr><td><code>test_weekday_pattern</code></td><td>Highest/lowest weekday, p-values</td></tr>
+      <tr><td><code>detect_reversal_events</code></td><td>Events + best family by 5-day return</td></tr>
+      <tr><td><code>calculate_fundamental_change</code></td><td>QoQ change + publication reaction</td></tr>
       <tr><td><code>get_macro_context</code></td><td>TCMB / TÜİK reader (no cache shipped)</td></tr>
       <tr><td><code>get_news_events</code></td><td>KAP news events</td></tr>
       <tr><td><code>get_speech_features</code></td><td>Speech text features</td></tr>
@@ -221,6 +221,9 @@ not recomputed, not approximated.</p>
     </table>
   </div>
 </div>
+<p style="margin-top:0.6rem; font-size:0.82rem; color:#aab">Each scenario tool returns its
+comparison and the label its rule gives (<code>label_by_rule</code>), so the model copies
+tool values instead of doing arithmetic.</p>
 </section>
 
 <section class="slide"><span class="slide-num">6 / 12</span>
@@ -230,45 +233,46 @@ not recomputed, not approximated.</p>
   <div class="card" style="flex:1; text-align:center">
     <h3>Base Model</h3>
     <p>Qwen 2.5 3B Instruct</p>
-    <p>(Apache 2.0)</p>
+    <p>(Qwen Research License)</p>
   </div>
   <div class="arrow">→</div>
   <div class="card" style="flex:1; text-align:center">
     <h3>Dataset</h3>
-    <p>400 verified traces</p>
-    <p>from live MCP calls</p>
+    <p>400 traces from live MCP calls</p>
+    <p>every answer figure audited</p>
   </div>
   <div class="arrow">→</div>
   <div class="card" style="flex:1; text-align:center">
     <h3>QLoRA Training</h3>
-    <p>Colab T4 GPU</p>
-    <p>~20 min · 3 epochs</p>
-    <p>eval_loss = 0.031</p>
+    <p>Colab Tesla T4</p>
+    <p>50 min · 3 epochs</p>
+    <p>eval_loss = 0.0032</p>
   </div>
   <div class="arrow">→</div>
   <div class="card" style="flex:1; text-align:center">
     <h3>Export</h3>
     <p>Merged GGUF (q4_k_m)</p>
-    <p>1.8 GB file</p>
+    <p>1.9 GB file</p>
   </div>
   <div class="arrow">→</div>
   <div class="card" style="flex:1; text-align:center">
     <h3>Deploy</h3>
-    <p>Ollama tag</p>
-    <p><code>bist-qwen</code></p>
+    <p>Ollama tag <code>bist-qwen</code></p>
+    <p>100% on a 4 GB laptop GPU</p>
   </div>
 </div>
 <hr>
 <div class="cols">
   <div>
-    <p><strong>LoRA config:</strong> rank 16 · alpha 32 · dropout 0.05</p>
-    <p><strong>Targets:</strong> q/k/v/o projections + MLP</p>
-    <p><strong>Method:</strong> SFT with response-only loss masking (no RLHF)</p>
+    <p><strong>LoRA:</strong> rank 16 · alpha 32 · dropout 0.05 on q/k/v/o + MLP</p>
+    <p><strong>Training:</strong> max_len 4096 · effective batch 16 · lr 0.0002 cosine · seed 17</p>
+    <p><strong>Adapter:</strong> safetensors, SHA-256 <code>ad3716e908060dc8…</code></p>
   </div>
   <div>
-    <p><strong>Dataset breakdown (400 total):</strong></p>
-    <p>S1 Sector: 80 · S2 Weekday: 60 · S3 Reversal: 100 · S4 Fundamental: 80 · Negative: 80</p>
-    <p><strong>Split:</strong> 80/20 train/eval, stratified by scenario</p>
+    <p><strong>Dataset (v3, 400 total):</strong> sector 100 · weekday 60 ·
+       reversal 100 · fundamental 50 · unsafe/unavailable 90</p>
+    <p><strong>Split:</strong> 80/20 train/eval · 46% natural-language questions (EN + TR)</p>
+    <p><strong>Held out:</strong> the five presentation scenarios' exact settings</p>
   </div>
 </div>
 </section>
@@ -304,51 +308,35 @@ not recomputed, not approximated.</p>
   </tr>
 </table>
 <p style="margin-top:0.8rem; font-size:0.82rem; color:#889">
-  All reports in outputs/universe10/scenarios/ — generated by scripts/build_scenarios.py --config config/universe10.yaml
+  Python studies over the 10-ticker sample (no LLM involved): outputs/universe10/scenarios/ —
+  scripts/build_scenarios.py --config config/universe10.yaml
 </p>
 </section>
 
 <section class="slide"><span class="slide-num">8 / 12</span>
 <div class="tag">Evaluation</div>
-<h1>§30 Metrics — Base vs Fine-Tuned</h1>
-<table style="margin-top:1rem">
-  <tr><th>Metric</th><th>Direction</th><th>Base 3B</th><th>Fine-tuned (after fix)</th><th>Verdict</th></tr>
-  <tr>
-    <td><code>invalid_tool_call_rate</code></td><td>↓ lower better</td>
-    <td>0.450</td><td>0.450</td>
-    <td class="tied">TIED <span style="font-size:0.75rem;color:#aaa">(improved from 0.500 pre-fix)</span></td>
-  </tr>
-  <tr>
-    <td><code>missing_required_tool_rate</code></td><td>↓ lower better</td>
-    <td>0.050</td><td>0.050</td><td class="tied">TIED</td>
-  </tr>
-  <tr>
-    <td><code>label_mismatch_rate</code></td><td>↓ lower better</td>
-    <td>0.000</td><td>0.200</td>
-    <td class="note">REGRESSED* <span style="font-size:0.75rem;color:#aaa">(vacuous pass)</span></td>
-  </tr>
-  <tr>
-    <td><code>advice_leak_rate</code></td><td>↓ lower better</td>
-    <td>0.000</td><td>0.000</td><td class="tied">TIED</td>
-  </tr>
-  <tr>
-    <td><code>unknown_label_emitted_rate</code></td><td>↓ lower better</td>
-    <td>0.050</td><td>0.300</td>
-    <td class="note">REGRESSED** <span style="font-size:0.75rem;color:#aaa">(artifact)</span></td>
-  </tr>
-  <tr>
-    <td><code>reproducibility_rate</code></td><td>↑ higher better</td>
-    <td>1.000</td><td>1.000</td><td class="tied">TIED</td>
-  </tr>
+<h1>§30 Metrics — Base vs Fine-Tuned (20 questions)</h1>
+<table style="margin-top:0.6rem">
+  <tr><th rowspan="2">Metric (share of questions)</th>
+      <th colspan="3">Presentation protocol (training format + RAG)</th>
+      <th colspan="3">Original protocol (tool schemas)</th></tr>
+  <tr><th>Base</th><th>Fine-tuned</th><th>Verdict</th><th>Base</th><th>Fine-tuned</th><th>Verdict</th></tr>
+  <tr><td>invalid tool call ↓</td><td>0.00</td><td>0.10</td><td class="note">regressed</td><td>0.05</td><td>0.45</td><td class="note">regressed</td></tr>
+  <tr><td>missing required tool ↓</td><td>1.00</td><td>0.05</td><td class="pass">improved</td><td>0.10</td><td>0.00</td><td class="pass">improved</td></tr>
+  <tr><td>label mismatch ↓</td><td>0.05</td><td>0.10</td><td class="note">regressed</td><td>0.05</td><td>0.10</td><td class="note">regressed</td></tr>
+  <tr><td>advice leak ↓</td><td>0.00</td><td>0.00</td><td class="tied">tie</td><td>0.00</td><td>0.00</td><td class="tied">tie</td></tr>
+  <tr><td>unknown label token ↓</td><td>0.25</td><td>0.45</td><td class="note">regressed</td><td>0.05</td><td>0.20</td><td class="note">regressed</td></tr>
+  <tr><td>ungrounded figure ↓</td><td>0.35</td><td>0.05</td><td class="pass">improved</td><td>0.00</td><td>0.05</td><td class="note">regressed</td></tr>
+  <tr><td>no answer (turn limit) ↓</td><td>0.00</td><td>0.00</td><td class="tied">tie</td><td>0.00</td><td>0.00</td><td class="tied">tie</td></tr>
+  <tr><td>non-empty answer ↑</td><td>1.00</td><td>1.00</td><td class="tied">tie</td><td>1.00</td><td>1.00</td><td class="tied">tie</td></tr>
+  <tr><td><strong>Tally (fine-tuned vs base)</strong></td><td colspan="3">2 improved · 3 tied · 3 regressed</td>
+      <td colspan="3">1 improved · 3 tied · 4 regressed</td></tr>
 </table>
-<p style="margin-top:0.8rem; font-size:0.8rem; color:#f9a825">
-  * Base's 0.000 is a <em>vacuous pass</em>: it never emits educational labels at all.
-  Fine-tune learned to emit labels — which creates room for mismatches.
-</p>
-<p style="font-size:0.8rem; color:#f9a825">
-  ** Fine-tune quotes domain identifiers from tool outputs (BB_LOWER_TOUCH, NET_PROFIT_QOQ).
-  The evaluator's regex catches any CAPS_UNDERSCORE token not in the 8-label set.
-  This is a test-design gap, not actual label violations.
+<p style="margin-top:0.6rem; font-size:0.78rem; color:#aab">
+  Base = <code>bist-qwen-base</code> (Qwen 2.5 3B Instruct, same 16k context and sampling);
+  fine-tuned = <code>bist-qwen</code>. Temperature 0, seed 17. The presentation protocol is what
+  <code>ask.py</code> and the five scenario traces use. "Unknown label token" also counts quoted tool
+  identifiers such as BB_LOWER_TOUCH. Full table: outputs/training/base_vs_finetuned.md
 </p>
 </section>
 
@@ -356,78 +344,43 @@ not recomputed, not approximated.</p>
 <div class="tag">Harness</div>
 <h1>5-Stage Harness — Architecture Comparison</h1>
 <table style="margin-top:1rem">
-  <tr><th>Metric</th><th>A: raw_llm</th><th>B: llm_tools</th>
+  <tr><th>Metric (bist-qwen)</th><th>A: raw_llm</th><th>B: llm_tools</th>
       <th>C: stateful</th><th>D: evid_gate</th><th>E: mem_review</th><th>Trend</th></tr>
-  <tr>
-    <td><code>evidence_coverage</code> ↑</td>
-    <td>0.0</td><td class="pass">1.0</td><td class="pass">1.0</td>
-    <td class="pass">1.0</td><td class="pass">1.0</td>
-    <td class="pass">↑ Monotonic</td>
-  </tr>
-  <tr>
-    <td><code>workflow_completion</code> ↑</td>
-    <td>0.0</td><td class="pass">1.0</td><td class="pass">1.0</td>
-    <td class="pass">1.0</td><td class="pass">1.0</td>
-    <td class="pass">↑ Monotonic</td>
-  </tr>
-  <tr>
-    <td><code>structured_repro</code> ↑</td>
-    <td>No</td><td class="pass">Yes</td><td>No</td><td>No</td><td>No</td>
-    <td class="note">Peaks at B</td>
-  </tr>
-  <tr>
-    <td><code>constraint_compliance</code> ↑</td>
-    <td class="pass">Yes</td><td>No</td><td class="pass">Yes</td>
-    <td class="pass">Yes</td><td>No</td>
-    <td class="note">3 / 5 pass</td>
-  </tr>
-  <tr>
-    <td><code>temporal_validity</code> ↑</td>
-    <td>No</td><td>No</td><td>No</td><td>No</td><td>No</td>
-    <td style="color:#888">Flat</td>
-  </tr>
-  <tr>
-    <td><code>numeric_exactness</code> ↑</td>
-    <td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td>
-    <td style="color:#888">Flat</td>
-  </tr>
+  <tr><td><code>evidence_coverage</code> ↑</td><td>0.0</td><td class="pass">1.0</td><td class="pass">1.0</td><td class="pass">1.0</td><td class="pass">1.0</td><td class="pass">↑ Monotonic</td></tr>
+  <tr><td><code>workflow_completion</code> ↑</td><td>0.0</td><td class="pass">1.0</td><td class="pass">1.0</td><td class="pass">1.0</td><td class="pass">1.0</td><td class="pass">↑ Monotonic</td></tr>
+  <tr><td><code>structured_repro</code> ↑</td><td>No</td><td class="pass">Yes</td><td class="pass">Yes</td><td class="pass">Yes</td><td>No</td><td class="note">3 / 5 pass</td></tr>
+  <tr><td><code>constraint_compliance</code> ↑</td><td class="pass">Yes</td><td class="pass">Yes</td><td class="pass">Yes</td><td class="pass">Yes</td><td class="pass">Yes</td><td class="pass">5 / 5 pass</td></tr>
+  <tr><td><code>temporal_validity</code> ↑</td><td>No</td><td>No</td><td>No</td><td>No</td><td>No</td><td style="color:#888">Flat</td></tr>
+  <tr><td><code>numeric_exactness</code> ↑</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td style="color:#888">Flat</td></tr>
 </table>
 <p style="margin-top:0.9rem; font-size:0.85rem; color:#ccd">
-  <strong>Headline:</strong> Adding MCP tools (A→B) drives evidence_coverage and workflow_completion
-  from 0 → 1.0 and they stay at 1.0. Architecture adds value regardless of model quality.
+  Same THYAO question through each stage; only the architecture changes. Base model's
+  evidence_coverage per stage, for comparison: 0.0 · 1.0 · 1.0 · 1.0 · 1.0.
+  Files: outputs/harness/comparison.finetuned.json, comparison.base.json
 </p>
 </section>
 
 <section class="slide"><span class="slide-num">10 / 12</span>
 <div class="tag">Engineering</div>
-<h1>The Dedup Guard — Solving Tool-Loop Pathology</h1>
-<div class="cols">
-  <div>
-    <h2>The Problem</h2>
-    <p>The 3B model generalises: <em>"after a successful tool call → call another."</em></p>
-    <p>On ~20% of eval questions, it cycles the same tool endlessly
-       instead of writing an answer.</p>
-    <table style="margin-top:0.6rem">
-      <tr><th>Question</th><th>Calls before</th><th>Calls after</th></tr>
-      <tr><td>q06 (rank_sector loop)</td><td style="color:#f44">15 identical</td><td class="pass">2</td></tr>
-      <tr><td>q07 (rank_sector loop)</td><td style="color:#f44">14+ mixed</td><td class="pass">2</td></tr>
-      <tr><td>q16 (backtest + signal)</td><td style="color:#f44">20+</td><td class="pass">3</td></tr>
-      <tr><td>q09 (weekday loop)</td><td style="color:#f44">10 identical</td><td class="note">8 (partial)</td></tr>
-    </table>
-  </div>
-  <div>
-    <h2>The Fix</h2>
-    <p><strong>At inference time</strong> in <code>scripts/local_agent.py</code>:</p>
-    <ul>
-      <li>Track <code>seen_calls</code> set: <code>tool_name:json(args)</code></li>
-      <li>On first repeat call: return <code>dedup_note</code> (not error), disable tools immediately</li>
-      <li>Inject "write your final answer now" nudge</li>
-      <li>Safety net: force answer after turn 10</li>
-    </ul>
-    <p style="margin-top:0.8rem"><strong>Key:</strong> returns <code>{"dedup_note": "..."}</code>
-    not <code>{"error": "..."}</code> — evaluator does not count this as an MCP failure.</p>
-  </div>
-</div>
+<h1>What Fixed the Model — v1 → v3</h1>
+<table style="margin-top:0.8rem">
+  <tr><th>Problem we observed</th><th>Root cause</th><th>Fix</th></tr>
+  <tr><td>Endless tool loops (q06: 15 identical calls)</td><td>No "stop and answer" signal</td>
+      <td>Dedup guard + per-turn token ceiling (1,536)</td></tr>
+  <tr><td>Grounded numbers, wrong reasoning (wrong laggard of 4 banks, lost minus sign)</td>
+      <td>A 3B model doing comparisons in its head</td>
+      <td>Tools return the comparison + <code>label_by_rule</code>; answers copy it (dataset v3)</td></tr>
+  <tr><td>Chained unrelated tools after the right one</td>
+      <td>Trained without tool schemas, served with Ollama's 21-schema block</td>
+      <td>Presentation path sends no schemas and parses <code>&lt;tool_call&gt;</code> text, as in training</td></tr>
+  <tr><td>Answers ignored parts of long tool outputs</td><td>Trained on 3 KB tool text, served 12 KB</td>
+      <td>One 4.5 KB cap for training and inference; summaries placed first</td></tr>
+  <tr><td>Risk of testing on training data</td><td>Scenario settings could appear in the dataset</td>
+      <td>The five presentation settings are held out of the 400 examples</td></tr>
+</table>
+<p style="margin-top:0.8rem; font-size:0.85rem; color:#ccd">
+  Every answer still comes from the model, unedited; a grounding audit checks each figure against the tool outputs.
+</p>
 </section>
 
 <section class="slide"><span class="slide-num">11 / 12</span>
@@ -436,41 +389,36 @@ not recomputed, not approximated.</p>
 <div class="cols" style="margin-top:1rem">
   <div>
     <div class="card" style="margin-bottom:0.8rem">
-      <h3>1. Small Training Corpus</h3>
-      <p>400 examples — cannot generalise beyond the 10-ticker universe.
-         First candidate for improvement: add more gate_unsafe examples
-         for unknown tickers and future dates.</p>
+      <h3>1. A 3B Model Reads, It Does Not Reason</h3>
+      <p>Correct answers depend on the tools doing the comparisons. In one dry run on an
+         8-sector output, the label was right but the explanation quoted another sector's figures.</p>
     </div>
     <div class="card" style="margin-bottom:0.8rem">
-      <h3>2. Gate-Unsafe Knowledge Gap</h3>
-      <p>Model does not reliably call <code>check_data_quality</code> first
-         for unknown tickers or future dates (q17, q18, q19 fail).
-         Root cause: not enough negative examples in training set.</p>
+      <h3>2. Grounding ≠ Attribution</h3>
+      <p>The audit proves each figure exists in a tool output; it cannot prove the figure is
+         attached to the right ticker. Sector answers need a human read.</p>
     </div>
     <div class="card">
-      <h3>3. Metric-Key Vocabulary Artifact</h3>
-      <p>Fine-tune quotes domain identifiers from tool outputs verbatim.
-         Evaluator regex catches them as "unknown labels" — test-design gap,
-         not actual violations.</p>
+      <h3>3. Over-Cautious Outside Its 5 Question Types</h3>
+      <p>On the 20-question eval: 11 answers say ANALYSIS_UNSAFE, only 2 should. It doesn't know
+         tools it wasn't trained on (asked for <code>project_status</code>, it ran the quality gate).</p>
     </div>
   </div>
   <div>
     <div class="card" style="margin-bottom:0.8rem">
-      <h3>4. Numeric Schema Slots</h3>
-      <p>Model writes rich narratives but does not populate strict
-         numeric output fields (revenue, net profit, four strategy returns).
-         Under-trained on scalar extraction into structured schemas.</p>
+      <h3>4. Works Only in Its Own Tool Format</h3>
+      <p>Trained without tool schemas; given Ollama's 21 schemas it chains extra tools
+         (invalid calls 0.45 vs 0.05 for the base). The presentation path uses the training format.</p>
     </div>
     <div class="card" style="margin-bottom:0.8rem">
-      <h3>5. No RLHF</h3>
-      <p>"No investment advice" compliance relies entirely on the SYSTEM_PROMPT
-         and data-quality gate — no reinforcement-learning alignment.</p>
+      <h3>5. Fundamentals for THYAO Only</h3>
+      <p>Other tickers return <code>available: false</code> and get INVESTIGATE. Pre/post-TMS 29
+         statements are never mixed (PERIOD_MISMATCH hard-block).</p>
     </div>
     <div class="card">
-      <h3>6. TMS29 Boundary</h3>
-      <p>Pre/post-TMS29 statements cannot be mixed. The gate hard-blocks
-         PERIOD_MISMATCH — model refuses rather than fusing incompatible data.
-         Appropriate, but limits historical depth.</p>
+      <h3>6. Evaluator and Safety Limits</h3>
+      <p>Only 4 of 20 eval questions expect a particular label. No RLHF: "no advice" rests on the
+         prompt, the 8 labels and the quality gate.</p>
     </div>
   </div>
 </div>
@@ -478,54 +426,26 @@ not recomputed, not approximated.</p>
 
 <section class="slide"><span class="slide-num">12 / 12</span>
 <div class="tag">Demo</div>
-<h1>Live Demo — Two Harnesses</h1>
-<p style="margin-top:0.4rem; font-size:0.9rem">
-  The project runs <strong>two</strong> distinct processes. One <em>does work</em>, the other <em>measures it</em>.
-</p>
+<h1>Five Pre-Run Scenarios + Live Question</h1>
+<table style="margin-top:0.6rem; font-size:0.76rem">
+  <tr><th>Scenario</th><th>Tool the model chose</th><th>Label</th><th>Key figures (from the tool output)</th>
+      <th>Grounded</th><th>Time</th></tr>
+  <tr><td><strong>S1</strong> Sector laggard / catch-up candidate</td><td><code>rank_sector_relative_strength</code></td><td><code>HOLD</code></td><td>banking laggard ISCTR.IS -0.0422 vs sector</td><td>all</td><td>28 s</td></tr>
+  <tr><td><strong>S2</strong> Day-of-week return pattern</td><td><code>test_weekday_pattern</code></td><td><code>WATCH</code></td><td>highest Mon +0.002940, lowest Wed -0.004426, smallest p 0.238</td><td>all</td><td>27 s</td></tr>
+  <tr><td><strong>S3</strong> Technical reversal events</td><td><code>detect_reversal_events</code></td><td><code>TECHNICAL_REVERSAL_CANDIDATE</code></td><td>35 events; best supertrend_flip_up mean 5-day +0.0207</td><td>all</td><td>25 s</td></tr>
+  <tr><td><strong>S4</strong> Fundamental change and price reaction</td><td><code>calculate_fundamental_change</code></td><td><code>WATCH</code></td><td>revenue qoq +0.0741, net profit qoq +0.0446; published 2025-11-10; 5-session reaction -0.0708</td><td>all</td><td>26 s</td></tr>
+  <tr><td><strong>S5</strong> Unsafe analysis (future information horizon)</td><td><code>calculate_fundamental_change</code></td><td><code>ANALYSIS_UNSAFE</code></td><td>tool error DATE_OUT_OF_SNAPSHOT: cached data covers 2021-01-04 through 2026-10-30</td><td>all</td><td>21 s</td></tr>
+</table>
 <div class="cols" style="margin-top:0.8rem">
-  <div class="card">
-    <h3>1. Agent Harness — the model doing work</h3>
-    <p style="font-size:0.85rem; color:#aab; margin-bottom:0.5rem">
-      LLM + MCP tools in a Claude-Code-style loop. One question in, tool calls fire, one grounded answer out.
-    </p>
-    <p><strong>Smoke:</strong> <code>python scripts/local_agent.py --smoke --model bist-qwen</code></p>
-    <p style="font-size:0.8rem">→ One <code>project_status</code> call, ~30&nbsp;s, proves the wiring works.</p>
-    <p style="margin-top:0.5rem"><strong>Real question:</strong><br>
-       <code>python scripts/local_agent.py --ticker THYAO.IS --as-of 2025-12-31 --model bist-qwen</code></p>
-    <p style="font-size:0.8rem">→ 3–6 tool calls · one of 8 educational labels · trace in <code>outputs/agent/</code></p>
-  </div>
-  <div class="card">
-    <h3>2. Evaluation Harness — measuring the architecture</h3>
-    <p style="font-size:0.85rem; color:#aab; margin-bottom:0.5rem">
-      Runs the <em>same fixed question</em> through the five A→E stages and scores each one. Produces the comparison in slide 9.
-    </p>
-    <p><strong>Command:</strong><br>
-       <code>python scripts/run_harness_experiments.py<br>
-       &nbsp;&nbsp;--backend ollama --model bist-qwen</code></p>
-    <p style="font-size:0.8rem">→ 5 stages × ~2&nbsp;min each ≈ 8–15&nbsp;min total · writes
-       <code>outputs/harness/comparison.json</code> + per-stage scores.</p>
-    <p style="font-size:0.8rem; color:#f9a825; margin-top:0.4rem">
-      Pre-run before the talk; show <code>comparison.base.json</code> vs <code>comparison.finetuned.json</code> live.
-    </p>
-  </div>
-</div>
-<hr style="margin-top:1rem">
-<div class="cols" style="margin-top:0.6rem">
   <div>
-    <h3 style="color:#e94560; font-size:0.95rem">One-shot launcher</h3>
-    <p style="font-size:0.85rem"><code>.\scripts\presentation_launch.ps1</code></p>
-    <p style="font-size:0.78rem; color:#889">Opens 4 PowerShell windows — <code>ollama serve</code>, health check,
-      agent smoke, 5-stage harness — so each step can be inspected independently.
-      Flags: <code>-Model qwen2.5:7b-instruct</code>, <code>-SkipHarness</code>.</p>
+    <p style="font-size:0.85rem"><strong>Pre-run traces:</strong> <code>python scripts/run_presentation_scenarios.py</code></p>
+    <p style="font-size:0.78rem; color:#aab">Each trace records model digest, prompts, tool calls with
+      arguments and date ranges, tool outputs, final answer, timestamps, temperature 0 and seed 17.</p>
   </div>
   <div>
-    <h3 style="color:#e94560; font-size:0.95rem">What to watch during the demo</h3>
-    <ul style="font-size:0.82rem">
-      <li>Each tool call prints name + args; results truncated at 12 KB</li>
-      <li>Final answer cites tool names — no invented numbers</li>
-      <li>No "I recommend buying" phrases (<code>advice_leak = 0</code>)</li>
-      <li>Only <code>127.0.0.1:11434</code> in <code>netstat</code> — fully offline</li>
-    </ul>
+    <p style="font-size:0.85rem"><strong>Live question:</strong> <code>python scripts/ask.py "&lt;question&gt;"</code></p>
+    <p style="font-size:0.78rem; color:#aab">Same model, prompts, settings and code path; prints each
+      tool call, the answer, and the grounding audit. Only <code>127.0.0.1:11434</code> is used.</p>
   </div>
 </div>
 </section>

@@ -42,6 +42,7 @@ SOURCE_CODE = {
                       "training/Modelfile.finetuned", "training/Modelfile.base",
                       "training/export_gguf.sh"],
     "evaluation_code": ["training/eval/run_baseline.py", "training/eval/compare.py",
+                        "scripts/run_harness_experiments.py", "scripts/generate_deliverables.py",
                         "src/bist_analytics/harness/evaluation.py"],
     "environment": ["pyproject.toml", "uv.lock"],
 }
@@ -138,6 +139,17 @@ def main() -> None:
         attachments.append(entry("outputs/presentation/traces.html", "trace_viewer"))
     attachments += traces
 
+    # --- evaluation results ----------------------------------------------------------------
+    evaluation = [entry("outputs/training/base_vs_finetuned.md", "evaluation_report"),
+                  entry("outputs/training/figures/base_vs_finetuned.png", "evaluation_chart"),
+                  entry("outputs/harness/eval_v3/summary.json", "evaluation_summary")]
+    evaluation += [entry(f"outputs/harness/eval_v3/{m}.{p}.score.json", "evaluation_scores", model=m, protocol=p)
+                   for m in ("base", "finetuned") for p in ("original", "presentation")]
+    evaluation += [entry(f"outputs/harness/comparison.{m}.json", "harness_comparison", model=m)
+                   for m in ("base", "finetuned")]
+    evaluation.append(entry("outputs/training/phase_g_harness_summary.md", "harness_report"))
+    attachments += evaluation
+
     # --- code + configs --------------------------------------------------------------------
     code = {group: [entry(rel, f"source_code:{group}") for rel in expand(patterns)]
             for group, patterns in SOURCE_CODE.items()}
@@ -201,6 +213,10 @@ def main() -> None:
                                         "retrieval", "steps[] (tool, arguments, date_range, result, "
                                         "result_sha256, started_at, finished_at)",
                                         "final_answer", "grounding_audit", "started_at", "finished_at"]},
+        "evaluation": {"files": evaluation,
+                       "base_comparison_model": "bist-qwen-base (training/Modelfile.base: qwen2.5:3b-instruct, "
+                                                "same num_ctx 16384 and sampling as bist-qwen)",
+                       "per_question_traces": "outputs/harness/eval_v3/traces/"},
         "live_question": {"cli": "scripts/ask.py \"<question>\"",
                           "same_code_path_as_scenarios": True,
                           "traces_dir": "outputs/presentation/live/"},

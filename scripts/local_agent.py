@@ -279,14 +279,25 @@ def _chat(messages: list[dict], tools: list[dict], model: str,
     data = json.dumps(body).encode("utf-8")
     request = urllib.request.Request(f"{OLLAMA_URL}/chat/completions", data=data,
                                       headers={"Content-Type": "application/json"})
-    try:
-        with urllib.request.urlopen(request, timeout=600) as response:
-            return json.loads(response.read())
-    except urllib.error.HTTPError as exc:
-        body = exc.read().decode("utf-8", errors="replace")[:2000]
-        raise RuntimeError(f"Ollama HTTP {exc.code} at {OLLAMA_URL}: {body}") from exc
-    except urllib.error.URLError as exc:
-        raise RuntimeError(f"Ollama endpoint unreachable at {OLLAMA_URL}: {exc}") from exc
+    # Transient local failures (the llama-server runner restarting, a VPN/firewall briefly
+    # refusing a localhost socket) are retried twice. Temperature 0 + a fixed seed make the
+    # retried request equivalent, so the retry cannot change the answer.
+    for attempt in range(3):
+        try:
+            with urllib.request.urlopen(request, timeout=600) as response:
+                return json.loads(response.read())
+        except urllib.error.HTTPError as exc:
+            body = exc.read().decode("utf-8", errors="replace")[:2000]
+            if exc.code >= 500 and attempt < 2:
+                time.sleep(5 * (attempt + 1))
+                continue
+            raise RuntimeError(f"Ollama HTTP {exc.code} at {OLLAMA_URL}: {body}") from exc
+        except urllib.error.URLError as exc:
+            if attempt < 2:
+                time.sleep(5 * (attempt + 1))
+                continue
+            raise RuntimeError(f"Ollama endpoint unreachable at {OLLAMA_URL}: {exc}") from exc
+    raise RuntimeError("unreachable")
 
 
 _TOOL_CALL_RE = re.compile(r"<tool_call>\s*(\{.*?\})\s*</tool_call>", re.DOTALL)

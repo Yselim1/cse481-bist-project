@@ -41,7 +41,7 @@ curl http://localhost:11434/v1/chat/completions `
 `scripts/local_agent.py` is the Python bridge. It:
 
 1. Launches the BIST MCP server as a child process (stdio transport).
-2. Lists the 20 MCP tools and translates their schemas into OpenAI tool-calling format.
+2. Lists the 21 MCP tools and translates their schemas into OpenAI tool-calling format.
 3. Hits `http://localhost:11434/v1/chat/completions` with `tool_choice="auto"`.
 4. Shuttles each `tool_calls` entry back to the MCP server, appends the result as a
    `role: tool` message, and re-invokes the model until it produces a tool-less answer

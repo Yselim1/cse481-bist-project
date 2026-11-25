@@ -109,8 +109,11 @@ def _run_ollama_stage(stage: str, args: argparse.Namespace, output: Path) -> tup
     error_path = output/f"{stage}.stderr.log"
     # raw_llm stage runs without any tool access; we still use run_agent but strip tool calls after the fact.
     allow_tools = stage != "raw_llm"
+    # Same data config as the Codex backend (the question is about the TMS 29 THYAO study), and
+    # no harness-side RAG: retrieval is not one of the five stages being compared.
     result = run_agent(full_prompt, model=args.model, max_turns=12 if allow_tools else 1,
-                       trace_path=trace_path, allow_tools=allow_tools)
+                       trace_path=trace_path, allow_tools=allow_tools,
+                       config=str(ROOT/"config/tms29.yaml"), retrieval_top_k=0)
     text = result.get("final_answer", "")
     answer = _extract_json(text)
     if answer is None:

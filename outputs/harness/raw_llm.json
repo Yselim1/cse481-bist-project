@@ -1,19 +1,26 @@
 {
-  "url": null,
   "as_of": "2026-09-25",
-  "educational_label": null,
   "financial_period": "2026-09-25",
-  "ticker": "THYAO",
-  "revenue_try_million": null,
-  "net_profit_try_million": null,
-  "net_debt_try_million": null,
-  "combined_return": null,
-  "technical_return": null,
-  "buy_hold_return": null,
-  "BIST100_return": null,
+  "committed_evidence_ids": [
+    "explanation_THYAO_2026-09-25",
+    "THYAO_trailing_financial_state_2026-09-25",
+    "THYAO_current_rule_signal_2026-09-25",
+    "THYAO_strategy_comparison_2026-09-25",
+    "THYAO_KAP_context_event_2026-09-25"
+  ],
+  "explanation_THYAO_2026-09-25": null,
+  "THYAO_trailing_financial_state_2026-09-25": null,
+  "THYAO_current_rule_signal_2026-09-25": null,
+  "THYAO_strategy_comparison_2026-09-25": null,
+  "THYAO_KAP_context_event_2026-09-25": null,
   "signal_action": null,
-  "educational_caveat": null,
-  "context_event_ids": null,
-  "explanation": null,
-  "evidence_tools": []
+  "context_event_ids": [
+    "explanation_THYAO_2026-09-25",
+    "THYAO_current_rule_signal_2026-09-25",
+    "THYAO_strategy_comparison_2026-09-25",
+    "THYAO_KAP_context_event_2026-09-25"
+  ],
+  "educational_caveat": "This is educational research. Do not act on this information.",
+  "investment_recommendation": null,
+  "narrative": ""
 }

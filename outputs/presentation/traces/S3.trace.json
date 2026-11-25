@@ -1,30 +1,42 @@
 {
   "schema_version": "bist-execution-trace/1",
-  "run_id": "5f23be12-d8bc-48ef-904e-29d0086adcf4",
+  "run_id": "e2df4231-aa69-4954-b0d3-4ed827a966e7",
   "scenario_id": "S3",
-  "started_at": "2026-11-25T16:35:46.422+00:00",
-  "finished_at": "2026-11-25T16:36:22.699+00:00",
-  "wall_time_s": 36.277,
+  "started_at": "2026-11-25T16:45:48.700+00:00",
+  "finished_at": "2026-11-25T16:46:14.039+00:00",
+  "wall_time_s": 25.339,
   "model": {
     "name": "bist-qwen",
     "endpoint": "http://localhost:11434/v1",
     "ollama_version": "0.40.16",
-    "digest": "03815952dddc6ff1489e9910c93a872c32be7f09095ffa09c810065f67b66b72",
+    "digest": "2ea69e9a076b8b5b83109ffe51879c523f34d16d4cce05d7aa4a531699c42814",
     "size_bytes": 1929903359,
-    "modified_at": "2026-11-25T19:13:21.6186539+03:00",
+    "modified_at": "2026-11-25T19:44:13.5817669+03:00",
     "family": "qwen2",
     "parameter_size": "3.1B",
     "quantization_level": "Q4_K_M",
     "format": "gguf",
-    "modelfile_parameters": "top_p                          0.9\nnum_ctx                        65536\ntemperature                    0",
-    "modelfile_sha256": "c7d4eab0ee20daca5cd1bcb148a5991550602e6e48594be4498d69d9acd87dcc"
+    "modelfile_parameters": "num_ctx                        16384\ntemperature                    0\ntop_p                          0.9",
+    "modelfile_sha256": "d671e9ae7188711279a3f45d934da4630f9935194858a7d966867f8d3a6d0d85",
+    "base_model": {
+      "name": "Qwen2.5-3B-Instruct",
+      "version": "Qwen2.5, 3B parameters, instruct",
+      "huggingface_repo": "Qwen/Qwen2.5-3B-Instruct",
+      "huggingface_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+      "training_checkpoint": "unsloth/Qwen2.5-3B-Instruct-bnb-4bit",
+      "training_checkpoint_revision": "2672b588848527e456d320c11926c794539f47d5",
+      "download_source": "https://huggingface.co/Qwen/Qwen2.5-3B-Instruct",
+      "ollama_base_tag": "qwen2.5:3b-instruct",
+      "license": "Qwen Research License (qwen2.5-3b-instruct)"
+    },
+    "adapter_sha256": "ad3716e908060dc87c3095d5a20ac9811f557cf293ead4f80a2497d143908e53"
   },
   "sampling": {
     "temperature": 0.0,
     "seed": 17,
     "max_tokens": 1536,
     "top_p": "0.9",
-    "num_ctx": "65536",
+    "num_ctx": "16384",
     "endpoint": "http://localhost:11434/v1/chat/completions"
   },
   "harness": {
@@ -58,7 +70,7 @@
       "search_knowledge_base"
     ],
     "git": {
-      "commit": "f052f85ddb9484da9694a3e7e53b970f03bbbaa1",
+      "commit": "db82984c0a9edb678f1b39a8390f21333188813b",
       "dirty": true
     },
     "python": "3.12.14"
@@ -94,9 +106,9 @@
       "date_range": {
         "as_of": "2025-12-31"
       },
-      "started_at": "2026-11-25T16:35:54.847+00:00",
-      "finished_at": "2026-11-25T16:35:59.424+00:00",
-      "duration_s": 4.576,
+      "started_at": "2026-11-25T16:45:57.774+00:00",
+      "finished_at": "2026-11-25T16:46:02.208+00:00",
+      "duration_s": 4.434,
       "result": {
         "content": [
           {
@@ -175,9 +187,9 @@
       "index": 1,
       "turn": 0,
       "type": "assistant",
-      "started_at": "2026-11-25T16:35:59.424+00:00",
-      "finished_at": "2026-11-25T16:36:03.681+00:00",
-      "duration_s": 4.256,
+      "started_at": "2026-11-25T16:46:02.208+00:00",
+      "finished_at": "2026-11-25T16:46:05.537+00:00",
+      "duration_s": 3.329,
       "content": "<tool_call>\n{\"name\": \"detect_reversal_events\", \"arguments\": {\"ticker\": \"TCELL.IS\", \"as_of\": \"2025-12-31\", \"lookback\": 120}}\n</tool_call>",
       "tool_calls": [
         {
@@ -211,9 +223,9 @@
         "as_of": "2025-12-31",
         "lookback": 120
       },
-      "started_at": "2026-11-25T16:36:03.681+00:00",
-      "finished_at": "2026-11-25T16:36:03.783+00:00",
-      "duration_s": 0.102,
+      "started_at": "2026-11-25T16:46:05.537+00:00",
+      "finished_at": "2026-11-25T16:46:05.631+00:00",
+      "duration_s": 0.095,
       "result": {
         "content": [
           {
@@ -745,9 +757,9 @@
       "index": 3,
       "turn": 1,
       "type": "assistant",
-      "started_at": "2026-11-25T16:36:03.783+00:00",
-      "finished_at": "2026-11-25T16:36:22.693+00:00",
-      "duration_s": 18.91,
+      "started_at": "2026-11-25T16:46:05.632+00:00",
+      "finished_at": "2026-11-25T16:46:14.034+00:00",
+      "duration_s": 8.402,
       "content": "<final_answer>\n{\"educational_label\": \"TECHNICAL_REVERSAL_CANDIDATE\", \"committed_evidence_ids\": [\"detect_reversal_events:TCELL.IS:2025-12-31:lb120\"], \"explanation\": \"detect_reversal_events for TCELL.IS, 120 sessions to 2025-12-31: 35 events. By family (summary): supertrend_flip_up: count 2, mean_forward_5d 0.0207; supertrend_flip_down: count 3, mean_forward_5d 0.0102; kama_slope_up: count 9, mean_forward_5d 0.0087; bb_lower_touch: count 4, mean_forward_5d 0.0077; kama_slope_down: count 9, mean_forward_5d -0.0145. label_rule: mean_forward_5d > 0.005 → TECHNICAL_REVERSAL_CANDIDATE, otherwise WATCH. best_family (at least 2 forward returns): supertrend_flip_up, count 2, mean_forward_5d 0.0207. label_by_rule: TECHNICAL_REVERSAL_CANDIDATE. Selected: TECHNICAL_REVERSAL_CANDIDATE. In-sample only; not a trading signal.\"}\n</final_answer>",
       "tool_calls": [],
       "finish_reason": "stop",

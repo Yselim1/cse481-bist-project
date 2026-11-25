@@ -1,0 +1,39 @@
+{"id": "q01", "tools": ["project_status", "generate_signal", "generate_report", "build_evidence_bundle", "generate_signal"], "label": null, "invalid_tool": true, "missing": 0}
+{"id": "q02", "tools": ["calculate_indicators", "generate_signal", "calculate_scores", "generate_signal"], "label": null, "invalid_tool": false, "missing": 0}
+{"id": "q03", "tools": ["calculate_scores", "generate_signal", "calculate_indicators", "generate_signal", "calculate_scores", "calculate_scores", "calculate_scores", "generate_signal"], "label": null, "invalid_tool": false, "missing": 0}
+{"id": "q04", "tools": ["get_fundamental_metrics", "calculate_indicators", "calculate_scores", "generate_signal", "check_data_quality"], "label": "INVESTIGATE", "invalid_tool": false, "missing": 0}
+{"id": "q05", "tools": ["calculate_indicators", "calculate_scores", "generate_signal", "check_data_quality"], "label": "ANALYSIS_UNSAFE", "invalid_tool": false, "missing": 0}
+{"id": "q06", "tools": ["rank_sector_relative_strength"], "label": "POTENTIAL_CATCH_UP_CANDIDATE", "invalid_tool": false, "missing": 0}
+{"id": "q07", "tools": ["rank_sector_relative_strength", "rank_sector_relative_strength", "rank_sector_relative_strength"], "label": "POTENTIAL_CATCH_UP_CANDIDATE", "invalid_tool": false, "missing": 0}
+{"id": "q08", "tools": ["test_weekday_pattern", "generate_signal", "calculate_indicators", "generate_signal", "calculate_scores", "generate_signal"], "label": "INVESTIGATE", "invalid_tool": false, "missing": 0}
+{"id": "q09", "tools": ["test_weekday_pattern", "generate_signal", "generate_report", "build_evidence_bundle", "generate_signal"], "label": null, "invalid_tool": true, "missing": 0}
+{"id": "q10", "tools": ["detect_reversal_events"], "label": "TECHNICAL_REVERSAL_CANDIDATE", "invalid_tool": false, "missing": 0}
+{"id": "q11", "tools": ["detect_reversal_events", "generate_signal", "generate_signal", "generate_signal"], "label": null, "invalid_tool": false, "missing": 0}
+{"id": "q12", "tools": ["calculate_fundamental_change", "generate_signal", "build_evidence_bundle", "generate_report", "run_backtest", "calculate_fundamental_change"], "label": null, "invalid_tool": true, "missing": 0}
+{"id": "q13", "tools": ["get_fundamental_metrics", "generate_signal", "calculate_scores", "generate_report", "build_evidence_bundle", "find_support_resistance", "calculate_fundamental_change", "get_macro_context", "get_index_history"], "label": "WATCH", "invalid_tool": true, "missing": 0}
+{"id": "q14", "tools": ["get_macro_context", "generate_signal", "generate_report", "build_evidence_bundle"], "label": "HOLD", "invalid_tool": true, "missing": 0}
+{"id": "q15", "tools": ["get_news_events", "build_evidence_bundle", "find_support_resistance", "detect_reversal_events", "generate_signal", "generate_report", "run_backtest", "calculate_fundamental_change", "find_support_resistance"], "label": null, "invalid_tool": true, "missing": 0}
+{"id": "q16", "tools": ["run_backtest", "generate_report", "build_evidence_bundle", "generate_signal", "calculate_scores", "calculate_fundamental_change", "find_support_resistance", "detect_reversal_events", "rank_sector_relative_strength", "get_fundamental_metrics"], "label": null, "invalid_tool": true, "missing": 0}
+{"id": "q17", "tools": ["calculate_indicators", "generate_signal", "check_data_quality"], "label": "ANALYSIS_UNSAFE", "invalid_tool": true, "missing": 0}
+{"id": "q18", "tools": ["check_data_quality", "generate_signal", "calculate_indicators", "build_evidence_bundle", "generate_report", "check_data_quality", "calculate_fundamental_change"], "label": "ANALYSIS_UNSAFE", "invalid_tool": true, "missing": 0}
+{"id": "q19", "tools": ["calculate_indicators", "check_data_quality", "generate_signal", "calculate_indicators", "check_data_quality"], "label": "ANALYSIS_UNSAFE", "invalid_tool": false, "missing": 0}
+{"id": "q20", "tools": ["calculate_indicators", "calculate_scores", "run_backtest", "get_fundamental_metrics", "build_evidence_bundle"], "label": "INVESTIGATE", "invalid_tool": false, "missing": 0}
+{
+  "total_questions": 20,
+  "invalid_tool_call_rate": 0.45,
+  "missing_required_tool_rate": 0.0,
+  "label_mismatch_rate": 0.1,
+  "advice_leak_rate": 0.0,
+  "unknown_label_emitted_rate": 0.4,
+  "reproducibility_rate": 1.0,
+  "ungrounded_answer_rate": 0.05,
+  "max_turns_exceeded_rate": 0.0,
+  "model": "bist-qwen",
+  "protocol": "original",
+  "protocol_settings": {
+    "system_prompt": "SYSTEM_PROMPT",
+    "tool_schemas": true,
+    "retrieval_top_k": 0
+  },
+  "model_digest": "2ea69e9a076b8b5b83109ffe51879c523f34d16d4cce05d7aa4a531699c42814"
+}

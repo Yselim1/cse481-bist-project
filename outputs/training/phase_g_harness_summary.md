@@ -1,68 +1,69 @@
-# Phase G — 5-stage A→E harness re-run with `bist-qwen`
+# Phase G — 5-stage A→E harness, base vs fine-tuned (v3)
 
-- Backend: Ollama (localhost:11434), zero cloud traffic
-- Model: `bist-qwen` (Qwen 2.5 3B + LoRA, merged GGUF)
+- Backend: Ollama (localhost:11434), zero cloud traffic; data config `config/tms29.yaml`, no harness-side RAG
+- Fine-tuned: `bist-qwen` (Qwen 2.5 3B + LoRA v3, merged Q4_K_M GGUF, 16k context)
+- Base: `bist-qwen-base` (`qwen2.5:3b-instruct` with the same 16k context and sampling; `training/Modelfile.base`)
 - Stages: `raw_llm` → `llm_tools` → `stateful_harness` → `evidence_quality_gate` → `memory_human_review`
-- Fix applied: dedup guard + force-answer-after-7-turns in `scripts/local_agent.py`
-- Full artefacts: `outputs/harness/{stage}.{json,jsonl,score.json}`, `comparison.finetuned.json`, `state.finetuned.json`
+- One fixed THYAO question; only the architecture changes between stages, so this is an architecture comparison
+- Artefacts: `outputs/harness/comparison.{finetuned,base}.json`, `state.{finetuned,base}.json`;
+  per-stage `{stage}.{json,jsonl,score.json}` are the fine-tuned run (it ran last)
+- Run on 2026-11-25 with the submitted adapter (SHA-256 `ad3716e9…`)
 
-## Per-stage §30 metric table (post-dedup fix)
+## Per-stage table — fine-tuned `bist-qwen`
 
-| Axis | raw_llm | llm_tools | stateful | evidence_gate | memory_review | Monotonic? |
+| Axis | raw_llm | llm_tools | stateful | evidence_gate | memory_review | Shape |
 |---|---|---|---|---|---|---|
-| `evidence_coverage` (↑) | 0.0 | 1.0 | 1.0 | 1.0 | 1.0 | **yes** |
-| `workflow_completion` (↑) | 0.0 | 1.0 | 1.0 | 1.0 | 1.0 | **yes** |
-| `structured_reproducibility` (↑) | False | **True** | False | False | False | partial (peaks at B) |
-| `constraint_compliance` (↑) | True | False | **True** | **True** | False | partial (3/5 pass) |
+| `evidence_coverage` (↑) | 0.0 | 1.0 | 1.0 | 1.0 | 1.0 | **monotonic** |
+| `workflow_completion` (↑) | 0.0 | 1.0 | 1.0 | 1.0 | 1.0 | **monotonic** |
+| `structured_reproducibility` (↑) | False | True | True | True | False | 3 / 5 |
+| `constraint_compliance` (↑) | True | True | True | True | True | **5 / 5** |
 | `temporal_validity` (↑) | False | False | False | False | False | flat |
 | `numeric_exactness` (↑) | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | flat |
+| strict field checks passed (of 11) | 1 | 2 | 2 | 2 | 2 | |
 
-## Improvements vs previous run (pre-dedup fix)
+## Per-stage table — base `bist-qwen-base`
 
-| Stage | Axis | Before | After | Change |
-|---|---|---|---|---|
-| llm_tools | structured_reproducibility | False | **True** | improved |
-| stateful_harness | as_of check | False | **True** | improved |
-| stateful_harness | context_event check | False | **True** | improved |
-| stateful_harness | constraint_compliance | False | **True** | improved |
-| evidence_quality_gate | constraint_compliance | False | **True** | improved |
-| memory_human_review | signal_action check | False | **True** | improved |
+| Axis | raw_llm | llm_tools | stateful | evidence_gate | memory_review | Shape |
+|---|---|---|---|---|---|---|
+| `evidence_coverage` (↑) | 0.0 | 1.0 | 1.0 | 1.0 | 1.0 | monotonic |
+| `workflow_completion` (↑) | 0.0 | 1.0 | 1.0 | 1.0 | 1.0 | monotonic |
+| `structured_reproducibility` (↑) | True | True | True | True | True | 5 / 5 |
+| `constraint_compliance` (↑) | True | False | True | False | False | 2 / 5 |
+| `temporal_validity` (↑) | False | False | False | False | False | flat |
+| `numeric_exactness` (↑) | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | flat |
+| strict field checks passed (of 11) | 1 | 0 | 2 | 0 | 0 | |
 
 ## Reading
 
-- **evidence_coverage, workflow_completion**: both strictly monotonic. Giving the fine-tune MCP
-  tools (A → B transition) immediately drives both to 1.0 and they stay there through every
-  later stage. This is the headline Phase G finding.
-- **structured_reproducibility**: peaks at `llm_tools` with the dedup fix — without looping the
-  model produces cleaner single-pass JSON output. Drops in later stages because the longer
-  prompts (state, gate language, memory) push the model into adding preamble text that breaks
-  pure-JSON extraction.
-- **constraint_compliance**: now passes in 3 of 5 stages (raw_llm, stateful_harness,
-  evidence_quality_gate). The dedup guard stops the model from cycling through tools and landing
-  in a confused state; with clean exits it correctly includes `educational_caveat` and omits
-  `investment_recommendation`.
-- **numeric_exactness**: flat at 0 across all stages. The 3B model reliably calls the right
-  tools but does not populate the strict numeric schema slots (revenue, net profit, net debt,
-  four returns). Root cause: trained to call tools and cite them, under-trained on extracting
-  specific scalars from large tool-result JSON into a structured output schema.
-- **temporal_validity**: flat at False. The model embeds dates in free-form narrative rather
-  than the `as_of`/`financial_period` schema slots.
+- **Tools are the step change.** For both models, adding MCP tools (A → B) takes
+  evidence_coverage and workflow_completion from 0 to 1.0, and they stay there in every later stage.
+- **The fine-tune keeps the rules.** constraint_compliance (educational caveat present, no
+  investment recommendation) holds in all five stages for `bist-qwen`, versus two of five for the
+  base. It also passes both the as_of and context_event checks in all four tool stages
+  (B–E); the base passes both only at `stateful_harness`.
+- **The base produces cleaner JSON.** structured_reproducibility is 5/5 for the base and 3/5 for
+  the fine-tune: the fine-tune was trained to answer in its `<final_answer>` format, so on the
+  long harness prompt it sometimes wraps or prefixes the JSON object.
+- **numeric_exactness stays 0 for both.** This stage asks for eleven strict fields (revenue, net
+  profit, net debt in million TRY, four strategy returns, signal, context event) assembled from
+  several large tool outputs in one JSON object. Neither 3B model fills them exactly; the
+  presentation path avoids this by having tools return the needed comparisons directly.
+- **temporal_validity stays False**: dates go into the narrative instead of the `as_of` /
+  `financial_period` schema slots.
 
-## Phase G exit decision
+## Earlier run (v1 adapter, for reference)
 
-2 / 6 axes strictly monotonic, 1 / 6 partial-monotonic, 3 / 6 flat or partial — consistent
-with an architecture demonstration. The dedup fix improved 6 individual checks across the 5
-stages. Per the plan's Phase G exit criterion ("monotonic improvement on the §30 metrics *or*
-honest documentation of any non-monotonic axis"), this run documents all non-monotonic axes
-with root causes.
+The v1 fine-tune (dataset v1, dedup guard) had constraint_compliance in 3 of 5 stages and
+structured_reproducibility only at `llm_tools`; evidence_coverage and workflow_completion had the
+same 0 → 1.0 shape. That run used the default data config and is superseded by this one.
 
 ## Reproducing
 
 ```powershell
-ollama serve
-ollama list | Select-String bist-qwen
-./.venv/Scripts/python.exe scripts/run_harness_experiments.py --backend ollama --model bist-qwen
+.\.venv\Scripts\python.exe scripts\run_harness_experiments.py --backend ollama --model bist-qwen-base
+Copy-Item outputs\harness\comparison.json outputs\harness\comparison.base.json
+Copy-Item outputs\harness\state.json outputs\harness\state.base.json
+.\.venv\Scripts\python.exe scripts\run_harness_experiments.py --backend ollama --model bist-qwen
+Copy-Item outputs\harness\comparison.json outputs\harness\comparison.finetuned.json
+Copy-Item outputs\harness\state.json outputs\harness\state.finetuned.json
 ```
-
-All five stages run in ~25 min on a workstation with 8 GB VRAM. No network calls after the
-Ollama tag is pulled once.

@@ -32,7 +32,7 @@ def main():
         for path in training_dir.rglob("*"):
             if not path.is_file() or exclude.intersection(path.parts) or path.suffix == ".pyc":
                 continue
-            # Skip HF checkpoints and the 1.8 GB merged GGUF (shared separately; its hash is
+            # Skip HF checkpoints and the 1.9 GB merged GGUF (shared separately; its hash is
             # still recorded in the manifest below); keep code, dataset and Modelfiles.
             if "outputs" in path.parts or path.suffix == ".gguf":
                 continue

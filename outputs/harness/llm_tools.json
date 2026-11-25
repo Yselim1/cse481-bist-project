@@ -1,17 +1,33 @@
 {
-  "as_of": null,
-  "financial_period": null,
+  "as_of": "2026-09-25",
+  "financial_period": "2025-01-01 to 2026-09-26",
   "revenue_try_million": null,
   "net_profit_try_million": null,
   "net_debt_try_million": null,
-  "combined_return": null,
-  "technical_return": null,
+  "combined_return": 0.04476254705612881,
+  "technical_return": 0.11098691629865809,
   "buy_hold_return": null,
-  "bist100_return": null,
+  "bist100_return": 0.3073817789827118,
   "signal_action": null,
-  "context_event_ids": [],
-  "evidence_tools": [],
-  "educational_caveat": "",
+  "context_event_ids": [
+    "air-europa-offer",
+    "boeing-2025",
+    "air-europa-agreement",
+    "fin-2025q3",
+    "fin-2025fy",
+    "biofuel-investment",
+    "fin-2026q1",
+    "air-europa-approval",
+    "fin-2026q2",
+    "boeing-2026"
+  ],
+  "evidence_tools": [
+    "calculate_indicators:THYAO:2026-09-25",
+    "calculate_scores:THYAO:2026-09-25",
+    "generate_signal:THYAO:2026-09-25:holding:false:entry_price:0",
+    "run_backtest:2025-01-01:2026-09-25"
+  ],
+  "educational_caveat": "Single user-selected stock; selection/survivorship bias; no market-wide inference. Nominal TRY returns, zero cash yield and zero-risk-free Sharpe. Adjusted synthetic units; whole-lot execution and taxes not modeled. BIST100 price-index basis differs from adjusted stock return basis. Primary analysis uses one internally consistent post-TMS 29 basis; pre-2025 trading results are outside its evaluation window. 2026 is partial through the last cached session before the exclusive evaluation end. KAP context is evidence for interpretation and does not alter any strategy score or order.",
   "investment_recommendation": null,
-  "narrative": "<tool_call>\n{\"name\": \"generate_signal\", \"arguments\": {\"ticker\": \"THYAO\", \"as_of\": \"2026-09-25\", \"holding\": false, \"entry_price\": 1, \"holding_sessions\": 0}}\n</tool_call>\n<tool_call>\n{\"name\": \"run_backtest\", \"arguments\": {\"start\": \"2025-01-01\", \"end\": \"2026-09-25\"}}\n</tool_call>\n<tool_call>\n{\"name\": \"get_context_events\", \"arguments\": {\"as_of\": \"2026-09-25\", \"limit\": 10}}\n"
+  "narrative": "calculate_indicators: THYAO as of 2026-09-25 (summary): combined_return 0.04476254705612881, technical_return 0.11098691629865809, buy_hold_return null. Fundamental metrics: revenue_try_million null, net_profit_try_million null, net_debt_try_million null. generate_signal: THYAO as of 2026-09-25, holding false, entry_price 0 (not an order). run_backtest: from 2025-01-01 to 2026-09-25. get_context_events: 10 events as of 2026-09-25 (full list): air-europa-offer, boeing-2025, air-europa-agreement, fin-2025q3, fin-2025fy, biofuel-investment, fin-2026q1, air-europa-approval, fin-2026q2, Boeing-2026. No fundamental metrics for THYAO: missing values are null. The latest context is up to date."
 }

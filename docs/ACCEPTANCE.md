@@ -2,7 +2,7 @@
 
 **Upgrade audit: 27 September 2026.** The instructor-Q&A primary study is documented in `INSTRUCTOR_QA_UPGRADE.md`: a FY2024 post-TMS 29 anchor plus six 2025–2026 Fintables reports supply 238 verified observations; 13 timestamped KAP context events and a completed five-stage fixed-model harness are included. The annual-refresh audit below remains valid as baseline evidence.
 
-**Submission update: 25 November 2026.** The agent now runs on the locally hosted fine-tuned model `bist-qwen` (Qwen 2.5 3B + QLoRA, served by Ollama) over 20 read-only MCP tools; no cloud AI calls are made. The instructor's fine-tuned-LLM requirements (base model choice, dataset, training settings, local run steps, base-vs-fine-tuned comparison, limitations) are mapped in `outputs/deliverables/requirements_report.pdf` and `docs/MODEL_CARD.md`. Presentation slides exist at `outputs/deliverables/presentation_slides.html`; only the classroom rehearsal remains.
+**Submission update: 25 November 2026.** The agent now runs on the locally hosted fine-tuned model `bist-qwen` (Qwen 2.5 3B + QLoRA, served by Ollama) over 21 read-only MCP tools (including a BM25 knowledge-base search); no cloud AI calls are made. The instructor's fine-tuned-LLM requirements (base model choice, dataset, training settings, local run steps, base-vs-fine-tuned comparison, limitations) are mapped in `outputs/deliverables/requirements_report.pdf` and `docs/MODEL_CARD.md`. Presentation slides exist at `outputs/deliverables/presentation_slides.html`; only the classroom rehearsal remains.
 
 ## Requirements from the supplied PDF
 
@@ -26,7 +26,7 @@ IDs and page references correspond to IMPLEMENTATION_PLAN.md, which maps all eig
 | R14 Combined strategy | Pass | Config, stateful BUY/SELL/HOLD rules, reasons, input snapshots and next-open orders. |
 | R15 No-look-ahead backtest | Pass for declared annual source scope | Causal features, verified release dates, first-session-after-release joins, dated comparative revisions and next-open costs. FY2020 comparatives enter with the FY2021 release. Source/currency correction followed inspection of earlier USD results; the chronological parameter holdout is not a pristine blind experiment. |
 | R16 Benchmarks/metrics | Pass for labeled annual-refresh study | Four-way comparison, required return/drawdown/Sharpe/win-rate/difference metrics, costs, exposure, annual evaluation and gross counterfactual. |
-| R17 Actual MCP AI agent | Pass | Local fine-tuned `bist-qwen` via Ollama driving 20 MCP tools through `scripts/local_agent.py`; traces in `outputs/agent/` and the five-stage harness in `outputs/harness/`. Earlier Codex smoke/full/missing-data sessions are kept as development history; `docs/MCP_DEMO.md`; separate stdio equality verification. |
+| R17 Actual MCP AI agent | Pass | Local fine-tuned `bist-qwen` via Ollama driving 21 MCP tools through `scripts/local_agent.py`; traces in `outputs/agent/` and the five-stage harness in `outputs/harness/`. Earlier Codex smoke/full/missing-data sessions are kept as development history; `docs/MCP_DEMO.md`; separate stdio equality verification. |
 | R18 Visuals/explanation | Pass with explicit limitations | HTML/Markdown/PDF report, three checked charts, actual results tables; conclusions acknowledge underperformance and limited sample. |
 | R19 Submission categories | Pass | All nine categories supplied, including classroom slides (`outputs/deliverables/presentation_slides.html`). Rehearsal is the student's remaining step. See inventory below. |
 
@@ -50,7 +50,7 @@ IDs and page references correspond to IMPLEMENTATION_PLAN.md, which maps all eig
 | V12 metrics | Known cumulative return/drawdown/Sharpe, initial-capital high-water mark, zero-volatility/no-closed-trade nulls. |
 | V13 future independence | Technical/zone prefixes, price-future perturbation of past orders, P/E median excludes today/future; release revision fixtures. |
 | V14 offline reproducibility | Fresh `.verify-venv` installed from frozen lock; both policies' features, annual/full metrics and ledgers compared. |
-| V15 real agent/protocol | 20 read-only tools discovered over stdio; actual local-model sessions, 20-question §30 evaluation (`outputs/harness/`) and numerical narrative audit. |
+| V15 real agent/protocol | 21 read-only tools discovered over stdio; actual local-model sessions, 20-question §30 evaluation (`outputs/harness/`) and numerical narrative audit. |
 | V16 ML | Not applicable: optional ML was excluded from the baseline. |
 
 The test suite contains 22 focused tests. Separate source review visually checked 16 statement pages and reconciled 40 balance, profit and cash-flow identities exactly. Hash checks cover originals, transcription, release evidence and normalized data. This is targeted coverage, not exhaustive testing or proof of provider infallibility or real-world execution.

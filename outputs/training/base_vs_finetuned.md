@@ -1,124 +1,151 @@
 # Base vs fine-tuned local LLM (§30 metrics)
 
-- Base model: `qwen2.5:3b-instruct`
-- Fine-tuned model: `bist-qwen` (Qwen 2.5 3B + LoRA, dedup guard applied at inference time)
-- Questions: 20 baseline eval set
-- Scores: `base_3b.score.json` vs `baseline_local.score.json` (post-fix run)
+## Original protocol
 
-## §30 metric table
+Original eval protocol: Ollama sends the 21 tool schemas, base system prompt, 12 KB tool-result cap, no RAG (same settings as the earlier v1 evaluation).
 
-| Metric | Direction | Base 3B | Fine-tuned (before fix) | Fine-tuned (after fix) | Verdict |
+**Fine-tuned vs base: 1 improved, 3 tied, 4 regressed** (of 8 metrics).
+
+| Metric | Direction | Base | Fine-tuned | Verdict |
+|---|---|---|---|---|
+| `invalid_tool_call_rate` | ↓ | 0.05 | 0.45 | regressed |
+| `missing_required_tool_rate` | ↓ | 0.10 | 0.00 | improved |
+| `label_mismatch_rate` | ↓ | 0.05 | 0.10 | regressed |
+| `advice_leak_rate` | ↓ | 0.00 | 0.00 | tie |
+| `unknown_label_emitted_rate` | ↓ | 0.05 | 0.20 | regressed |
+| `ungrounded_answer_rate` | ↓ | 0.00 | 0.05 | regressed |
+| `max_turns_exceeded_rate` | ↓ | 0.00 | 0.00 | tie |
+| `reproducibility_rate` | ↑ | 1.00 | 1.00 | tie |
+
+<details><summary>Per-question labels</summary>
+
+| Q | Scenario | Expected label | Base label | Fine-tuned label | Fine-tuned tools |
 |---|---|---|---|---|---|
-| `invalid_tool_call_rate` | lower_is_better | 0.450 | 0.500 | **0.450** | **improved** (tied base) |
-| `missing_required_tool_rate` | lower_is_better | 0.050 | 0.050 | 0.050 | tie |
-| `label_mismatch_rate` | lower_is_better | 0.000 | 0.150 | 0.200 | regressed |
-| `advice_leak_rate` | lower_is_better | 0.000 | 0.000 | 0.000 | tie |
-| `unknown_label_emitted_rate` | lower_is_better | 0.050 | 0.150 | 0.300 | regressed further |
-| `reproducibility_rate` | higher_is_better | 1.000 | 1.000 | 1.000 | tie |
+| q01 | status | — | — | — | project_status, generate_signal, generate_report, build_evidence_bundle, generate_signal |
+| q02 | indicators | — | — | — | calculate_indicators, generate_signal, calculate_scores, generate_signal |
+| q03 | scores | — | — | — | calculate_scores, generate_signal, calculate_indicators, generate_signal, calculate_scores, calculate_scores, calculate_scores, generate_signal |
+| q04 | signal | HOLD|WATCH|INVESTIGATE|POTENTIAL_CATCH_UP_CANDIDATE|TECHNICAL_REVERSAL_CANDIDATE|FUNDAMENTAL_IMPROVEMENT_CANDIDATE|REJECT_SIGNAL|ANALYSIS_UNSAFE | INVESTIGATE | INVESTIGATE | get_fundamental_metrics, calculate_indicators, calculate_scores, generate_signal, check_data_quality |
+| q05 | signal | any | INVESTIGATE | ANALYSIS_UNSAFE | calculate_indicators, calculate_scores, generate_signal, check_data_quality |
+| q06 | sector_lag | — | — | POTENTIAL_CATCH_UP_CANDIDATE | rank_sector_relative_strength |
+| q07 | sector_lag | — | — | POTENTIAL_CATCH_UP_CANDIDATE | rank_sector_relative_strength, rank_sector_relative_strength, rank_sector_relative_strength |
+| q08 | weekday | — | WATCH | INVESTIGATE | test_weekday_pattern, generate_signal, calculate_indicators, generate_signal, calculate_scores, generate_signal |
+| q09 | weekday | — | WATCH | — | test_weekday_pattern, generate_signal, generate_report, build_evidence_bundle, generate_signal |
+| q10 | reversal | — | TECHNICAL_REVERSAL_CANDIDATE | TECHNICAL_REVERSAL_CANDIDATE | detect_reversal_events |
+| q11 | reversal | — | TECHNICAL_REVERSAL_CANDIDATE | — | detect_reversal_events, generate_signal, generate_signal, generate_signal |
+| q12 | fundamental | — | FUNDAMENTAL_IMPROVEMENT_CANDIDATE | — | calculate_fundamental_change, generate_signal, build_evidence_bundle, generate_report, run_backtest, calculate_fundamental_change |
+| q13 | fundamental | — | — | WATCH | get_fundamental_metrics, generate_signal, calculate_scores, generate_report, build_evidence_bundle, find_support_resistance, calculate_fundamental_change, get_macro_context, get_index_history |
+| q14 | macro | — | — | HOLD | get_macro_context, generate_signal, generate_report, build_evidence_bundle |
+| q15 | news | — | — | — | get_news_events, build_evidence_bundle, find_support_resistance, detect_reversal_events, generate_signal, generate_report, run_backtest, calculate_fundamental_change, find_support_resistance |
+| q16 | backtest | — | — | — | run_backtest, generate_report, build_evidence_bundle, generate_signal, calculate_scores, calculate_fundamental_change, find_support_resistance, detect_reversal_events, rank_sector_relative_strength, get_fundamental_metrics |
+| q17 | gate_unsafe | ANALYSIS_UNSAFE | ANALYSIS_UNSAFE | ANALYSIS_UNSAFE | calculate_indicators, generate_signal, check_data_quality |
+| q18 | gate_unsafe | ANALYSIS_UNSAFE | ANALYSIS_UNSAFE | ANALYSIS_UNSAFE | check_data_quality, generate_signal, calculate_indicators, build_evidence_bundle, generate_report, check_data_quality, calculate_fundamental_change |
+| q19 | gate_unsafe | INVESTIGATE | INVESTIGATE | ANALYSIS_UNSAFE | calculate_indicators, check_data_quality, generate_signal, calculate_indicators, check_data_quality |
+| q20 | evidence_bundle | HOLD | INVESTIGATE | INVESTIGATE | calculate_indicators, calculate_scores, run_backtest, get_fundamental_metrics, build_evidence_bundle |
+
+</details>
+
+## Presentation protocol
+
+Presentation protocol: no schemas (the model writes `<tool_call>` text, as in its fine-tuning data), presentation system prompt, RAG context, 4.5 KB cap; the settings of `scripts/ask.py` and the five scenario traces.
+
+**Fine-tuned vs base: 2 improved, 3 tied, 3 regressed** (of 8 metrics).
+
+| Metric | Direction | Base | Fine-tuned | Verdict |
+|---|---|---|---|---|
+| `invalid_tool_call_rate` | ↓ | 0.00 | 0.10 | regressed |
+| `missing_required_tool_rate` | ↓ | 1.00 | 0.05 | improved |
+| `label_mismatch_rate` | ↓ | 0.05 | 0.10 | regressed |
+| `advice_leak_rate` | ↓ | 0.00 | 0.00 | tie |
+| `unknown_label_emitted_rate` | ↓ | 0.25 | 0.45 | regressed |
+| `ungrounded_answer_rate` | ↓ | 0.35 | 0.05 | improved |
+| `max_turns_exceeded_rate` | ↓ | 0.00 | 0.00 | tie |
+| `reproducibility_rate` | ↑ | 1.00 | 1.00 | tie |
+
+<details><summary>Per-question labels</summary>
+
+| Q | Scenario | Expected label | Base label | Fine-tuned label | Fine-tuned tools |
+|---|---|---|---|---|---|
+| q01 | status | — | — | ANALYSIS_UNSAFE | check_data_quality |
+| q02 | indicators | — | — | INVESTIGATE | calculate_indicators, check_data_quality |
+| q03 | scores | — | — | INVESTIGATE | calculate_scores |
+| q04 | signal | HOLD|WATCH|INVESTIGATE|POTENTIAL_CATCH_UP_CANDIDATE|TECHNICAL_REVERSAL_CANDIDATE|FUNDAMENTAL_IMPROVEMENT_CANDIDATE|REJECT_SIGNAL|ANALYSIS_UNSAFE | ANALYSIS_UNSAFE | ANALYSIS_UNSAFE | generate_signal, check_data_quality |
+| q05 | signal | any | INVESTIGATE | ANALYSIS_UNSAFE | calculate_indicators, calculate_scores, generate_signal, check_data_quality, explanation |
+| q06 | sector_lag | — | — | POTENTIAL_CATCH_UP_CANDIDATE | rank_sector_relative_strength |
+| q07 | sector_lag | — | — | POTENTIAL_CATCH_UP_CANDIDATE | rank_sector_relative_strength |
+| q08 | weekday | — | ANALYSIS_UNSAFE | ANALYSIS_UNSAFE | test_weekday_pattern, check_data_quality |
+| q09 | weekday | — | REJECT_SIGNAL | INVESTIGATE | test_weekday_pattern, check_data_quality, calculate_indicators, calculate_fundamental_change, generate_signal |
+| q10 | reversal | — | — | TECHNICAL_REVERSAL_CANDIDATE | detect_reversal_events |
+| q11 | reversal | — | INVESTIGATE | TECHNICAL_REVERSAL_CANDIDATE | detect_reversal_events, calculate_indicators, calculate_scores, check_data_quality |
+| q12 | fundamental | — | ANALYSIS_UNSAFE | INVESTIGATE | calculate_fundamental_change, check_data_quality |
+| q13 | fundamental | — | — | ANALYSIS_UNSAFE | get_fundamental_metrics |
+| q14 | macro | — | — | ANALYSIS_UNSAFE | get_macro_context |
+| q15 | news | — | — | INVESTIGATE | get_news_events, check_data_quality |
+| q16 | backtest | — | — | ANALYSIS_UNSAFE | run_backtest, check_data_quality |
+| q17 | gate_unsafe | ANALYSIS_UNSAFE | ANALYSIS_UNSAFE | ANALYSIS_UNSAFE | calculate_indicators, generate_signal, check_data_quality |
+| q18 | gate_unsafe | ANALYSIS_UNSAFE | ANALYSIS_UNSAFE | ANALYSIS_UNSAFE | check_data_quality |
+| q19 | gate_unsafe | INVESTIGATE | INVESTIGATE | ANALYSIS_UNSAFE | check_data_quality, calculate_indicators |
+| q20 | evidence_bundle | HOLD | ANALYSIS_UNSAFE | ANALYSIS_UNSAFE | calculate_indicators, calculate_scores, run_backtest, get_fundamental_metrics, build_evidence_bundle, check_data_quality |
+
+</details>
+
+## Earlier fine-tune (v1) for reference
+
+Same 20 questions and original protocol; the v1 adapter was trained on dataset v1 and is not part of the submission. v1 numbers are as recorded at the time, before the unknown-label tokenizer fix, so their unknown-label rates are overstated.
+
+| Metric | Base (Ollama default ctx) | v1 fine-tune | v3 fine-tune (submitted) |
+|---|---|---|---|
+| `invalid_tool_call_rate` | 0.45 | 0.45 | 0.45 |
+| `missing_required_tool_rate` | 0.05 | 0.05 | 0.00 |
+| `label_mismatch_rate` | 0.00 | 0.20 | 0.10 |
+| `advice_leak_rate` | 0.00 | 0.00 | 0.00 |
+| `unknown_label_emitted_rate` | 0.05 | 0.30 | 0.20 |
+| `reproducibility_rate` | 1.00 | 1.00 | 1.00 |
+
+## Reading the results (written 2026-11-25 from the traces above)
+
+**On the path the presentation uses, the fine-tune is the model that works.** Without tool
+schemas the base model never calls a tool (required-tool miss rate 1.00) and writes figures
+from memory: 7 of its 20 answers contain numbers no tool returned (ungrounded rate 0.35; 17
+unsupported figures in the q08 weekday answer alone). The fine-tune calls the planned tool in
+19 of 20 questions and one answer (q04, two figures) is ungrounded.
+
+**With Ollama's tool schemas, the base 3B is the stronger agent.** The fine-tune was trained
+without schemas; given them, it calls the right tool first and then keeps going (invalid-call
+rate 0.45 vs 0.05: extra `generate_signal` / `generate_report` / `build_evidence_bundle`
+calls with bad arguments). One answer (q14, macro context) contains 43 ungrounded figures.
+This is why `ask.py` and the scenario runner use the training format.
+
+**The fine-tune is over-cautious outside its five question types.** On the presentation
+protocol it labelled 11 of 20 answers ANALYSIS_UNSAFE, although only q17 and q18 are unsafe
+cases (the base did so 6 times). It adds a `check_data_quality` call to 14 of 20 questions
+and sometimes misapplies the gate: on q08 the gate returned INVESTIGATE and the answer still
+said ANALYSIS_UNSAFE. Most of these questions have no expected label, so
+`label_mismatch_rate` (0.10) does not show this; it is the clearest weakness in this eval.
+Its expected-label misses are q19 (INVESTIGATE expected, ANALYSIS_UNSAFE given) and q20
+(HOLD expected).
+
+**Unknown-label tokens are mostly tool vocabulary.** After the tokenizer fix (labels in
+quotes or followed by `;`/`:` were miscounted before, for both models and for the v1 run),
+the fine-tune's remaining hits are gate and error codes it quotes from tool outputs:
+HARD_BLOCK, PASS_WITH_WARNINGS, INVALID_SYMBOL, PRICE_HISTORY_BROKEN, FUTURE_STATEMENT.
+
+**What the 20-question set does and does not measure.** Every question names the tool to
+call. Eleven fall inside the fine-tuned question types (sector, weekday, reversal,
+fundamental, unsafe: q06–q13, q17–q19); nine ask for general tool output the fine-tune was
+not trained on (status, indicators, scores, signal, macro, news, backtest, evidence bundle). The five presentation scenarios, phrased the way a
+user would ask and never naming a tool, are a better test of the target behaviour: there the
+fine-tune chose the intended tool and gave a fully grounded answer in 5 of 5
+(`outputs/presentation/traces/`).
 
 ## Metric definitions
 
-- `invalid_tool_call_rate` — share of questions where at least one MCP tool call returned an error.
-- `missing_required_tool_rate` — share of questions missing at least one expected tool from the plan.
-- `label_mismatch_rate` — share where the emitted educational label does not match the expected label (or label set). Questions with `expected_label = null` are vacuous passes.
-- `advice_leak_rate` — share of answers containing banned advisory phrasing.
-- `unknown_label_emitted_rate` — share emitting any uppercase+underscore token not in the frozen 8-label set.
-- `reproducibility_rate` — share producing a non-empty final answer.
+- `invalid_tool_call_rate`: share of questions where at least one MCP call returned an error.
+- `missing_required_tool_rate`: share missing at least one tool from the question's plan.
+- `label_mismatch_rate`: share whose label is outside the expected set (questions without an expected label pass vacuously).
+- `advice_leak_rate`: share containing banned advisory phrases.
+- `unknown_label_emitted_rate`: share emitting an UPPER_SNAKE token outside the 8 labels (also catches quoted tool identifiers such as BB_LOWER_TOUCH).
+- `ungrounded_answer_rate`: share whose answer contains a figure the grounding audit could not trace to a tool output (`src/bist_analytics/harness/grounding.py`).
+- `max_turns_exceeded_rate`: share that hit the 15-turn limit without an answer.
+- `reproducibility_rate`: share producing a non-empty final answer.
 
-## What the dedup fix changed
-
-The inference-time dedup guard (`scripts/local_agent.py`) addresses the tool-loop pathology
-documented previously: on the first repeat call (same tool + same args), it returns a
-`dedup_note` message (not an error) and immediately disables further tool calls, forcing the
-model to write its answer. A safety-net at turn 10 catches any remaining loops.
-
-**Concrete loop reductions:**
-
-| Question | Calls before fix | Calls after fix | Turns before | Turns after |
-|---|---|---|---|---|
-| q06 (rank_sector loop) | 15 identical | 2 | 15 | 3 |
-| q07 (rank_sector loop) | 14+ mixed | 2 | 15 | 3 |
-| q09 (test_weekday loop) | 10 identical | 8 | 11 | 9 |
-| q16 (backtest + signal loop) | 20+ calls | 3 | 15 | 3 |
-
-q06 is the clearest win: 15 identical calls → 2 (1 real + 1 dedup-blocked), producing
-an answer in 3 turns vs the previous MAX_TURNS_EXCEEDED.
-
-**Why `invalid_tool_call_rate` improved (0.50 → 0.45):**
-
-q16 changed from invalid to valid — it no longer exhausts 15 turns cycling `generate_signal`.
-The remaining invalids (q05, q06, q07, q09, q11, q13, q17, q18, q19) are either schema
-argument mismatches (MCP returns a real error) or the dedup-disabled turns where the model
-still makes a unique but broken follow-up call before the disabled flag takes effect.
-
-**Why `unknown_label_emitted_rate` worsened (0.15 → 0.30) — measurement artifact:**
-
-The evaluator flags any `ALL_CAPS_WITH_UNDERSCORE` token not in the 8-label whitelist. The
-fine-tune produces longer, more evidence-rich answers that quote domain identifiers directly
-from tool outputs: event-type names like `BB_LOWER_TOUCH`, `SUPERTREND_FLIP_UP` (from
-`detect_reversal_events`), metric keys like `NET_PROFIT_QOQ` (from `calculate_fundamental_change`),
-and macro field names like `POLICY_RATE` (from `get_macro_context`).
-
-**These are not label violations** — the model is correctly citing source identifiers. The base
-model scores 0.05 on this metric because it rarely emits domain terminology at all (it rarely
-tries). The fine-tune learned to cite tool outputs, which incidentally trips the evaluator's
-broad regex. This is a test-design gap: the evaluator was written to catch educational-label
-vocabulary violations but cannot distinguish label tokens from tool-result vocabulary.
-
-**Per-question breakdown of `unknown_label=True` after fix:**
-
-| Q | Detected label | Unknown token (inferred) | Type |
-|---|---|---|---|
-| q10 | TECHNICAL_REVERSAL_CANDIDATE (valid) | BB_LOWER_TOUCH / SUPERTREND_FLIP_UP | reversal event name |
-| q12 | FUNDAMENTAL_IMPROVEMENT_CANDIDATE (valid) | NET_PROFIT_QOQ | metric key |
-| q13 | FUNDAMENTAL_IMPROVEMENT_CANDIDATE (valid) | NET_PROFIT_QOQ / similar | metric key |
-| q14 | ANALYSIS_UNSAFE (valid) | POLICY_RATE or similar | macro field name |
-| q18 | FUNDAMENTAL_IMPROVEMENT_CANDIDATE (wrong) | same metric-key pattern | metric key |
-| q19 | ANALYSIS_UNSAFE (wrong expected) | BUILD_EVIDENCE_BUNDLE / similar | tool name in caps |
-
-**Why `label_mismatch_rate` worsened (0.15 → 0.20):**
-
-q20 (evidence_bundle) no longer emits any label after the dedup forces a shorter answer. It
-previously emitted INVESTIGATE (wrong), now emits nothing — both fail the label check but
-differently. q17, q18, q19 remain persistent failures (gate_unsafe questions) due to training
-data gaps, not the dedup fix. These questions require the model to call `check_data_quality`
-proactively for unknown tickers or future dates — a behavior not well-represented in the
-400-example training set.
-
-## Why the base scores the way it does (vacuous pass analysis)
-
-The base `qwen2.5:3b-instruct` almost never emits educational labels at all. Its 0.00
-`label_mismatch_rate` is therefore a vacuous pass — the evaluator treats `detected=None` vs
-`expected=None` as correct. The fine-tune learned to emit labels (q03, q04, q08, q10, q11,
-q12, q13, q14, q16 all emit labels in this run), which makes those metrics fire and creates
-room for mismatches. The fine-tune also quotes tool-output identifiers, which the base avoids
-by not citing evidence at all. The base's 0.05 `unknown_label_emitted_rate` is the minimum
-noise level.
-
-## Decision
-
-**Against the base model: 0 improved, 4 tied, 2 regressed.** (Against the fine-tune's own pre-fix run, `invalid_tool_call_rate` improved from 0.500 to 0.450, which brings it level with the base.)
-
-The ≥3-improvement bar is not met after the dedup fix. The inference-time guard solved the
-tool-loop pathology measurably (`invalid_tool_call_rate` tied) but the remaining regressions
-are rooted in training data:
-
-1. **Gate-unsafe knowledge gap** (q17, q18, q19): model does not reliably call
-   `check_data_quality` first for unknown tickers or future dates. Fix: add more gate_unsafe
-   examples to the training set covering unknown tickers (not just future dates).
-
-2. **Schema-slot population** (q20, numeric exactness in harness): model writes evidence-rich
-   narratives but doesn't emit the expected structured label reliably in complex multi-tool
-   flows. Fix: add explicit "commit a final label" turns to training demonstrations.
-
-3. **Metric-key vocabulary in answers** (`unknown_label_emitted_rate`): model cites domain
-   identifiers verbatim from tool outputs. Fix: either post-process answers to lower-case
-   tool-output field names, or update the evaluator to whitelist known domain identifiers.
-
-The fine-tune ships as the Phase G / H artifact because it demonstrably learned the target
-behaviours (label vocabulary, trained tool-chain patterns, tool-call initiation) even though
-the §30 measurement surface has gaps. The documented regressions have clear root causes and
-are the first candidates for any future dataset iteration.
-
-See `docs/MODEL_CARD.md` for training configuration and known limitations.
-See `outputs/training/phase_g_harness_summary.md` for the 5-stage architecture comparison.
+Both models: temperature 0, seed 17, 16k context (`training/Modelfile.base` builds `bist-qwen-base` from `qwen2.5:3b-instruct` with the fine-tune's context and sampling settings). Per-question traces: `outputs/harness/eval_v3/traces/`. Chart: `outputs/training/figures/base_vs_finetuned.png`.

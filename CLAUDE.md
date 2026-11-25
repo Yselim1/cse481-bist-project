@@ -120,12 +120,13 @@ config/tms29.yaml → CLI → build_analysis() → evaluate() → create_report(
 
 ### LLM stack (`scripts/local_agent.py` + `training/`)
 
-- `scripts/local_agent.py` — Python client against Ollama's OpenAI-compatible endpoint (`localhost:11434/v1`); launches the MCP server (with `BIST_CONFIG`, default `config/universe_live.yaml`) as a child process, does harness-side RAG, sends seed + temperature, and writes the full execution trace (`bist-execution-trace/1`).
+- `scripts/local_agent.py` — Python client against Ollama's OpenAI-compatible endpoint (`localhost:11434/v1`); launches the MCP server (with `BIST_CONFIG`, default `config/universe_live.yaml`) as a child process, does harness-side RAG, sends seed + temperature + max_tokens 1536, and writes the full execution trace (`bist-execution-trace/1`). `tool_schemas=False` (used by `ask.py` and `run_presentation_scenarios.py`) sends no tool schemas and parses the model's `<tool_call>` text — the format the fine-tune was trained on; the default sends OpenAI tool schemas (eval/harness "original" protocol).
+- GPU: `training/Modelfile.finetuned` uses `num_ctx 16384`; with `OLLAMA_FLASH_ATTENTION=1` and `OLLAMA_KV_CACHE_TYPE=q8_0` set for `ollama serve`, the model runs 100% on a 4 GB RTX 3050. `training/Modelfile.base` (`bist-qwen-base`) is the base model with the same context, used for the comparison.
 - `scripts/run_harness_experiments.py --backend ollama` — the 5-stage A–E experiment, local path (submission).
 - `training/dataset/build.py` — dataset v3: 400 examples by replaying live MCP tool calls (config/universe_live.yaml; the 5 presentation settings held out; answers copy the tools' precomputed summary / label_by_rule blocks), ~half natural-language questions with the inference system prompt + RAG context, every answer figure grounding-checked; 80/20 stratified split.
 - `training/train_unsloth.py` — QLoRA 4-bit via Unsloth (rank 16, alpha 32, 3 epochs, cosine LR 2e-4, effective batch 16, max_len 4096, seed 17) on Colab T4; saves `adapter_model.safetensors`, writes `training/config/hyperparams.json`, exports the merged GGUF from the same run. (`train_lora.py` is the superseded peft/trl recipe.)
 - `training/export_gguf.sh` — adapter → GGUF via llama.cpp, loaded through `training/Modelfile.finetuned`.
-- `training/eval/run_baseline.py` + `compare.py` — 20-question §30 eval and base-vs-fine-tuned comparison.
+- `training/eval/run_baseline.py` + `compare.py` — 20-question §30 eval (`--protocol original|presentation`) and base-vs-fine-tuned comparison; results in `outputs/harness/eval_v3/` and `outputs/training/base_vs_finetuned.md`.
 
 ### Key Design Constraints
 

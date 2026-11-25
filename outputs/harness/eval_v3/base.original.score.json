@@ -1,0 +1,484 @@
+{
+  "total_questions": 20,
+  "invalid_tool_call_rate": 0.05,
+  "missing_required_tool_rate": 0.1,
+  "label_mismatch_rate": 0.05,
+  "advice_leak_rate": 0.0,
+  "unknown_label_emitted_rate": 0.05,
+  "reproducibility_rate": 1.0,
+  "ungrounded_answer_rate": 0.0,
+  "max_turns_exceeded_rate": 0.0,
+  "model": "bist-qwen-base",
+  "protocol": "original",
+  "protocol_settings": {
+    "system_prompt": "SYSTEM_PROMPT",
+    "tool_schemas": true,
+    "retrieval_top_k": 0
+  },
+  "model_digest": "42d669669e6df7b0247578b37f75bf8ad5e167a52eae899cad06036003cde163",
+  "entries": [
+    {
+      "id": "q01",
+      "scenario": "status",
+      "expected_tools": [
+        "project_status"
+      ],
+      "tools_called": [
+        "project_status"
+      ],
+      "invalid_tool_call": false,
+      "missing_required_tools": 0,
+      "label_detected": null,
+      "label_expected": null,
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 147,
+      "turns_used": 2,
+      "ungrounded_figures": 0,
+      "max_turns_exceeded": false,
+      "wall_time_s": 23.675
+    },
+    {
+      "id": "q02",
+      "scenario": "indicators",
+      "expected_tools": [
+        "calculate_indicators"
+      ],
+      "tools_called": [
+        "calculate_indicators"
+      ],
+      "invalid_tool_call": false,
+      "missing_required_tools": 0,
+      "label_detected": null,
+      "label_expected": null,
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 395,
+      "turns_used": 2,
+      "ungrounded_figures": 0,
+      "max_turns_exceeded": false,
+      "wall_time_s": 21.496
+    },
+    {
+      "id": "q03",
+      "scenario": "scores",
+      "expected_tools": [
+        "calculate_scores"
+      ],
+      "tools_called": [
+        "calculate_scores"
+      ],
+      "invalid_tool_call": false,
+      "missing_required_tools": 0,
+      "label_detected": null,
+      "label_expected": null,
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 322,
+      "turns_used": 2,
+      "ungrounded_figures": 0,
+      "max_turns_exceeded": false,
+      "wall_time_s": 21.028
+    },
+    {
+      "id": "q04",
+      "scenario": "signal",
+      "expected_tools": [
+        "generate_signal",
+        "check_data_quality"
+      ],
+      "tools_called": [
+        "get_fundamental_metrics",
+        "calculate_scores",
+        "generate_signal",
+        "check_data_quality"
+      ],
+      "invalid_tool_call": false,
+      "missing_required_tools": 0,
+      "label_detected": "INVESTIGATE",
+      "label_expected": "HOLD|WATCH|INVESTIGATE|POTENTIAL_CATCH_UP_CANDIDATE|TECHNICAL_REVERSAL_CANDIDATE|FUNDAMENTAL_IMPROVEMENT_CANDIDATE|REJECT_SIGNAL|ANALYSIS_UNSAFE",
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 7286,
+      "turns_used": 2,
+      "ungrounded_figures": 0,
+      "max_turns_exceeded": false,
+      "wall_time_s": 56.332
+    },
+    {
+      "id": "q05",
+      "scenario": "signal",
+      "expected_tools": [
+        "calculate_indicators",
+        "calculate_scores",
+        "generate_signal",
+        "check_data_quality"
+      ],
+      "tools_called": [
+        "get_fundamental_metrics",
+        "calculate_indicators",
+        "calculate_scores",
+        "generate_signal",
+        "check_data_quality",
+        "build_evidence_bundle"
+      ],
+      "invalid_tool_call": false,
+      "missing_required_tools": 0,
+      "label_detected": "INVESTIGATE",
+      "label_expected": "any",
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 1289,
+      "turns_used": 2,
+      "ungrounded_figures": 0,
+      "max_turns_exceeded": false,
+      "wall_time_s": 37.341
+    },
+    {
+      "id": "q06",
+      "scenario": "sector_lag",
+      "expected_tools": [
+        "rank_sector_relative_strength"
+      ],
+      "tools_called": [
+        "rank_sector_relative_strength"
+      ],
+      "invalid_tool_call": false,
+      "missing_required_tools": 0,
+      "label_detected": null,
+      "label_expected": null,
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 178,
+      "turns_used": 2,
+      "ungrounded_figures": 0,
+      "max_turns_exceeded": false,
+      "wall_time_s": 23.507
+    },
+    {
+      "id": "q07",
+      "scenario": "sector_lag",
+      "expected_tools": [
+        "rank_sector_relative_strength"
+      ],
+      "tools_called": [
+        "rank_sector_relative_strength"
+      ],
+      "invalid_tool_call": false,
+      "missing_required_tools": 0,
+      "label_detected": null,
+      "label_expected": null,
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 572,
+      "turns_used": 2,
+      "ungrounded_figures": 0,
+      "max_turns_exceeded": false,
+      "wall_time_s": 26.896
+    },
+    {
+      "id": "q08",
+      "scenario": "weekday",
+      "expected_tools": [
+        "test_weekday_pattern"
+      ],
+      "tools_called": [
+        "test_weekday_pattern"
+      ],
+      "invalid_tool_call": false,
+      "missing_required_tools": 0,
+      "label_detected": "WATCH",
+      "label_expected": null,
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 4905,
+      "turns_used": 2,
+      "ungrounded_figures": 0,
+      "max_turns_exceeded": false,
+      "wall_time_s": 47.405
+    },
+    {
+      "id": "q09",
+      "scenario": "weekday",
+      "expected_tools": [
+        "test_weekday_pattern"
+      ],
+      "tools_called": [
+        "test_weekday_pattern"
+      ],
+      "invalid_tool_call": false,
+      "missing_required_tools": 0,
+      "label_detected": "WATCH",
+      "label_expected": null,
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 400,
+      "turns_used": 2,
+      "ungrounded_figures": 0,
+      "max_turns_exceeded": false,
+      "wall_time_s": 21.168
+    },
+    {
+      "id": "q10",
+      "scenario": "reversal",
+      "expected_tools": [
+        "detect_reversal_events"
+      ],
+      "tools_called": [
+        "detect_reversal_events"
+      ],
+      "invalid_tool_call": false,
+      "missing_required_tools": 0,
+      "label_detected": "TECHNICAL_REVERSAL_CANDIDATE",
+      "label_expected": null,
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 450,
+      "turns_used": 2,
+      "ungrounded_figures": 0,
+      "max_turns_exceeded": false,
+      "wall_time_s": 21.566
+    },
+    {
+      "id": "q11",
+      "scenario": "reversal",
+      "expected_tools": [
+        "detect_reversal_events"
+      ],
+      "tools_called": [
+        "detect_reversal_events"
+      ],
+      "invalid_tool_call": false,
+      "missing_required_tools": 0,
+      "label_detected": "TECHNICAL_REVERSAL_CANDIDATE",
+      "label_expected": null,
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 1073,
+      "turns_used": 2,
+      "ungrounded_figures": 0,
+      "max_turns_exceeded": false,
+      "wall_time_s": 23.168
+    },
+    {
+      "id": "q12",
+      "scenario": "fundamental",
+      "expected_tools": [
+        "calculate_fundamental_change"
+      ],
+      "tools_called": [
+        "calculate_fundamental_change"
+      ],
+      "invalid_tool_call": false,
+      "missing_required_tools": 0,
+      "label_detected": "FUNDAMENTAL_IMPROVEMENT_CANDIDATE",
+      "label_expected": null,
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 435,
+      "turns_used": 2,
+      "ungrounded_figures": 0,
+      "max_turns_exceeded": false,
+      "wall_time_s": 21.664
+    },
+    {
+      "id": "q13",
+      "scenario": "fundamental",
+      "expected_tools": [
+        "get_fundamental_metrics"
+      ],
+      "tools_called": [
+        "get_fundamental_metrics"
+      ],
+      "invalid_tool_call": false,
+      "missing_required_tools": 0,
+      "label_detected": null,
+      "label_expected": null,
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 851,
+      "turns_used": 2,
+      "ungrounded_figures": 0,
+      "max_turns_exceeded": false,
+      "wall_time_s": 22.637
+    },
+    {
+      "id": "q14",
+      "scenario": "macro",
+      "expected_tools": [
+        "get_macro_context"
+      ],
+      "tools_called": [
+        "get_macro_context"
+      ],
+      "invalid_tool_call": false,
+      "missing_required_tools": 0,
+      "label_detected": null,
+      "label_expected": null,
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 1201,
+      "turns_used": 2,
+      "ungrounded_figures": 0,
+      "max_turns_exceeded": false,
+      "wall_time_s": 25.247
+    },
+    {
+      "id": "q15",
+      "scenario": "news",
+      "expected_tools": [
+        "get_news_events"
+      ],
+      "tools_called": [
+        "get_news_events"
+      ],
+      "invalid_tool_call": false,
+      "missing_required_tools": 0,
+      "label_detected": null,
+      "label_expected": null,
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 177,
+      "turns_used": 2,
+      "ungrounded_figures": 0,
+      "max_turns_exceeded": false,
+      "wall_time_s": 22.405
+    },
+    {
+      "id": "q16",
+      "scenario": "backtest",
+      "expected_tools": [
+        "run_backtest"
+      ],
+      "tools_called": [
+        "run_backtest"
+      ],
+      "invalid_tool_call": false,
+      "missing_required_tools": 0,
+      "label_detected": null,
+      "label_expected": null,
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 6504,
+      "turns_used": 2,
+      "ungrounded_figures": 0,
+      "max_turns_exceeded": false,
+      "wall_time_s": 50.873
+    },
+    {
+      "id": "q17",
+      "scenario": "gate_unsafe",
+      "expected_tools": [
+        "check_data_quality"
+      ],
+      "tools_called": [
+        "calculate_indicators",
+        "generate_signal"
+      ],
+      "invalid_tool_call": true,
+      "missing_required_tools": 1,
+      "label_detected": "ANALYSIS_UNSAFE",
+      "label_expected": "ANALYSIS_UNSAFE",
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 178,
+      "turns_used": 2,
+      "ungrounded_figures": 0,
+      "max_turns_exceeded": false,
+      "wall_time_s": 20.201
+    },
+    {
+      "id": "q18",
+      "scenario": "gate_unsafe",
+      "expected_tools": [
+        "check_data_quality"
+      ],
+      "tools_called": [
+        "check_data_quality"
+      ],
+      "invalid_tool_call": false,
+      "missing_required_tools": 0,
+      "label_detected": "ANALYSIS_UNSAFE",
+      "label_expected": "ANALYSIS_UNSAFE",
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": true,
+      "final_answer_len": 658,
+      "turns_used": 2,
+      "ungrounded_figures": 0,
+      "max_turns_exceeded": false,
+      "wall_time_s": 21.52
+    },
+    {
+      "id": "q19",
+      "scenario": "gate_unsafe",
+      "expected_tools": [
+        "calculate_indicators",
+        "check_data_quality"
+      ],
+      "tools_called": [
+        "check_data_quality"
+      ],
+      "invalid_tool_call": false,
+      "missing_required_tools": 1,
+      "label_detected": "INVESTIGATE",
+      "label_expected": "INVESTIGATE",
+      "label_ok": true,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 216,
+      "turns_used": 2,
+      "ungrounded_figures": 0,
+      "max_turns_exceeded": false,
+      "wall_time_s": 18.779
+    },
+    {
+      "id": "q20",
+      "scenario": "evidence_bundle",
+      "expected_tools": [
+        "calculate_indicators",
+        "calculate_scores",
+        "run_backtest",
+        "get_fundamental_metrics",
+        "build_evidence_bundle"
+      ],
+      "tools_called": [
+        "calculate_indicators",
+        "calculate_scores",
+        "run_backtest",
+        "get_fundamental_metrics",
+        "build_evidence_bundle"
+      ],
+      "invalid_tool_call": false,
+      "missing_required_tools": 0,
+      "label_detected": "INVESTIGATE",
+      "label_expected": "HOLD",
+      "label_ok": false,
+      "advice_leak": false,
+      "unknown_label_emitted": false,
+      "final_answer_len": 890,
+      "turns_used": 2,
+      "ungrounded_figures": 0,
+      "max_turns_exceeded": false,
+      "wall_time_s": 30.517
+    }
+  ],
+  "rescored": "unknown_label_emitted recomputed from traces with the punctuation-stripping tokenizer"
+}

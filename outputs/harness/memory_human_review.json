@@ -1,14 +1,32 @@
 {
   "as_of": "2026-09-25",
-  "financial_period": "2026-09-26",
+  "financial_period": "2025-01-01 to 2026-09-26",
   "revenue_try_million": null,
-  "net_profit_try_million": -1.37,
-  "net_debt_try_million": -1.48,
-  "combined_return": 0.6532,
-  "technical_return": 0.6119,
-  "buy_hold_return": 0.9273,
-  "bist100_return": 1.0224,
-  "signal_action": "HOLD",
-  "educational_caveat": null,
+  "net_profit_try_million": null,
+  "net_debt_try_million": null,
+  "combined_return": null,
+  "technical_return": null,
+  "buy_hold_return": null,
+  "bist100_return": null,
+  "signal_action": null,
+  "context_event_ids": [
+    "air-europa-offer",
+    "boeing-2025",
+    "air-europa-agreement",
+    "fin-2025q3",
+    "fin-2025fy",
+    "biofuel-investment",
+    "fin-2026q1",
+    "air-europa-approval",
+    "fin-2026q2",
+    "boeing-2026"
+  ],
+  "evidence_tools": [
+    "calculate_indicators:THYAO:2026-09-25",
+    "calculate_scores:THYAO:2026-09-25",
+    "generate_signal:THYAO:2026-09-25:unheld:0:0.000000",
+    "run_backtest:2025-01-01:2026-09-26"
+  ],
+  "educational_caveat": "Historical stock returns are not indicative of future returns. Statements in KAP disclosures are not statements of fact and have not been audited. The selected evidence is only for educational research; it does not alter the strategy score or trading decision.",
   "investment_recommendation": null
 }

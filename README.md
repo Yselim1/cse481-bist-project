@@ -51,7 +51,7 @@ These commands need no network or Fintables login. They regenerate outputs from 
 
 To regenerate the executed notebook and PDF, run `scripts/build_notebook.py` and then `scripts/build_pdf.py` with the same Python. The PDF reads the verified-only report and sensitivity outputs. `scripts/build_findings.py` refreshes the source audit, financial interpretation and walkthrough. Poppler is only needed for visual QA, not to create or read the report. `outputs/verification/reproduction.json` records a separate fresh-environment offline comparison of all features, annual/full metrics and daily ledgers.
 
-`scripts/package_project.py` creates `output/THYAO_Implementation_Package.zip` and `SUBMISSION_MANIFEST.json`. It includes source, cached data and deliverables; local environments, caches and authentication files are excluded. The package includes the four originals and their audit. The 1.8 GB merged model file `training/bist_lora.gguf` and the legacy cloud-LLM runs in `outputs/harness_codex_archive/` are left out; the GGUF's hash is recorded under `external_files` in the manifest and the file is provided separately. Presentation slides are in `outputs/deliverables/`. Annual refresh, nominal TRY, small trade sample and execution limitations remain disclosed.
+`scripts/package_project.py` creates `output/THYAO_Implementation_Package.zip` and `SUBMISSION_MANIFEST.json`. It includes source, cached data and deliverables; local environments, caches and authentication files are excluded. The package includes the four originals and their audit. The 1.9 GB merged model file `training/bist_lora.gguf` and the legacy cloud-LLM runs in `outputs/harness_codex_archive/` are left out; the GGUF's hash is recorded under `external_files` in the manifest and the file is provided separately. Presentation slides are in `outputs/deliverables/`. Annual refresh, nominal TRY, small trade sample and execution limitations remain disclosed.
 
 ## Fresh setup
 
@@ -89,7 +89,7 @@ See `docs/DECISIONS.md` for all thresholds. Strategy parameters are not selected
 
 ## Actual MCP AI agent
 
-Twenty read-only tools expose status, history, indicators, zones, fundamentals, scores, signal, backtest, saved report and timestamped KAP context, plus the benchmark index, reversal events, sector ranking, weekday tests, fundamental change, macro context, news, speech features, data-quality checks and evidence bundles. The TCMB/TÜİK macro and speech tools are built, but no data for them is cached in this submission, so they return empty values. Inputs are bounded; outputs contain dates, units, warnings and missing values. No tool trades.
+Twenty-one read-only tools expose status, history, indicators, zones, fundamentals, scores, signal, backtest, saved report and timestamped KAP context, plus the benchmark index, reversal events, sector ranking, weekday tests, fundamental change, macro context, news, speech features, data-quality checks, evidence bundles and a BM25 knowledge-base search (RAG). The scenario tools also return their comparisons precomputed (sector laggard/leader, highest/lowest weekday, best reversal family, the label each rule gives, the price reaction around a statement's publication), so the model copies results instead of computing them. The TCMB/TÜİK macro and speech tools are built, but no data for them is cached in this submission, so they return empty values. Inputs are bounded; outputs contain dates, units, warnings and missing values. No tool trades.
 
 ```powershell
 .\.venv\Scripts\python.exe -m bist_analytics.mcp.server
@@ -99,11 +99,12 @@ The submission agent is the locally hosted fine-tuned model `bist-qwen` (Qwen 2.
 
 ```powershell
 ollama create bist-qwen -f training/Modelfile.finetuned
+.\.venv\Scripts\python.exe scripts/run_presentation_scenarios.py      # the five pre-run scenario traces
+.\.venv\Scripts\python.exe scripts/ask.py "<question>"                 # live question, same settings
 .\.venv\Scripts\python.exe scripts/local_agent.py --smoke --model bist-qwen
-.\.venv\Scripts\python.exe scripts/local_agent.py --ticker THYAO.IS --as-of 2025-12-31 --model bist-qwen
 ```
 
-Without `--model` (or `BIST_LOCAL_MODEL`), `local_agent.py` uses the base `qwen2.5:7b-instruct`. It launches the MCP server as a stdio child process and passes the tools to the model in OpenAI tool-calling format. Tools explicitly advertise read-only, idempotent, closed-world behavior. See `docs/LOCAL_MODEL.md` and `docs/MODEL_CARD.md`. `scripts/run_agent_demo.py` is the earlier Codex CLI runner; its sessions in `outputs/agent/analysis_demo.*` are kept as development history.
+`ask.py` and the scenario runner use the settings the model was fine-tuned with: no tool schemas (the model writes `<tool_call>` text, as in its training data), the presentation system prompt, knowledge-base context, and a 4,500-character tool-result cap. Each run writes a full execution trace with a figure-grounding audit; see `docs/PRESENTATION.md`. Without `--model` (or `BIST_LOCAL_MODEL`), `local_agent.py` uses the base `qwen2.5:7b-instruct`; it launches the MCP server as a stdio child process and, by default, passes the tools in OpenAI tool-calling format. Tools explicitly advertise read-only, idempotent, closed-world behavior. See `docs/LOCAL_MODEL.md` and `docs/MODEL_CARD.md`. `scripts/run_agent_demo.py` is the earlier Codex CLI runner; its sessions in `outputs/agent/analysis_demo.*` are kept as development history.
 
 `verify_mcp.py` separately checks the real stdio protocol and equality with direct Python output. It does not call an LLM and is labeled accordingly. Host setup and audit: `docs/MCP_DEMO.md`.
 

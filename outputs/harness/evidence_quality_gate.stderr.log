@@ -1,2 +1,16 @@
-Reading additional input from stdin...
-2026-09-27T15:22:46.375250Z  WARN codex_core::shell_snapshot: Failed to create shell snapshot for powershell: Shell snapshot not supported yet for PowerShell
+Could not parse JSON from model output. Raw text:
+as_of: 2026-09-25
+financial_period: 2026-09-25
+revenue_try_million: null
+net_profit_try_million: null
+net_debt_try_million: null
+combined_return: -0.11029793916663655
+technical_return: 0.06421505249467252
+buy_hold_return: 0.05291060851497198
+bist100_return: -0.4188057552497888
+signal_action: REJECT_SIGNAL
+context_event_ids: ["air-europa-offer", "boeing-2025", "air-europa-agreement", "fin-2025q3", "fin-2025fy", "fin-2026q1", "air-europa-approval", "fin-2026q2", "boeing-2026"]
+evidence_tools: ["generate_signal", "run_backtest", "get_context_events"]
+educational_caveat: The financial data for THYAO is not available for the current evaluation period. The context events provide insights into significant announcements and developments that may affect the stock's performance.
+investment_recommendation: null
+narrative: The THYAO stock has shown a negative return in the combined strategy, with a combined annualized volatility of 8.38%. The buy-hold strategy has a lower volatility and a positive return, indicating that the stock may have been overvalued or undervalued in the past. The technical strategy has a relatively low volatility and a positive return, suggesting that the stock may have been undervalued in the past. The BIST100 index has also shown a negative return, which could be a factor affecting THYAO's performance. The context events include significant announcements such as the acceptance of a binding offer, the disclosure of an order for aircraft, and the approval of a foreign direct investment, which may have influenced the stock's performance. The signal is currently rejected due to the lack of available financial data for the current evaluation period.

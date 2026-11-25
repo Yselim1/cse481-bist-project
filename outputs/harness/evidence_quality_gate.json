@@ -1,29 +1,33 @@
 {
   "as_of": "2026-09-25",
-  "financial_period": "2026-09-25",
-  "ticker": "THYAO.IS",
-  "educational_label": "ANALYSIS_UNSAFE",
-  "explanation": "Primary metric failure: 1 live-session indicator(s) >0.1% change from sample window; gate escalates to ANALYSIS_UNSAFE. Note: live indicators may vary in subsequent sessions.",
-  "gate_status": "ANALYSIS_UNSAFE",
-  "hard_blocks": [],
-  "soft_block_counts": {
-    "excessive_reversal_events": 0,
-    "live_indicator_changes": 1,
-    "missing_fundamentals": 0,
-    "other": 0
-  },
-  "hard_block_explanation": null,
-  "soft_block_explanations": {
-    "excessive_reversal_events": null,
-    "live_indicator_changes": "1 live-session indicator(s) >0.1% change from sample window; gate escalates to ANALYSIS_UNSAFE.",
-    "missing_fundamentals": null,
-    "other": null
-  },
-  "evidence_tools": [
-    "calculate_indicators:274aa2d966f5",
-    "calculate_scores:a416ea84421f"
+  "financial_period": "2025-01-01 to 2026-09-26",
+  "revenue_try_million": null,
+  "net_profit_try_million": null,
+  "net_debt_try_million": null,
+  "combined_return": null,
+  "technical_return": null,
+  "buy_hold_return": null,
+  "bist100_return": null,
+  "signal_action": null,
+  "context_event_ids": [
+    "air-europa-offer",
+    "boeing-2025",
+    "air-europa-agreement",
+    "fin-2025q3",
+    "fin-2025fy",
+    "biofuel-investment",
+    "fin-2026q1",
+    "air-europa-approval",
+    "fin-2026q2",
+    "boeing-2026"
   ],
-  "educational_caveat": "Live indicators may vary in subsequent sessions; gate escalates to ANALYSIS_UNSAFE.",
+  "evidence_tools": [
+    "calculate_indicators:THYAO:2026-09-25",
+    "calculate_scores:THYAO:2026-09-25",
+    "generate_signal:THYAO:2026-09-25:unheld:0:0.000000",
+    "run_backtest:2025-01-01:2026-09-26"
+  ],
+  "educational_caveat": "Single user-selected stock; selection/survivorship bias; no market-wide inference. Nominal TRY returns, zero cash yield and zero-risk-free Sharpe. Adjusted synthetic units; whole-lot execution and taxes not modeled. BIST100 price-index basis differs from adjusted stock return basis. Primary analysis uses one internally consistent post-TMS 29 basis; pre-2025 trading results are outside its evaluation window. 2026 is partial through the last cached session before the exclusive evaluation end. KAP context is evidence for interpretation and does not alter any strategy score or order.",
   "investment_recommendation": null,
-  "note": "Gate escalates to ANALYSIS_UNSAFE due to primary metric failure: live-session indicator(s) >0.1% change from sample window."
+  "narrative": "calculate_indicators returned missing values for THYAO (INVALID_SYMBOL: 'THYAO' not in universe ['THYAO.IS']). Fundamental metrics are missing (get_fundamental_metrics: INVALID_SYMBOL: 'THYAO' not in universe ['THYAO.IS']). The full 2025-01-01 to 2026-09-26 exclusive backtest is not available for THYAO (run_backtest). No KAP context events are available for THYAO as of 2026-09-25 (get_context_events). The latest fundamental statements are from 2026-04-01 (fin-2026q2), 2026-03-04 (fin-2026q1), and 2025-11-07 (fin-2025q3). The price is in TRY. The statements are unadjusted; the full return basis is Net nominal TRY, adjusted stock vs BIST100 price index. The selected strategy is combined (returns in net nominal TRY). The full 434 sessions to 2026-09-25 are: combined_return -0.10672196625331909, technical_return 0.06849244418476363, buy_hold_return 0.05291060851497198, bist100_return 0.30850781608315225. The latest fundamental change is from 2025-11-07: revenue -0.0000000000000000, net_profit -0.0000000000000000, operating profit -0.0000000000000000, EBITDA -0.0000000000000000 (calculate_fundamental_change: THYAO:2026-09-25). The price is 21.43 on 2026-09-25. The price is not a trading signal; it is unadjusted and has selection bias. The statements are for the full period, not as of 2026-09-25. No trading orders have been placed."
 }

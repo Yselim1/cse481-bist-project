@@ -4,7 +4,7 @@
     "bist100_return": false,
     "buy_hold_return": false,
     "combined_return": false,
-    "context_event": false,
+    "context_event": true,
     "financial_period": false,
     "net_debt_try_million": false,
     "net_profit_try_million": false,
@@ -17,11 +17,13 @@
   "missing_data_honesty": false,
   "numeric_exactness": 0.0,
   "quality_gate_pass": false,
-  "structured_reproducibility": false,
+  "structured_reproducibility": true,
   "temporal_validity": false,
   "unsupported_tool_claims": [
-    "calculate_indicators:274aa2d966f5",
-    "calculate_scores:a416ea84421f"
+    "calculate_indicators:THYAO:2026-09-25",
+    "calculate_scores:THYAO:2026-09-25",
+    "generate_signal:THYAO:2026-09-25:unheld:0:0.000000",
+    "run_backtest:2025-01-01:2026-09-26"
   ],
   "workflow_completion": 1.0
 }
