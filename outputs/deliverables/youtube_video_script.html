@@ -121,8 +121,8 @@ body.tp .honest{background:#2a2112;color:#f2f2f2}
       <p class="lede">A segment-by-segment rundown for recording the presentation of the BIST analytics pipeline and its locally hosted fine-tuned agent. Each segment lists what to show, what to say and which repo file backs every number. Every claim has been checked against the project outputs.</p>
     </div>
     <div class="figs">
-      <div><b id="fig-run">23:00</b><span>planned runtime</span></div>
-      <div><b id="fig-seg">19</b><span>segments</span></div>
+      <div><b id="fig-run">9:30</b><span>planned runtime</span></div>
+      <div><b id="fig-seg">9</b><span>segments</span></div>
       <div><b>100%</b><span>instructor items mapped</span></div>
     </div>
   </div>
@@ -134,7 +134,7 @@ body.tp .honest{background:#2a2112;color:#f2f2f2}
   <div class="toolbar">
     <button class="primary" id="tpOn">Teleprompter mode</button>
     <button id="resetBtn">Reset progress</button>
-    <div class="prog"><span id="progtxt">0 of 19 segments recorded</span><div class="track"><div class="fill" id="progfill"></div></div></div>
+    <div class="prog"><span id="progtxt">0 of 9 segments recorded</span><div class="track"><div class="fill" id="progfill"></div></div></div>
   </div>
 </div></header>
 
@@ -175,308 +175,143 @@ body.tp .honest{background:#2a2112;color:#f2f2f2}
 <nav class="rundown" aria-label="Segments"><ol id="navlist"></ol></nav>
 <main id="scenes">
 
-<section class="scene" id="s1" data-dur="60" data-act="1" data-title="Intro and disclaimer">
-  <div class="scene-h"><h2>1 · Intro and disclaimer</h2></div>
+<section class="scene" id="s1" data-dur="40" data-act="1" data-title="Intro and question">
+  <div class="scene-h"><h2>1 · Intro, disclaimer, research question</h2></div>
   <div class="cols">
-    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li>Title slide (slide 1 of <code>presentation_slides.html</code>)</li><li>Your face cam, if you're using one</li></ul></div></div>
+    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li>Title slide (slide 1)</li><li><code>docs/PROPOSAL.md</code>, research question</li></ul></div></div>
     <div class="say"><p class="lbl">SAY</p>
-      <p>Hi, I'm Yavuz Selim Gezginci, and this is my CSE481 Engineering Economics term project for Doç. Dr. Alper Özcan at Akdeniz University.</p>
-      <p>I built a Python system that analyses Turkish Airlines, THYAO, on Borsa Istanbul. It combines Yahoo Finance prices with Fintables financial statements, computes technical and fundamental scores, backtests a rule-based strategy against BIST 100 and buy-and-hold, and exposes all of it as MCP tools to an AI agent. The agent is a model I fine-tuned myself, and it runs entirely on my laptop with no cloud AI.</p>
-      <p>One note before we start: this is an educational research project. Nothing in this video is investment advice. The agent is restricted to eight educational labels and never says "buy".</p>
+      <p>Hi, I'm Yavuz Selim Gezginci. This is my CSE481 Engineering Economics term project for Doç. Dr. Alper Özcan.</p>
+      <p>I built a Python system that analyses Turkish Airlines, THYAO, using Yahoo Finance prices and Fintables financial statements, backtests a rule-based strategy, and lets an AI agent explain the results through MCP tools. The agent is a model I fine-tuned myself, and it runs entirely on my laptop.</p>
+      <p>My question: does a fundamental filter change the risk and return of a technical strategy, compared with technical-only trading, buy-and-hold and BIST 100? This is educational research, not investment advice.</p>
     </div>
   </div>
-  <div class="meta"><div><b>Proof:</b> <code>docs/PROPOSAL.md</code>, <code>src/bist_analytics/schemas.py</code> (EDUCATIONAL_LABELS)</div><div class="tags"><span>§12 disclaimer</span><span>§1 overview</span></div></div>
+  <div class="meta"><div><b>Proof:</b> <code>docs/PROPOSAL.md</code></div><div class="tags"><span>§12 disclaimer</span><span>§8.1 select stock</span></div></div>
 </section>
 
-<section class="scene" id="s2" data-dur="60" data-act="1" data-title="Research question">
-  <div class="scene-h"><h2>2 · Research question and why THYAO</h2></div>
+<section class="scene" id="s2" data-dur="70" data-act="1" data-title="Architecture and data">
+  <div class="scene-h"><h2>2 · Architecture and data</h2></div>
   <div class="cols">
-    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li><code>docs/PROPOSAL.md</code>, "Title and question" section</li></ul></div></div>
-    <div class="say"><p class="lbl">SAY</p>
-      <p>My research question: does adding a financial-statement filter change the exposure, risk, trading activity and returns of a technical strategy for THYAO? I compare it with technical-only trading, buy-and-hold and the BIST 100 index. I did not assume up front that adding fundamentals would improve returns.</p>
-      <p>I chose Turkish Airlines because it has a long financial history, heavy lease and debt exposure, foreign-currency reporting and cyclical profits, which makes it an interesting test of a fundamental filter. It is one hand-picked company, though, not an unbiased stock-selection experiment.</p>
-    </div>
-  </div>
-  <div class="meta"><div><b>Proof:</b> <code>docs/PROPOSAL.md</code></div><div class="tags"><span>§8.1 select stock</span><span>Proposal</span></div></div>
-</section>
-
-<section class="scene" id="s3" data-dur="75" data-act="1" data-title="Architecture">
-  <div class="scene-h"><h2>3 · Architecture</h2></div>
-  <div class="cols">
-    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li>Slide 3, "System Architecture"</li><li>VS Code tree of <code>src/bist_analytics/</code></li></ul></div></div>
-    <div class="say"><p class="lbl">SAY</p>
-      <p>The architecture follows the instructor's recommended pipeline. Yahoo Finance and Fintables feed a data layer in <code>data/</code>. Technical and fundamental analysis live in <code>analysis/</code>. Their outputs meet in a combined scoring layer. The rule set in <code>strategy/rules.py</code> turns scores into signals, the engine in <code>backtest/</code> simulates them, and <code>reporting.py</code> writes the HTML, Markdown and PDF reports.</p>
-      <p>On top of that, <code>mcp/server.py</code> wraps the same Python functions as read-only MCP tools. The AI agent calls those tools and explains what they return. It never computes a financial number on its own.</p>
-      <p>Everything runs from cached data, so the whole study reproduces offline with no network calls during the backtest or reporting.</p>
-    </div>
-  </div>
-  <div class="meta"><div><b>Proof:</b> <code>src/bist_analytics/pipeline.py</code>, <code>cli.py</code></div><div class="tags"><span>§4 architecture</span><span>§4 modular functions</span></div></div>
-</section>
-
-<section class="scene" id="s4" data-dur="60" data-act="1" data-title="Market data">
-  <div class="scene-h"><h2>4 · Market data from Yahoo Finance</h2></div>
-  <div class="cols">
-    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li><code>data/raw/market/THYAO.IS.csv</code> (Date, Open, High, Low, Close, Volume)</li><li><code>THYAO.IS.metadata.json</code> (provenance)</li></ul></div>
-      <div class="cmd"><code>.\.venv\Scripts\python.exe -m bist_analytics.cli fetch --refresh</code><button data-copy>Copy</button></div></div>
-    <div class="say"><p class="lbl">SAY</p>
-      <p>Prices come from Yahoo Finance through yfinance: THYAO.IS for the stock, XU100.IS for the BIST 100 benchmark and TRY=X for the dollar-lira rate. Each file has the OHLCV columns the spec asks for, plus a metadata file that records where and when it was downloaded.</p>
-      <p>The fetch command refreshes them, but the submitted results use the cached snapshot, because Yahoo can revise history. Prices start in 2021 to warm up the indicators. The evaluation runs from 1 January 2025 to 25 September 2026, which is 437 trading sessions, and the strategy starts with 100,000 lira.</p>
-      <p>The cache also holds nine other BIST tickers across five sectors. I come back to those in the scenario reports.</p>
-    </div>
-  </div>
-  <div class="meta"><div><b>Proof:</b> <code>src/bist_analytics/data/market.py</code>, <code>outputs/tms29_primary/report.md</code> §2</div><div class="tags"><span>§2 Yahoo data</span><span>§3.1 OHLCV</span><span>§8.2</span></div></div>
-</section>
-
-<section class="scene" id="s5" data-dur="90" data-act="1" data-title="Fintables fundamentals">
-  <div class="scene-h"><h2>5 · Fintables financial statements</h2></div>
-  <div class="cols">
-    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li><code>data/processed/fintables_tms29_observations.csv</code></li><li><code>output/pdf/originals/</code> (original reports)</li><li><code>docs/DATA_SOURCES.md</code></li></ul></div>
+    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li>Slide 3, "System Architecture"</li><li><code>data/raw/market/THYAO.IS.csv</code></li><li><code>data/processed/fintables_tms29_observations.csv</code></li></ul></div>
       <div class="cmd"><code>.\.venv\Scripts\python.exe -m bist_analytics.cli --config config/tms29.yaml import-tms29</code><button data-copy>Copy</button></div></div>
     <div class="say"><p class="lbl">SAY</p>
-      <p>For fundamentals I used Fintables-hosted original financial reports. After Turkey adopted inflation accounting, TMS 29, older and newer statements are presented on different bases and can't be mixed. So, following the instructor's guidance, the main study uses a FY2024 annual report plus six 2025 and 2026 reports.</p>
-      <p>The importer checks seven PDF versions and 56 accounting identities. For example, assets must equal liabilities plus equity. Only then does it write 238 observations covering income statement, balance sheet and cash-flow items.</p>
-      <p>Every observation records its period, its type (annual or year-to-date), its units and its publication date. That last field is important: a financial number enters the strategy only after the report was actually published, and a restated comparative figure only arrives with the later report that restated it. That is how the project avoids look-ahead bias on the fundamental side.</p>
-      <p>An earlier FY2020 to FY2024 annual study with 136 verified observations is kept as a separate, reproducible baseline. All values are in nominal Turkish lira.</p>
+      <p>The architecture follows the instructor's pipeline. Market data and Fintables data feed technical and fundamental analysis. Both feed a combined score, then the strategy, the backtest, and finally the MCP agent that explains the result.</p>
+      <p>Prices come from yfinance: THYAO.IS for the stock, XU100.IS for BIST 100 and TRY=X for the dollar rate, each with full OHLCV columns, cached so the study reproduces offline. Evaluation runs from January 2025 to 25 September 2026, which is 437 trading sessions.</p>
+      <p>Fundamentals come from Fintables-hosted original reports after Turkey's TMS 29 inflation accounting. The importer checks seven report versions and 56 accounting identities, then writes 238 dated observations. A number only enters the strategy after its report was published. That prevents look-ahead bias on the fundamental side.</p>
     </div>
   </div>
-  <div class="meta"><div><b>Proof:</b> <code>src/bist_analytics/data/tms29.py</code>, <code>README.md</code>, <code>docs/INSTRUCTOR_QA_UPGRADE.md</code></div><div class="tags"><span>§2 Fintables</span><span>§3.2</span><span>§8.3–8.4 clean and align</span><span>§11 Fintables dataset</span></div></div>
+  <div class="meta"><div><b>Proof:</b> <code>data/market.py</code>, <code>data/tms29.py</code>, <code>README.md</code>, <code>outputs/tms29_primary/report.md</code> §2</div><div class="tags"><span>§4 architecture</span><span>§2 / §3.1 Yahoo OHLCV</span><span>§3.2 Fintables</span><span>§8.2–8.4</span></div></div>
 </section>
 
-<section class="scene" id="s6" data-dur="75" data-act="1" data-title="Indicators and zones">
-  <div class="scene-h"><h2>6 · Technical indicators and support/resistance</h2></div>
+<section class="scene" id="s3" data-dur="65" data-act="1" data-title="Technical and fundamental analysis">
+  <div class="scene-h"><h2>3 · Technical and fundamental analysis</h2></div>
   <div class="cols">
     <div class="screen-col"><p class="lbl">ON SCREEN</p>
       <figure class="shot"><img src="../tms29_primary/figures/technical.png" alt="THYAO technical chart" loading="lazy"><figcaption>outputs/tms29_primary/figures/technical.png</figcaption></figure></div>
     <div class="say"><p class="lbl">SAY</p>
-      <p>This is the technical layer: 20- and 50-day simple and exponential moving averages, a 14-day RSI using Wilder's smoothing, MACD 12-26-9, and volume features: relative volume, volume change and on-balance volume. Every one of them uses only past prices.</p>
-      <p>Support and resistance are detected automatically. A pivot high or low needs five sessions on each side, so it can only be used five sessions after it happened. Confirmed pivots from the past 252 sessions are clustered into zones no wider than 1.5 percent, with at least two touches.</p>
-      <p>A pivot is never painted back into an earlier decision. The tests check this with a prefix-invariance check: adding future data must not change past signals.</p>
-    </div>
-  </div>
-  <div class="meta"><div><b>Proof:</b> <code>analysis/indicators.py</code>, <code>analysis/levels.py</code>, <code>tests/test_indicators_levels.py</code></div><div class="tags"><span>§2 indicators</span><span>§2 pivots + clustering</span><span>§8.5–8.6</span></div></div>
-</section>
-
-<section class="scene" id="s7" data-dur="75" data-act="1" data-title="Fundamental metrics">
-  <div class="scene-h"><h2>7 · Growth, profitability, leverage, liquidity and valuation</h2></div>
-  <div class="cols">
-    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li><code>outputs/tms29_primary/report.html</code> §4</li><li><code>ratio_analysis.csv</code></li></ul></div></div>
-    <div class="say"><p class="lbl">SAY</p>
-      <p>From the statements the code calculates the ratios in the spec. Growth is this period over the prior period minus one, on trailing-twelve-month flows rebuilt from same-basis year-to-date figures. If the prior value is a loss, growth is marked unavailable rather than reported as a misleading percentage.</p>
-      <p>At the last date, 25 September 2026, using the June 2026 statements:</p>
+      <p>On the technical side I calculate SMA and EMA 20 and 50, RSI 14, MACD, and volume features. Support and resistance come from pivots that need five sessions on each side to be confirmed. They are then clustered into zones, and a pivot is never used before it is confirmed.</p>
+      <p>On the fundamental side I calculate growth, profitability, leverage, liquidity and valuation. At the last date, using June 2026 statements:</p>
       <div class="scroll"><table><thead><tr><th>Metric</th><th class="n">Value</th><th>Metric</th><th class="n">Value</th></tr></thead><tbody>
         <tr><td>Revenue growth</td><td class="n">37.55%</td><td>Net debt / EBITDA</td><td class="n">4.25</td></tr>
-        <tr><td>Net profit growth</td><td class="n">10.88%</td><td>Debt / equity</td><td class="n">0.90</td></tr>
-        <tr><td>EBITDA growth</td><td class="n">2.09%</td><td>Current ratio</td><td class="n">0.90</td></tr>
-        <tr><td>ROE</td><td class="n">12.66%</td><td>Quick ratio</td><td class="n">0.81</td></tr>
-        <tr><td>ROA</td><td class="n">5.59%</td><td>P/E</td><td class="n">3.58</td></tr>
-        <tr><td>EBITDA margin</td><td class="n">12.88%</td><td>P/B</td><td class="n">0.39</td></tr>
-        <tr><td>Net margin</td><td class="n">9.89%</td><td>EV / EBITDA</td><td class="n">7.00</td></tr>
+        <tr><td>Net profit growth</td><td class="n">10.88%</td><td>P/E</td><td class="n">3.58</td></tr>
+        <tr><td>ROE</td><td class="n">12.66%</td><td>P/B</td><td class="n">0.39</td></tr>
       </tbody></table></div>
-      <p>So revenue is growing fast and the valuation multiples are low, but profit growth and ROE are weaker and leverage is high. That is typical for an airline with large aircraft leases. The figures are nominal lira, so part of the growth is inflation, not real growth.</p>
+      <p>So revenue is growing fast and the valuation is low, but ROE is weaker and leverage is high, which is typical for an airline. These are nominal lira, so some of the growth is inflation.</p>
     </div>
   </div>
-  <div class="meta"><div><b>Proof:</b> <code>outputs/tms29_primary/report.md</code> §4, <code>analysis/fundamentals.py</code></div><div class="tags"><span>§2 fundamental indicators</span><span>§5.1 growth</span><span>§5.2 ratios</span><span>§8.7</span></div></div>
+  <div class="meta"><div><b>Proof:</b> <code>analysis/indicators.py</code>, <code>analysis/levels.py</code>, <code>report.md</code> §3–4</div><div class="tags"><span>§2 indicators</span><span>§2 pivots + clustering</span><span>§5.1–5.2 ratios</span><span>§8.5–8.7</span></div></div>
 </section>
 
-<section class="scene" id="s8" data-dur="60" data-act="1" data-title="Scores">
-  <div class="scene-h"><h2>8 · Fundamental score, technical score, combined score</h2></div>
+<section class="scene" id="s4" data-dur="60" data-act="1" data-title="Scores and strategy">
+  <div class="scene-h"><h2>4 · Scores and trading rules</h2></div>
   <div class="cols">
     <div class="screen-col"><p class="lbl">ON SCREEN</p>
       <figure class="shot"><img src="../tms29_primary/figures/scores.png" alt="Score chart" loading="lazy"><figcaption>outputs/tms29_primary/figures/scores.png</figcaption></figure></div>
     <div class="say"><p class="lbl">SAY</p>
-      <p>The fundamental score follows the spec's 0-to-5 design, with one point each for: revenue growth above 15 percent, net profit growth above 15 percent, ROE above 20 percent, net debt to EBITDA below 4, and a positive P/E at or below its own past median.</p>
-      <p>I changed one threshold on purpose. The example uses net debt to EBITDA below 2, but an airline carries large lease debt, so I declared 4 times as a case-study assumption before testing. It is not an industry-validated cutoff, and I also ran the 2x version as a sensitivity check.</p>
-      <p>The technical score also has five points: SMA20 above SMA50, RSI between 35 and 55, MACD above its signal line, relative volume at least 1, and price near support. The combined score is 0.6 times technical over 5 plus 0.4 times fundamental over 5.</p>
-      <div class="honest"><b>Say it honestly:</b> the spec's example also gives 10 percent weight to macro. My score doesn't include a macro term. The USD/TRY rate is cached and used for currency conversion, and there's a get_macro_context tool for TCMB and TÜİK series, but this submission doesn't include cached TCMB or TÜİK data, so that tool returns empty values. Macro is the optional part of the spec, and I implemented only part of it.</div>
+      <p>The fundamental score gives 0 to 5 points: revenue growth above 15 percent, profit growth above 15 percent, ROE above 20 percent, net debt to EBITDA below 4, and a P/E at or below its past median. I chose 4 instead of 2 because airlines carry heavy lease debt, and I tested 2 as well.</p>
+      <p>The technical score also has five points. The combined score is 0.6 technical plus 0.4 fundamental.</p>
+      <p>The rule buys when the fundamental score is at least 3, the combined score at least 0.70, the trend is up and price is near support. It exits on an 8 percent loss, after 40 sessions, or when the trend or fundamentals weaken. Signals use today's close and execute at the next open, with 10 basis points commission and 5 slippage.</p>
+      <div class="honest"><b>Say it honestly:</b> the spec's example also weights macro. My score doesn't: only USD/TRY is cached, and the TCMB/TÜİK macro tool has no data in this submission.</div>
     </div>
   </div>
-  <div class="meta"><div><b>Proof:</b> <code>analysis/scoring.py</code>, <code>docs/DECISIONS.md</code> items 9–10, <code>data/macro.py</code></div><div class="tags"><span>§2 score</span><span>§5.3</span><span>§5.4 weights</span><span>§3.3 macro (partial)</span><span>§8.8</span></div></div>
+  <div class="meta"><div><b>Proof:</b> <code>analysis/scoring.py</code>, <code>strategy/rules.py</code>, <code>docs/DECISIONS.md</code></div><div class="tags"><span>§5.3 score</span><span>§5.4 weights</span><span>§3.3 macro (partial)</span><span>§3.4 rule</span><span>§6 no look-ahead</span><span>§8.8–8.10</span></div></div>
 </section>
 
-<section class="scene" id="s9" data-dur="75" data-act="1" data-title="Strategy and look-ahead">
-  <div class="scene-h"><h2>9 · Trading rules, with no look-ahead</h2></div>
-  <div class="cols">
-    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li><code>src/bist_analytics/strategy/rules.py</code></li><li><code>backtest/engine.py</code> (next-open fill)</li><li><code>outputs/tms29_primary/combined_trades.csv</code></li></ul></div></div>
-    <div class="say"><p class="lbl">SAY</p>
-      <p>The rule is explicit and testable. Buy when the fundamental score is at least 3, the combined score is at least 0.70, the fundamentals are complete and recent, the trend is up, and the price is near support.</p>
-      <p>Exit on an 8 percent loss measured at the close, after 40 sessions in the trade, when the fundamentals become stale or weak, when the trend reverses, or when RSI reaches 70. If an entry and an exit fire on the same day, the exit wins.</p>
-      <p>To avoid look-ahead, the signal is computed at today's close and executed at the next session's open. The position state carries forward from day to day. Every trade pays 10 basis points of commission and 5 of slippage on each side, and idle cash earns nothing.</p>
-      <p>All thresholds were frozen before evaluation and were not tuned on 2025 returns.</p>
-    </div>
-  </div>
-  <div class="meta"><div><b>Proof:</b> <code>docs/DECISIONS.md</code>, <code>tests/test_backtest.py</code>, <code>tests/test_data_boundaries.py</code></div><div class="tags"><span>§2 rule-based strategy</span><span>§3.4</span><span>§6 no look-ahead</span><span>§8.9–8.10</span></div></div>
-</section>
-
-<section class="scene" id="s10" data-dur="105" data-act="2" data-title="Backtest results">
-  <div class="scene-h"><h2>10 · Backtest results against the benchmarks</h2></div>
+<section class="scene" id="s5" data-dur="75" data-act="2" data-title="Backtest results">
+  <div class="scene-h"><h2>5 · Backtest results</h2></div>
   <div class="cols">
     <div class="screen-col"><p class="lbl">ON SCREEN</p>
-      <figure class="shot"><img src="../tms29_primary/figures/performance.png" alt="Equity curves" loading="lazy"><figcaption>outputs/tms29_primary/figures/performance.png</figcaption></figure>
-      <div class="screen" style="margin-top:10px"><ul><li><code>performance_table.csv</code></li><li><code>outputs/verified_only/sensitivity.csv</code></li></ul></div></div>
+      <figure class="shot"><img src="../tms29_primary/figures/performance.png" alt="Equity curves" loading="lazy"><figcaption>outputs/tms29_primary/figures/performance.png</figcaption></figure></div>
     <div class="say"><p class="lbl">SAY</p>
-      <p>Here are the results for 1 January 2025 to 25 September 2026:</p>
-      <div class="scroll"><table><thead><tr><th>Strategy</th><th class="n">Return</th><th class="n">Max DD</th><th class="n">Sharpe</th><th class="n">Trades</th><th class="n">Win</th><th class="n">Exposure</th></tr></thead><tbody>
-        <tr><td>Combined</td><td class="n">−11.03%</td><td class="n">−13.66%</td><td class="n">−0.76</td><td class="n">4</td><td class="n">25.00%</td><td class="n">6.64%</td></tr>
-        <tr><td>Technical only</td><td class="n">6.42%</td><td class="n">−15.45%</td><td class="n">0.29</td><td class="n">13</td><td class="n">53.85%</td><td class="n">34.55%</td></tr>
-        <tr><td>Buy and hold</td><td class="n">5.29%</td><td class="n">−24.40%</td><td class="n">0.25</td><td class="n">0</td><td class="n">–</td><td class="n">100.00%</td></tr>
-        <tr><td>BIST 100</td><td class="n">30.85%</td><td class="n">−17.06%</td><td class="n">0.76</td><td class="n">–</td><td class="n">–</td><td class="n">–</td></tr>
+      <div class="scroll"><table><thead><tr><th>Strategy</th><th class="n">Return</th><th class="n">Max DD</th><th class="n">Sharpe</th><th class="n">Trades</th><th class="n">Exposure</th></tr></thead><tbody>
+        <tr><td>Combined</td><td class="n">−11.03%</td><td class="n">−13.66%</td><td class="n">−0.76</td><td class="n">4</td><td class="n">6.64%</td></tr>
+        <tr><td>Technical only</td><td class="n">6.42%</td><td class="n">−15.45%</td><td class="n">0.29</td><td class="n">13</td><td class="n">34.55%</td></tr>
+        <tr><td>Buy and hold</td><td class="n">5.29%</td><td class="n">−24.40%</td><td class="n">0.25</td><td class="n">0</td><td class="n">100.00%</td></tr>
+        <tr><td>BIST 100</td><td class="n">30.85%</td><td class="n">−17.06%</td><td class="n">0.76</td><td class="n">–</td><td class="n">–</td></tr>
       </tbody></table></div>
-      <p>The honest finding is that the fundamental filter made the strategy far more selective. It was in the market only 6.64 percent of the time, against 34.55 percent for technical-only, with the smallest drawdown of the three. But it returned minus 11.03 percent, 41.88 percentage points behind BIST 100. Technical-only and buy-and-hold both made small gains, and the index beat all of them.</p>
-      <p>Four closed trades is far too few to support any conclusion, and the report flags low activity instead of treating it as robustness. Results are net of costs. Before costs, on the same executions, the combined strategy would have returned −9.96 percent. Year by year, the combined strategy made no trades in 2025, so its return that year was 0.00 percent, and returned −11.03 percent in partial 2026. BIST 100 gained 14.24 percent and 14.19 percent in those two years.</p>
-      <p>The spec asks for sensitivity testing of the weights. On the 2023–2024 annual-baseline data I ran variants I had declared before testing: the baseline returned 46.91 percent, zero costs 49.80, 20 basis-point commission 45.01, entry threshold 0.65 55.09, entry 0.75 46.91, and the 2x debt limit 43.17. I report all of them and don't pick a winner, because choosing the best variant after the fact would be overfitting.</p>
+      <p>The honest result: the fundamental filter made the strategy very selective. It was invested only 6.64 percent of the time and had the smallest drawdown. But it lost 11.03 percent and trailed BIST 100 by 41.88 points. Four trades is far too few to draw a conclusion.</p>
+      <p>For sensitivity, I ran declared variants on 2023 to 2024 data: entry thresholds 0.65 and 0.75, a 2x debt limit, and different costs. Returns ranged from 43.17 to 55.09 percent, and I report them all without picking a winner.</p>
+      <p>The optional machine-learning model in section 7 was not built; my proposal excluded it from scope.</p>
     </div>
   </div>
-  <div class="meta"><div><b>Proof:</b> <code>outputs/tms29_primary/report.md</code> §6–7, <code>performance_table.csv</code>, <code>outputs/verified_only/sensitivity.csv</code></div><div class="tags"><span>§2 benchmark</span><span>§6 backtest</span><span>§7 financial metrics</span><span>§5.4 sensitivity</span><span>§8.11–8.12</span><span>§11 tables + charts</span></div></div>
+  <div class="meta"><div><b>Proof:</b> <code>outputs/tms29_primary/performance_table.csv</code>, <code>report.md</code> §6, <code>outputs/verified_only/sensitivity.csv</code>, <code>docs/PROPOSAL.md</code></div><div class="tags"><span>§6 backtest</span><span>§2 benchmarks</span><span>§7 financial metrics</span><span>§5.4 sensitivity</span><span>§7 ML not done</span><span>§8.11–8.13</span></div></div>
 </section>
 
-<section class="scene" id="s11" data-dur="20" data-act="2" data-title="Optional ML">
-  <div class="scene-h"><h2>11 · Optional machine-learning model</h2></div>
+<section class="scene" id="s6" data-dur="95" data-act="3" data-title="MCP and fine-tuned model">
+  <div class="scene-h"><h2>6 · MCP tools and the fine-tuned model</h2></div>
   <div class="cols">
-    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li><code>docs/PROPOSAL.md</code>, "Deliverables" line: "ML is excluded from the core scope"</li></ul></div></div>
+    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li>Slide 5, "MCP Tools"</li><li>Slide 6, "Fine-Tuning Pipeline"</li><li>Slide 8, base vs fine-tuned table</li></ul></div></div>
     <div class="say"><p class="lbl">SAY</p>
-      <p>Section 7 of the spec offers an optional machine-learning direction-prediction model. I didn't build one. My proposal excluded it from scope, and I put that effort into the local fine-tuned language model instead, which I'll show next. So there are no accuracy or confusion-matrix results in this project.</p>
+      <p>The MCP server exposes the same Python functions as 20 read-only tools, including the ones the spec lists: stock history, indicators, support and resistance, fundamentals, scores, signals and backtest. No tool can trade, and the agent gets every number from a tool.</p>
+      <p>The agent model covers the instructor's six points. The <b>base model</b> is Qwen 2.5 3B Instruct, Apache-licensed, with tool calling. I picked 3B because 7B didn't reliably fit on a free Colab T4.</p>
+      <p>The <b>data</b> is 400 examples built by replaying real tool calls, across four scenarios plus 80 unsafe-data cases, split 80/20. The <b>training</b> is QLoRA, rank 16, alpha 32, 3 epochs, about 20 minutes, final eval loss 0.031. It <b>runs locally</b> as a 1.8 GB GGUF file in Ollama under the name bist-qwen.</p>
+      <p>In the <b>comparison</b> on 20 questions, both models had zero advice leaks and always answered. The fine-tune learned to give educational labels, but it didn't beat the base: four metrics tie and two are worse, partly because the evaluator counts tool identifiers as labels.</p>
+      <p>The <b>limitations</b> are a small dataset, a model that doesn't always check data quality first, and no RLHF.</p>
     </div>
   </div>
-  <div class="meta"><div><b>Proof:</b> <code>docs/PROPOSAL.md</code></div><div class="tags"><span>§7 optional, not done</span><span>§8.13 optional</span></div></div>
+  <div class="meta"><div><b>Proof:</b> <code>mcp/server.py</code>, <code>docs/MODEL_CARD.md</code>, <code>outputs/training/base_vs_finetuned.md</code></div><div class="tags"><span>§8.14 tools</span><span>§9.1</span><span>Q&amp;A-1 to Q&amp;A-6</span></div></div>
 </section>
 
-<section class="scene" id="s12" data-dur="60" data-act="3" data-title="MCP server">
-  <div class="scene-h"><h2>12 · The MCP server: 20 read-only tools</h2></div>
+<section class="scene" id="s7" data-dur="80" data-act="3" data-title="Live demo">
+  <div class="scene-h"><h2>7 · Live demo</h2></div>
   <div class="cols">
-    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li>Slide 5, "MCP Tools"</li><li><code>src/bist_analytics/mcp/server.py</code></li></ul></div>
-      <div class="cmd"><code>.\.venv\Scripts\python.exe scripts/verify_mcp.py</code><button data-copy>Copy</button></div></div>
-    <div class="say"><p class="lbl">SAY</p>
-      <p>The MCP server exposes the analysis as 20 read-only tools over standard input and output. The core set matches the spec's list: get_stock_history, calculate_indicators, find_support_resistance, get_fundamental_metrics, calculate_scores, generate_signal and run_backtest. Extra tools cover the benchmark index, reversal events, sector ranking, weekday tests, fundamental change, KAP news, data-quality checks and evidence bundles.</p>
-      <p>Each tool takes bounded inputs and returns values with dates, units, warnings and explicit missing values. They are marked read-only and idempotent, and none of them can place a trade.</p>
-      <p>The verify_mcp script runs the real protocol and checks the tool results against the direct Python calculation. It doesn't involve any language model; it checks only the tool layer.</p>
-    </div>
-  </div>
-  <div class="meta"><div><b>Proof:</b> <code>mcp/server.py</code> (20 <code>@server.tool</code>), <code>scripts/verify_mcp.py</code></div><div class="tags"><span>§2 MCP agent</span><span>§8.14 expose as tools</span><span>§9.1 controlled tools</span></div></div>
-</section>
-
-<section class="scene" id="s13" data-dur="120" data-act="3" data-title="Fine-tuned local LLM">
-  <div class="scene-h"><h2>13 · The fine-tuned local model: the six instructor points</h2></div>
-  <div class="cols">
-    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li>Slide 6, "Fine-Tuning Pipeline"</li><li><code>docs/MODEL_CARD.md</code></li><li><code>outputs/training/base_vs_finetuned.md</code></li><li>Slide 8 table</li></ul></div></div>
-    <div class="say"><p class="lbl">SAY</p>
-      <p><b>One, the base model.</b> I started from Qwen 2.5 3B Instruct. It is Apache 2.0 licensed, it supports tool calling, and it can be fine-tuned on a free Colab T4 GPU. I first planned the 7B model, but its QLoRA training didn't reliably fit in the T4's memory, so I switched to 3B. It uses the same chat template and tool-call format, so none of the other code had to change.</p>
-      <p><b>Two, the data.</b> The dataset builder replays live MCP tool calls to create 400 verified examples, so every number in a training answer matches the real tool output. That is 80 sector-laggard, 60 weekday, 100 reversal and 80 fundamental-reaction examples, plus 80 negative examples where the correct answer is ANALYSIS_UNSAFE. The split is 80/20 train and eval, stratified by scenario.</p>
-      <p><b>Three, the training settings.</b> QLoRA with a 4-bit base, LoRA rank 16, alpha 32, dropout 0.05 on the attention and MLP projections, 3 epochs, a cosine learning-rate schedule starting at 2e-4, and loss computed only on the assistant's responses. Training took about 20 minutes and ended at an eval loss of 0.031. There's no RLHF; this is supervised fine-tuning only.</p>
-      <p><b>Four, running it locally.</b> The adapter was merged into the base model and exported as a 1.8 GB q4_k_m GGUF file. One ollama create command registers it as bist-qwen, and Ollama serves it on localhost. I'll show it live in a moment.</p>
-      <p><b>Five, base versus fine-tuned.</b> On a 20-question evaluation set:</p>
-      <div class="scroll"><table><thead><tr><th>Metric (lower is better unless marked)</th><th class="n">Base 3B</th><th class="n">Fine-tuned</th></tr></thead><tbody>
-        <tr><td>Invalid tool-call rate</td><td class="n">0.450</td><td class="n">0.450</td></tr>
-        <tr><td>Missing required tool rate</td><td class="n">0.050</td><td class="n">0.050</td></tr>
-        <tr><td>Label mismatch rate</td><td class="n">0.000</td><td class="n">0.200</td></tr>
-        <tr><td>Advice-leak rate</td><td class="n">0.000</td><td class="n">0.000</td></tr>
-        <tr><td>Unknown-label rate</td><td class="n">0.050</td><td class="n">0.300</td></tr>
-        <tr><td>Reproducibility rate (higher is better)</td><td class="n">1.000</td><td class="n">1.000</td></tr>
-      </tbody></table></div>
-      <div class="honest"><b>Say it honestly:</b> on these numbers the fine-tune did not beat the base model. Against the earlier fine-tuned run, invalid tool calls improved; against the base, two metrics tie and three get worse. The base's perfect label score is a vacuous pass, because it almost never outputs a label at all, while the fine-tune learned to give one. The unknown-label rate is partly a measurement artefact: the fine-tune quotes tool identifiers such as BB_LOWER_TOUCH, and the evaluator's regex counts them as labels.</div>
-      <p><b>Six, limitations.</b> 400 examples is a small corpus, and it covers only my ten tickers. The model doesn't reliably run the data-quality check first for unknown tickers or future dates. It writes rich narratives but doesn't fill the strict numeric output fields. And because there's no RLHF, the no-advice rule depends on the system prompt and the data-quality gate.</p>
-    </div>
-  </div>
-  <div class="meta"><div><b>Proof:</b> <code>docs/MODEL_CARD.md</code>, <code>training/train_unsloth.py</code>, <code>training/dataset/build.py</code>, <code>outputs/training/base_vs_finetuned.md</code></div><div class="tags"><span>Q&amp;A-1 base model</span><span>Q&amp;A-2 data</span><span>Q&amp;A-3 training</span><span>Q&amp;A-4 run locally</span><span>Q&amp;A-5 comparison</span><span>Q&amp;A-6 limitations</span></div></div>
-</section>
-
-<section class="scene" id="s14" data-dur="150" data-act="3" data-title="Live demo">
-  <div class="scene-h"><h2>14 · Live demo: the agent calls tools and explains</h2></div>
-  <div class="cols">
-    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li>PowerShell at the repo root, font at 18pt or larger</li><li>Optional: <code>.\scripts\presentation_launch.ps1</code> opens four windows</li></ul></div>
-      <div class="cmd"><code>ollama create bist-qwen -f training/Modelfile.finetuned</code><button data-copy>Copy</button></div>
+    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li>PowerShell at the repo root, font at 18pt or larger</li></ul></div>
       <div class="cmd"><code>.\.venv\Scripts\python.exe scripts/local_agent.py --smoke --model bist-qwen</code><button data-copy>Copy</button></div>
       <div class="cmd"><code>.\.venv\Scripts\python.exe scripts/local_agent.py --ticker THYAO.IS --as-of 2025-12-31 --model bist-qwen</code><button data-copy>Copy</button></div>
       <div class="cmd"><code>netstat -ano | findstr 11434</code><button data-copy>Copy</button></div></div>
     <div class="say"><p class="lbl">SAY</p>
-      <p>Now the live run. Ollama is serving bist-qwen locally. First a smoke test: the agent makes one project_status call to prove the connection works.</p>
-      <p>Next, a real question: analyse THYAO as of 31 December 2025. Watch the terminal. Each line is a real MCP tool call with its arguments: price history, indicators, support zones, fundamentals, scores. The model doesn't make up a single number; it reads the tool results and explains them.</p>
-      <p><i>[Pause while it runs. When it finishes:]</i> The answer is built from the tools it used. Its conclusion should be one of the eight educational labels, and it doesn't contain "I recommend buying". The advice-leak rate in the evaluation was zero.</p>
-      <p>Finally, netstat shows the model endpoint listening on 127.0.0.1 port 11434, on this machine. No cloud AI is involved at any point.</p>
-      <div class="honest"><b>If it stumbles:</b> a 3B model sometimes makes a broken tool call or loops. Keep it in the video and say: "this is exactly the tool-loop behaviour I'll explain in a minute, and the dedup guard stops it."</div>
+      <p>Now it's live. The smoke test makes one tool call to prove the connection works.</p>
+      <p>Next, a real question: analyse THYAO as of the end of 2025. Each line here is a real MCP call: prices, indicators, zones, fundamentals, scores. The model reads the results and explains them without making up numbers.</p>
+      <p><i>[When it finishes:]</i> The conclusion should be one of the eight educational labels, with no buy recommendation. And netstat shows the model is served on localhost port 11434, so no cloud AI is involved.</p>
+      <div class="honest"><b>If it stumbles:</b> say "small models can loop on tool calls. My agent has a dedup guard that blocks repeated calls and forces an answer, which cut one question from fifteen calls to two."</div>
     </div>
   </div>
-  <div class="meta"><div><b>Proof:</b> <code>scripts/local_agent.py</code> (flags: --smoke, --ticker, --as-of, --model, --output, --prompt), <code>scripts/presentation_launch.ps1</code>, traces in <code>outputs/agent/</code></div><div class="tags"><span>§8.15 agent explains</span><span>§9.1 no invented values</span><span>§11 MCP demo</span><span>Q&amp;A-4 live</span></div></div>
+  <div class="meta"><div><b>Proof:</b> <code>scripts/local_agent.py</code>, <code>outputs/agent/</code>, <code>outputs/training/base_vs_finetuned.md</code> (dedup)</div><div class="tags"><span>§8.15 agent explains</span><span>§9.1 no invented values</span><span>§11 MCP demo</span><span>Q&amp;A-4 live</span></div></div>
 </section>
 
-<section class="scene" id="s15" data-dur="60" data-act="3" data-title="A–E harness">
-  <div class="scene-h"><h2>15 · The five-stage evaluation harness</h2></div>
+<section class="scene" id="s8" data-dur="40" data-act="3" data-title="Harness and extras">
+  <div class="scene-h"><h2>8 · Harness and extra studies</h2></div>
   <div class="cols">
-    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li>Slide 9</li><li><code>outputs/training/phase_g_harness_summary.md</code></li></ul></div>
-      <div class="cmd"><code>.\.venv\Scripts\python.exe scripts/run_harness_experiments.py --backend ollama --model bist-qwen</code><button data-copy>Copy</button></div></div>
+    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li>Slide 9, harness table</li><li>Slide 7, scenarios</li></ul></div></div>
     <div class="say"><p class="lbl">SAY</p>
-      <p>To measure what the architecture contributes, the harness runs the same question through five stages, each adding one layer. A is the raw model with no tools. B adds the MCP tools. C adds state such as the as-of date and financial period. D adds the evidence-quality gate. E adds a memory and human-review layer.</p>
-      <p>The headline result: going from A to B, evidence coverage and workflow completion jump from 0 to 1.0, and they stay at 1.0 in every later stage. Constraint compliance passes in three of the five stages.</p>
-      <div class="honest"><b>Say it honestly:</b> numeric exactness stays at 0 in every stage, and temporal validity never passes. The model calls the right tools but doesn't copy the exact numbers and dates into the strict output fields. It's a demonstration of the architecture, not proof of model quality.</div>
+      <p>A five-stage harness measures what each layer adds. Giving the model tools raises evidence coverage from 0 to 1.0, and it stays there. Numeric exactness stays at 0, though, so this shows the architecture works, not that the model is precise.</p>
+      <p>I also ran four scenario studies on ten BIST stocks in five sectors, for example 1,458 technical reversal events. These became the fine-tuning data.</p>
     </div>
   </div>
-  <div class="meta"><div><b>Proof:</b> <code>outputs/training/phase_g_harness_summary.md</code>, <code>outputs/harness/</code>, <code>harness/evaluation.py</code></div><div class="tags"><span>§9.1 agent orchestration</span><span>Q&amp;A-5 evaluation</span></div></div>
+  <div class="meta"><div><b>Proof:</b> <code>outputs/training/phase_g_harness_summary.md</code>, <code>outputs/universe10/scenarios/</code></div><div class="tags"><span>Additional work</span><span>Q&amp;A-5</span></div></div>
 </section>
 
-<section class="scene" id="s16" data-dur="60" data-act="2" data-title="Scenario reports">
-  <div class="scene-h"><h2>16 · Extra: four scenario studies on ten tickers</h2></div>
+<section class="scene" id="s9" data-dur="45" data-act="4" data-title="Quality and close">
+  <div class="scene-h"><h2>9 · Tests, limitations, close</h2></div>
   <div class="cols">
-    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li><code>outputs/universe10/scenarios/*.md</code></li><li>Slide 7</li></ul></div>
-      <div class="cmd"><code>.\.venv\Scripts\python.exe scripts/build_scenarios.py</code><button data-copy>Copy</button></div></div>
+    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li><code>pytest</code> output</li><li>Slide 11, limitations</li><li>File explorer showing the deliverables</li></ul></div>
+      <div class="cmd"><code>.\.venv\Scripts\pytest.exe</code><button data-copy>Copy</button></div></div>
     <div class="say"><p class="lbl">SAY</p>
-      <p>Beyond the spec, I extended the pipeline to ten BIST tickers in five sectors (airlines, banking, steel, retail and telecom) from January 2025 to November 2026. These four studies also generated the scenarios for the fine-tuning data.</p>
-      <p><b>Sector laggards:</b> over 92 weekly checkpoints, I took the weakest stock in each sector and checked whether it caught up. Steel's laggard beat its peers over 20 days 60.9 percent of the time. The airline laggard did so only 44.6 percent of the time, which is worse than a coin flip.</p>
-      <p><b>Weekday patterns:</b> 50 ticker-weekday tests. The strongest is Pegasus on Wednesdays, with an uncorrected p-value of 0.0099. With 50 tests, a few small p-values are expected by chance alone, so I don't claim a weekday edge.</p>
-      <p><b>Reversals:</b> 1,458 technical events. A touch of the lower Bollinger band bounced within five days 58.7 percent of the time, and an RSI oversold recovery 59.1 percent.</p>
-      <p><b>Fundamental reaction:</b> this one covers THYAO only, with seven release dates and 19 panel rows. Averaged over those rows, the stock underperformed BIST 100 by 1.29 percent in the five days after a release.</p>
+      <p>All 68 tests pass, checking things like indicator maths, pivot timing, publication dates, costs and next-open execution, and a clean-environment reproduction matches the results.</p>
+      <p>The main limitations: one company, a short period, four trades, nominal lira returns and a small model.</p>
+      <p>The package contains the code, notebook, README, proposal, report, Fintables dataset, backtest tables, charts, agent traces and slides. The main lesson: an AI agent is most useful when it drives reliable tools instead of inventing financial conclusions. Thanks for watching.</p>
     </div>
   </div>
-  <div class="meta"><div><b>Proof:</b> <code>s1_sector_laggard.md</code>, <code>s2_weekday.md</code>, <code>s3_reversals.md</code>, <code>s4_fundamental_reaction.md</code>, <code>scenarios_summary.json</code></div><div class="tags"><span>Additional work</span><span>§3.1 one or more stocks</span></div></div>
-</section>
-
-<section class="scene" id="s17" data-dur="45" data-act="3" data-title="Dedup guard">
-  <div class="scene-h"><h2>17 · Engineering detail: stopping tool loops</h2></div>
-  <div class="cols">
-    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li>Slide 10</li><li><code>scripts/local_agent.py</code> around <code>seen_calls</code></li></ul></div></div>
-    <div class="say"><p class="lbl">SAY</p>
-      <p>One real problem I had to solve: the 3B model learned "after a successful tool call, make another one", and on some questions it called the same tool over and over without ever answering.</p>
-      <p>The fix is in the agent loop. It remembers every tool name and argument pair. On the first repeat, it returns a dedup note instead of an error, turns off further tool calls and asks for the final answer. As a safety net, it forces an answer after turn 10.</p>
-      <p>On question 6, fifteen identical calls dropped to two. On question 16, more than twenty calls dropped to three.</p>
-    </div>
-  </div>
-  <div class="meta"><div><b>Proof:</b> <code>scripts/local_agent.py</code> (<code>force_answer_after=10</code>), <code>outputs/training/base_vs_finetuned.md</code></div><div class="tags"><span>Engineering</span></div></div>
-</section>
-
-<section class="scene" id="s18" data-dur="45" data-act="4" data-title="Verification">
-  <div class="scene-h"><h2>18 · Tests and reproducibility</h2></div>
-  <div class="cols">
-    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li>Terminal running the tests</li><li><code>SUBMISSION_MANIFEST.json</code></li></ul></div>
-      <div class="cmd"><code>.\.venv\Scripts\pytest.exe</code><button data-copy>Copy</button></div>
-      <div class="cmd"><code>.\.venv\Scripts\ruff.exe check src tests scripts</code><button data-copy>Copy</button></div>
-      <div class="cmd"><code>.\.venv\Scripts\python.exe scripts/verify_reproduction.py</code><button data-copy>Copy</button></div></div>
-    <div class="say"><p class="lbl">SAY</p>
-      <p>All 68 tests pass. They check indicator recurrences, pivot confirmation, release-date boundaries, later restatements, invalid denominators, next-open gaps, fees and position state. A clean-environment reproduction compares every feature, metric and daily ledger. Dependencies are pinned in uv.lock, and the submission manifest records a SHA-256 hash for every file.</p>
-      <p>These tests confirm the code is correct. They say nothing about future investment performance.</p>
-    </div>
-  </div>
-  <div class="meta"><div><b>Proof:</b> <code>tests/</code>, <code>outputs/verification/reproduction.json</code>, <code>SUBMISSION_MANIFEST.json</code></div><div class="tags"><span>§10 reproducible pipeline</span></div></div>
-</section>
-
-<section class="scene" id="s19" data-dur="85" data-act="4" data-title="Limitations and close">
-  <div class="scene-h"><h2>19 · Limitations, deliverables, closing</h2></div>
-  <div class="cols">
-    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li>Slide 11, "Honest Limitations"</li><li>File explorer showing the deliverables listed on the right</li></ul></div></div>
-    <div class="say"><p class="lbl">SAY</p>
-      <p>The main limitations: one selected company, a short evaluation period and only four trades for the combined strategy. Returns are in nominal lira, with no adjustment for inflation. Cash earns zero, slippage is simple, and taxes are ignored. The fine-tuned model is small, and so is its training set.</p>
-      <p>The deliverables are all in the package:</p>
-      <div class="scroll"><table><tbody>
-        <tr><td>Source code and notebook</td><td><code>src/</code>, <code>notebooks/THYAO_walkthrough.ipynb</code></td></tr>
-        <tr><td>README and setup guide</td><td><code>README.md</code>, <code>docs/LOCAL_SETUP.md</code></td></tr>
-        <tr><td>Proposal</td><td><code>docs/PROPOSAL.md</code></td></tr>
-        <tr><td>Final report</td><td><code>output/pdf/THYAO_Term_Project_Report.pdf</code>, <code>requirements_report.pdf</code></td></tr>
-        <tr><td>Fintables dataset</td><td><code>data/processed/fintables_tms29_observations.csv</code></td></tr>
-        <tr><td>Backtest tables and charts</td><td><code>outputs/tms29_primary/</code></td></tr>
-        <tr><td>MCP agent demo</td><td><code>outputs/agent/</code>, <code>outputs/harness/</code>, this video</td></tr>
-        <tr><td>Presentation</td><td><code>outputs/deliverables/presentation_slides.html</code></td></tr>
-      </tbody></table></div>
-      <p>To sum up: I learned how to put price data and company financials into one engineering workflow, and how an AI agent can drive reliable tools instead of inventing financial conclusions. In this study the fundamental filter reduced exposure but did not beat the market, and I report that as it is. Thanks for watching.</p>
-    </div>
-  </div>
-  <div class="meta"><div><b>Proof:</b> <code>outputs/tms29_primary/report.md</code> §9, <code>docs/ACCEPTANCE.md</code></div><div class="tags"><span>§11 deliverables</span><span>§12 learning outcome</span><span>§8.16 report + presentation</span></div></div>
+  <div class="meta"><div><b>Proof:</b> <code>tests/</code>, <code>outputs/verification/reproduction.json</code>, <code>report.md</code> §9</div><div class="tags"><span>§10 reproducible</span><span>§11 deliverables</span><span>§12 learning outcome</span><span>§8.16</span></div></div>
 </section>
 
 </main>
@@ -497,8 +332,8 @@ const acts={1:'var(--a1)',2:'var(--a2)',3:'var(--a3)',4:'var(--a4)'};
 const scenes=[...document.querySelectorAll('.scene')];
 const fmt=s=>Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
 let store={};
-try{store=JSON.parse(localStorage.getItem('cse481-video')||'{}')}catch(e){store={}}
-const save=()=>{try{localStorage.setItem('cse481-video',JSON.stringify(store))}catch(e){}};
+try{store=JSON.parse(localStorage.getItem('cse481-video-short')||'{}')}catch(e){store={}}
+const save=()=>{try{localStorage.setItem('cse481-video-short',JSON.stringify(store))}catch(e){}};
 let t=0;const total=scenes.reduce((a,s)=>a+ +s.dataset.dur,0);
 const bar=document.getElementById('rosbar'),nav=document.getElementById('navlist');
 scenes.forEach((s,i)=>{
@@ -527,23 +362,23 @@ function prog(){const n=scenes.filter(s=>store[s.id]).length;document.getElement
 prog();
 document.getElementById('resetBtn').onclick=()=>{store={};save();document.querySelectorAll('input[type=checkbox]').forEach(c=>c.checked=false);document.querySelectorAll('.done').forEach(e=>e.classList.remove('done'));prog()};
 const M=[
-['§2 / §3.1 Yahoo Finance OHLCV for a BIST 100 stock and the index','ok','s4'],
-['§2 Pandas/NumPy time-series processing','ok','s4, s6'],
-['§2 SMA, EMA, RSI, MACD, volume indicators','ok','s6'],
-['§2 Support/resistance from pivots and clustering','ok','s6'],
-['§2 / §3.2 Fintables income, balance sheet, cash flow (with dates/periods)','ok','s5'],
-['§2 / §5.1–5.2 Growth, ROE, P/E, P/B, Net Debt/EBITDA, liquidity','ok','s7'],
-['§2 / §5.3 Fundamental score 0–5, explained thresholds','ok','s8'],
-['§5.4 Combined score weights + sensitivity','ok','s8, s10'],
-['§3.3 Optional macro (rates, inflation, USD/TRY, index)','part','s8'],
-['§2 / §3.4 Explicit rule-based strategy','ok','s9'],
-['§2 / §6 Backtest without look-ahead bias','ok','s9, s10'],
-['§2 / §6 Compare with BIST 100 and buy-and-hold','ok','s10'],
-['§7 Financial metrics: return, drawdown, Sharpe, win rate, benchmark difference','ok','s10'],
-['§7 Optional ML direction model','no','s11'],
-['§2 / §9.1 MCP agent calls Python tools and explains; no invented values','ok','s12, s14'],
-['Q&A 1–6 Base model, data, training, run locally, comparison, limitations','ok','s13, s14'],
-['§11 Deliverables (code, README, proposal, report, dataset, tables, charts, demo, presentation)','ok','s19'],
+['§2 / §3.1 Yahoo Finance OHLCV for a BIST 100 stock and the index','ok','s2'],
+['§2 Pandas/NumPy time-series processing','ok','s2, s3'],
+['§2 SMA, EMA, RSI, MACD, volume indicators','ok','s3'],
+['§2 Support/resistance from pivots and clustering','ok','s3'],
+['§2 / §3.2 Fintables income, balance sheet, cash flow (with dates/periods)','ok','s2'],
+['§2 / §5.1–5.2 Growth, ROE, P/E, P/B, Net Debt/EBITDA, liquidity','ok','s3'],
+['§2 / §5.3 Fundamental score 0–5, explained thresholds','ok','s4'],
+['§5.4 Combined score weights + sensitivity','ok','s4, s5'],
+['§3.3 Optional macro (rates, inflation, USD/TRY, index)','part','s4'],
+['§2 / §3.4 Explicit rule-based strategy','ok','s4'],
+['§2 / §6 Backtest without look-ahead bias','ok','s4, s5'],
+['§2 / §6 Compare with BIST 100 and buy-and-hold','ok','s5'],
+['§7 Financial metrics: return, drawdown, Sharpe, win rate, benchmark difference','ok','s5'],
+['§7 Optional ML direction model','no','s5'],
+['§2 / §9.1 MCP agent calls Python tools and explains; no invented values','ok','s6, s7'],
+['Q&A 1–6 Base model, data, training, run locally, comparison, limitations','ok','s6, s7'],
+['§11 Deliverables (code, README, proposal, report, dataset, tables, charts, demo, presentation)','ok','s9'],
 ['§12 Educational use, not investment advice','ok','s1']];
 const lab={ok:'Implemented',part:'Partial',no:'Optional, not done'};
 document.getElementById('mrows').innerHTML=M.map(r=>'<tr><td data-l="Item">'+r[0]+'</td><td data-l="Status"><span class="st '+r[1]+'">'+lab[r[1]]+'</span></td><td data-l="Segment">'+r[2].split(', ').map(x=>'<a href="#'+x+'">'+x.slice(1)+'</a>').join(', ')+'</td></tr>').join('');

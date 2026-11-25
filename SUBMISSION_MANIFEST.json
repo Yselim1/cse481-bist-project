@@ -1,5 +1,5 @@
 {
-  "created_at": "2026-11-25T10:15:55.616363+00:00",
+  "created_at": "2026-11-25T10:18:26.667243+00:00",
   "external_files": {
     "training/bist_lora.gguf": {
       "bytes": 1929902688,
@@ -801,8 +801,8 @@
       "sha256": "9e72895b4588b52344188de38ded1302b3bee14cb3b478f846f01c07e9dae7fd"
     },
     "outputs/deliverables/youtube_video_script.html": {
-      "bytes": 57793,
-      "sha256": "e761f47170b3a12bdd3b445231706be0a780c784b6611cd8fe44fe557d3f82cc"
+      "bytes": 36152,
+      "sha256": "459719fff1c35241f968afd716a3db8750730c8d40feeb4c6c93752216b70f6d"
     },
     "outputs/harness/HUMAN_REVIEW.md": {
       "bytes": 1943,
