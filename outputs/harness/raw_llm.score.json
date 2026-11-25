@@ -12,15 +12,13 @@
     "signal_action": false,
     "technical_return": false
   },
-  "constraint_compliance": true,
+  "constraint_compliance": false,
   "evidence_coverage": 0.0,
   "missing_data_honesty": true,
   "numeric_exactness": 0.0,
   "quality_gate_pass": false,
   "structured_reproducibility": false,
   "temporal_validity": false,
-  "unsupported_tool_claims": [
-    "MCP"
-  ],
+  "unsupported_tool_claims": [],
   "workflow_completion": 0.0
 }

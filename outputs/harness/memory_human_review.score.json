@@ -1,6 +1,6 @@
 {
   "checks": {
-    "as_of": false,
+    "as_of": true,
     "bist100_return": false,
     "buy_hold_return": false,
     "combined_return": false,
@@ -9,7 +9,7 @@
     "net_debt_try_million": false,
     "net_profit_try_million": false,
     "revenue_try_million": false,
-    "signal_action": false,
+    "signal_action": true,
     "technical_return": false
   },
   "constraint_compliance": false,
@@ -17,7 +17,7 @@
   "missing_data_honesty": false,
   "numeric_exactness": 0.0,
   "quality_gate_pass": false,
-  "structured_reproducibility": true,
+  "structured_reproducibility": false,
   "temporal_validity": false,
   "unsupported_tool_claims": [],
   "workflow_completion": 1.0

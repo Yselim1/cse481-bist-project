@@ -1,9 +1,17 @@
 {
-  "educational_label": "HOLD",
-  "committed_evidence_ids": [
-    "get_fundamental_metrics:THYAO:2026-09-25",
-    "calculate_scores:THYAO:2026-09-25",
-    "run_backtest:2025-01-01:2026-09-25"
-  ],
-  "explanation": "Primary metric: 3-session \u2190 in-sample; threshold 0.01 \u2190, cap at TECHNICAL_REVERSAL_CANDIDATE. Current: -0.028 \u2190. Exceeds threshold; gate fails.\u2014 Secondary metric: 5-session up-sample; threshold 0.01 \u2190, cap at TECHNICAL_REVERSAL_CANDIDATE. Current: +0.067 \u2190. Exceeds threshold; gate fails.\u2014 Final gate: SYSTEMATIC_EXIT. Threshold 0.05 \u2190. Current: +0.067 \u2190. Exceeds threshold; gate fails. Label is HOLD."
+  "as_of": null,
+  "financial_period": null,
+  "revenue_try_million": null,
+  "net_profit_try_million": null,
+  "net_debt_try_million": null,
+  "combined_return": null,
+  "technical_return": null,
+  "buy_hold_return": null,
+  "bist100_return": null,
+  "signal_action": null,
+  "context_event_ids": [],
+  "evidence_tools": [],
+  "educational_caveat": "",
+  "investment_recommendation": null,
+  "narrative": "<tool_call>\n{\"name\": \"generate_signal\", \"arguments\": {\"ticker\": \"THYAO\", \"as_of\": \"2026-09-25\", \"holding\": false, \"entry_price\": 1, \"holding_sessions\": 0}}\n</tool_call>\n<tool_call>\n{\"name\": \"run_backtest\", \"arguments\": {\"start\": \"2025-01-01\", \"end\": \"2026-09-25\"}}\n</tool_call>\n<tool_call>\n{\"name\": \"get_context_events\", \"arguments\": {\"as_of\": \"2026-09-25\", \"limit\": 10}}\n"
 }

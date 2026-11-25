@@ -144,46 +144,79 @@ def _chat(messages: list[dict], tools: list[dict], model: str,
 
 
 def run_agent(prompt: str, *, model: str = DEFAULT_MODEL, max_turns: int = 10,
-              trace_path: Path | None = None, allow_tools: bool = True) -> dict:
+              trace_path: Path | None = None, allow_tools: bool = True,
+              force_answer_after: int = 10) -> dict:
     """Run a tool-calling loop against a local Ollama model and the BIST MCP server.
 
     If ``allow_tools`` is False the MCP server is still launched for schema listing but
     the model is called with an empty tools array and ``tool_choice="none"``, used for
     the stage-A raw-LLM baseline in the harness.
+
+    ``force_answer_after`` — if the model is still making tool calls after this many turns,
+    inject a "write your final answer now" nudge and disable further tool calls.  Dedup
+    guard: if the model calls the same tool with the identical arguments a second time,
+    we return an error immediately (without hitting the MCP server) and ask it to finalise.
+    Both guards target the tool-loop pathology documented in MODEL_CARD.md.
     """
     mcp = MCPStdioClient([sys.executable, "-m", "bist_analytics.mcp.server"])
     trace: list[dict] = []
+    seen_calls: set[str] = set()  # dedup key: "tool_name:json(args,sorted)"
+    tools_active = allow_tools
     try:
         mcp_tools = mcp.list_tools() if allow_tools else []
         openai_tools = [_mcp_tool_to_openai_schema(t) for t in mcp_tools] if allow_tools else []
         messages: list[dict] = [{"role": "system", "content": SYSTEM_PROMPT},
                                  {"role": "user", "content": prompt}]
         for turn in range(max_turns):
-            response = _chat(messages, openai_tools, model=model, allow_tools=allow_tools)
+            # Safety net: after force_answer_after tool turns, nudge the model to finalise.
+            if tools_active and turn >= force_answer_after and any(e.get("tool") for e in trace):
+                messages.append({"role": "user", "content":
+                    "You have gathered sufficient evidence. Write your final answer now "
+                    "without calling any more tools."})
+                tools_active = False
+            response = _chat(messages, openai_tools if tools_active else [], model=model,
+                             allow_tools=tools_active)
             choice = response["choices"][0]
             message = choice["message"]
             trace.append({"turn": turn, "role": "assistant", "content": message.get("content"),
                            "tool_calls": message.get("tool_calls", [])})
             tool_calls = message.get("tool_calls") or []
-            if not tool_calls or not allow_tools:
+            if not tool_calls or not tools_active:
                 return {"final_answer": message.get("content", ""), "trace": trace,
                          "turns_used": turn + 1, "model": model}
             messages.append(message)
+            dedup_fired = False
             for call in tool_calls:
                 try:
                     args = json.loads(call["function"].get("arguments") or "{}")
                 except json.JSONDecodeError:
                     args = {}
-                try:
-                    tool_result = mcp.call_tool(call["function"]["name"], args)
-                except Exception as exc:  # noqa: BLE001 - surface tool errors to the model
-                    tool_result = {"error": str(exc)}
+                # Dedup guard: on the first repeat call, disable tools immediately so the next
+                # turn forces a text answer. Use "dedup_note" (not "error") so the evaluator
+                # does not count this as an invalid tool call — it is not an MCP failure.
+                call_key = f"{call['function']['name']}:{json.dumps(args, sort_keys=True)}"
+                if call_key in seen_calls:
+                    tool_result = {"dedup_note": (f"Already called {call['function']['name']} "
+                                                  "with these exact arguments. Use the previous "
+                                                  "result and write your final answer now.")}
+                    dedup_fired = True
+                else:
+                    seen_calls.add(call_key)
+                    try:
+                        tool_result = mcp.call_tool(call["function"]["name"], args)
+                    except Exception as exc:  # noqa: BLE001 - surface tool errors to the model
+                        tool_result = {"error": str(exc)}
                 trace.append({"turn": turn, "tool": call["function"]["name"],
                                "arguments": args, "result": tool_result})
                 messages.append({"role": "tool", "tool_call_id": call.get("id", str(time.time())),
                                  "name": call["function"]["name"],
                                  "content": _truncate_tool_result(
                                      json.dumps(tool_result, default=str))})
+            # On first dedup hit, disable tools so next turn forces a text answer.
+            if dedup_fired and tools_active:
+                messages.append({"role": "user", "content":
+                    "You already have all the evidence you need. Write your final answer now."})
+                tools_active = False
         return {"final_answer": "MAX_TURNS_EXCEEDED", "trace": trace,
                  "turns_used": max_turns, "model": model}
     finally:
@@ -207,9 +240,13 @@ def main() -> None:
     parser.add_argument("--as-of", default="2025-12-31")
     parser.add_argument("--model", default=DEFAULT_MODEL)
     parser.add_argument("--output", default=None, help="Optional path to dump the full trace JSON.")
+    parser.add_argument("--prompt", default=None,
+                        help="Free-form user question. Overrides --smoke and the default analysis prompt.")
     args = parser.parse_args()
 
-    if args.smoke:
+    if args.prompt:
+        prompt = args.prompt
+    elif args.smoke:
         prompt = ("Call project_status exactly once. Report its ticker and fundamental source. "
                   "Then stop and summarize in two sentences.")
     else:

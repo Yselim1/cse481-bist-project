@@ -12,10 +12,8 @@
   "buy_hold_return": null,
   "BIST100_return": null,
   "signal_action": null,
-  "educational_caveat": "Missing numeric evidence; gate escalates to INVESTIGATE.",
+  "educational_caveat": null,
+  "context_event_ids": null,
   "explanation": null,
-  "evidence_tools": [
-    "MCP",
-    "MCP"
-  ]
+  "evidence_tools": []
 }

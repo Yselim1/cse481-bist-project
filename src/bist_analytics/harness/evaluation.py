@@ -38,7 +38,7 @@ def score_answer(answer: dict[str, Any], called_tools: set[str]) -> dict[str, An
     checks["as_of"] = answer.get("as_of") == EXPECTED["as_of"]
     checks["financial_period"] = answer.get("financial_period") == EXPECTED["financial_period"]
     checks["signal_action"] = answer.get("signal_action") == EXPECTED["signal_action"]
-    checks["context_event"] = EXPECTED["context_event_id"] in answer.get("context_event_ids", [])
+    checks["context_event"] = EXPECTED["context_event_id"] in (answer.get("context_event_ids") or [])
     numeric_score = sum(checks[key] for key in NUMERIC) / len(NUMERIC)
     evidence_score = len(REQUIRED_TOOLS & called_tools) / len(REQUIRED_TOOLS)
     temporal_valid = checks["as_of"] and checks["financial_period"] and checks["context_event"]

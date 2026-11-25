@@ -7,21 +7,23 @@
   "gate_status": "ANALYSIS_UNSAFE",
   "hard_blocks": [],
   "soft_block_counts": {
-    "WATCH": 0,
-    "HOLD": 1,
-    "POTENTIAL_CATCH_UP_CANDIDATE": 0,
-    "TECHNICAL_REVERSAL_CANDIDATE": 0,
-    "FUNDAMENTAL_IMPROVEMENT_CANDIDATE": 0,
-    "REJECT_SIGNAL": 0,
-    "ANALYSIS_UNSAFE": 1
+    "excessive_reversal_events": 0,
+    "live_indicator_changes": 1,
+    "missing_fundamentals": 0,
+    "other": 0
   },
-  "explanation_fallbacks": [],
-  "live_indicators_exceed_threshold": true,
-  "committed_evidence_ids": [
-    "calculate_scores:a416ea84421f:2026-09-25:technical_score",
-    "calculate_scores:a416ea84421f:2026-09-25:fundamental_score",
-    "calculate_scores:d6ecb1403323:2026-09-25:combined_score"
+  "hard_block_explanation": null,
+  "soft_block_explanations": {
+    "excessive_reversal_events": null,
+    "live_indicator_changes": "1 live-session indicator(s) >0.1% change from sample window; gate escalates to ANALYSIS_UNSAFE.",
+    "missing_fundamentals": null,
+    "other": null
+  },
+  "evidence_tools": [
+    "calculate_indicators:274aa2d966f5",
+    "calculate_scores:a416ea84421f"
   ],
-  "live_indicator_names_exceed_threshold": true,
-  "explanation_chain_of_reasoning": "Primary metric failure: 1 live-session indicator(s) >0.1% change from sample window; gate escalates to ANALYSIS_UNSAFE. Note: live indicators may vary in subsequent sessions."
+  "educational_caveat": "Live indicators may vary in subsequent sessions; gate escalates to ANALYSIS_UNSAFE.",
+  "investment_recommendation": null,
+  "note": "Gate escalates to ANALYSIS_UNSAFE due to primary metric failure: live-session indicator(s) >0.1% change from sample window."
 }

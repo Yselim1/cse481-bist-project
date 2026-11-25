@@ -1,5 +1,5 @@
 {
-  "final_answer": "The ticker THYAO.IS has live fundamental data from Fintables at vintage policy `verified_only`. Selected educational label: FUNDAMENTAL_IMPROVEMENT_CANDIDATE. No trading action recommended.",
+  "final_answer": "The project is focused on the ticker THYAO.IS, with its fundamental data sourced from Fintables. The project ensures the use of verified-only vintage policies and reports in TRY currency.",
   "trace": [
     {
       "turn": 0,
@@ -7,7 +7,7 @@
       "content": "",
       "tool_calls": [
         {
-          "id": "xjN664yDzcvaa6xQri08A4cbycN89E94",
+          "id": "call_7zfbfht8",
           "index": 0,
           "type": "function",
           "function": {
@@ -43,10 +43,10 @@
     {
       "turn": 1,
       "role": "assistant",
-      "content": "The ticker THYAO.IS has live fundamental data from Fintables at vintage policy `verified_only`. Selected educational label: FUNDAMENTAL_IMPROVEMENT_CANDIDATE. No trading action recommended.",
+      "content": "The project is focused on the ticker THYAO.IS, with its fundamental data sourced from Fintables. The project ensures the use of verified-only vintage policies and reports in TRY currency.",
       "tool_calls": []
     }
   ],
   "turns_used": 2,
-  "model": "bist-qwen"
+  "model": "qwen2.5:7b-instruct"
 }

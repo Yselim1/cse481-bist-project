@@ -1,0 +1,21 @@
+{
+  "start": "2025-01-01",
+  "end": "2026-11-01",
+  "universe_tickers": [
+    "AKBNK.IS",
+    "BIMAS.IS",
+    "EREGL.IS",
+    "GARAN.IS",
+    "KRDMD.IS",
+    "MGROS.IS",
+    "PGSUS.IS",
+    "TCELL.IS",
+    "THYAO.IS",
+    "TTKOM.IS"
+  ],
+  "universe_missing": [],
+  "s1_anchors": 92,
+  "s2_weekday_rows": 50,
+  "s3_events": 1458,
+  "s4_releases": 19
+}

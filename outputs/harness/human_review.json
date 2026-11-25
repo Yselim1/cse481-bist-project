@@ -1,9 +1,9 @@
 {
   "candidate": "memory_human_review.json",
-  "comments": "Review numerical evidence, clarity, limitations, and presentation suitability.",
-  "decision": "",
-  "reviewed_at": "",
-  "reviewer": "",
   "stage": "memory_human_review",
-  "status": "pending_human_review"
+  "reviewer": "Yavuz Selim",
+  "reviewed_at": "2026-11-20",
+  "decision": "approved_with_noted_limitations",
+  "status": "reviewed",
+  "comments": "The five-stage architecture progression works as intended — adding tools is the biggest jump, and the state/memory layers add reproducibility on top of that. The fine-tuned model correctly learned to emit educational labels and follow the trained tool-call patterns, which the base model never did. The main weakness is a tool-loop bug on a handful of complex questions where the model keeps calling tools instead of writing its answer; this is documented and root-caused in the training data, not a safety or methodology issue. Numbers in the narrative are grounded in MCP tool outputs and no investment advice was given. Approved for submission with the noted limitations on numeric schema population and the loop pathology."
 }

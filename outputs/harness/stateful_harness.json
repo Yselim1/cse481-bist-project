@@ -13,5 +13,5 @@
   "evidence_tools": [],
   "educational_caveat": "",
   "investment_recommendation": null,
-  "narrative": "MAX_TURNS_EXCEEDED"
+  "narrative": "<tool_call>\n{\"name\": \"generate_signal\", \"arguments\": {\"ticker\": \"THYAO\", \"as_of\": \"2026-09-25\", \"holding\": false, \"entry_price\": 0, \"holding_sessions\": 0}}\n</tool_call>\n<tool_call>\n{\"name\": \"run_backtest\", \"arguments\": {\"start\": \"2025-01-01\", \"end\": \"2026-09-26\"}}\n"
 }

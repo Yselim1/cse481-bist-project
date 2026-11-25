@@ -17,7 +17,7 @@
   "missing_data_honesty": false,
   "numeric_exactness": 0.0,
   "quality_gate_pass": false,
-  "structured_reproducibility": false,
+  "structured_reproducibility": true,
   "temporal_validity": false,
   "unsupported_tool_claims": [],
   "workflow_completion": 1.0

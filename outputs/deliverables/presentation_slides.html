@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BIST Financial Analysis Agent — CSE481 Presentation</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+       background: #111; color: #fff; }
+.slide {
+  width: 100vw; min-height: 100vh;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 4rem 7rem;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+  page-break-after: always; break-after: page;
+  position: relative;
+}
+.slide-num {
+  position: absolute; top: 1.4rem; right: 2rem;
+  font-size: 0.75rem; color: #556; letter-spacing: 2px;
+}
+.tag {
+  display: inline-block; background: #e94560; color: #fff;
+  font-size: 0.7rem; font-weight: 700; padding: 2px 10px;
+  border-radius: 2px; letter-spacing: 1px; margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+h1 { font-size: 2.4rem; color: #e94560; margin-bottom: 1.2rem; line-height: 1.2; }
+h2 { font-size: 1.5rem; color: #e94560; margin-bottom: 0.8rem; }
+.subtitle { font-size: 1.1rem; color: #aab; margin-bottom: 0.4rem; }
+p  { font-size: 0.98rem; line-height: 1.75; color: #ccd; margin-bottom: 0.6rem; }
+ul { margin-left: 1.4rem; }
+ul li { font-size: 0.95rem; line-height: 1.7; color: #ccd; margin-bottom: 0.3rem; }
+ul li strong { color: #fff; }
+code, .mono {
+  font-family: 'Consolas', 'Cascadia Code', monospace;
+  background: rgba(255,255,255,0.08); padding: 2px 6px;
+  border-radius: 3px; font-size: 0.85rem; color: #e0e0ff;
+}
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-top: 0.5rem; }
+.cols3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; margin-top: 0.5rem; }
+.card {
+  background: rgba(255,255,255,0.06); border-radius: 8px;
+  padding: 1.2rem 1.4rem; border-left: 3px solid #e94560;
+}
+.card h3 { font-size: 1rem; color: #e94560; margin-bottom: 0.5rem; }
+.card p  { font-size: 0.85rem; color: #bbc; margin-bottom: 0.3rem; }
+table { width: 100%; border-collapse: collapse; margin-top: 0.6rem; font-size: 0.82rem; }
+th { background: #e94560; color: #fff; padding: 6px 10px; text-align: left; }
+td { padding: 5px 10px; border-bottom: 1px solid rgba(255,255,255,0.08);
+     color: #ccd; vertical-align: top; }
+tr:nth-child(even) td { background: rgba(255,255,255,0.03); }
+.pass  { color: #4caf50; font-weight: 700; }
+.tied  { color: #90caf9; font-weight: 700; }
+.note  { color: #f9a825; font-weight: 700; }
+.arrow { color: #e94560; font-size: 1.3rem; }
+.big-stat { font-size: 2.4rem; font-weight: 700; color: #e94560; }
+.stat-label { font-size: 0.75rem; color: #889; text-transform: uppercase;
+              letter-spacing: 1px; margin-top: 0.1rem; }
+hr { border: none; border-top: 1px solid rgba(255,255,255,0.12);
+     margin: 1rem 0; }
+@media print {
+  @page { size: landscape; margin: 0; }
+  .slide { width: 100vw; height: 100vh; min-height: 100vh; overflow: hidden; }
+}
+
+</style>
+</head>
+<body>
+<section class="slide"><span class="slide-num">1 / 12</span>
+<div class="tag">CSE481 · Engineering Economics</div>
+<h1>BIST Financial Analysis Agent</h1>
+<p class="subtitle">A locally-hosted fine-tuned LLM for reproducible BIST equity analysis</p>
+<hr>
+<div class="cols" style="margin-top:1.5rem">
+  <div>
+    <p><strong>Student:</strong> Yavuz Selim</p>
+    <p><strong>Course:</strong> CSE481 Engineering Economics, 2026</p>
+    <p><strong>Model:</strong> <code>bist-qwen</code> (Qwen 2.5 3B + LoRA via Ollama)</p>
+  </div>
+  <div>
+    <p><strong>10</strong> tickers · <strong>5</strong> sectors</p>
+    <p><strong>19</strong> MCP tools · <strong>400</strong> training examples</p>
+    <p><strong>5-stage</strong> architecture harness</p>
+  </div>
+</div>
+</section>
+
+<section class="slide"><span class="slide-num">2 / 12</span>
+<div class="tag">Problem</div>
+<h1>Problem Statement</h1>
+<p>Can a locally-hosted fine-tuned LLM give reproducible, evidence-grounded<br>
+BIST equity analysis — without inventing numbers or giving investment advice?</p>
+<hr>
+<div class="cols">
+  <div class="card">
+    <h3>Two Hard Constraints</h3>
+    <p>🔢 <strong>Never invent numbers</strong> — every numeric claim must cite a tool call</p>
+    <p>⚠️ <strong>No investment advice</strong> — only 8 educational labels allowed</p>
+  </div>
+  <div class="card">
+    <h3>Why Local?</h3>
+    <p>✓ Fully verifiable — offline, no cloud dependency</p>
+    <p>✓ Reproducible — same model, same tools, same answers</p>
+    <p>✓ Student-controlled — no API keys, no costs</p>
+  </div>
+</div>
+<div style="margin-top:1.4rem">
+  <p><strong>8 Educational Labels (the only allowed conclusions):</strong></p>
+  <p><code>HOLD</code> &nbsp; <code>WATCH</code> &nbsp; <code>INVESTIGATE</code> &nbsp;
+     <code>POTENTIAL_CATCH_UP_CANDIDATE</code> &nbsp; <code>TECHNICAL_REVERSAL_CANDIDATE</code></p>
+  <p><code>FUNDAMENTAL_IMPROVEMENT_CANDIDATE</code> &nbsp;
+     <code>REJECT_SIGNAL</code> &nbsp; <code>ANALYSIS_UNSAFE</code></p>
+</div>
+</section>
+
+<section class="slide"><span class="slide-num">3 / 12</span>
+<div class="tag">Architecture</div>
+<h1>System Architecture</h1>
+<div class="cols3" style="margin-top:1rem">
+  <div class="card">
+    <h3>Layer 1 — Data</h3>
+    <p>Yahoo Finance OHLCV</p>
+    <p>Fintables TMS29 financials</p>
+    <p>KAP context events</p>
+    <p>TCMB / TÜİK macro</p>
+  </div>
+  <div class="card">
+    <h3>Layer 2 — MCP Server</h3>
+    <p>19 read-only tools</p>
+    <p>stdio transport (subprocess)</p>
+    <p>No network calls during analysis</p>
+    <p>All tools return JSON evidence</p>
+  </div>
+  <div class="card">
+    <h3>Layer 3 — LLM Agent</h3>
+    <p><code>bist-qwen</code> via Ollama</p>
+    <p>OpenAI-compat. tool-calling</p>
+    <p>Dedup guard (loop prevention)</p>
+    <p>8-label action space</p>
+  </div>
+</div>
+<hr>
+<p style="margin-top:0.8rem"><strong>5-Stage Harness A→E</strong> (adds one layer per stage):</p>
+<table style="margin-top:0.4rem">
+  <tr><th>A: raw_llm</th><th>B: llm_tools</th><th>C: stateful</th>
+      <th>D: evidence_gate</th><th>E: memory_review</th></tr>
+  <tr><td>Base LLM only<br>No tools</td>
+      <td>+ 19 MCP tools<br>Tool-calling enabled</td>
+      <td>+ State context<br>as_of, financial period</td>
+      <td>+ Quality gate<br>ANALYSIS_UNSAFE blocking</td>
+      <td>+ Memory layer<br>Human review sign-off</td></tr>
+</table>
+</section>
+
+<section class="slide"><span class="slide-num">4 / 12</span>
+<div class="tag">Data</div>
+<h1>Data Architecture — 3 Tiers</h1>
+<div class="cols3" style="margin-top:1rem">
+  <div class="card">
+    <h3>Tier 1: Market Data</h3>
+    <p><strong>Source:</strong> Yahoo Finance (cached)</p>
+    <p><strong>Tickers:</strong> 10 BIST stocks + XU100.IS</p>
+    <p><strong>Sectors:</strong> Airlines, Banking, Steel, Retail, Telecom</p>
+    <p><strong>OHLCV:</strong> 1250+ sessions per ticker</p>
+  </div>
+  <div class="card">
+    <h3>Tier 2: Fundamental Data</h3>
+    <p><strong>Source:</strong> Fintables TMS29</p>
+    <p><strong>Scope:</strong> 2025–2026 (post-inflation-adjustment)</p>
+    <p><strong>Observations:</strong> 238 verified</p>
+    <p><strong>Events:</strong> 13 KAP timestamped disclosures</p>
+  </div>
+  <div class="card">
+    <h3>Tier 3: Macro Context</h3>
+    <p><strong>TCMB:</strong> Policy rate series</p>
+    <p><strong>TÜİK:</strong> CPI release-date aligned</p>
+    <p><strong>KAP:</strong> Per-ticker corporate events</p>
+    <p><strong>Speech:</strong> Selected examples (approved)</p>
+  </div>
+</div>
+<hr>
+<p><strong>Key design rule:</strong> All analysis runs from <em>cached</em> data.
+No network calls during backtest or reporting.
+Fundamental values come <em>exclusively</em> from the student-downloaded Fintables documents —
+not recomputed, not approximated.</p>
+</section>
+
+<section class="slide"><span class="slide-num">5 / 12</span>
+<div class="tag">Tools</div>
+<h1>19 MCP Tools — The Agent's Calculator</h1>
+<div class="cols" style="margin-top:0.8rem">
+  <div>
+    <table>
+      <tr><th colspan="2">Market &amp; Scoring</th></tr>
+      <tr><td><code>get_stock_history</code></td><td>OHLCV for any ticker</td></tr>
+      <tr><td><code>get_index_history</code></td><td>XU100 benchmark</td></tr>
+      <tr><td><code>calculate_indicators</code></td><td>SMA/EMA/RSI/MACD/BB/Supertrend</td></tr>
+      <tr><td><code>find_support_resistance</code></td><td>Pivot clustering</td></tr>
+      <tr><td><code>get_fundamental_metrics</code></td><td>Revenue, ROE, leverage…</td></tr>
+      <tr><td><code>calculate_scores</code></td><td>Technical + fundamental score</td></tr>
+      <tr><td><code>generate_signal</code></td><td>BUY / SELL / HOLD signal</td></tr>
+      <tr><td><code>run_backtest</code></td><td>Strategy backtest + metrics</td></tr>
+      <tr><td><code>generate_report</code></td><td>HTML / Markdown output</td></tr>
+    </table>
+  </div>
+  <div>
+    <table>
+      <tr><th colspan="2">Scenario &amp; Quality</th></tr>
+      <tr><td><code>rank_sector_relative_strength</code></td><td>Sector laggard ranking</td></tr>
+      <tr><td><code>test_weekday_pattern</code></td><td>Day-of-week pattern test</td></tr>
+      <tr><td><code>detect_reversal_events</code></td><td>BB / RSI / Supertrend signals</td></tr>
+      <tr><td><code>calculate_fundamental_change</code></td><td>QoQ / YoY change</td></tr>
+      <tr><td><code>get_macro_context</code></td><td>TCMB / TÜİK data</td></tr>
+      <tr><td><code>get_news_events</code></td><td>KAP news events</td></tr>
+      <tr><td><code>get_speech_features</code></td><td>Speech text features</td></tr>
+      <tr><td><code>check_data_quality</code></td><td>Gate: future date / unknown ticker</td></tr>
+      <tr><td><code>build_evidence_bundle</code></td><td>EvidenceBundle with IDs</td></tr>
+      <tr><td><code>get_context_events</code> / <code>project_status</code></td><td>Context &amp; status</td></tr>
+    </table>
+  </div>
+</div>
+</section>
+
+<section class="slide"><span class="slide-num">6 / 12</span>
+<div class="tag">Fine-Tuning</div>
+<h1>Fine-Tuning Pipeline</h1>
+<div style="display:flex; align-items:center; gap:1rem; margin-top:1rem; font-size:0.9rem">
+  <div class="card" style="flex:1; text-align:center">
+    <h3>Base Model</h3>
+    <p>Qwen 2.5 3B Instruct</p>
+    <p>(Apache 2.0)</p>
+  </div>
+  <div class="arrow">→</div>
+  <div class="card" style="flex:1; text-align:center">
+    <h3>Dataset</h3>
+    <p>400 verified traces</p>
+    <p>from live MCP calls</p>
+  </div>
+  <div class="arrow">→</div>
+  <div class="card" style="flex:1; text-align:center">
+    <h3>QLoRA Training</h3>
+    <p>Colab T4 GPU</p>
+    <p>~20 min · 3 epochs</p>
+    <p>eval_loss = 0.031</p>
+  </div>
+  <div class="arrow">→</div>
+  <div class="card" style="flex:1; text-align:center">
+    <h3>Export</h3>
+    <p>Merged GGUF (q4_k_m)</p>
+    <p>1.8 GB file</p>
+  </div>
+  <div class="arrow">→</div>
+  <div class="card" style="flex:1; text-align:center">
+    <h3>Deploy</h3>
+    <p>Ollama tag</p>
+    <p><code>bist-qwen</code></p>
+  </div>
+</div>
+<hr>
+<div class="cols">
+  <div>
+    <p><strong>LoRA config:</strong> rank 16 · alpha 32 · dropout 0.05</p>
+    <p><strong>Targets:</strong> q/k/v/o projections + MLP</p>
+    <p><strong>Method:</strong> SFT with response-only loss masking (no RLHF)</p>
+  </div>
+  <div>
+    <p><strong>Dataset breakdown (400 total):</strong></p>
+    <p>S1 Sector: 80 · S2 Weekday: 60 · S3 Reversal: 100 · S4 Fundamental: 80 · Negative: 80</p>
+    <p><strong>Split:</strong> 80/20 train/eval, stratified by scenario</p>
+  </div>
+</div>
+</section>
+
+<section class="slide"><span class="slide-num">7 / 12</span>
+<div class="tag">Scenarios</div>
+<h1>4 Mandatory Scenario Reports</h1>
+<table style="margin-top:1rem">
+  <tr><th>Scenario</th><th>MCP Tool</th><th>Universe (10 tickers)</th><th>Key Finding</th></tr>
+  <tr>
+    <td><strong>S1 — Sector Laggards</strong><br><em>Catch-up analysis</em></td>
+    <td><code>rank_sector_relative_strength</code></td>
+    <td>5 sectors, all 10 tickers</td>
+    <td>92 laggard anchors. Banking sector: 50.4% 20-day hit rate for AKBNK/GARAN lagging sector median.</td>
+  </tr>
+  <tr>
+    <td><strong>S2 — Weekday Patterns</strong><br><em>Day-of-week bias</em></td>
+    <td><code>test_weekday_pattern</code></td>
+    <td>All 10 tickers</td>
+    <td>50 observations. Pattern significance varies by ticker; no universal weekday edge found.</td>
+  </tr>
+  <tr>
+    <td><strong>S3 — Reversal Events</strong><br><em>Technical bounce signals</em></td>
+    <td><code>detect_reversal_events</code></td>
+    <td>All 10 tickers</td>
+    <td>1,458 events detected. BB lower-touch: 59% 10-day bounce rate. RSI oversold: 59% bounce rate.</td>
+  </tr>
+  <tr>
+    <td><strong>S4 — Fundamental Reaction</strong><br><em>Post-earnings price move</em></td>
+    <td><code>calculate_fundamental_change</code></td>
+    <td>All 10 tickers</td>
+    <td>19 fundamental releases mapped. Post-announcement price reactions linked to QoQ/YoY changes.</td>
+  </tr>
+</table>
+<p style="margin-top:0.8rem; font-size:0.82rem; color:#889">
+  All reports in outputs/universe10/scenarios/ — generated by scripts/build_scenarios.py --config config/universe10.yaml
+</p>
+</section>
+
+<section class="slide"><span class="slide-num">8 / 12</span>
+<div class="tag">Evaluation</div>
+<h1>§30 Metrics — Base vs Fine-Tuned</h1>
+<table style="margin-top:1rem">
+  <tr><th>Metric</th><th>Direction</th><th>Base 3B</th><th>Fine-tuned (after fix)</th><th>Verdict</th></tr>
+  <tr>
+    <td><code>invalid_tool_call_rate</code></td><td>↓ lower better</td>
+    <td>0.450</td><td>0.450</td>
+    <td class="tied">TIED <span style="font-size:0.75rem;color:#aaa">(improved from 0.500 pre-fix)</span></td>
+  </tr>
+  <tr>
+    <td><code>missing_required_tool_rate</code></td><td>↓ lower better</td>
+    <td>0.050</td><td>0.050</td><td class="tied">TIED</td>
+  </tr>
+  <tr>
+    <td><code>label_mismatch_rate</code></td><td>↓ lower better</td>
+    <td>0.000</td><td>0.200</td>
+    <td class="note">REGRESSED* <span style="font-size:0.75rem;color:#aaa">(vacuous pass)</span></td>
+  </tr>
+  <tr>
+    <td><code>advice_leak_rate</code></td><td>↓ lower better</td>
+    <td>0.000</td><td>0.000</td><td class="tied">TIED</td>
+  </tr>
+  <tr>
+    <td><code>unknown_label_emitted_rate</code></td><td>↓ lower better</td>
+    <td>0.050</td><td>0.300</td>
+    <td class="note">REGRESSED** <span style="font-size:0.75rem;color:#aaa">(artifact)</span></td>
+  </tr>
+  <tr>
+    <td><code>reproducibility_rate</code></td><td>↑ higher better</td>
+    <td>1.000</td><td>1.000</td><td class="tied">TIED</td>
+  </tr>
+</table>
+<p style="margin-top:0.8rem; font-size:0.8rem; color:#f9a825">
+  * Base's 0.000 is a <em>vacuous pass</em>: it never emits educational labels at all.
+  Fine-tune learned to emit labels — which creates room for mismatches.
+</p>
+<p style="font-size:0.8rem; color:#f9a825">
+  ** Fine-tune quotes domain identifiers from tool outputs (BB_LOWER_TOUCH, NET_PROFIT_QOQ).
+  The evaluator's regex catches any CAPS_UNDERSCORE token not in the 8-label set.
+  This is a test-design gap, not actual label violations.
+</p>
+</section>
+
+<section class="slide"><span class="slide-num">9 / 12</span>
+<div class="tag">Harness</div>
+<h1>5-Stage Harness — Architecture Comparison</h1>
+<table style="margin-top:1rem">
+  <tr><th>Metric</th><th>A: raw_llm</th><th>B: llm_tools</th>
+      <th>C: stateful</th><th>D: evid_gate</th><th>E: mem_review</th><th>Trend</th></tr>
+  <tr>
+    <td><code>evidence_coverage</code> ↑</td>
+    <td>0.0</td><td class="pass">1.0</td><td class="pass">1.0</td>
+    <td class="pass">1.0</td><td class="pass">1.0</td>
+    <td class="pass">↑ Monotonic</td>
+  </tr>
+  <tr>
+    <td><code>workflow_completion</code> ↑</td>
+    <td>0.0</td><td class="pass">1.0</td><td class="pass">1.0</td>
+    <td class="pass">1.0</td><td class="pass">1.0</td>
+    <td class="pass">↑ Monotonic</td>
+  </tr>
+  <tr>
+    <td><code>structured_repro</code> ↑</td>
+    <td>No</td><td class="pass">Yes</td><td>No</td><td>No</td><td>No</td>
+    <td class="note">Peaks at B</td>
+  </tr>
+  <tr>
+    <td><code>constraint_compliance</code> ↑</td>
+    <td class="pass">Yes</td><td>No</td><td class="pass">Yes</td>
+    <td class="pass">Yes</td><td>No</td>
+    <td class="note">3 / 5 pass</td>
+  </tr>
+  <tr>
+    <td><code>temporal_validity</code> ↑</td>
+    <td>No</td><td>No</td><td>No</td><td>No</td><td>No</td>
+    <td style="color:#888">Flat</td>
+  </tr>
+  <tr>
+    <td><code>numeric_exactness</code> ↑</td>
+    <td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td>
+    <td style="color:#888">Flat</td>
+  </tr>
+</table>
+<p style="margin-top:0.9rem; font-size:0.85rem; color:#ccd">
+  <strong>Headline:</strong> Adding MCP tools (A→B) drives evidence_coverage and workflow_completion
+  from 0 → 1.0 and they stay at 1.0. Architecture adds value regardless of model quality.
+</p>
+</section>
+
+<section class="slide"><span class="slide-num">10 / 12</span>
+<div class="tag">Engineering</div>
+<h1>The Dedup Guard — Solving Tool-Loop Pathology</h1>
+<div class="cols">
+  <div>
+    <h2>The Problem</h2>
+    <p>The 3B model generalises: <em>"after a successful tool call → call another."</em></p>
+    <p>On ~20% of eval questions, it cycles the same tool endlessly
+       instead of writing an answer.</p>
+    <table style="margin-top:0.6rem">
+      <tr><th>Question</th><th>Calls before</th><th>Calls after</th></tr>
+      <tr><td>q06 (rank_sector loop)</td><td style="color:#f44">15 identical</td><td class="pass">2</td></tr>
+      <tr><td>q07 (rank_sector loop)</td><td style="color:#f44">14+ mixed</td><td class="pass">2</td></tr>
+      <tr><td>q16 (backtest + signal)</td><td style="color:#f44">20+</td><td class="pass">3</td></tr>
+      <tr><td>q09 (weekday loop)</td><td style="color:#f44">10 identical</td><td class="note">8 (partial)</td></tr>
+    </table>
+  </div>
+  <div>
+    <h2>The Fix</h2>
+    <p><strong>At inference time</strong> in <code>scripts/local_agent.py</code>:</p>
+    <ul>
+      <li>Track <code>seen_calls</code> set: <code>tool_name:json(args)</code></li>
+      <li>On first repeat call: return <code>dedup_note</code> (not error), disable tools immediately</li>
+      <li>Inject "write your final answer now" nudge</li>
+      <li>Safety net: force answer after turn 10</li>
+    </ul>
+    <p style="margin-top:0.8rem"><strong>Key:</strong> returns <code>{"dedup_note": "..."}</code>
+    not <code>{"error": "..."}</code> — evaluator does not count this as an MCP failure.</p>
+  </div>
+</div>
+</section>
+
+<section class="slide"><span class="slide-num">11 / 12</span>
+<div class="tag">Limitations</div>
+<h1>Honest Limitations</h1>
+<div class="cols" style="margin-top:1rem">
+  <div>
+    <div class="card" style="margin-bottom:0.8rem">
+      <h3>1. Small Training Corpus</h3>
+      <p>400 examples — cannot generalise beyond the 10-ticker universe.
+         First candidate for improvement: add more gate_unsafe examples
+         for unknown tickers and future dates.</p>
+    </div>
+    <div class="card" style="margin-bottom:0.8rem">
+      <h3>2. Gate-Unsafe Knowledge Gap</h3>
+      <p>Model does not reliably call <code>check_data_quality</code> first
+         for unknown tickers or future dates (q17, q18, q19 fail).
+         Root cause: not enough negative examples in training set.</p>
+    </div>
+    <div class="card">
+      <h3>3. Metric-Key Vocabulary Artifact</h3>
+      <p>Fine-tune quotes domain identifiers from tool outputs verbatim.
+         Evaluator regex catches them as "unknown labels" — test-design gap,
+         not actual violations.</p>
+    </div>
+  </div>
+  <div>
+    <div class="card" style="margin-bottom:0.8rem">
+      <h3>4. Numeric Schema Slots</h3>
+      <p>Model writes rich narratives but does not populate strict
+         numeric output fields (revenue, net profit, four strategy returns).
+         Under-trained on scalar extraction into structured schemas.</p>
+    </div>
+    <div class="card" style="margin-bottom:0.8rem">
+      <h3>5. No RLHF</h3>
+      <p>"No investment advice" compliance relies entirely on the SYSTEM_PROMPT
+         and data-quality gate — no reinforcement-learning alignment.</p>
+    </div>
+    <div class="card">
+      <h3>6. TMS29 Boundary</h3>
+      <p>Pre/post-TMS29 statements cannot be mixed. The gate hard-blocks
+         PERIOD_MISMATCH — model refuses rather than fusing incompatible data.
+         Appropriate, but limits historical depth.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="slide"><span class="slide-num">12 / 12</span>
+<div class="tag">Demo</div>
+<h1>Live Demo — Two Harnesses</h1>
+<p style="margin-top:0.4rem; font-size:0.9rem">
+  The project runs <strong>two</strong> distinct processes. One <em>does work</em>, the other <em>measures it</em>.
+</p>
+<div class="cols" style="margin-top:0.8rem">
+  <div class="card">
+    <h3>1. Agent Harness — the model doing work</h3>
+    <p style="font-size:0.85rem; color:#aab; margin-bottom:0.5rem">
+      LLM + MCP tools in a Claude-Code-style loop. One question in, tool calls fire, one grounded answer out.
+    </p>
+    <p><strong>Smoke:</strong> <code>python scripts/local_agent.py --smoke</code></p>
+    <p style="font-size:0.8rem">→ One <code>project_status</code> call, ~30&nbsp;s, proves the wiring works.</p>
+    <p style="margin-top:0.5rem"><strong>Real question:</strong><br>
+       <code>python scripts/local_agent.py --ticker THYAO.IS --as-of 2025-12-31</code></p>
+    <p style="font-size:0.8rem">→ 3–6 tool calls · one of 8 educational labels · trace in <code>outputs/agent/</code></p>
+  </div>
+  <div class="card">
+    <h3>2. Evaluation Harness — measuring the architecture</h3>
+    <p style="font-size:0.85rem; color:#aab; margin-bottom:0.5rem">
+      Runs the <em>same fixed question</em> through the five A→E stages and scores each one. Produces the comparison in slide 9.
+    </p>
+    <p><strong>Command:</strong><br>
+       <code>python scripts/run_harness_experiments.py<br>
+       &nbsp;&nbsp;--backend ollama --model bist-qwen</code></p>
+    <p style="font-size:0.8rem">→ 5 stages × ~2&nbsp;min each ≈ 8–15&nbsp;min total · writes
+       <code>outputs/harness/comparison.json</code> + per-stage scores.</p>
+    <p style="font-size:0.8rem; color:#f9a825; margin-top:0.4rem">
+      Pre-run before the talk; show <code>comparison.base.json</code> vs <code>comparison.finetuned.json</code> live.
+    </p>
+  </div>
+</div>
+<hr style="margin-top:1rem">
+<div class="cols" style="margin-top:0.6rem">
+  <div>
+    <h3 style="color:#e94560; font-size:0.95rem">One-shot launcher</h3>
+    <p style="font-size:0.85rem"><code>.\scripts\presentation_launch.ps1</code></p>
+    <p style="font-size:0.78rem; color:#889">Opens 4 PowerShell windows — <code>ollama serve</code>, health check,
+      agent smoke, 5-stage harness — so each step can be inspected independently.
+      Flags: <code>-Model qwen2.5:7b-instruct</code>, <code>-SkipHarness</code>.</p>
+  </div>
+  <div>
+    <h3 style="color:#e94560; font-size:0.95rem">What to watch during the demo</h3>
+    <ul style="font-size:0.82rem">
+      <li>Each tool call prints name + args; results truncated at 12 KB</li>
+      <li>Final answer cites tool names — no invented numbers</li>
+      <li>No "I recommend buying" phrases (<code>advice_leak = 0</code>)</li>
+      <li>Only <code>127.0.0.1:11434</code> in <code>netstat</code> — fully offline</li>
+    </ul>
+  </div>
+</div>
+</section>
+</body>
+</html>

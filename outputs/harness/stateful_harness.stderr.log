@@ -1,2 +1,7 @@
-Reading additional input from stdin...
-2026-09-27T15:22:11.903864Z  WARN codex_core::shell_snapshot: Failed to create shell snapshot for powershell: Shell snapshot not supported yet for PowerShell
+Could not parse JSON from model output. Raw text:
+<tool_call>
+{"name": "generate_signal", "arguments": {"ticker": "THYAO", "as_of": "2026-09-25", "holding": false, "entry_price": 0, "holding_sessions": 0}}
+</tool_call>
+<tool_call>
+{"name": "run_backtest", "arguments": {"start": "2025-01-01", "end": "2026-09-26"}}
+

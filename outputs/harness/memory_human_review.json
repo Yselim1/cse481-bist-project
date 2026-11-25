@@ -1,17 +1,14 @@
 {
-  "as_of": null,
-  "financial_period": null,
+  "as_of": "2026-09-25",
+  "financial_period": "2026-09-26",
   "revenue_try_million": null,
-  "net_profit_try_million": null,
-  "net_debt_try_million": null,
-  "combined_return": null,
-  "technical_return": null,
-  "buy_hold_return": null,
-  "bist100_return": null,
-  "signal_action": null,
-  "context_event_ids": [],
-  "evidence_tools": [],
-  "educational_caveat": "",
-  "investment_recommendation": null,
-  "narrative": "MAX_TURNS_EXCEEDED"
+  "net_profit_try_million": -1.37,
+  "net_debt_try_million": -1.48,
+  "combined_return": 0.6532,
+  "technical_return": 0.6119,
+  "buy_hold_return": 0.9273,
+  "bist100_return": 1.0224,
+  "signal_action": "HOLD",
+  "educational_caveat": null,
+  "investment_recommendation": null
 }

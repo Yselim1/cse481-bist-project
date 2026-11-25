@@ -51,18 +51,18 @@
       "numeric_exactness": 0.0,
       "quality_gate_pass": false,
       "stage": "llm_tools",
-      "structured_reproducibility": false,
+      "structured_reproducibility": true,
       "temporal_validity": false,
       "unsupported_tool_claims": [],
       "workflow_completion": 1.0
     },
     {
       "checks": {
-        "as_of": false,
+        "as_of": true,
         "bist100_return": false,
         "buy_hold_return": false,
         "combined_return": false,
-        "context_event": false,
+        "context_event": true,
         "financial_period": false,
         "net_debt_try_million": false,
         "net_profit_try_million": false,
@@ -70,13 +70,13 @@
         "signal_action": false,
         "technical_return": false
       },
-      "constraint_compliance": false,
+      "constraint_compliance": true,
       "evidence_coverage": 1.0,
       "missing_data_honesty": false,
       "numeric_exactness": 0.0,
       "quality_gate_pass": false,
       "stage": "stateful_harness",
-      "structured_reproducibility": true,
+      "structured_reproducibility": false,
       "temporal_validity": false,
       "unsupported_tool_claims": [],
       "workflow_completion": 1.0
@@ -95,7 +95,7 @@
         "signal_action": false,
         "technical_return": false
       },
-      "constraint_compliance": false,
+      "constraint_compliance": true,
       "evidence_coverage": 1.0,
       "missing_data_honesty": false,
       "numeric_exactness": 0.0,
@@ -108,7 +108,7 @@
     },
     {
       "checks": {
-        "as_of": false,
+        "as_of": true,
         "bist100_return": false,
         "buy_hold_return": false,
         "combined_return": false,
@@ -117,7 +117,7 @@
         "net_debt_try_million": false,
         "net_profit_try_million": false,
         "revenue_try_million": false,
-        "signal_action": false,
+        "signal_action": true,
         "technical_return": false
       },
       "constraint_compliance": false,
@@ -126,7 +126,7 @@
       "numeric_exactness": 0.0,
       "quality_gate_pass": false,
       "stage": "memory_human_review",
-      "structured_reproducibility": true,
+      "structured_reproducibility": false,
       "temporal_validity": false,
       "unsupported_tool_claims": [],
       "workflow_completion": 1.0

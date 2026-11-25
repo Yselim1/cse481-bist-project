@@ -51,7 +51,7 @@ These commands need no network or Fintables login. They regenerate outputs from 
 
 To regenerate the executed notebook and PDF, run `scripts/build_notebook.py` and then `scripts/build_pdf.py` with the same Python. The PDF reads the verified-only report and sensitivity outputs. `scripts/build_findings.py` refreshes the source audit, financial interpretation and walkthrough. Poppler is only needed for visual QA, not to create or read the report. `outputs/verification/reproduction.json` records a separate fresh-environment offline comparison of all features, annual/full metrics and daily ledgers.
 
-`scripts/package_project.py` creates `output/THYAO_Implementation_Package.zip` and `SUBMISSION_MANIFEST.json`. It includes source, cached data and deliverables; local environments, caches and authentication files are excluded. The package includes the four originals and their audit. Presentation is deferred; annual refresh, nominal TRY, small trade sample and execution limitations remain disclosed.
+`scripts/package_project.py` creates `output/THYAO_Implementation_Package.zip` and `SUBMISSION_MANIFEST.json`. It includes source, cached data and deliverables; local environments, caches and authentication files are excluded. The package includes the four originals and their audit. The 1.8 GB merged model file `training/bist_lora.gguf` and the legacy cloud-LLM runs in `outputs/harness_codex_archive/` are left out; the GGUF's hash is recorded under `external_files` in the manifest and the file is provided separately. Presentation slides are in `outputs/deliverables/`. Annual refresh, nominal TRY, small trade sample and execution limitations remain disclosed.
 
 ## Fresh setup
 
