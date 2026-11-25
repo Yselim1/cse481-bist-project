@@ -3,9 +3,9 @@
 | | |
 | --- | --- |
 | **Course** | CSE481 Engineering Economics |
-| **Team members** | [Student Name 1] ([Student ID]), [Student Name 2] ([Student ID]) |
-| **Instructor** | [Instructor Name] |
-| **Submission deadline** | [DD Month YYYY] |
+| **Team members** | Yavuz Selim Gezginci 20210808028 |
+| **Instructor** | Doç. Dr. Alper Özcan |
+| **Submission deadline** | 30.11.2026 |
 
 ## Title and question
 

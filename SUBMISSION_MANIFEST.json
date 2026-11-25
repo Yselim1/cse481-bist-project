@@ -1,5 +1,5 @@
 {
-  "created_at": "2026-11-25T09:49:11.713099+00:00",
+  "created_at": "2026-11-25T09:52:14.261019+00:00",
   "external_files": {
     "training/bist_lora.gguf": {
       "bytes": 1929902688,
@@ -333,8 +333,8 @@
       "sha256": "dddadea4526f429951edf369809a08154445d496cbbfa645517025a786f9628b"
     },
     "docs/PROPOSAL.md": {
-      "bytes": 3209,
-      "sha256": "6f947783ca9c1b10865ec2b7086ecb95dfd98f0fffc7f221d07445d8bdcc33cb"
+      "bytes": 3177,
+      "sha256": "8ebffc44fed5d0cb3066b8616bde4d7417523889864239ad2f5189b1590c8fd9"
     },
     "docs/THYAO_PROJECT_COMPLETE_GUIDE.md": {
       "bytes": 75811,
