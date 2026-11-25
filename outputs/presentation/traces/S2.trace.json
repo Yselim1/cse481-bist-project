@@ -1,0 +1,464 @@
+{
+  "schema_version": "bist-execution-trace/1",
+  "run_id": "1e1146a4-6c89-484e-b259-e51fbe98ab6f",
+  "scenario_id": "S2",
+  "started_at": "2026-11-25T16:29:41.275+00:00",
+  "finished_at": "2026-11-25T16:30:11.726+00:00",
+  "wall_time_s": 30.452,
+  "model": {
+    "name": "bist-qwen",
+    "endpoint": "http://localhost:11434/v1",
+    "ollama_version": "0.40.16",
+    "digest": "03815952dddc6ff1489e9910c93a872c32be7f09095ffa09c810065f67b66b72",
+    "size_bytes": 1929903359,
+    "modified_at": "2026-11-25T19:13:21.6186539+03:00",
+    "family": "qwen2",
+    "parameter_size": "3.1B",
+    "quantization_level": "Q4_K_M",
+    "format": "gguf",
+    "modelfile_parameters": "top_p                          0.9\nnum_ctx                        65536\ntemperature                    0",
+    "modelfile_sha256": "c7d4eab0ee20daca5cd1bcb148a5991550602e6e48594be4498d69d9acd87dcc"
+  },
+  "sampling": {
+    "temperature": 0.0,
+    "seed": 17,
+    "max_tokens": 1536,
+    "top_p": "0.9",
+    "num_ctx": "65536",
+    "endpoint": "http://localhost:11434/v1/chat/completions"
+  },
+  "harness": {
+    "script": "scripts/local_agent.py",
+    "config_file": "config/universe_live.yaml",
+    "max_turns": 10,
+    "force_answer_after": 10,
+    "tool_result_char_cap": 4500,
+    "tool_protocol": "training_format (no schemas sent; <tool_call> text parsed, as in the fine-tuning data)",
+    "tools_offered": [
+      "project_status",
+      "get_context_events",
+      "get_stock_history",
+      "calculate_indicators",
+      "find_support_resistance",
+      "get_fundamental_metrics",
+      "calculate_scores",
+      "run_backtest",
+      "generate_signal",
+      "generate_report",
+      "get_index_history",
+      "detect_reversal_events",
+      "rank_sector_relative_strength",
+      "test_weekday_pattern",
+      "calculate_fundamental_change",
+      "get_macro_context",
+      "get_news_events",
+      "get_speech_features",
+      "check_data_quality",
+      "build_evidence_bundle",
+      "search_knowledge_base"
+    ],
+    "git": {
+      "commit": "f052f85ddb9484da9694a3e7e53b970f03bbbaa1",
+      "dirty": true
+    },
+    "python": "3.12.14"
+  },
+  "system_prompt": "You are an academic BIST financial-analysis agent. For every claim, call a tool first: you must never invent numbers. Allowed labels are the 8 educational labels (HOLD, WATCH, INVESTIGATE, POTENTIAL_CATCH_UP_CANDIDATE, TECHNICAL_REVERSAL_CANDIDATE, FUNDAMENTAL_IMPROVEMENT_CANDIDATE, REJECT_SIGNAL, ANALYSIS_UNSAFE). When evidence is insufficient, choose INVESTIGATE or ANALYSIS_UNSAFE. Cite tool names in your reasoning. Do not give investment advice. Numeric values must come from committed_evidence entries.\n\nTool guide (pick what the question needs; pass the question's ticker and dates):\n- sector leaders/laggards, catch-up: rank_sector_relative_strength (as_of, lookback)\n- day-of-week effects: test_weekday_pattern (ticker, start, end)\n- reversal / turning-point events: detect_reversal_events (ticker, as_of, lookback<=252)\n- fundamentals and their change: get_fundamental_metrics, calculate_fundamental_change; price reaction: get_stock_history, get_news_events\n- technical state and scores: calculate_indicators, calculate_scores, generate_signal\n- dates beyond the data, unknown tickers, missing data: check_data_quality (ticker, as_of); gate_status HARD_BLOCK means the label must be ANALYSIS_UNSAFE\n- methodology, definitions, disclosures: search_knowledge_base\nApply the label_rule returned by the tool. When the tool returns a summary, sector_summary or best_family block, take the laggard/leader, highest/lowest and best values from it and use its *label_by_rule field as the label; do not re-derive them from the rows. If a tool returns an error or available=false, say the data is unavailable; never estimate it. Copy numbers exactly as the tools return them (you may round, or convert fractions to percentages).",
+  "user_prompt": "Using EREGL.IS daily returns from 2025-01-01 to 2025-12-31, is there a day-of-the-week effect? Name the weekday with the highest and the lowest mean return and say whether either is statistically significant.",
+  "user_message_sent": "Using EREGL.IS daily returns from 2025-01-01 to 2025-12-31, is there a day-of-the-week effect? Name the weekday with the highest and the lowest mean return and say whether either is statistically significant.\n\nReference context retrieved by search_knowledge_base (cite doc_id when you use it; numbers must still come from tool results):\n- [doc:financial_interpretation:01] FINANCIAL_INTERPRETATION: Findings and how to explain them (undated): **Final study:** THYAO, 2023-2025 trading; verified original annual Fintables statements; financial amounts and returns in nominal TRY. Latest annual period at 2025-12-31 is FY2024, released 2025-02-28 and usable from 2025-03-03.\n- [universe:EREGL.IS] EREGL.IS universe membership (undated): EREGL.IS belongs to the steel sector of the research universe. Sector peers: KRDMD.IS. Flat steel; commodity-cycle exposure. Benchmark index: XU100.IS.\n- [doc:decisions:01] DECISIONS: Implementation decisions (undated): Items 1-15 were recorded before the first strategy-return comparison on 15 September 2026. Items 16-20 below record the subsequent original-source correction and supersede the initial source choices in items 4-7; the initial decisions are retained as history. 1. The user selected Turkish Airlines (T...",
+  "retrieval": {
+    "tool": "search_knowledge_base",
+    "arguments": {
+      "query": "Using EREGL.IS daily returns from 2025-01-01 to 2025-12-31, is there a day-of-the-week effect? Name the weekday with the highest and the lowest mean return and say whether either is statistically significant.",
+      "top_k": 3,
+      "as_of": "2025-12-31",
+      "ticker": "EREGL.IS"
+    },
+    "step_index": 0,
+    "injected": true,
+    "injected_text": "Reference context retrieved by search_knowledge_base (cite doc_id when you use it; numbers must still come from tool results):\n- [doc:financial_interpretation:01] FINANCIAL_INTERPRETATION: Findings and how to explain them (undated): **Final study:** THYAO, 2023-2025 trading; verified original annual Fintables statements; financial amounts and returns in nominal TRY. Latest annual period at 2025-12-31 is FY2024, released 2025-02-28 and usable from 2025-03-03.\n- [universe:EREGL.IS] EREGL.IS universe membership (undated): EREGL.IS belongs to the steel sector of the research universe. Sector peers: KRDMD.IS. Flat steel; commodity-cycle exposure. Benchmark index: XU100.IS.\n- [doc:decisions:01] DECISIONS: Implementation decisions (undated): Items 1-15 were recorded before the first strategy-return comparison on 15 September 2026. Items 16-20 below record the subsequent original-source correction and supersede the initial source choices in items 4-7; the initial decisions are retained as history. 1. The user selected Turkish Airlines (T..."
+  },
+  "steps": [
+    {
+      "index": 0,
+      "turn": -1,
+      "type": "tool_call",
+      "actor": "harness",
+      "tool": "search_knowledge_base",
+      "arguments": {
+        "query": "Using EREGL.IS daily returns from 2025-01-01 to 2025-12-31, is there a day-of-the-week effect? Name the weekday with the highest and the lowest mean return and say whether either is statistically significant.",
+        "top_k": 3,
+        "as_of": "2025-12-31",
+        "ticker": "EREGL.IS"
+      },
+      "date_range": {
+        "as_of": "2025-12-31"
+      },
+      "started_at": "2026-11-25T16:29:50.040+00:00",
+      "finished_at": "2026-11-25T16:29:54.932+00:00",
+      "duration_s": 4.892,
+      "result": {
+        "content": [
+          {
+            "text": "{\n  \"ticker\": \"EREGL.IS\",\n  \"primary_ticker\": \"THYAO.IS\",\n  \"as_of\": \"2025-12-31\",\n  \"data\": {\n    \"query\": \"Using EREGL.IS daily returns from 2025-01-01 to 2025-12-31, is there a day-of-the-week effect? Name the weekday with the highest and the lowest mean return and say whether either is statistically significant.\",\n    \"hits\": [\n      {\n        \"doc_id\": \"doc:financial_interpretation:01\",\n        \"score\": 13.8426,\n        \"title\": \"FINANCIAL_INTERPRETATION: Findings and how to explain them\",\n        \"text\": \"**Final study:** THYAO, 2023-2025 trading; verified original annual Fintables statements; financial amounts and returns in nominal TRY. Latest annual period at 2025-12-31 is FY2024, released 2025-02-28 and usable from 2025-03-03.\",\n        \"source_type\": \"methodology\",\n        \"source\": \"docs/FINANCIAL_INTERPRETATION.md\",\n        \"published_at\": null,\n        \"tickers\": []\n      },\n      {\n        \"doc_id\": \"universe:EREGL.IS\",\n        \"score\": 12.1136,\n        \"title\": \"EREGL.IS universe membership\",\n        \"text\": \"EREGL.IS belongs to the steel sector of the research universe. Sector peers: KRDMD.IS. Flat steel; commodity-cycle exposure. Benchmark index: XU100.IS.\",\n        \"source_type\": \"universe_metadata\",\n        \"source\": \"config/bist100_universe.yaml\",\n        \"published_at\": null,\n        \"tickers\": [\n          \"EREGL.IS\"\n        ]\n      },\n      {\n        \"doc_id\": \"doc:decisions:01\",\n        \"score\": 10.9926,\n        \"title\": \"DECISIONS: Implementation decisions\",\n        \"text\": \"Items 1-15 were recorded before the first strategy-return comparison on 15 September 2026. Items 16-20 below record the subsequent original-source correction and supersede the initial source choices in items 4-7; the initial decisions are retained as history. 1. The user selected Turkish Airlines (THYAO.IS). Historical fundamental values remain exclusively from Fintables. Yahoo supplies stock, index and FX prices. No issuer financial values substitute for Fintables. 2. Deliver the working implementation now; milestone names describe dependencies, not eight calendar weeks. Presentation rehearsal follows implementation at the user's request. 3. Market warm-up begins 2021-01-01. Evaluation is 2023-01-01 through 2025-12-31. Report 2023 development, 2024 validation and 2025 holdout separately, each starting flat with equal capital. No parameter selection on holdout returns. 4. Initial source collection uses six annual Fintables snapshots (2020–2025). This intentionally tests an annual fundamental filter, with a 460-day age limit measured from modeled availability. It does not simulate quarterly updating. Flow and balance values retain their different period meanings. Current 2026 reports do not enter the 2023–2025 backtest. 5. Fintables USD display values are currency-converted series, not necessarily the issuer's original functional-USD statements. Comparisons use a consistent display convention; currency translation and revisions remain limitations. Valuation uses USD earnings/equity and historical USD market capitalization, so it may differ from Fintables' conventional TRY ratios. 6. The captured historical tables are today's vintages. They are all marked unverified. `retrospective` mode is an explicitly labeled exploratory reconstruction. `verified_only` mode excludes them. Neither date lagging nor passing causal-code tests proves that these current table versions existed historically. The primary original-vintage acceptance gate in the initial plan remains unmet; retrospective results must not be called a validated point-in-time strategy. 7. Verified release dates currently exist for 2023 (3 April 2024) and 2025 (4 March 2026). Other releases are explicitly assumed at 30 June of the following year, not represented as actual dates. This conservative modeling delay is a sensitivity/limitation, not proof of original availability. Improving dated Fintables provenance remains a data upgrade. 8. FAVÖK follows Fintables' published definition: gross profit plus signed general/admin and selling/distribution expenses plus depreciation; no separate R&D row is displayed. Net debt subtracts cash and current/noncurrent financial investments from both financial-debt rows. Separate airline lease cash outflows remain in the source excerpt for discussion; EBITDA is not EBITDAR. 9. Use a 4x net-debt/EBITDA score threshold as a declared airline case-study assumption because aircraft leasing makes debt substantial. It is not an industry-validated cutoff. Include a 2x variant. Growth >15%, profit growth >15%, ROE >20%, and positive P/E no higher than its prior median are the other four points. Negative comparison earnings produce an unavailable growth score rather than a misleading percentage. 10. Technical weight .60; F score at least 3/5 and combined score at least .70. The technical score includes trend, RSI, MACD, volume and proximity to causally confirmed zones. Entry requires trend and support proximity. Stop is a close-triggered 8% exit submitted for next open, not a guaranteed intraday stop. Maximum holding 40 sessions. Commission 10 bps and slippage 5 bps each side. Cash earns zero; Sharpe uses zero risk-free return, unsuitable as an inflation-adjusted performance claim. 11. Adjusted OHLC represents fractional synthetic total-return units. Preserve original prices, dividends and split fields. Do not add dividends again. This is an academic execution approximation, not an executable order simulation in whole BIST lots. Final positions are marked, not forcibly liquidated. 12. Yahoo stock and index calendars differ. Keep actual stock sessions for decisions/execution. Benchmark gaps remain missing; benchmark risk metrics use available index observations and disclose session counts. Endpoint return comparison uses the same first/last evaluation dates. Do not forward-fill an index or remove stock executions to conceal gaps. 13. Predeclare sensitivity: zero costs, 20 bps commission, combined entry .65 and .75, and debt threshold 2x. Run 2023–2024 variants without selecting a winner. Freeze the baseline throughout 2025. 14. MCP tools operate on local cached evidence, restrict symbols/dates and perform no trading. An actual authenticated Codex CLI host is the intended agent demonstrator. Mock/protocol tests alone do not satisfy the real-agent requirement. 15. No ML extension until core deliverables are verified. Team details, deadline and instructor amendments are unknown and are not invented.\",\n        \"source_type\": \"methodology\",\n        \"source\": \"docs/DECISIONS.md\",\n        \"published_at\": null,\n        \"tickers\": []\n      }\n    ]\n  },\n  \"price_currency\": \"TRY\",\n  \"fundamental_currency\": \"TRY\",\n  \"vintage_policy\": \"verified_only\",\n  \"fundamental_dataset\": \"data/processed/fintables_tms29_observations.csv\",\n  \"warnings\": [\n    \"Single user-selected stock; selection/survivorship bias; no market-wide inference.\",\n    \"Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.\",\n    \"Adjusted synthetic units; whole-lot execution and taxes not modeled.\",\n    \"BIST100 price-index basis differs from adjusted stock return basis.\",\n    \"Primary analysis uses one internally consistent post-TMS 29 basis; pre-2025 trading results are outside its evaluation window.\",\n    \"2026 is partial through the last cached session before the exclusive evaluation end.\",\n    \"KAP context is evidence for interpretation and does not alter any strategy score or order.\"\n  ],\n  \"source_document\": \"docs/DATA_SOURCES.md\",\n  \"execution_assumptions\": {\n    \"commission_bps_per_side\": 10.0,\n    \"slippage_bps_per_side\": 5.0,\n    \"initial_capital_try\": 100000.0,\n    \"signal_timing\": \"close decision, next stock-session open execution\"\n  }\n}",
+            "type": "text"
+          }
+        ],
+        "isError": false,
+        "structuredContent": {
+          "ticker": "EREGL.IS",
+          "primary_ticker": "THYAO.IS",
+          "as_of": "2025-12-31",
+          "data": {
+            "query": "Using EREGL.IS daily returns from 2025-01-01 to 2025-12-31, is there a day-of-the-week effect? Name the weekday with the highest and the lowest mean return and say whether either is statistically significant.",
+            "hits": [
+              {
+                "doc_id": "doc:financial_interpretation:01",
+                "score": 13.8426,
+                "title": "FINANCIAL_INTERPRETATION: Findings and how to explain them",
+                "text": "**Final study:** THYAO, 2023-2025 trading; verified original annual Fintables statements; financial amounts and returns in nominal TRY. Latest annual period at 2025-12-31 is FY2024, released 2025-02-28 and usable from 2025-03-03.",
+                "source_type": "methodology",
+                "source": "docs/FINANCIAL_INTERPRETATION.md",
+                "published_at": null,
+                "tickers": []
+              },
+              {
+                "doc_id": "universe:EREGL.IS",
+                "score": 12.1136,
+                "title": "EREGL.IS universe membership",
+                "text": "EREGL.IS belongs to the steel sector of the research universe. Sector peers: KRDMD.IS. Flat steel; commodity-cycle exposure. Benchmark index: XU100.IS.",
+                "source_type": "universe_metadata",
+                "source": "config/bist100_universe.yaml",
+                "published_at": null,
+                "tickers": [
+                  "EREGL.IS"
+                ]
+              },
+              {
+                "doc_id": "doc:decisions:01",
+                "score": 10.9926,
+                "title": "DECISIONS: Implementation decisions",
+                "text": "Items 1-15 were recorded before the first strategy-return comparison on 15 September 2026. Items 16-20 below record the subsequent original-source correction and supersede the initial source choices in items 4-7; the initial decisions are retained as history. 1. The user selected Turkish Airlines (THYAO.IS). Historical fundamental values remain exclusively from Fintables. Yahoo supplies stock, index and FX prices. No issuer financial values substitute for Fintables. 2. Deliver the working implementation now; milestone names describe dependencies, not eight calendar weeks. Presentation rehearsal follows implementation at the user's request. 3. Market warm-up begins 2021-01-01. Evaluation is 2023-01-01 through 2025-12-31. Report 2023 development, 2024 validation and 2025 holdout separately, each starting flat with equal capital. No parameter selection on holdout returns. 4. Initial source collection uses six annual Fintables snapshots (2020–2025). This intentionally tests an annual fundamental filter, with a 460-day age limit measured from modeled availability. It does not simulate quarterly updating. Flow and balance values retain their different period meanings. Current 2026 reports do not enter the 2023–2025 backtest. 5. Fintables USD display values are currency-converted series, not necessarily the issuer's original functional-USD statements. Comparisons use a consistent display convention; currency translation and revisions remain limitations. Valuation uses USD earnings/equity and historical USD market capitalization, so it may differ from Fintables' conventional TRY ratios. 6. The captured historical tables are today's vintages. They are all marked unverified. `retrospective` mode is an explicitly labeled exploratory reconstruction. `verified_only` mode excludes them. Neither date lagging nor passing causal-code tests proves that these current table versions existed historically. The primary original-vintage acceptance gate in the initial plan remains unmet; retrospective results must not be called a validated point-in-time strategy. 7. Verified release dates currently exist for 2023 (3 April 2024) and 2025 (4 March 2026). Other releases are explicitly assumed at 30 June of the following year, not represented as actual dates. This conservative modeling delay is a sensitivity/limitation, not proof of original availability. Improving dated Fintables provenance remains a data upgrade. 8. FAVÖK follows Fintables' published definition: gross profit plus signed general/admin and selling/distribution expenses plus depreciation; no separate R&D row is displayed. Net debt subtracts cash and current/noncurrent financial investments from both financial-debt rows. Separate airline lease cash outflows remain in the source excerpt for discussion; EBITDA is not EBITDAR. 9. Use a 4x net-debt/EBITDA score threshold as a declared airline case-study assumption because aircraft leasing makes debt substantial. It is not an industry-validated cutoff. Include a 2x variant. Growth >15%, profit growth >15%, ROE >20%, and positive P/E no higher than its prior median are the other four points. Negative comparison earnings produce an unavailable growth score rather than a misleading percentage. 10. Technical weight .60; F score at least 3/5 and combined score at least .70. The technical score includes trend, RSI, MACD, volume and proximity to causally confirmed zones. Entry requires trend and support proximity. Stop is a close-triggered 8% exit submitted for next open, not a guaranteed intraday stop. Maximum holding 40 sessions. Commission 10 bps and slippage 5 bps each side. Cash earns zero; Sharpe uses zero risk-free return, unsuitable as an inflation-adjusted performance claim. 11. Adjusted OHLC represents fractional synthetic total-return units. Preserve original prices, dividends and split fields. Do not add dividends again. This is an academic execution approximation, not an executable order simulation in whole BIST lots. Final positions are marked, not forcibly liquidated. 12. Yahoo stock and index calendars differ. Keep actual stock sessions for decisions/execution. Benchmark gaps remain missing; benchmark risk metrics use available index observations and disclose session counts. Endpoint return comparison uses the same first/last evaluation dates. Do not forward-fill an index or remove stock executions to conceal gaps. 13. Predeclare sensitivity: zero costs, 20 bps commission, combined entry .65 and .75, and debt threshold 2x. Run 2023–2024 variants without selecting a winner. Freeze the baseline throughout 2025. 14. MCP tools operate on local cached evidence, restrict symbols/dates and perform no trading. An actual authenticated Codex CLI host is the intended agent demonstrator. Mock/protocol tests alone do not satisfy the real-agent requirement. 15. No ML extension until core deliverables are verified. Team details, deadline and instructor amendments are unknown and are not invented.",
+                "source_type": "methodology",
+                "source": "docs/DECISIONS.md",
+                "published_at": null,
+                "tickers": []
+              }
+            ]
+          },
+          "price_currency": "TRY",
+          "fundamental_currency": "TRY",
+          "vintage_policy": "verified_only",
+          "fundamental_dataset": "data/processed/fintables_tms29_observations.csv",
+          "warnings": [
+            "Single user-selected stock; selection/survivorship bias; no market-wide inference.",
+            "Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.",
+            "Adjusted synthetic units; whole-lot execution and taxes not modeled.",
+            "BIST100 price-index basis differs from adjusted stock return basis.",
+            "Primary analysis uses one internally consistent post-TMS 29 basis; pre-2025 trading results are outside its evaluation window.",
+            "2026 is partial through the last cached session before the exclusive evaluation end.",
+            "KAP context is evidence for interpretation and does not alter any strategy score or order."
+          ],
+          "source_document": "docs/DATA_SOURCES.md",
+          "execution_assumptions": {
+            "commission_bps_per_side": 10.0,
+            "slippage_bps_per_side": 5.0,
+            "initial_capital_try": 100000.0,
+            "signal_timing": "close decision, next stock-session open execution"
+          }
+        }
+      },
+      "result_sha256": "aa467f8828f7ea78dff3abf6f73fd9bc0cc93af39cbfec6679f8e68e4f002f16",
+      "truncated_for_model": false
+    },
+    {
+      "index": 1,
+      "turn": 0,
+      "type": "assistant",
+      "started_at": "2026-11-25T16:29:54.932+00:00",
+      "finished_at": "2026-11-25T16:29:59.488+00:00",
+      "duration_s": 4.556,
+      "content": "<tool_call>\n{\"name\": \"test_weekday_pattern\", \"arguments\": {\"ticker\": \"EREGL.IS\", \"start\": \"2025-01-01\", \"end\": \"2025-12-31\"}}\n</tool_call>",
+      "tool_calls": [
+        {
+          "name": "test_weekday_pattern",
+          "arguments": "{\"ticker\": \"EREGL.IS\", \"start\": \"2025-01-01\", \"end\": \"2025-12-31\"}"
+        }
+      ],
+      "finish_reason": "stop",
+      "usage": {
+        "prompt_tokens": 764,
+        "prompt_tokens_details": {
+          "cached_tokens": 408
+        },
+        "completion_tokens": 54,
+        "total_tokens": 818
+      },
+      "system_fingerprint": "fp_ollama"
+    },
+    {
+      "index": 2,
+      "turn": 0,
+      "type": "tool_call",
+      "actor": "model",
+      "tool": "test_weekday_pattern",
+      "arguments": {
+        "ticker": "EREGL.IS",
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "date_range": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "started_at": "2026-11-25T16:29:59.488+00:00",
+      "finished_at": "2026-11-25T16:29:59.583+00:00",
+      "duration_s": 0.095,
+      "result": {
+        "content": [
+          {
+            "text": "{\n  \"ticker\": \"EREGL.IS\",\n  \"primary_ticker\": \"THYAO.IS\",\n  \"as_of\": \"2025-12-31\",\n  \"window\": {\n    \"start\": \"2025-01-01\",\n    \"end_exclusive\": \"2025-12-31\",\n    \"sessions\": 250\n  },\n  \"label_rule\": {\n    \"metric\": \"p_value_uncorrected\",\n    \"screen_p_value\": 0.1,\n    \"weekdays_tested\": 5,\n    \"bonferroni_p_threshold\": 0.01,\n    \"rule\": \"5 weekdays are tested, so a Bonferroni-corrected 5% test needs p < 0.01. p_value_uncorrected < 0.10 -> INVESTIGATE (screen only, not significant); otherwise WATCH\"\n  },\n  \"summary\": {\n    \"highest_mean_weekday\": \"Mon\",\n    \"highest_mean\": 0.00294,\n    \"highest_mean_p_value\": 0.367,\n    \"highest_mean_count\": 49,\n    \"lowest_mean_weekday\": \"Wed\",\n    \"lowest_mean\": -0.004426,\n    \"lowest_mean_p_value\": 0.257,\n    \"lowest_mean_count\": 49,\n    \"smallest_p_weekday\": \"Thu\",\n    \"smallest_p_value\": 0.238,\n    \"any_below_screen_p\": false,\n    \"any_below_bonferroni_p\": false,\n    \"label_by_rule\": \"WATCH\"\n  },\n  \"data\": [\n    {\n      \"index\": 0,\n      \"weekday\": \"Mon\",\n      \"count\": 49,\n      \"mean\": 0.0029401262437718143,\n      \"median\": -0.0006698076822221344,\n      \"win_rate\": 0.46938775510204084,\n      \"t_statistic\": 0.9022669688727818,\n      \"p_value_uncorrected\": 0.3669150676369436\n    },\n    {\n      \"index\": 1,\n      \"weekday\": \"Tue\",\n      \"count\": 50,\n      \"mean\": 0.0015968632197539167,\n      \"median\": 0.001409000713249231,\n      \"win_rate\": 0.54,\n      \"t_statistic\": 0.5691990416620839,\n      \"p_value_uncorrected\": 0.5692210709550422\n    },\n    {\n      \"index\": 2,\n      \"weekday\": \"Wed\",\n      \"count\": 49,\n      \"mean\": -0.0044260847654569195,\n      \"median\": -0.0020436434622806976,\n      \"win_rate\": 0.3673469387755102,\n      \"t_statistic\": -1.1343984553719573,\n      \"p_value_uncorrected\": 0.2566274467089986\n    },\n    {\n      \"index\": 3,\n      \"weekday\": \"Thu\",\n      \"count\": 51,\n      \"mean\": 0.00255656911721911,\n      \"median\": 0.0,\n      \"win_rate\": 0.49019607843137253,\n      \"t_statistic\": 1.179554066843326,\n      \"p_value_uncorrected\": 0.23817762089319167\n    },\n    {\n      \"index\": 4,\n      \"weekday\": \"Fri\",\n      \"count\": 51,\n      \"mean\": -0.0018292154782898167,\n      \"median\": -0.0008374602639362738,\n      \"win_rate\": 0.45098039215686275,\n      \"t_statistic\": -0.5200832163255787,\n      \"p_value_uncorrected\": 0.6030055758160879\n    }\n  ],\n  \"price_currency\": \"TRY\",\n  \"fundamental_currency\": \"TRY\",\n  \"vintage_policy\": \"verified_only\",\n  \"fundamental_dataset\": \"data/processed/fintables_tms29_observations.csv\",\n  \"warnings\": [\n    \"Single user-selected stock; selection/survivorship bias; no market-wide inference.\",\n    \"Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.\",\n    \"Adjusted synthetic units; whole-lot execution and taxes not modeled.\",\n    \"BIST100 price-index basis differs from adjusted stock return basis.\",\n    \"Primary analysis uses one internally consistent post-TMS 29 basis; pre-2025 trading results are outside its evaluation window.\",\n    \"2026 is partial through the last cached session before the exclusive evaluation end.\",\n    \"KAP context is evidence for interpretation and does not alter any strategy score or order.\"\n  ],\n  \"source_document\": \"docs/DATA_SOURCES.md\",\n  \"execution_assumptions\": {\n    \"commission_bps_per_side\": 10.0,\n    \"slippage_bps_per_side\": 5.0,\n    \"initial_capital_try\": 100000.0,\n    \"signal_timing\": \"close decision, next stock-session open execution\"\n  }\n}",
+            "type": "text"
+          }
+        ],
+        "isError": false,
+        "structuredContent": {
+          "ticker": "EREGL.IS",
+          "primary_ticker": "THYAO.IS",
+          "as_of": "2025-12-31",
+          "window": {
+            "start": "2025-01-01",
+            "end_exclusive": "2025-12-31",
+            "sessions": 250
+          },
+          "label_rule": {
+            "metric": "p_value_uncorrected",
+            "screen_p_value": 0.1,
+            "weekdays_tested": 5,
+            "bonferroni_p_threshold": 0.01,
+            "rule": "5 weekdays are tested, so a Bonferroni-corrected 5% test needs p < 0.01. p_value_uncorrected < 0.10 -> INVESTIGATE (screen only, not significant); otherwise WATCH"
+          },
+          "summary": {
+            "highest_mean_weekday": "Mon",
+            "highest_mean": 0.00294,
+            "highest_mean_p_value": 0.367,
+            "highest_mean_count": 49,
+            "lowest_mean_weekday": "Wed",
+            "lowest_mean": -0.004426,
+            "lowest_mean_p_value": 0.257,
+            "lowest_mean_count": 49,
+            "smallest_p_weekday": "Thu",
+            "smallest_p_value": 0.238,
+            "any_below_screen_p": false,
+            "any_below_bonferroni_p": false,
+            "label_by_rule": "WATCH"
+          },
+          "data": [
+            {
+              "index": 0,
+              "weekday": "Mon",
+              "count": 49,
+              "mean": 0.0029401262437718143,
+              "median": -0.0006698076822221344,
+              "win_rate": 0.46938775510204084,
+              "t_statistic": 0.9022669688727818,
+              "p_value_uncorrected": 0.3669150676369436
+            },
+            {
+              "index": 1,
+              "weekday": "Tue",
+              "count": 50,
+              "mean": 0.0015968632197539167,
+              "median": 0.001409000713249231,
+              "win_rate": 0.54,
+              "t_statistic": 0.5691990416620839,
+              "p_value_uncorrected": 0.5692210709550422
+            },
+            {
+              "index": 2,
+              "weekday": "Wed",
+              "count": 49,
+              "mean": -0.0044260847654569195,
+              "median": -0.0020436434622806976,
+              "win_rate": 0.3673469387755102,
+              "t_statistic": -1.1343984553719573,
+              "p_value_uncorrected": 0.2566274467089986
+            },
+            {
+              "index": 3,
+              "weekday": "Thu",
+              "count": 51,
+              "mean": 0.00255656911721911,
+              "median": 0.0,
+              "win_rate": 0.49019607843137253,
+              "t_statistic": 1.179554066843326,
+              "p_value_uncorrected": 0.23817762089319167
+            },
+            {
+              "index": 4,
+              "weekday": "Fri",
+              "count": 51,
+              "mean": -0.0018292154782898167,
+              "median": -0.0008374602639362738,
+              "win_rate": 0.45098039215686275,
+              "t_statistic": -0.5200832163255787,
+              "p_value_uncorrected": 0.6030055758160879
+            }
+          ],
+          "price_currency": "TRY",
+          "fundamental_currency": "TRY",
+          "vintage_policy": "verified_only",
+          "fundamental_dataset": "data/processed/fintables_tms29_observations.csv",
+          "warnings": [
+            "Single user-selected stock; selection/survivorship bias; no market-wide inference.",
+            "Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.",
+            "Adjusted synthetic units; whole-lot execution and taxes not modeled.",
+            "BIST100 price-index basis differs from adjusted stock return basis.",
+            "Primary analysis uses one internally consistent post-TMS 29 basis; pre-2025 trading results are outside its evaluation window.",
+            "2026 is partial through the last cached session before the exclusive evaluation end.",
+            "KAP context is evidence for interpretation and does not alter any strategy score or order."
+          ],
+          "source_document": "docs/DATA_SOURCES.md",
+          "execution_assumptions": {
+            "commission_bps_per_side": 10.0,
+            "slippage_bps_per_side": 5.0,
+            "initial_capital_try": 100000.0,
+            "signal_timing": "close decision, next stock-session open execution"
+          }
+        }
+      },
+      "result_sha256": "f632cbe059f297deb775acac5714b4b611722920d604130207380087bbb71781",
+      "truncated_for_model": false
+    },
+    {
+      "index": 3,
+      "turn": 1,
+      "type": "assistant",
+      "started_at": "2026-11-25T16:29:59.583+00:00",
+      "finished_at": "2026-11-25T16:30:11.723+00:00",
+      "duration_s": 12.14,
+      "content": "<final_answer>\n{\"educational_label\": \"WATCH\", \"committed_evidence_ids\": [\"test_weekday_pattern:EREGL.IS:2025-01-01:2025-12-31\"], \"explanation\": \"test_weekday_pattern for EREGL.IS, 2025-01-01 to 2025-12-31 (summary): highest Mon mean 0.002940 (n=49, uncorrected p=0.367); lowest Wed mean -0.004426 (n=49, uncorrected p=0.257). No weekday has uncorrected p below 0.1 (smallest 0.238 for Thu), so no significant weekday effect. label_rule: uncorrected p < 0.1 → INVESTIGATE, otherwise WATCH. label_by_rule: WATCH. Label: WATCH.\"}\n</final_answer>",
+      "tool_calls": [],
+      "finish_reason": "stop",
+      "usage": {
+        "prompt_tokens": 1963,
+        "prompt_tokens_details": {
+          "cached_tokens": 817
+        },
+        "completion_tokens": 216,
+        "total_tokens": 2179
+      },
+      "system_fingerprint": "fp_ollama"
+    }
+  ],
+  "tools_called": [
+    "test_weekday_pattern"
+  ],
+  "final_answer": "<final_answer>\n{\"educational_label\": \"WATCH\", \"committed_evidence_ids\": [\"test_weekday_pattern:EREGL.IS:2025-01-01:2025-12-31\"], \"explanation\": \"test_weekday_pattern for EREGL.IS, 2025-01-01 to 2025-12-31 (summary): highest Mon mean 0.002940 (n=49, uncorrected p=0.367); lowest Wed mean -0.004426 (n=49, uncorrected p=0.257). No weekday has uncorrected p below 0.1 (smallest 0.238 for Thu), so no significant weekday effect. label_rule: uncorrected p < 0.1 → INVESTIGATE, otherwise WATCH. label_by_rule: WATCH. Label: WATCH.\"}\n</final_answer>",
+  "turns_used": 2,
+  "grounding_audit": {
+    "numbers_found": 9,
+    "grounded_count": 9,
+    "ungrounded_count": 0,
+    "all_grounded": true,
+    "grounded": [
+      {
+        "text": "0.002940",
+        "value": 0.00294,
+        "decimals": 6,
+        "percent": false,
+        "is_year": false,
+        "tool_value": 0.00294,
+        "scale": 1.0,
+        "abs_match": false
+      },
+      {
+        "text": "49",
+        "value": 49.0,
+        "decimals": 0,
+        "percent": false,
+        "is_year": false,
+        "tool_value": 0.49019607843137253,
+        "scale": 100.0,
+        "abs_match": false
+      },
+      {
+        "text": "0.367",
+        "value": 0.367,
+        "decimals": 3,
+        "percent": false,
+        "is_year": false,
+        "tool_value": 0.3669150676369436,
+        "scale": 1.0,
+        "abs_match": false
+      },
+      {
+        "text": "-0.004426",
+        "value": -0.004426,
+        "decimals": 6,
+        "percent": false,
+        "is_year": false,
+        "tool_value": -0.0044260847654569195,
+        "scale": 1.0,
+        "abs_match": false
+      },
+      {
+        "text": "49",
+        "value": 49.0,
+        "decimals": 0,
+        "percent": false,
+        "is_year": false,
+        "tool_value": 0.49019607843137253,
+        "scale": 100.0,
+        "abs_match": false
+      },
+      {
+        "text": "0.257",
+        "value": 0.257,
+        "decimals": 3,
+        "percent": false,
+        "is_year": false,
+        "tool_value": 0.2566274467089986,
+        "scale": 1.0,
+        "abs_match": false
+      },
+      {
+        "text": "0.1",
+        "value": 0.1,
+        "decimals": 1,
+        "percent": false,
+        "is_year": false,
+        "tool_value": 0.1,
+        "scale": 1.0,
+        "abs_match": false
+      },
+      {
+        "text": "0.238",
+        "value": 0.238,
+        "decimals": 3,
+        "percent": false,
+        "is_year": false,
+        "tool_value": 0.238,
+        "scale": 1.0,
+        "abs_match": false
+      },
+      {
+        "text": "0.1",
+        "value": 0.1,
+        "decimals": 1,
+        "percent": false,
+        "is_year": false,
+        "tool_value": 0.1,
+        "scale": 1.0,
+        "abs_match": false
+      }
+    ],
+    "ungrounded": [],
+    "echoed_from_prompt": [],
+    "small_integers": [],
+    "years_ignored": [],
+    "evidence_values_indexed": 70,
+    "method": "src/bist_analytics/harness/grounding.py (audit only; answer never modified)"
+  },
+  "error": null
+}

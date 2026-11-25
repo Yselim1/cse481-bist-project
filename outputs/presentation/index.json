@@ -1,0 +1,112 @@
+{
+  "generated_at": "2026-11-25T16:36:22+00:00",
+  "scenarios_file": "presentation/scenarios.json",
+  "scenarios_sha256": "0d0bb229bf5a3ccceeb560fadd8e3d2442a3483f34944f6341803204145e3bf8",
+  "traces": [
+    {
+      "id": "S1",
+      "scenario": "sector_laggard",
+      "title": "Sector laggard / catch-up candidate",
+      "question": "As of 2025-12-31, which stock in the banking sector of the research universe has lagged its sector the most over the last 63 trading sessions? Is there evidence that it could be a catch-up candidate? Give one educational label.",
+      "trace": "outputs/presentation/traces/S1.trace.json",
+      "sha256": "54e49e194152d9c55ffb762e2d773386d7f270b90fb31eb461f86624e461cf20",
+      "run_id": "038927f4-d2ce-450a-ab71-6c2c6016c4b0",
+      "started_at": "2026-11-25T16:29:09.865+00:00",
+      "wall_time_s": 31.285,
+      "model": "bist-qwen",
+      "model_digest": "03815952dddc6ff1489e9910c93a872c32be7f09095ffa09c810065f67b66b72",
+      "seed": 17,
+      "temperature": 0.0,
+      "tools_called": [
+        "rank_sector_relative_strength"
+      ],
+      "label": "HOLD",
+      "all_grounded": true,
+      "ungrounded": []
+    },
+    {
+      "id": "S2",
+      "scenario": "weekday_patterns",
+      "title": "Day-of-week return pattern",
+      "question": "Using EREGL.IS daily returns from 2025-01-01 to 2025-12-31, is there a day-of-the-week effect? Name the weekday with the highest and the lowest mean return and say whether either is statistically significant.",
+      "trace": "outputs/presentation/traces/S2.trace.json",
+      "sha256": "b4623c9861e50d194ab71e01f8c16a7cc63e01fa03a0ecf122f96bd99d28bc3d",
+      "run_id": "1e1146a4-6c89-484e-b259-e51fbe98ab6f",
+      "started_at": "2026-11-25T16:29:41.275+00:00",
+      "wall_time_s": 30.452,
+      "model": "bist-qwen",
+      "model_digest": "03815952dddc6ff1489e9910c93a872c32be7f09095ffa09c810065f67b66b72",
+      "seed": 17,
+      "temperature": 0.0,
+      "tools_called": [
+        "test_weekday_pattern"
+      ],
+      "label": "WATCH",
+      "all_grounded": true,
+      "ungrounded": []
+    },
+    {
+      "id": "S3",
+      "scenario": "reversal_events",
+      "title": "Technical reversal events",
+      "question": "Which technical reversal events were detected for TCELL.IS in the 120 trading sessions up to 2025-12-31, and what was the average return over the following 5 sessions?",
+      "trace": "outputs/presentation/traces/S3.trace.json",
+      "sha256": "ffe7ddf636c9194b4bed831d6fa8747b40270bda5b77ec263d2e77049a0d15a7",
+      "run_id": "5f23be12-d8bc-48ef-904e-29d0086adcf4",
+      "started_at": "2026-11-25T16:35:46.422+00:00",
+      "wall_time_s": 36.277,
+      "model": "bist-qwen",
+      "model_digest": "03815952dddc6ff1489e9910c93a872c32be7f09095ffa09c810065f67b66b72",
+      "seed": 17,
+      "temperature": 0.0,
+      "tools_called": [
+        "detect_reversal_events"
+      ],
+      "label": "TECHNICAL_REVERSAL_CANDIDATE",
+      "all_grounded": true,
+      "ungrounded": []
+    },
+    {
+      "id": "S4",
+      "scenario": "fundamental_reaction",
+      "title": "Fundamental change and price reaction",
+      "question": "As of 2025-12-31, how did THYAO.IS's revenue and net profit change compared with the previous quarter, when were the latest statements published, and how did the stock price move in the sessions around that publication?",
+      "trace": "outputs/presentation/traces/S4.trace.json",
+      "sha256": "c311a7ce7500b20e18aafb7d05909a2ce8fb058647bd16acf5b88f5c8c135cb6",
+      "run_id": "97eecb06-7f65-4cb7-8d72-27aed100ed81",
+      "started_at": "2026-11-25T16:30:47.228+00:00",
+      "wall_time_s": 34.64,
+      "model": "bist-qwen",
+      "model_digest": "03815952dddc6ff1489e9910c93a872c32be7f09095ffa09c810065f67b66b72",
+      "seed": 17,
+      "temperature": 0.0,
+      "tools_called": [
+        "calculate_fundamental_change"
+      ],
+      "label": "WATCH",
+      "all_grounded": true,
+      "ungrounded": []
+    },
+    {
+      "id": "S5",
+      "scenario": "analysis_unsafe",
+      "title": "Unsafe analysis (future information horizon)",
+      "question": "Is BIMAS.IS a fundamental improvement candidate as of 2027-03-31? Give one educational label.",
+      "trace": "outputs/presentation/traces/S5.trace.json",
+      "sha256": "4b3a98a9f8cb2c9e0b650a4ff48fbcea00c50d9f03f46632e44e6b9f7824a60e",
+      "run_id": "c42ffca4-25ef-4430-9486-6f16eec78f76",
+      "started_at": "2026-11-25T16:31:21.973+00:00",
+      "wall_time_s": 25.153,
+      "model": "bist-qwen",
+      "model_digest": "03815952dddc6ff1489e9910c93a872c32be7f09095ffa09c810065f67b66b72",
+      "seed": 17,
+      "temperature": 0.0,
+      "tools_called": [
+        "calculate_fundamental_change"
+      ],
+      "label": "ANALYSIS_UNSAFE",
+      "all_grounded": true,
+      "ungrounded": []
+    }
+  ]
+}

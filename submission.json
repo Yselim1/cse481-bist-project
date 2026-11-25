@@ -1,0 +1,1137 @@
+{
+  "schema": "cse481-submission/1",
+  "created_at": "2026-11-25T16:37:29+00:00",
+  "project": "BIST multi-sector research agent: local fine-tuned LLM with MCP tools",
+  "course": "CSE481 Engineering Economics, Term Project 2026",
+  "group_members": [
+    "Yavuz Selim"
+  ],
+  "repository": "https://github.com/Yselim1/cse481-bist-project",
+  "git": {
+    "commit": "744929cfb3c1a9e7cae2b40e724c1da2ec58a0a2",
+    "dirty": false
+  },
+  "base_model": {
+    "name": "Qwen2.5-3B-Instruct",
+    "version": "Qwen2.5, 3B parameters, instruct",
+    "huggingface_repo": "Qwen/Qwen2.5-3B-Instruct",
+    "huggingface_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+    "training_checkpoint": "unsloth/Qwen2.5-3B-Instruct-bnb-4bit",
+    "training_checkpoint_revision": "2672b588848527e456d320c11926c794539f47d5",
+    "download_source": "https://huggingface.co/Qwen/Qwen2.5-3B-Instruct",
+    "ollama_base_tag": "qwen2.5:3b-instruct",
+    "license": "Qwen Research License (qwen2.5-3b-instruct)"
+  },
+  "adapter": {
+    "path": "training/adapter/adapter_model.safetensors",
+    "role": "lora_adapter",
+    "bytes": 119801528,
+    "sha256": "ad3716e908060dc87c3095d5a20ac9811f557cf293ead4f80a2497d143908e53",
+    "format": "safetensors",
+    "config": {
+      "path": "training/adapter/adapter_config.json",
+      "role": "lora_adapter_config",
+      "bytes": 1329,
+      "sha256": "ed4c2fa721961c851c6fe0c0fcad03fc0b169ea8050b2dbd28b63cc5f471f461"
+    },
+    "sha256_recorded_at_training": "ad3716e908060dc87c3095d5a20ac9811f557cf293ead4f80a2497d143908e53",
+    "matches_training_record": true,
+    "hyperparameters": {
+      "epochs": 3,
+      "per_device_batch": 2,
+      "grad_accum": 8,
+      "effective_batch": 16,
+      "learning_rate": 0.0002,
+      "lr_scheduler": "cosine",
+      "warmup_ratio": 0.03,
+      "lora_rank": 16,
+      "lora_alpha": 32,
+      "lora_dropout": 0.05,
+      "bias": "none",
+      "target_modules": [
+        "q_proj",
+        "k_proj",
+        "v_proj",
+        "o_proj",
+        "gate_proj",
+        "up_proj",
+        "down_proj"
+      ],
+      "max_seq_length": 4096,
+      "load_in_4bit": true,
+      "precision": "fp16",
+      "packing": false,
+      "gradient_checkpointing": "unsloth",
+      "seed": 17,
+      "chat_template": "qwen-2.5"
+    }
+  },
+  "served_model": {
+    "ollama_name": "bist-qwen",
+    "digest": "03815952dddc6ff1489e9910c93a872c32be7f09095ffa09c810065f67b66b72",
+    "quantization": "Q4_K_M",
+    "family": "qwen2",
+    "parameter_size": "3.1B",
+    "ollama_version": "0.40.16",
+    "modelfile": {
+      "path": "training/Modelfile.finetuned",
+      "role": "modelfile",
+      "bytes": 2281,
+      "sha256": "6c5667e51b83590268a85f36f387d1b30d8caf63f3aa46da71829161e5862da7"
+    },
+    "gguf": {
+      "path": "training/bist_lora.gguf",
+      "bytes": 1929902688,
+      "sha256": "b853679eef485bdc171696d4278149419ae8a662fc35cede9f06c6096d5fc839",
+      "distribution": "external (not in archive; ~1.9 GB)"
+    },
+    "relation_to_adapter": "Merged Q4_K_M GGUF exported by training/train_unsloth.py from the same in-memory model right after the adapter was saved: base + this adapter, quantized for Ollama."
+  },
+  "fine_tuning": {
+    "files": [
+      {
+        "path": "training/dataset/train.jsonl",
+        "role": "training_data",
+        "bytes": 2107057,
+        "sha256": "7ffdd4e9d96621e7505c27d51a9f70118a5dad796292ddf95e0b0d0f5e423e75",
+        "format": "jsonl"
+      },
+      {
+        "path": "training/dataset/eval.jsonl",
+        "role": "evaluation_data",
+        "bytes": 511437,
+        "sha256": "506699466aa2ab6092e98ce3a39f54ae05ad8dbbb00b65668ba9715bbf261c48",
+        "format": "jsonl"
+      },
+      {
+        "path": "training/dataset/audit.json",
+        "role": "dataset_audit",
+        "bytes": 1973,
+        "sha256": "058c1bc1155e7ec9c71f40e82b49d4b86fdcfdf0c5900aaa198d33319df8e5e1"
+      },
+      {
+        "path": "training/config/hyperparams.json",
+        "role": "hyperparameters_and_run_record",
+        "bytes": 7390,
+        "sha256": "b8c3abc89d7cc2252516a9bb5390001114e9605f256d328710422bbcfc54b575"
+      }
+    ],
+    "method": "QLoRA (4-bit base, LoRA adapters) via Unsloth + TRL SFTTrainer, loss on assistant turns only (train_on_responses_only)",
+    "results": {
+      "train_loss": 0.15990932908219596,
+      "global_steps": 60,
+      "eval": {
+        "eval_loss": 0.003235872834920883,
+        "eval_runtime": 61.108,
+        "eval_samples_per_second": 1.309,
+        "eval_steps_per_second": 0.327,
+        "epoch": 3.0
+      }
+    }
+  },
+  "rag": {
+    "knowledge_base": {
+      "path": "rag/knowledge_base.json",
+      "role": "rag_knowledge_base",
+      "bytes": 54766,
+      "sha256": "f104a0a0b9eed710aea6271654ae3abdc4588259e6632c04110250dffe52d8b8",
+      "documents": 48,
+      "source_counts": {
+        "data_provenance": 6,
+        "kap_disclosure": 13,
+        "methodology": 9,
+        "metric_definition": 2,
+        "universe_metadata": 18
+      },
+      "retrieval": {
+        "method": "BM25 (k1=1.5, b=0.75)",
+        "module": "src/bist_analytics/rag.py",
+        "point_in_time_field": "published_at"
+      }
+    },
+    "builder": {
+      "path": "scripts/build_rag_kb.py",
+      "role": "rag_builder",
+      "bytes": 7877,
+      "sha256": "81a31e7ff498d714c73f2cfd45be6c4f4836999f250c35e527356632b9433a7e"
+    },
+    "retriever": {
+      "path": "src/bist_analytics/rag.py",
+      "role": "rag_retriever",
+      "bytes": 4662,
+      "sha256": "97c52574269aab039d73e0c746c0e3e19a8d92838f05a9ffb8c0fc391b12726c"
+    },
+    "usage": "scripts/local_agent.py calls the MCP tool search_knowledge_base before the first model turn and adds the hits to the user message. The model may also call the tool itself. Documents published after the question's as_of date are filtered out."
+  },
+  "execution_traces": {
+    "count": 5,
+    "items": [
+      {
+        "path": "outputs/presentation/traces/S1.trace.json",
+        "role": "execution_trace",
+        "bytes": 51981,
+        "sha256": "54e49e194152d9c55ffb762e2d773386d7f270b90fb31eb461f86624e461cf20",
+        "scenario_id": "S1",
+        "scenario": "sector_laggard",
+        "question": "As of 2025-12-31, which stock in the banking sector of the research universe has lagged its sector the most over the last 63 trading sessions? Is there evidence that it could be a catch-up candidate? Give one educational label.",
+        "model": "bist-qwen",
+        "model_digest": "03815952dddc6ff1489e9910c93a872c32be7f09095ffa09c810065f67b66b72",
+        "seed": 17,
+        "temperature": 0.0,
+        "started_at": "2026-11-25T16:29:09.865+00:00",
+        "label": "HOLD",
+        "tools_called": [
+          "rank_sector_relative_strength"
+        ],
+        "all_grounded": true
+      },
+      {
+        "path": "outputs/presentation/traces/S2.trace.json",
+        "role": "execution_trace",
+        "bytes": 38349,
+        "sha256": "b4623c9861e50d194ab71e01f8c16a7cc63e01fa03a0ecf122f96bd99d28bc3d",
+        "scenario_id": "S2",
+        "scenario": "weekday_patterns",
+        "question": "Using EREGL.IS daily returns from 2025-01-01 to 2025-12-31, is there a day-of-the-week effect? Name the weekday with the highest and the lowest mean return and say whether either is statistically significant.",
+        "model": "bist-qwen",
+        "model_digest": "03815952dddc6ff1489e9910c93a872c32be7f09095ffa09c810065f67b66b72",
+        "seed": 17,
+        "temperature": 0.0,
+        "started_at": "2026-11-25T16:29:41.275+00:00",
+        "label": "WATCH",
+        "tools_called": [
+          "test_weekday_pattern"
+        ],
+        "all_grounded": true
+      },
+      {
+        "path": "outputs/presentation/traces/S3.trace.json",
+        "role": "execution_trace",
+        "bytes": 63222,
+        "sha256": "ffe7ddf636c9194b4bed831d6fa8747b40270bda5b77ec263d2e77049a0d15a7",
+        "scenario_id": "S3",
+        "scenario": "reversal_events",
+        "question": "Which technical reversal events were detected for TCELL.IS in the 120 trading sessions up to 2025-12-31, and what was the average return over the following 5 sessions?",
+        "model": "bist-qwen",
+        "model_digest": "03815952dddc6ff1489e9910c93a872c32be7f09095ffa09c810065f67b66b72",
+        "seed": 17,
+        "temperature": 0.0,
+        "started_at": "2026-11-25T16:35:46.422+00:00",
+        "label": "TECHNICAL_REVERSAL_CANDIDATE",
+        "tools_called": [
+          "detect_reversal_events"
+        ],
+        "all_grounded": true
+      },
+      {
+        "path": "outputs/presentation/traces/S4.trace.json",
+        "role": "execution_trace",
+        "bytes": 34105,
+        "sha256": "c311a7ce7500b20e18aafb7d05909a2ce8fb058647bd16acf5b88f5c8c135cb6",
+        "scenario_id": "S4",
+        "scenario": "fundamental_reaction",
+        "question": "As of 2025-12-31, how did THYAO.IS's revenue and net profit change compared with the previous quarter, when were the latest statements published, and how did the stock price move in the sessions around that publication?",
+        "model": "bist-qwen",
+        "model_digest": "03815952dddc6ff1489e9910c93a872c32be7f09095ffa09c810065f67b66b72",
+        "seed": 17,
+        "temperature": 0.0,
+        "started_at": "2026-11-25T16:30:47.228+00:00",
+        "label": "WATCH",
+        "tools_called": [
+          "calculate_fundamental_change"
+        ],
+        "all_grounded": true
+      },
+      {
+        "path": "outputs/presentation/traces/S5.trace.json",
+        "role": "execution_trace",
+        "bytes": 20302,
+        "sha256": "4b3a98a9f8cb2c9e0b650a4ff48fbcea00c50d9f03f46632e44e6b9f7824a60e",
+        "scenario_id": "S5",
+        "scenario": "analysis_unsafe",
+        "question": "Is BIMAS.IS a fundamental improvement candidate as of 2027-03-31? Give one educational label.",
+        "model": "bist-qwen",
+        "model_digest": "03815952dddc6ff1489e9910c93a872c32be7f09095ffa09c810065f67b66b72",
+        "seed": 17,
+        "temperature": 0.0,
+        "started_at": "2026-11-25T16:31:21.973+00:00",
+        "label": "ANALYSIS_UNSAFE",
+        "tools_called": [
+          "calculate_fundamental_change"
+        ],
+        "all_grounded": true
+      }
+    ],
+    "scenarios_file": {
+      "path": "presentation/scenarios.json",
+      "role": "scenario_definitions",
+      "bytes": 3732,
+      "sha256": "0d0bb229bf5a3ccceeb560fadd8e3d2442a3483f34944f6341803204145e3bf8"
+    },
+    "trace_schema": "bist-execution-trace/1",
+    "fields": [
+      "model (name, digest, family, size, quantization, Ollama version)",
+      "sampling (temperature, seed, top_p, num_ctx)",
+      "system_prompt",
+      "user_prompt",
+      "user_message_sent",
+      "retrieval",
+      "steps[] (tool, arguments, date_range, result, result_sha256, started_at, finished_at)",
+      "final_answer",
+      "grounding_audit",
+      "started_at",
+      "finished_at"
+    ]
+  },
+  "live_question": {
+    "cli": "scripts/ask.py \"<question>\"",
+    "same_code_path_as_scenarios": true,
+    "traces_dir": "outputs/presentation/live/"
+  },
+  "integrity": {
+    "no_hardcoded_answers": "The agent path (scripts/local_agent.py, scripts/ask.py, scripts/run_presentation_scenarios.py, MCP server) has no question-to-answer mapping. Every final answer is the model's text, unedited.",
+    "grader_only_reference_values": "src/bist_analytics/harness/evaluation.py holds expected values used only to score harness experiments. The agent path never imports it; scripts/verify_submission.py checks this.",
+    "figure_grounding": "Each trace's grounding_audit lists every figure in the answer and the tool value it matches. Ungrounded figures are reported, never removed.",
+    "label_thresholds": "Labelling thresholds live in src/bist_analytics/strategy/label_rules.py and are returned inside tool outputs (label_rule), so any threshold the model cites is tool evidence."
+  },
+  "code": {
+    "tools": [
+      {
+        "path": "src/bist_analytics/mcp/server.py",
+        "role": "source_code:tools",
+        "bytes": 25562,
+        "sha256": "c82437ca2bfd6684b69599b5c3db6e4615b21cac39cf23a08c2ed4ea584a9318"
+      },
+      {
+        "path": "src/bist_analytics/analysis/__init__.py",
+        "role": "source_code:tools",
+        "bytes": 58,
+        "sha256": "559d0d4484078579dd4e647968f4b9c17d64ac6f1b3e99919341931c741f2af1"
+      },
+      {
+        "path": "src/bist_analytics/analysis/evidence.py",
+        "role": "source_code:tools",
+        "bytes": 2580,
+        "sha256": "58df0c4c2270f1198e2c6adde9a564e68a2c6ae2b2494ec2f484b92abafe0c1d"
+      },
+      {
+        "path": "src/bist_analytics/analysis/fundamentals.py",
+        "role": "source_code:tools",
+        "bytes": 8787,
+        "sha256": "3566d601f1b6fb26c9339ba434d26efe7ea0dea70c445efac5ef633bd8e9e100"
+      },
+      {
+        "path": "src/bist_analytics/analysis/gate.py",
+        "role": "source_code:tools",
+        "bytes": 4771,
+        "sha256": "06189993fde0ff4e6d1fd96421d238f9cb48027ec87d09d582f6f10047fabe9e"
+      },
+      {
+        "path": "src/bist_analytics/analysis/grouping.py",
+        "role": "source_code:tools",
+        "bytes": 4248,
+        "sha256": "34b26231c2e83960932b1ce12ae8ac3a994e9e9f3a7ec9eb6585f54a5827db1f"
+      },
+      {
+        "path": "src/bist_analytics/analysis/indicators.py",
+        "role": "source_code:tools",
+        "bytes": 6384,
+        "sha256": "1266299695198da596ea5e95f1a02ab52f9471113a55e0b5386012c3510636cc"
+      },
+      {
+        "path": "src/bist_analytics/analysis/levels.py",
+        "role": "source_code:tools",
+        "bytes": 2860,
+        "sha256": "e6425f220d73aae157466decaff3f458993bb6e638acc2e81fe375f1fe33ca81"
+      },
+      {
+        "path": "src/bist_analytics/analysis/reversals.py",
+        "role": "source_code:tools",
+        "bytes": 4491,
+        "sha256": "2b44baf7c5ea53ee516a1d368d3c96b2d70bd3ad233d5ec63ae8c9c98208016f"
+      },
+      {
+        "path": "src/bist_analytics/analysis/scoring.py",
+        "role": "source_code:tools",
+        "bytes": 2766,
+        "sha256": "fe673e2ae4abe572cc38a90ecfde4925d776a3a32097dd03e46434a62470d660"
+      },
+      {
+        "path": "src/bist_analytics/strategy/__init__.py",
+        "role": "source_code:tools",
+        "bytes": 44,
+        "sha256": "028594edaf1ee481822cbb83756ede572449476c23fa6cccaf4c3f03e6a00b47"
+      },
+      {
+        "path": "src/bist_analytics/strategy/label_rules.py",
+        "role": "source_code:tools",
+        "bytes": 7459,
+        "sha256": "a1797037415ef537ea39ebe89e5e26f666dabfe9bd35e4e178e6b24ee8ded301"
+      },
+      {
+        "path": "src/bist_analytics/strategy/rules.py",
+        "role": "source_code:tools",
+        "bytes": 2575,
+        "sha256": "a28562c074ed04e05e1ff8ab0d6a3513d50f65c48e408634301a43471703a9c6"
+      },
+      {
+        "path": "src/bist_analytics/backtest/__init__.py",
+        "role": "source_code:tools",
+        "bytes": 63,
+        "sha256": "122bec5ff2ae53f1ebba433beaed3ee00ddf2918855a43c94b8d7c4f22df488e"
+      },
+      {
+        "path": "src/bist_analytics/backtest/engine.py",
+        "role": "source_code:tools",
+        "bytes": 6787,
+        "sha256": "b28ea9f291e8479c7d439d1622fe2f7469280c40faa67681970515e00099fa9e"
+      },
+      {
+        "path": "src/bist_analytics/backtest/metrics.py",
+        "role": "source_code:tools",
+        "bytes": 3081,
+        "sha256": "a2595a398485e6d66eeb1ad9dbddb0ed0304e910590b2e2739723d9b169a2d3f"
+      },
+      {
+        "path": "src/bist_analytics/data/__init__.py",
+        "role": "source_code:tools",
+        "bytes": 60,
+        "sha256": "765902c03f5fdd2d1cb2b39c6c9271470a7fe44d17681c343f233682f96727c8"
+      },
+      {
+        "path": "src/bist_analytics/data/context.py",
+        "role": "source_code:tools",
+        "bytes": 1965,
+        "sha256": "9619a632e3969881ee8cac4087bc31ae7036ffcda1a3225ff17a58439c1e6e97"
+      },
+      {
+        "path": "src/bist_analytics/data/fintables_import.py",
+        "role": "source_code:tools",
+        "bytes": 5309,
+        "sha256": "7b87af37450919306c1ee85cf857d024860ee55caea7d5eb8853a8b4eadcf3fc"
+      },
+      {
+        "path": "src/bist_analytics/data/fundamentals.py",
+        "role": "source_code:tools",
+        "bytes": 3558,
+        "sha256": "99ba948d3c242a0de395d4e0263ff837dd41393a263c680f12ef14430f0a4371"
+      },
+      {
+        "path": "src/bist_analytics/data/macro.py",
+        "role": "source_code:tools",
+        "bytes": 6678,
+        "sha256": "3fc2a311805edc16cdda0074798f62e2fec158499c1e5360b10b32ec7eeed07b"
+      },
+      {
+        "path": "src/bist_analytics/data/market.py",
+        "role": "source_code:tools",
+        "bytes": 6482,
+        "sha256": "919b525cfa786bdf800f4a6a6760fbc88833561bfc170feee982c0972a00cf4c"
+      },
+      {
+        "path": "src/bist_analytics/data/originals.py",
+        "role": "source_code:tools",
+        "bytes": 8503,
+        "sha256": "d78113a7f6ac516de731755a29324b69188c8a3547693eac25e50d45e12fa0d6"
+      },
+      {
+        "path": "src/bist_analytics/data/tms29.py",
+        "role": "source_code:tools",
+        "bytes": 13928,
+        "sha256": "84da2048c8a7937a3c3c552cb3a5a816d465e239cf025579ad12788822d4e0cf"
+      },
+      {
+        "path": "src/bist_analytics/rag.py",
+        "role": "source_code:tools",
+        "bytes": 4662,
+        "sha256": "97c52574269aab039d73e0c746c0e3e19a8d92838f05a9ffb8c0fc391b12726c"
+      },
+      {
+        "path": "src/bist_analytics/pipeline.py",
+        "role": "source_code:tools",
+        "bytes": 10126,
+        "sha256": "e7744069691860684fab067b42a5f7aa012458d6054d1661185caaf844469e40"
+      },
+      {
+        "path": "src/bist_analytics/config.py",
+        "role": "source_code:tools",
+        "bytes": 5837,
+        "sha256": "d7e3e6ca46e1406416a21cc358d2845790263f22c2dbae33cc101ef4c64ae9e4"
+      },
+      {
+        "path": "src/bist_analytics/schemas.py",
+        "role": "source_code:tools",
+        "bytes": 5165,
+        "sha256": "0671d7e8e039e23875da035a6ef529c6b8fe2afb309081fbc126c76ef6883018"
+      },
+      {
+        "path": "src/bist_analytics/io.py",
+        "role": "source_code:tools",
+        "bytes": 1301,
+        "sha256": "fe698a72e1c8512382a36e5fd0063fb69892bab6e5cff4e6e241f92161ac93d8"
+      },
+      {
+        "path": "src/bist_analytics/__init__.py",
+        "role": "source_code:tools",
+        "bytes": 104,
+        "sha256": "fe918ca78c671b7aec3efb94ff7e4eab23f77dbe2a2f99a66983b8b117b898f8"
+      },
+      {
+        "path": "src/bist_analytics/harness/__init__.py",
+        "role": "source_code:tools",
+        "bytes": 78,
+        "sha256": "9ac9d3e9825009e1d8fc730ba75611f664398a2c33a314729df619cb783ad126"
+      },
+      {
+        "path": "src/bist_analytics/mcp/__init__.py",
+        "role": "source_code:tools",
+        "bytes": 67,
+        "sha256": "c6ac04ebef363ebec3e3a35fe8a9d2e25dbdccdda0c328066ac4e563c0e26749"
+      },
+      {
+        "path": "src/bist_analytics/scenarios/__init__.py",
+        "role": "source_code:tools",
+        "bytes": 349,
+        "sha256": "d530912a027279971597d893dce0db791871344f19324cc8ae5894fb4bcbd30f"
+      }
+    ],
+    "agent_harness": [
+      {
+        "path": "scripts/local_agent.py",
+        "role": "source_code:agent_harness",
+        "bytes": 33820,
+        "sha256": "d15d6edd0a20b3e03a400ae873e8865f3e543b7387a4d129fe984986b3ea8832"
+      },
+      {
+        "path": "src/bist_analytics/harness/grounding.py",
+        "role": "source_code:agent_harness",
+        "bytes": 6027,
+        "sha256": "6166ad002e4f0e2c8796e091aa4ec92eb0843c52f0fd60f6b8e5bd470b441c19"
+      }
+    ],
+    "run_scripts": [
+      {
+        "path": "scripts/run_presentation_scenarios.py",
+        "role": "source_code:run_scripts",
+        "bytes": 9812,
+        "sha256": "ef3a07807cb3ac687df6c55c015f4abf31c117d9802482f3ae71725486702566"
+      },
+      {
+        "path": "scripts/ask.py",
+        "role": "source_code:run_scripts",
+        "bytes": 3374,
+        "sha256": "b08b42fc2f13f9ab6a1d1f0e597694b7733595283e413d2f6c75533dcded81c9"
+      },
+      {
+        "path": "scripts/build_rag_kb.py",
+        "role": "source_code:run_scripts",
+        "bytes": 7877,
+        "sha256": "81a31e7ff498d714c73f2cfd45be6c4f4836999f250c35e527356632b9433a7e"
+      },
+      {
+        "path": "scripts/build_submission.py",
+        "role": "source_code:run_scripts",
+        "bytes": 13286,
+        "sha256": "6b423459e31b02f6d7e43b7ec31b92d0f1a2405b7e45ddc99ef637ea52384aff"
+      },
+      {
+        "path": "scripts/verify_submission.py",
+        "role": "source_code:run_scripts",
+        "bytes": 5053,
+        "sha256": "59480af32029e77a512f4c627adec4a1e521c5031f33c7e60e166dd6a0fc4029"
+      }
+    ],
+    "training_code": [
+      {
+        "path": "training/dataset/build.py",
+        "role": "source_code:training_code",
+        "bytes": 38836,
+        "sha256": "df548c75bef1a776394c74a29c31e37349e65d4b97320af2cd798f9ad8ab10a4"
+      },
+      {
+        "path": "training/train_unsloth.py",
+        "role": "source_code:training_code",
+        "bytes": 10477,
+        "sha256": "c3cb02c8b87a8fba6cd932552d348b2f6c464f7a4fc34c2436ef8978f747553e"
+      },
+      {
+        "path": "training/Modelfile.finetuned",
+        "role": "source_code:training_code",
+        "bytes": 2281,
+        "sha256": "6c5667e51b83590268a85f36f387d1b30d8caf63f3aa46da71829161e5862da7"
+      },
+      {
+        "path": "training/Modelfile.base",
+        "role": "source_code:training_code",
+        "bytes": 1129,
+        "sha256": "58023578d29d25d0dcda37e85c652653da7c2ed3fe10388eab52132e2fcbaef5"
+      },
+      {
+        "path": "training/export_gguf.sh",
+        "role": "source_code:training_code",
+        "bytes": 1003,
+        "sha256": "0cbc1150f671fe50ce4654f08eecc4ac80fffe8c0a4eb025cf2420299db82d88"
+      }
+    ],
+    "evaluation_code": [
+      {
+        "path": "training/eval/run_baseline.py",
+        "role": "source_code:evaluation_code",
+        "bytes": 6115,
+        "sha256": "1fa1d6bf1430c34fa5f988f25de7b044b23acec70a757049d97bcb2ca4459c28"
+      },
+      {
+        "path": "training/eval/compare.py",
+        "role": "source_code:evaluation_code",
+        "bytes": 3829,
+        "sha256": "53514596542f83a99d68675f6ded6626acbf4189b8454663584cf05b63d213d1"
+      },
+      {
+        "path": "src/bist_analytics/harness/evaluation.py",
+        "role": "source_code:evaluation_code",
+        "bytes": 3202,
+        "sha256": "1008a059670219c65530ce3609fc198058a6ac22695a0099f10a552d426a4b87"
+      }
+    ],
+    "environment": [
+      {
+        "path": "pyproject.toml",
+        "role": "source_code:environment",
+        "bytes": 992,
+        "sha256": "a497ffc5fd5abc0c482e05ff91267c5a5417cbf54c24b8dc9c51bc43b6860b83"
+      },
+      {
+        "path": "uv.lock",
+        "role": "source_code:environment",
+        "bytes": 377000,
+        "sha256": "fcc64056412586342b27011ac38d9cc3b21cc927592c76c443a76713dfc65f37"
+      }
+    ]
+  },
+  "configs": [
+    {
+      "path": "config/universe_live.yaml",
+      "role": "configuration",
+      "bytes": 1915,
+      "sha256": "36bc5784835280440981b811248819ba4175d2f10a42943aac3d94720f70884c"
+    },
+    {
+      "path": "config/universe10.yaml",
+      "role": "configuration",
+      "bytes": 1218,
+      "sha256": "b0a1a916535147faa34b2fdff443cc3279d36926c849e5aa59b1f0426aa2e53a"
+    },
+    {
+      "path": "config/bist100_universe.yaml",
+      "role": "configuration",
+      "bytes": 1522,
+      "sha256": "f18f09a24dcdd45e9c21cb8f215184ec1720106c657e82872b0f055cd868a32b"
+    },
+    {
+      "path": "presentation/scenarios.json",
+      "role": "configuration",
+      "bytes": 3732,
+      "sha256": "0d0bb229bf5a3ccceeb560fadd8e3d2442a3483f34944f6341803204145e3bf8"
+    }
+  ],
+  "reproduce": [
+    "python -m venv .venv; .\\.venv\\Scripts\\python.exe -m pip install uv==0.12.15",
+    ".\\.venv\\Scripts\\uv.exe sync --frozen --extra dev --python .\\.venv\\Scripts\\python.exe",
+    "ollama create bist-qwen -f training/Modelfile.finetuned   # needs training/bist_lora.gguf",
+    ".\\.venv\\Scripts\\python.exe scripts/build_rag_kb.py",
+    ".\\.venv\\Scripts\\python.exe scripts/run_presentation_scenarios.py",
+    ".\\.venv\\Scripts\\python.exe scripts/ask.py \"<live question>\"",
+    ".\\.venv\\Scripts\\python.exe scripts/verify_submission.py"
+  ],
+  "attachments": [
+    {
+      "path": "training/adapter/adapter_model.safetensors",
+      "role": "lora_adapter",
+      "bytes": 119801528,
+      "sha256": "ad3716e908060dc87c3095d5a20ac9811f557cf293ead4f80a2497d143908e53",
+      "format": "safetensors"
+    },
+    {
+      "path": "training/adapter/adapter_config.json",
+      "role": "lora_adapter_config",
+      "bytes": 1329,
+      "sha256": "ed4c2fa721961c851c6fe0c0fcad03fc0b169ea8050b2dbd28b63cc5f471f461"
+    },
+    {
+      "path": "training/dataset/train.jsonl",
+      "role": "training_data",
+      "bytes": 2107057,
+      "sha256": "7ffdd4e9d96621e7505c27d51a9f70118a5dad796292ddf95e0b0d0f5e423e75",
+      "format": "jsonl"
+    },
+    {
+      "path": "training/dataset/eval.jsonl",
+      "role": "evaluation_data",
+      "bytes": 511437,
+      "sha256": "506699466aa2ab6092e98ce3a39f54ae05ad8dbbb00b65668ba9715bbf261c48",
+      "format": "jsonl"
+    },
+    {
+      "path": "training/dataset/audit.json",
+      "role": "dataset_audit",
+      "bytes": 1973,
+      "sha256": "058c1bc1155e7ec9c71f40e82b49d4b86fdcfdf0c5900aaa198d33319df8e5e1"
+    },
+    {
+      "path": "training/config/hyperparams.json",
+      "role": "hyperparameters_and_run_record",
+      "bytes": 7390,
+      "sha256": "b8c3abc89d7cc2252516a9bb5390001114e9605f256d328710422bbcfc54b575"
+    },
+    {
+      "path": "rag/knowledge_base.json",
+      "role": "rag_knowledge_base",
+      "bytes": 54766,
+      "sha256": "f104a0a0b9eed710aea6271654ae3abdc4588259e6632c04110250dffe52d8b8",
+      "documents": 48,
+      "source_counts": {
+        "data_provenance": 6,
+        "kap_disclosure": 13,
+        "methodology": 9,
+        "metric_definition": 2,
+        "universe_metadata": 18
+      },
+      "retrieval": {
+        "method": "BM25 (k1=1.5, b=0.75)",
+        "module": "src/bist_analytics/rag.py",
+        "point_in_time_field": "published_at"
+      }
+    },
+    {
+      "path": "outputs/presentation/index.json",
+      "role": "trace_index",
+      "bytes": 4923,
+      "sha256": "6fe5e1a6acdf51fc2a35f9e338dcbb85127c0acdfdae1c8cdff9732a81c5ef55"
+    },
+    {
+      "path": "outputs/presentation/traces.html",
+      "role": "trace_viewer",
+      "bytes": 102290,
+      "sha256": "6156faf0e3225b590bd9391dc104dbdbe28d94d473b92ddad3efb8226842d75c"
+    },
+    {
+      "path": "outputs/presentation/traces/S1.trace.json",
+      "role": "execution_trace",
+      "bytes": 51981,
+      "sha256": "54e49e194152d9c55ffb762e2d773386d7f270b90fb31eb461f86624e461cf20",
+      "scenario_id": "S1",
+      "scenario": "sector_laggard",
+      "question": "As of 2025-12-31, which stock in the banking sector of the research universe has lagged its sector the most over the last 63 trading sessions? Is there evidence that it could be a catch-up candidate? Give one educational label.",
+      "model": "bist-qwen",
+      "model_digest": "03815952dddc6ff1489e9910c93a872c32be7f09095ffa09c810065f67b66b72",
+      "seed": 17,
+      "temperature": 0.0,
+      "started_at": "2026-11-25T16:29:09.865+00:00",
+      "label": "HOLD",
+      "tools_called": [
+        "rank_sector_relative_strength"
+      ],
+      "all_grounded": true
+    },
+    {
+      "path": "outputs/presentation/traces/S2.trace.json",
+      "role": "execution_trace",
+      "bytes": 38349,
+      "sha256": "b4623c9861e50d194ab71e01f8c16a7cc63e01fa03a0ecf122f96bd99d28bc3d",
+      "scenario_id": "S2",
+      "scenario": "weekday_patterns",
+      "question": "Using EREGL.IS daily returns from 2025-01-01 to 2025-12-31, is there a day-of-the-week effect? Name the weekday with the highest and the lowest mean return and say whether either is statistically significant.",
+      "model": "bist-qwen",
+      "model_digest": "03815952dddc6ff1489e9910c93a872c32be7f09095ffa09c810065f67b66b72",
+      "seed": 17,
+      "temperature": 0.0,
+      "started_at": "2026-11-25T16:29:41.275+00:00",
+      "label": "WATCH",
+      "tools_called": [
+        "test_weekday_pattern"
+      ],
+      "all_grounded": true
+    },
+    {
+      "path": "outputs/presentation/traces/S3.trace.json",
+      "role": "execution_trace",
+      "bytes": 63222,
+      "sha256": "ffe7ddf636c9194b4bed831d6fa8747b40270bda5b77ec263d2e77049a0d15a7",
+      "scenario_id": "S3",
+      "scenario": "reversal_events",
+      "question": "Which technical reversal events were detected for TCELL.IS in the 120 trading sessions up to 2025-12-31, and what was the average return over the following 5 sessions?",
+      "model": "bist-qwen",
+      "model_digest": "03815952dddc6ff1489e9910c93a872c32be7f09095ffa09c810065f67b66b72",
+      "seed": 17,
+      "temperature": 0.0,
+      "started_at": "2026-11-25T16:35:46.422+00:00",
+      "label": "TECHNICAL_REVERSAL_CANDIDATE",
+      "tools_called": [
+        "detect_reversal_events"
+      ],
+      "all_grounded": true
+    },
+    {
+      "path": "outputs/presentation/traces/S4.trace.json",
+      "role": "execution_trace",
+      "bytes": 34105,
+      "sha256": "c311a7ce7500b20e18aafb7d05909a2ce8fb058647bd16acf5b88f5c8c135cb6",
+      "scenario_id": "S4",
+      "scenario": "fundamental_reaction",
+      "question": "As of 2025-12-31, how did THYAO.IS's revenue and net profit change compared with the previous quarter, when were the latest statements published, and how did the stock price move in the sessions around that publication?",
+      "model": "bist-qwen",
+      "model_digest": "03815952dddc6ff1489e9910c93a872c32be7f09095ffa09c810065f67b66b72",
+      "seed": 17,
+      "temperature": 0.0,
+      "started_at": "2026-11-25T16:30:47.228+00:00",
+      "label": "WATCH",
+      "tools_called": [
+        "calculate_fundamental_change"
+      ],
+      "all_grounded": true
+    },
+    {
+      "path": "outputs/presentation/traces/S5.trace.json",
+      "role": "execution_trace",
+      "bytes": 20302,
+      "sha256": "4b3a98a9f8cb2c9e0b650a4ff48fbcea00c50d9f03f46632e44e6b9f7824a60e",
+      "scenario_id": "S5",
+      "scenario": "analysis_unsafe",
+      "question": "Is BIMAS.IS a fundamental improvement candidate as of 2027-03-31? Give one educational label.",
+      "model": "bist-qwen",
+      "model_digest": "03815952dddc6ff1489e9910c93a872c32be7f09095ffa09c810065f67b66b72",
+      "seed": 17,
+      "temperature": 0.0,
+      "started_at": "2026-11-25T16:31:21.973+00:00",
+      "label": "ANALYSIS_UNSAFE",
+      "tools_called": [
+        "calculate_fundamental_change"
+      ],
+      "all_grounded": true
+    },
+    {
+      "path": "src/bist_analytics/mcp/server.py",
+      "role": "source_code:tools",
+      "bytes": 25562,
+      "sha256": "c82437ca2bfd6684b69599b5c3db6e4615b21cac39cf23a08c2ed4ea584a9318"
+    },
+    {
+      "path": "src/bist_analytics/analysis/__init__.py",
+      "role": "source_code:tools",
+      "bytes": 58,
+      "sha256": "559d0d4484078579dd4e647968f4b9c17d64ac6f1b3e99919341931c741f2af1"
+    },
+    {
+      "path": "src/bist_analytics/analysis/evidence.py",
+      "role": "source_code:tools",
+      "bytes": 2580,
+      "sha256": "58df0c4c2270f1198e2c6adde9a564e68a2c6ae2b2494ec2f484b92abafe0c1d"
+    },
+    {
+      "path": "src/bist_analytics/analysis/fundamentals.py",
+      "role": "source_code:tools",
+      "bytes": 8787,
+      "sha256": "3566d601f1b6fb26c9339ba434d26efe7ea0dea70c445efac5ef633bd8e9e100"
+    },
+    {
+      "path": "src/bist_analytics/analysis/gate.py",
+      "role": "source_code:tools",
+      "bytes": 4771,
+      "sha256": "06189993fde0ff4e6d1fd96421d238f9cb48027ec87d09d582f6f10047fabe9e"
+    },
+    {
+      "path": "src/bist_analytics/analysis/grouping.py",
+      "role": "source_code:tools",
+      "bytes": 4248,
+      "sha256": "34b26231c2e83960932b1ce12ae8ac3a994e9e9f3a7ec9eb6585f54a5827db1f"
+    },
+    {
+      "path": "src/bist_analytics/analysis/indicators.py",
+      "role": "source_code:tools",
+      "bytes": 6384,
+      "sha256": "1266299695198da596ea5e95f1a02ab52f9471113a55e0b5386012c3510636cc"
+    },
+    {
+      "path": "src/bist_analytics/analysis/levels.py",
+      "role": "source_code:tools",
+      "bytes": 2860,
+      "sha256": "e6425f220d73aae157466decaff3f458993bb6e638acc2e81fe375f1fe33ca81"
+    },
+    {
+      "path": "src/bist_analytics/analysis/reversals.py",
+      "role": "source_code:tools",
+      "bytes": 4491,
+      "sha256": "2b44baf7c5ea53ee516a1d368d3c96b2d70bd3ad233d5ec63ae8c9c98208016f"
+    },
+    {
+      "path": "src/bist_analytics/analysis/scoring.py",
+      "role": "source_code:tools",
+      "bytes": 2766,
+      "sha256": "fe673e2ae4abe572cc38a90ecfde4925d776a3a32097dd03e46434a62470d660"
+    },
+    {
+      "path": "src/bist_analytics/strategy/__init__.py",
+      "role": "source_code:tools",
+      "bytes": 44,
+      "sha256": "028594edaf1ee481822cbb83756ede572449476c23fa6cccaf4c3f03e6a00b47"
+    },
+    {
+      "path": "src/bist_analytics/strategy/label_rules.py",
+      "role": "source_code:tools",
+      "bytes": 7459,
+      "sha256": "a1797037415ef537ea39ebe89e5e26f666dabfe9bd35e4e178e6b24ee8ded301"
+    },
+    {
+      "path": "src/bist_analytics/strategy/rules.py",
+      "role": "source_code:tools",
+      "bytes": 2575,
+      "sha256": "a28562c074ed04e05e1ff8ab0d6a3513d50f65c48e408634301a43471703a9c6"
+    },
+    {
+      "path": "src/bist_analytics/backtest/__init__.py",
+      "role": "source_code:tools",
+      "bytes": 63,
+      "sha256": "122bec5ff2ae53f1ebba433beaed3ee00ddf2918855a43c94b8d7c4f22df488e"
+    },
+    {
+      "path": "src/bist_analytics/backtest/engine.py",
+      "role": "source_code:tools",
+      "bytes": 6787,
+      "sha256": "b28ea9f291e8479c7d439d1622fe2f7469280c40faa67681970515e00099fa9e"
+    },
+    {
+      "path": "src/bist_analytics/backtest/metrics.py",
+      "role": "source_code:tools",
+      "bytes": 3081,
+      "sha256": "a2595a398485e6d66eeb1ad9dbddb0ed0304e910590b2e2739723d9b169a2d3f"
+    },
+    {
+      "path": "src/bist_analytics/data/__init__.py",
+      "role": "source_code:tools",
+      "bytes": 60,
+      "sha256": "765902c03f5fdd2d1cb2b39c6c9271470a7fe44d17681c343f233682f96727c8"
+    },
+    {
+      "path": "src/bist_analytics/data/context.py",
+      "role": "source_code:tools",
+      "bytes": 1965,
+      "sha256": "9619a632e3969881ee8cac4087bc31ae7036ffcda1a3225ff17a58439c1e6e97"
+    },
+    {
+      "path": "src/bist_analytics/data/fintables_import.py",
+      "role": "source_code:tools",
+      "bytes": 5309,
+      "sha256": "7b87af37450919306c1ee85cf857d024860ee55caea7d5eb8853a8b4eadcf3fc"
+    },
+    {
+      "path": "src/bist_analytics/data/fundamentals.py",
+      "role": "source_code:tools",
+      "bytes": 3558,
+      "sha256": "99ba948d3c242a0de395d4e0263ff837dd41393a263c680f12ef14430f0a4371"
+    },
+    {
+      "path": "src/bist_analytics/data/macro.py",
+      "role": "source_code:tools",
+      "bytes": 6678,
+      "sha256": "3fc2a311805edc16cdda0074798f62e2fec158499c1e5360b10b32ec7eeed07b"
+    },
+    {
+      "path": "src/bist_analytics/data/market.py",
+      "role": "source_code:tools",
+      "bytes": 6482,
+      "sha256": "919b525cfa786bdf800f4a6a6760fbc88833561bfc170feee982c0972a00cf4c"
+    },
+    {
+      "path": "src/bist_analytics/data/originals.py",
+      "role": "source_code:tools",
+      "bytes": 8503,
+      "sha256": "d78113a7f6ac516de731755a29324b69188c8a3547693eac25e50d45e12fa0d6"
+    },
+    {
+      "path": "src/bist_analytics/data/tms29.py",
+      "role": "source_code:tools",
+      "bytes": 13928,
+      "sha256": "84da2048c8a7937a3c3c552cb3a5a816d465e239cf025579ad12788822d4e0cf"
+    },
+    {
+      "path": "src/bist_analytics/rag.py",
+      "role": "source_code:tools",
+      "bytes": 4662,
+      "sha256": "97c52574269aab039d73e0c746c0e3e19a8d92838f05a9ffb8c0fc391b12726c"
+    },
+    {
+      "path": "src/bist_analytics/pipeline.py",
+      "role": "source_code:tools",
+      "bytes": 10126,
+      "sha256": "e7744069691860684fab067b42a5f7aa012458d6054d1661185caaf844469e40"
+    },
+    {
+      "path": "src/bist_analytics/config.py",
+      "role": "source_code:tools",
+      "bytes": 5837,
+      "sha256": "d7e3e6ca46e1406416a21cc358d2845790263f22c2dbae33cc101ef4c64ae9e4"
+    },
+    {
+      "path": "src/bist_analytics/schemas.py",
+      "role": "source_code:tools",
+      "bytes": 5165,
+      "sha256": "0671d7e8e039e23875da035a6ef529c6b8fe2afb309081fbc126c76ef6883018"
+    },
+    {
+      "path": "src/bist_analytics/io.py",
+      "role": "source_code:tools",
+      "bytes": 1301,
+      "sha256": "fe698a72e1c8512382a36e5fd0063fb69892bab6e5cff4e6e241f92161ac93d8"
+    },
+    {
+      "path": "src/bist_analytics/__init__.py",
+      "role": "source_code:tools",
+      "bytes": 104,
+      "sha256": "fe918ca78c671b7aec3efb94ff7e4eab23f77dbe2a2f99a66983b8b117b898f8"
+    },
+    {
+      "path": "src/bist_analytics/harness/__init__.py",
+      "role": "source_code:tools",
+      "bytes": 78,
+      "sha256": "9ac9d3e9825009e1d8fc730ba75611f664398a2c33a314729df619cb783ad126"
+    },
+    {
+      "path": "src/bist_analytics/mcp/__init__.py",
+      "role": "source_code:tools",
+      "bytes": 67,
+      "sha256": "c6ac04ebef363ebec3e3a35fe8a9d2e25dbdccdda0c328066ac4e563c0e26749"
+    },
+    {
+      "path": "src/bist_analytics/scenarios/__init__.py",
+      "role": "source_code:tools",
+      "bytes": 349,
+      "sha256": "d530912a027279971597d893dce0db791871344f19324cc8ae5894fb4bcbd30f"
+    },
+    {
+      "path": "scripts/local_agent.py",
+      "role": "source_code:agent_harness",
+      "bytes": 33820,
+      "sha256": "d15d6edd0a20b3e03a400ae873e8865f3e543b7387a4d129fe984986b3ea8832"
+    },
+    {
+      "path": "src/bist_analytics/harness/grounding.py",
+      "role": "source_code:agent_harness",
+      "bytes": 6027,
+      "sha256": "6166ad002e4f0e2c8796e091aa4ec92eb0843c52f0fd60f6b8e5bd470b441c19"
+    },
+    {
+      "path": "scripts/run_presentation_scenarios.py",
+      "role": "source_code:run_scripts",
+      "bytes": 9812,
+      "sha256": "ef3a07807cb3ac687df6c55c015f4abf31c117d9802482f3ae71725486702566"
+    },
+    {
+      "path": "scripts/ask.py",
+      "role": "source_code:run_scripts",
+      "bytes": 3374,
+      "sha256": "b08b42fc2f13f9ab6a1d1f0e597694b7733595283e413d2f6c75533dcded81c9"
+    },
+    {
+      "path": "scripts/build_rag_kb.py",
+      "role": "source_code:run_scripts",
+      "bytes": 7877,
+      "sha256": "81a31e7ff498d714c73f2cfd45be6c4f4836999f250c35e527356632b9433a7e"
+    },
+    {
+      "path": "scripts/build_submission.py",
+      "role": "source_code:run_scripts",
+      "bytes": 13286,
+      "sha256": "6b423459e31b02f6d7e43b7ec31b92d0f1a2405b7e45ddc99ef637ea52384aff"
+    },
+    {
+      "path": "scripts/verify_submission.py",
+      "role": "source_code:run_scripts",
+      "bytes": 5053,
+      "sha256": "59480af32029e77a512f4c627adec4a1e521c5031f33c7e60e166dd6a0fc4029"
+    },
+    {
+      "path": "training/dataset/build.py",
+      "role": "source_code:training_code",
+      "bytes": 38836,
+      "sha256": "df548c75bef1a776394c74a29c31e37349e65d4b97320af2cd798f9ad8ab10a4"
+    },
+    {
+      "path": "training/train_unsloth.py",
+      "role": "source_code:training_code",
+      "bytes": 10477,
+      "sha256": "c3cb02c8b87a8fba6cd932552d348b2f6c464f7a4fc34c2436ef8978f747553e"
+    },
+    {
+      "path": "training/Modelfile.finetuned",
+      "role": "source_code:training_code",
+      "bytes": 2281,
+      "sha256": "6c5667e51b83590268a85f36f387d1b30d8caf63f3aa46da71829161e5862da7"
+    },
+    {
+      "path": "training/Modelfile.base",
+      "role": "source_code:training_code",
+      "bytes": 1129,
+      "sha256": "58023578d29d25d0dcda37e85c652653da7c2ed3fe10388eab52132e2fcbaef5"
+    },
+    {
+      "path": "training/export_gguf.sh",
+      "role": "source_code:training_code",
+      "bytes": 1003,
+      "sha256": "0cbc1150f671fe50ce4654f08eecc4ac80fffe8c0a4eb025cf2420299db82d88"
+    },
+    {
+      "path": "training/eval/run_baseline.py",
+      "role": "source_code:evaluation_code",
+      "bytes": 6115,
+      "sha256": "1fa1d6bf1430c34fa5f988f25de7b044b23acec70a757049d97bcb2ca4459c28"
+    },
+    {
+      "path": "training/eval/compare.py",
+      "role": "source_code:evaluation_code",
+      "bytes": 3829,
+      "sha256": "53514596542f83a99d68675f6ded6626acbf4189b8454663584cf05b63d213d1"
+    },
+    {
+      "path": "src/bist_analytics/harness/evaluation.py",
+      "role": "source_code:evaluation_code",
+      "bytes": 3202,
+      "sha256": "1008a059670219c65530ce3609fc198058a6ac22695a0099f10a552d426a4b87"
+    },
+    {
+      "path": "pyproject.toml",
+      "role": "source_code:environment",
+      "bytes": 992,
+      "sha256": "a497ffc5fd5abc0c482e05ff91267c5a5417cbf54c24b8dc9c51bc43b6860b83"
+    },
+    {
+      "path": "uv.lock",
+      "role": "source_code:environment",
+      "bytes": 377000,
+      "sha256": "fcc64056412586342b27011ac38d9cc3b21cc927592c76c443a76713dfc65f37"
+    },
+    {
+      "path": "config/universe_live.yaml",
+      "role": "configuration",
+      "bytes": 1915,
+      "sha256": "36bc5784835280440981b811248819ba4175d2f10a42943aac3d94720f70884c"
+    },
+    {
+      "path": "config/universe10.yaml",
+      "role": "configuration",
+      "bytes": 1218,
+      "sha256": "b0a1a916535147faa34b2fdff443cc3279d36926c849e5aa59b1f0426aa2e53a"
+    },
+    {
+      "path": "config/bist100_universe.yaml",
+      "role": "configuration",
+      "bytes": 1522,
+      "sha256": "f18f09a24dcdd45e9c21cb8f215184ec1720106c657e82872b0f055cd868a32b"
+    },
+    {
+      "path": "presentation/scenarios.json",
+      "role": "configuration",
+      "bytes": 3732,
+      "sha256": "0d0bb229bf5a3ccceeb560fadd8e3d2442a3483f34944f6341803204145e3bf8"
+    }
+  ]
+}

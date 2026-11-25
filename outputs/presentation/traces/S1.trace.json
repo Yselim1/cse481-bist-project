@@ -1,0 +1,807 @@
+{
+  "schema_version": "bist-execution-trace/1",
+  "run_id": "038927f4-d2ce-450a-ab71-6c2c6016c4b0",
+  "scenario_id": "S1",
+  "started_at": "2026-11-25T16:29:09.865+00:00",
+  "finished_at": "2026-11-25T16:29:41.151+00:00",
+  "wall_time_s": 31.285,
+  "model": {
+    "name": "bist-qwen",
+    "endpoint": "http://localhost:11434/v1",
+    "ollama_version": "0.40.16",
+    "digest": "03815952dddc6ff1489e9910c93a872c32be7f09095ffa09c810065f67b66b72",
+    "size_bytes": 1929903359,
+    "modified_at": "2026-11-25T19:13:21.6186539+03:00",
+    "family": "qwen2",
+    "parameter_size": "3.1B",
+    "quantization_level": "Q4_K_M",
+    "format": "gguf",
+    "modelfile_parameters": "top_p                          0.9\nnum_ctx                        65536\ntemperature                    0",
+    "modelfile_sha256": "c7d4eab0ee20daca5cd1bcb148a5991550602e6e48594be4498d69d9acd87dcc"
+  },
+  "sampling": {
+    "temperature": 0.0,
+    "seed": 17,
+    "max_tokens": 1536,
+    "top_p": "0.9",
+    "num_ctx": "65536",
+    "endpoint": "http://localhost:11434/v1/chat/completions"
+  },
+  "harness": {
+    "script": "scripts/local_agent.py",
+    "config_file": "config/universe_live.yaml",
+    "max_turns": 10,
+    "force_answer_after": 10,
+    "tool_result_char_cap": 4500,
+    "tool_protocol": "training_format (no schemas sent; <tool_call> text parsed, as in the fine-tuning data)",
+    "tools_offered": [
+      "project_status",
+      "get_context_events",
+      "get_stock_history",
+      "calculate_indicators",
+      "find_support_resistance",
+      "get_fundamental_metrics",
+      "calculate_scores",
+      "run_backtest",
+      "generate_signal",
+      "generate_report",
+      "get_index_history",
+      "detect_reversal_events",
+      "rank_sector_relative_strength",
+      "test_weekday_pattern",
+      "calculate_fundamental_change",
+      "get_macro_context",
+      "get_news_events",
+      "get_speech_features",
+      "check_data_quality",
+      "build_evidence_bundle",
+      "search_knowledge_base"
+    ],
+    "git": {
+      "commit": "f052f85ddb9484da9694a3e7e53b970f03bbbaa1",
+      "dirty": true
+    },
+    "python": "3.12.14"
+  },
+  "system_prompt": "You are an academic BIST financial-analysis agent. For every claim, call a tool first: you must never invent numbers. Allowed labels are the 8 educational labels (HOLD, WATCH, INVESTIGATE, POTENTIAL_CATCH_UP_CANDIDATE, TECHNICAL_REVERSAL_CANDIDATE, FUNDAMENTAL_IMPROVEMENT_CANDIDATE, REJECT_SIGNAL, ANALYSIS_UNSAFE). When evidence is insufficient, choose INVESTIGATE or ANALYSIS_UNSAFE. Cite tool names in your reasoning. Do not give investment advice. Numeric values must come from committed_evidence entries.\n\nTool guide (pick what the question needs; pass the question's ticker and dates):\n- sector leaders/laggards, catch-up: rank_sector_relative_strength (as_of, lookback)\n- day-of-week effects: test_weekday_pattern (ticker, start, end)\n- reversal / turning-point events: detect_reversal_events (ticker, as_of, lookback<=252)\n- fundamentals and their change: get_fundamental_metrics, calculate_fundamental_change; price reaction: get_stock_history, get_news_events\n- technical state and scores: calculate_indicators, calculate_scores, generate_signal\n- dates beyond the data, unknown tickers, missing data: check_data_quality (ticker, as_of); gate_status HARD_BLOCK means the label must be ANALYSIS_UNSAFE\n- methodology, definitions, disclosures: search_knowledge_base\nApply the label_rule returned by the tool. When the tool returns a summary, sector_summary or best_family block, take the laggard/leader, highest/lowest and best values from it and use its *label_by_rule field as the label; do not re-derive them from the rows. If a tool returns an error or available=false, say the data is unavailable; never estimate it. Copy numbers exactly as the tools return them (you may round, or convert fractions to percentages).",
+  "user_prompt": "As of 2025-12-31, which stock in the banking sector of the research universe has lagged its sector the most over the last 63 trading sessions? Is there evidence that it could be a catch-up candidate? Give one educational label.",
+  "user_message_sent": "As of 2025-12-31, which stock in the banking sector of the research universe has lagged its sector the most over the last 63 trading sessions? Is there evidence that it could be a catch-up candidate? Give one educational label.\n\nReference context retrieved by search_knowledge_base (cite doc_id when you use it; numbers must still come from tool results):\n- [doc:financial_interpretation:01] FINANCIAL_INTERPRETATION: Findings and how to explain them (undated): **Final study:** THYAO, 2023-2025 trading; verified original annual Fintables statements; financial amounts and returns in nominal TRY. Latest annual period at 2025-12-31 is FY2024, released 2025-02-28 and usable from 2025-03-03.\n- [universe:GARAN.IS] GARAN.IS universe membership (undated): GARAN.IS belongs to the banking sector of the research universe. Sector peers: AKBNK.IS, YKBNK.IS, ISCTR.IS. Private bank; sector peer for AKBNK. Benchmark index: XU100.IS.\n- [universe:ISCTR.IS] ISCTR.IS universe membership (undated): ISCTR.IS belongs to the banking sector of the research universe (live-question extension; prices only, no fundamentals). Sector peers: AKBNK.IS, GARAN.IS, YKBNK.IS. Benchmark index: XU100.IS.",
+  "retrieval": {
+    "tool": "search_knowledge_base",
+    "arguments": {
+      "query": "As of 2025-12-31, which stock in the banking sector of the research universe has lagged its sector the most over the last 63 trading sessions? Is there evidence that it could be a catch-up candidate? Give one educational label.",
+      "top_k": 3,
+      "as_of": "2025-12-31"
+    },
+    "step_index": 0,
+    "injected": true,
+    "injected_text": "Reference context retrieved by search_knowledge_base (cite doc_id when you use it; numbers must still come from tool results):\n- [doc:financial_interpretation:01] FINANCIAL_INTERPRETATION: Findings and how to explain them (undated): **Final study:** THYAO, 2023-2025 trading; verified original annual Fintables statements; financial amounts and returns in nominal TRY. Latest annual period at 2025-12-31 is FY2024, released 2025-02-28 and usable from 2025-03-03.\n- [universe:GARAN.IS] GARAN.IS universe membership (undated): GARAN.IS belongs to the banking sector of the research universe. Sector peers: AKBNK.IS, YKBNK.IS, ISCTR.IS. Private bank; sector peer for AKBNK. Benchmark index: XU100.IS.\n- [universe:ISCTR.IS] ISCTR.IS universe membership (undated): ISCTR.IS belongs to the banking sector of the research universe (live-question extension; prices only, no fundamentals). Sector peers: AKBNK.IS, GARAN.IS, YKBNK.IS. Benchmark index: XU100.IS."
+  },
+  "steps": [
+    {
+      "index": 0,
+      "turn": -1,
+      "type": "tool_call",
+      "actor": "harness",
+      "tool": "search_knowledge_base",
+      "arguments": {
+        "query": "As of 2025-12-31, which stock in the banking sector of the research universe has lagged its sector the most over the last 63 trading sessions? Is there evidence that it could be a catch-up candidate? Give one educational label.",
+        "top_k": 3,
+        "as_of": "2025-12-31"
+      },
+      "date_range": {
+        "as_of": "2025-12-31"
+      },
+      "started_at": "2026-11-25T16:29:18.792+00:00",
+      "finished_at": "2026-11-25T16:29:24.201+00:00",
+      "duration_s": 5.409,
+      "result": {
+        "content": [
+          {
+            "text": "{\n  \"ticker\": null,\n  \"primary_ticker\": \"THYAO.IS\",\n  \"as_of\": \"2025-12-31\",\n  \"data\": {\n    \"query\": \"As of 2025-12-31, which stock in the banking sector of the research universe has lagged its sector the most over the last 63 trading sessions? Is there evidence that it could be a catch-up candidate? Give one educational label.\",\n    \"hits\": [\n      {\n        \"doc_id\": \"doc:financial_interpretation:01\",\n        \"score\": 11.5806,\n        \"title\": \"FINANCIAL_INTERPRETATION: Findings and how to explain them\",\n        \"text\": \"**Final study:** THYAO, 2023-2025 trading; verified original annual Fintables statements; financial amounts and returns in nominal TRY. Latest annual period at 2025-12-31 is FY2024, released 2025-02-28 and usable from 2025-03-03.\",\n        \"source_type\": \"methodology\",\n        \"source\": \"docs/FINANCIAL_INTERPRETATION.md\",\n        \"published_at\": null,\n        \"tickers\": []\n      },\n      {\n        \"doc_id\": \"universe:GARAN.IS\",\n        \"score\": 11.4566,\n        \"title\": \"GARAN.IS universe membership\",\n        \"text\": \"GARAN.IS belongs to the banking sector of the research universe. Sector peers: AKBNK.IS, YKBNK.IS, ISCTR.IS. Private bank; sector peer for AKBNK. Benchmark index: XU100.IS.\",\n        \"source_type\": \"universe_metadata\",\n        \"source\": \"config/bist100_universe.yaml\",\n        \"published_at\": null,\n        \"tickers\": [\n          \"GARAN.IS\"\n        ]\n      },\n      {\n        \"doc_id\": \"universe:ISCTR.IS\",\n        \"score\": 11.0504,\n        \"title\": \"ISCTR.IS universe membership\",\n        \"text\": \"ISCTR.IS belongs to the banking sector of the research universe (live-question extension; prices only, no fundamentals). Sector peers: AKBNK.IS, GARAN.IS, YKBNK.IS. Benchmark index: XU100.IS.\",\n        \"source_type\": \"universe_metadata\",\n        \"source\": \"config/universe_live.yaml\",\n        \"published_at\": null,\n        \"tickers\": [\n          \"ISCTR.IS\"\n        ]\n      }\n    ]\n  },\n  \"price_currency\": \"TRY\",\n  \"fundamental_currency\": \"TRY\",\n  \"vintage_policy\": \"verified_only\",\n  \"fundamental_dataset\": \"data/processed/fintables_tms29_observations.csv\",\n  \"warnings\": [\n    \"Single user-selected stock; selection/survivorship bias; no market-wide inference.\",\n    \"Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.\",\n    \"Adjusted synthetic units; whole-lot execution and taxes not modeled.\",\n    \"BIST100 price-index basis differs from adjusted stock return basis.\",\n    \"Primary analysis uses one internally consistent post-TMS 29 basis; pre-2025 trading results are outside its evaluation window.\",\n    \"2026 is partial through the last cached session before the exclusive evaluation end.\",\n    \"KAP context is evidence for interpretation and does not alter any strategy score or order.\"\n  ],\n  \"source_document\": \"docs/DATA_SOURCES.md\",\n  \"execution_assumptions\": {\n    \"commission_bps_per_side\": 10.0,\n    \"slippage_bps_per_side\": 5.0,\n    \"initial_capital_try\": 100000.0,\n    \"signal_timing\": \"close decision, next stock-session open execution\"\n  }\n}",
+            "type": "text"
+          }
+        ],
+        "isError": false,
+        "structuredContent": {
+          "ticker": null,
+          "primary_ticker": "THYAO.IS",
+          "as_of": "2025-12-31",
+          "data": {
+            "query": "As of 2025-12-31, which stock in the banking sector of the research universe has lagged its sector the most over the last 63 trading sessions? Is there evidence that it could be a catch-up candidate? Give one educational label.",
+            "hits": [
+              {
+                "doc_id": "doc:financial_interpretation:01",
+                "score": 11.5806,
+                "title": "FINANCIAL_INTERPRETATION: Findings and how to explain them",
+                "text": "**Final study:** THYAO, 2023-2025 trading; verified original annual Fintables statements; financial amounts and returns in nominal TRY. Latest annual period at 2025-12-31 is FY2024, released 2025-02-28 and usable from 2025-03-03.",
+                "source_type": "methodology",
+                "source": "docs/FINANCIAL_INTERPRETATION.md",
+                "published_at": null,
+                "tickers": []
+              },
+              {
+                "doc_id": "universe:GARAN.IS",
+                "score": 11.4566,
+                "title": "GARAN.IS universe membership",
+                "text": "GARAN.IS belongs to the banking sector of the research universe. Sector peers: AKBNK.IS, YKBNK.IS, ISCTR.IS. Private bank; sector peer for AKBNK. Benchmark index: XU100.IS.",
+                "source_type": "universe_metadata",
+                "source": "config/bist100_universe.yaml",
+                "published_at": null,
+                "tickers": [
+                  "GARAN.IS"
+                ]
+              },
+              {
+                "doc_id": "universe:ISCTR.IS",
+                "score": 11.0504,
+                "title": "ISCTR.IS universe membership",
+                "text": "ISCTR.IS belongs to the banking sector of the research universe (live-question extension; prices only, no fundamentals). Sector peers: AKBNK.IS, GARAN.IS, YKBNK.IS. Benchmark index: XU100.IS.",
+                "source_type": "universe_metadata",
+                "source": "config/universe_live.yaml",
+                "published_at": null,
+                "tickers": [
+                  "ISCTR.IS"
+                ]
+              }
+            ]
+          },
+          "price_currency": "TRY",
+          "fundamental_currency": "TRY",
+          "vintage_policy": "verified_only",
+          "fundamental_dataset": "data/processed/fintables_tms29_observations.csv",
+          "warnings": [
+            "Single user-selected stock; selection/survivorship bias; no market-wide inference.",
+            "Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.",
+            "Adjusted synthetic units; whole-lot execution and taxes not modeled.",
+            "BIST100 price-index basis differs from adjusted stock return basis.",
+            "Primary analysis uses one internally consistent post-TMS 29 basis; pre-2025 trading results are outside its evaluation window.",
+            "2026 is partial through the last cached session before the exclusive evaluation end.",
+            "KAP context is evidence for interpretation and does not alter any strategy score or order."
+          ],
+          "source_document": "docs/DATA_SOURCES.md",
+          "execution_assumptions": {
+            "commission_bps_per_side": 10.0,
+            "slippage_bps_per_side": 5.0,
+            "initial_capital_try": 100000.0,
+            "signal_timing": "close decision, next stock-session open execution"
+          }
+        }
+      },
+      "result_sha256": "4159cf0bd4c8eb01f184b34f6470b9d4555d487a271e432e37547b6366efd25a",
+      "truncated_for_model": false
+    },
+    {
+      "index": 1,
+      "turn": 0,
+      "type": "assistant",
+      "started_at": "2026-11-25T16:29:24.202+00:00",
+      "finished_at": "2026-11-25T16:29:28.024+00:00",
+      "duration_s": 3.822,
+      "content": "<tool_call>\n{\"name\": \"rank_sector_relative_strength\", \"arguments\": {\"as_of\": \"2025-12-31\", \"lookback\": 63}}\n</tool_call>",
+      "tool_calls": [
+        {
+          "name": "rank_sector_relative_strength",
+          "arguments": "{\"as_of\": \"2025-12-31\", \"lookback\": 63}"
+        }
+      ],
+      "finish_reason": "stop",
+      "usage": {
+        "prompt_tokens": 750,
+        "prompt_tokens_details": {
+          "cached_tokens": 408
+        },
+        "completion_tokens": 40,
+        "total_tokens": 790
+      },
+      "system_fingerprint": "fp_ollama"
+    },
+    {
+      "index": 2,
+      "turn": 0,
+      "type": "tool_call",
+      "actor": "model",
+      "tool": "rank_sector_relative_strength",
+      "arguments": {
+        "as_of": "2025-12-31",
+        "lookback": 63
+      },
+      "date_range": {
+        "as_of": "2025-12-31",
+        "lookback": 63
+      },
+      "started_at": "2026-11-25T16:29:28.024+00:00",
+      "finished_at": "2026-11-25T16:29:28.063+00:00",
+      "duration_s": 0.039,
+      "result": {
+        "content": [
+          {
+            "text": "{\n  \"ticker\": null,\n  \"primary_ticker\": \"THYAO.IS\",\n  \"as_of\": \"2025-12-31\",\n  \"lookback_sessions\": 63,\n  \"label_rule\": {\n    \"metric\": \"relative_vs_sector\",\n    \"catch_up_below\": -0.05,\n    \"watch_above\": 0.05,\n    \"rule\": \"relative_vs_sector < -0.05 -> POTENTIAL_CATCH_UP_CANDIDATE; relative_vs_sector > 0.05 -> WATCH; otherwise HOLD\"\n  },\n  \"sector_summary\": [\n    {\n      \"sector\": \"airlines\",\n      \"sector_mean\": -0.1459,\n      \"laggard\": \"THYAO.IS\",\n      \"laggard_relative_vs_sector\": -0.0017,\n      \"laggard_label_by_rule\": \"HOLD\",\n      \"leader\": \"PGSUS.IS\",\n      \"leader_relative_vs_sector\": 0.0017,\n      \"members\": [\n        {\n          \"ticker\": \"PGSUS.IS\",\n          \"cum_return\": -0.1442,\n          \"relative_vs_sector\": 0.0017,\n          \"label_by_rule\": \"HOLD\"\n        },\n        {\n          \"ticker\": \"THYAO.IS\",\n          \"cum_return\": -0.1476,\n          \"relative_vs_sector\": -0.0017,\n          \"label_by_rule\": \"HOLD\"\n        }\n      ]\n    },\n    {\n      \"sector\": \"automotive\",\n      \"sector_mean\": -0.045,\n      \"laggard\": \"TOASO.IS\",\n      \"laggard_relative_vs_sector\": -0.0333,\n      \"laggard_label_by_rule\": \"HOLD\",\n      \"leader\": \"FROTO.IS\",\n      \"leader_relative_vs_sector\": 0.0333,\n      \"members\": [\n        {\n          \"ticker\": \"FROTO.IS\",\n          \"cum_return\": -0.0117,\n          \"relative_vs_sector\": 0.0333,\n          \"label_by_rule\": \"HOLD\"\n        },\n        {\n          \"ticker\": \"TOASO.IS\",\n          \"cum_return\": -0.0784,\n          \"relative_vs_sector\": -0.0333,\n          \"label_by_rule\": \"HOLD\"\n        }\n      ]\n    },\n    {\n      \"sector\": \"banking\",\n      \"sector_mean\": 0.0522,\n      \"laggard\": \"ISCTR.IS\",\n      \"laggard_relative_vs_sector\": -0.0422,\n      \"laggard_label_by_rule\": \"HOLD\",\n      \"leader\": \"AKBNK.IS\",\n      \"leader_relative_vs_sector\": 0.0655,\n      \"members\": [\n        {\n          \"ticker\": \"AKBNK.IS\",\n          \"cum_return\": 0.1177,\n          \"relative_vs_sector\": 0.0655,\n          \"label_by_rule\": \"WATCH\"\n        },\n        {\n          \"ticker\": \"YKBNK.IS\",\n          \"cum_return\": 0.0597,\n          \"relative_vs_sector\": 0.0075,\n          \"label_by_rule\": \"HOLD\"\n        },\n        {\n          \"ticker\": \"GARAN.IS\",\n          \"cum_return\": 0.0214,\n          \"relative_vs_sector\": -0.0308,\n          \"label_by_rule\": \"HOLD\"\n        },\n        {\n          \"ticker\": \"ISCTR.IS\",\n          \"cum_return\": 0.01,\n          \"relative_vs_sector\": -0.0422,\n          \"label_by_rule\": \"HOLD\"\n        }\n      ]\n    },\n    {\n      \"sector\": \"energy\",\n      \"sector_mean\": -0.0731,\n      \"laggard\": \"PETKM.IS\",\n      \"laggard_relative_vs_sector\": -0.0386,\n      \"laggard_label_by_rule\": \"HOLD\",\n      \"leader\": \"TUPRS.IS\",\n      \"leader_relative_vs_sector\": 0.0386,\n      \"members\": [\n        {\n          \"ticker\": \"TUPRS.IS\",\n          \"cum_return\": -0.0346,\n          \"relative_vs_sector\": 0.0386,\n          \"label_by_rule\": \"HOLD\"\n        },\n        {\n          \"ticker\": \"PETKM.IS\",\n          \"cum_return\": -0.1117,\n          \"relative_vs_sector\": -0.0386,\n          \"label_by_rule\": \"HOLD\"\n        }\n      ]\n    },\n    {\n      \"sector\": \"holding\",\n      \"sector_mean\": -0.0274,\n      \"laggard\": \"KCHOL.IS\",\n      \"laggard_relative_vs_sector\": -0.0014,\n      \"laggard_label_by_rule\": \"HOLD\",\n      \"leader\": \"SAHOL.IS\",\n      \"leader_relative_vs_sector\": 0.0014,\n      \"members\": [\n        {\n          \"ticker\": \"SAHOL.IS\",\n          \"cum_return\": -0.026,\n          \"relative_vs_sector\": 0.0014,\n          \"label_by_rule\": \"HOLD\"\n        },\n        {\n          \"ticker\": \"KCHOL.IS\",\n          \"cum_return\": -0.0288,\n          \"relative_vs_sector\": -0.0014,\n          \"label_by_rule\": \"HOLD\"\n        }\n      ]\n    },\n    {\n      \"sector\": \"retail\",\n      \"sector_mean\": 0.0406,\n      \"laggard\": \"BIMAS.IS\",\n      \"laggard_relative_vs_sector\": -0.086,\n      \"laggard_label_by_rule\": \"POTENTIAL_CATCH_UP_CANDIDATE\",\n      \"leader\": \"MGROS.IS\",\n      \"leader_relative_vs_sector\": 0.086,\n      \"members\": [\n        {\n          \"ticker\": \"MGROS.IS\",\n          \"cum_return\": 0.1265,\n          \"relative_vs_sector\": 0.086,\n          \"label_by_rule\": \"WATCH\"\n        },\n        {\n          \"ticker\": \"BIMAS.IS\",\n          \"cum_return\": -0.0454,\n          \"relative_vs_sector\": -0.086,\n          \"label_by_rule\": \"POTENTIAL_CATCH_UP_CANDIDATE\"\n        }\n      ]\n    },\n    {\n      \"sector\": \"steel\",\n      \"sector_mean\": -0.1412,\n      \"laggard\": \"EREGL.IS\",\n      \"laggard_relative_vs_sector\": -0.0557,\n      \"laggard_label_by_rule\": \"POTENTIAL_CATCH_UP_CANDIDATE\",\n      \"leader\": \"KRDMD.IS\",\n      \"leader_relative_vs_sector\": 0.0557,\n      \"members\": [\n        {\n          \"ticker\": \"KRDMD.IS\",\n          \"cum_return\": -0.0854,\n          \"relative_vs_sector\": 0.0557,\n          \"label_by_rule\": \"WATCH\"\n        },\n        {\n          \"ticker\": \"EREGL.IS\",\n          \"cum_return\": -0.1969,\n          \"relative_vs_sector\": -0.0557,\n          \"label_by_rule\": \"POTENTIAL_CATCH_UP_CANDIDATE\"\n        }\n      ]\n    },\n    {\n      \"sector\": \"telecom\",\n      \"sector_mean\": 0.0132,\n      \"laggard\": \"TCELL.IS\",\n      \"laggard_relative_vs_sector\": -0.0778,\n      \"laggard_label_by_rule\": \"POTENTIAL_CATCH_UP_CANDIDATE\",\n      \"leader\": \"TTKOM.IS\",\n      \"leader_relative_vs_sector\": 0.0778,\n      \"members\": [\n        {\n          \"ticker\": \"TTKOM.IS\",\n          \"cum_return\": 0.0911,\n          \"relative_vs_sector\": 0.0778,\n          \"label_by_rule\": \"WATCH\"\n        },\n        {\n          \"ticker\": \"TCELL.IS\",\n          \"cum_return\": -0.0646,\n          \"relative_vs_sector\": -0.0778,\n          \"label_by_rule\": \"POTENTIAL_CATCH_UP_CANDIDATE\"\n        }\n      ]\n    }\n  ],\n  \"data\": [\n    {\n      \"index\": 0,\n      \"ticker\": \"PGSUS.IS\",\n      \"sector\": \"airlines\",\n      \"cum_return\": -0.14419644219642858,\n      \"sector_mean\": -0.1459077449077381,\n      \"relative_vs_sector\": 0.001711302711309537,\n      \"sector_rank\": 1.0,\n      \"lookback_sessions\": 63,\n      \"as_of\": \"2025-12-31\",\n      \"label_by_rule\": \"HOLD\"\n    },\n    {\n      \"index\": 1,\n      \"ticker\": \"THYAO.IS\",\n      \"sector\": \"airlines\",\n      \"cum_return\": -0.14761904761904765,\n      \"sector_mean\": -0.1459077449077381,\n      \"relative_vs_sector\": -0.001711302711309537,\n      \"sector_rank\": 2.0,\n      \"lookback_sessions\": 63,\n      \"as_of\": \"2025-12-31\",\n      \"label_by_rule\": \"HOLD\"\n    },\n    {\n      \"index\": 2,\n      \"ticker\": \"FROTO.IS\",\n      \"sector\": \"automotive\",\n      \"cum_return\": -0.011683325103909126,\n      \"sector_mean\": -0.045020742730621455,\n      \"relative_vs_sector\": 0.03333741762671233,\n      \"sector_rank\": 1.0,\n      \"lookback_sessions\": 63,\n      \"as_of\": \"2025-12-31\",\n      \"label_by_rule\": \"HOLD\"\n    },\n    {\n      \"index\": 3,\n      \"ticker\": \"TOASO.IS\",\n      \"sector\": \"automotive\",\n      \"cum_return\": -0.07835816035733378,\n      \"sector_mean\": -0.045020742730621455,\n      \"relative_vs_sector\": -0.03333741762671233,\n      \"sector_rank\": 2.0,\n      \"lookback_sessions\": 63,\n      \"as_of\": \"2025-12-31\",\n      \"label_by_rule\": \"HOLD\"\n    },\n    {\n      \"index\": 4,\n      \"ticker\": \"AKBNK.IS\",\n      \"sector\": \"banking\",\n      \"cum_return\": 0.11769422891457038,\n      \"sector_mean\": 0.05219162717682713,\n      \"relative_vs_sector\": 0.06550260173774325,\n      \"sector_rank\": 1.0,\n      \"lookback_sessions\": 63,\n      \"as_of\": \"2025-12-31\",\n      \"label_by_rule\": \"WATCH\"\n    },\n    {\n      \"index\": 5,\n      \"ticker\": \"YKBNK.IS\",\n      \"sector\": \"banking\",\n      \"cum_return\": 0.059684051997789034,\n      \"sector_mean\": 0.05219162717682713,\n      \"relative_vs_sector\": 0.007492424820961907,\n      \"sector_rank\": 2.0,\n      \"lookback_sessions\": 63,\n      \"as_of\": \"2025-12-31\",\n      \"label_by_rule\": \"HOLD\"\n    },\n    {\n      \"index\": 6,\n      \"ticker\": \"GARAN.IS\",\n      \"sector\": \"banking\",\n      \"cum_return\": 0.02135237267379897,\n      \"sector_mean\": 0.05219162717682713,\n      \"relative_vs_sector\": -0.030839254503028157,\n      \"sector_rank\": 3.0,\n      \"lookback_sessions\": 63,\n      \"as_of\": \"2025-12-31\",\n      \"label_by_rule\": \"HOLD\"\n    },\n    {\n      \"index\": 7,\n      \"ticker\": \"ISCTR.IS\",\n      \"sector\": \"banking\",\n      \"cum_return\": 0.010035855121150128,\n      \"sector_mean\": 0.05219162717682713,\n      \"relative_vs_sector\": -0.042155772055677,\n      \"sector_rank\": 4.0,\n      \"lookback_sessions\": 63,\n      \"as_of\": \"2025-12-31\",\n      \"label_by_rule\": \"HOLD\"\n    },\n    {\n      \"index\": 8,\n      \"ticker\": \"TUPRS.IS\",\n      \"sector\": \"energy\",\n      \"cum_return\": -0.034554960876151286,\n      \"sector_mean\": -0.07310673233962828,\n      \"relative_vs_sector\": 0.03855177146347699,\n      \"sector_rank\": 1.0,\n      \"lookback_sessions\": 63,\n      \"as_of\": \"2025-12-31\",\n      \"label_by_rule\": \"HOLD\"\n    },\n    {\n      \"index\": 9,\n      \"ticker\": \"PETKM.IS\",\n      \"sector\": \"energy\",\n      \"cum_return\": -0.11165850380310527,\n      \"sector_mean\": -0.07310673233962828,\n      \"relative_vs_sector\": -0.03855177146347699,\n      \"sector_rank\": 2.0,\n      \"lookback_sessions\": 63,\n      \"as_of\": \"2025-12-31\",\n      \"label_by_rule\": \"HOLD\"\n    },\n    {\n      \"index\": 10,\n      \"ticker\": \"SAHOL.IS\",\n      \"sector\": \"holding\",\n      \"cum_return\": -0.026011564319789793,\n      \"sector_mean\": -0.02739014534973694,\n      \"relative_vs_sector\": 0.0013785810299471457,\n      \"sector_rank\": 1.0,\n      \"lookback_sessions\": 63,\n      \"as_of\": \"2025-12-31\",\n      \"label_by_rule\": \"HOLD\"\n    },\n    {\n      \"index\": 11,\n      \"ticker\": \"KCHOL.IS\",\n      \"sector\": \"holding\",\n      \"cum_return\": -0.028768726379684084,\n      \"sector_mean\": -0.02739014534973694,\n      \"relative_vs_sector\": -0.0013785810299471457,\n      \"sector_rank\": 2.0,\n      \"lookback_sessions\": 63,\n      \"as_of\": \"2025-12-31\",\n      \"label_by_rule\": \"HOLD\"\n    },\n    {\n      \"index\": 12,\n      \"ticker\": \"MGROS.IS\",\n      \"sector\": \"retail\",\n      \"cum_return\": 0.126542132900483,\n      \"sector_mean\": 0.04058806287434591,\n      \"relative_vs_sector\": 0.08595407002613709,\n      \"sector_rank\": 1.0,\n      \"lookback_sessions\": 63,\n      \"as_of\": \"2025-12-31\",\n      \"label_by_rule\": \"WATCH\"\n    },\n    {\n      \"index\": 13,\n      \"ticker\": \"BIMAS.IS\",\n      \"sector\": \"retail\",\n      \"cum_return\": -0.04536600715179118,\n      \"sector_mean\": 0.04058806287434591,\n      \"relative_vs_sector\": -0.08595407002613709,\n      \"sector_rank\": 2.0,\n      \"lookback_sessions\": 63,\n      \"as_of\": \"2025-12-31\",\n      \"label_by_rule\": \"POTENTIAL_CATCH_UP_CANDIDATE\"\n    },\n    {\n      \"index\": 14,\n      \"ticker\": \"KRDMD.IS\",\n      \"sector\": \"steel\",\n      \"cum_return\": -0.08544534897155187,\n      \"sector_mean\": -0.14117177882715753,\n      \"relative_vs_sector\": 0.055726429855605664,\n      \"sector_rank\": 1.0,\n      \"lookback_sessions\": 63,\n      \"as_of\": \"2025-12-31\",\n      \"label_by_rule\": \"WATCH\"\n    },\n    {\n      \"index\": 15,\n      \"ticker\": \"EREGL.IS\",\n      \"sector\": \"steel\",\n      \"cum_return\": -0.1968982086827632,\n      \"sector_mean\": -0.14117177882715753,\n      \"relative_vs_sector\": -0.055726429855605664,\n      \"sector_rank\": 2.0,\n      \"lookback_sessions\": 63,\n      \"as_of\": \"2025-12-31\",\n      \"label_by_rule\": \"POTENTIAL_CATCH_UP_CANDIDATE\"\n    },\n    {\n      \"index\": 16,\n      \"ticker\": \"TTKOM.IS\",\n      \"sector\": \"telecom\",\n      \"cum_return\": 0.09108157813309048,\n      \"sector_mean\": 0.013233626846029412,\n      \"relative_vs_sector\": 0.07784795128706107,\n      \"sector_rank\": 1.0,\n      \"lookback_sessions\": 63,\n      \"as_of\": \"2025-12-31\",\n      \"label_by_rule\": \"WATCH\"\n    },\n    {\n      \"index\": 17,\n      \"ticker\": \"TCELL.IS\",\n      \"sector\": \"telecom\",\n      \"cum_return\": -0.06461432444103166,\n      \"sector_mean\": 0.013233626846029412,\n      \"relative_vs_sector\": -0.07784795128706107,\n      \"sector_rank\": 2.0,\n      \"lookback_sessions\": 63,\n      \"as_of\": \"2025-12-31\",\n      \"label_by_rule\": \"POTENTIAL_CATCH_UP_CANDIDATE\"\n    }\n  ],\n  \"price_currency\": \"TRY\",\n  \"fundamental_currency\": \"TRY\",\n  \"vintage_policy\": \"verified_only\",\n  \"fundamental_dataset\": \"data/processed/fintables_tms29_observations.csv\",\n  \"warnings\": [\n    \"Single user-selected stock; selection/survivorship bias; no market-wide inference.\",\n    \"Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.\",\n    \"Adjusted synthetic units; whole-lot execution and taxes not modeled.\",\n    \"BIST100 price-index basis differs from adjusted stock return basis.\",\n    \"Primary analysis uses one internally consistent post-TMS 29 basis; pre-2025 trading results are outside its evaluation window.\",\n    \"2026 is partial through the last cached session before the exclusive evaluation end.\",\n    \"KAP context is evidence for interpretation and does not alter any strategy score or order.\"\n  ],\n  \"source_document\": \"docs/DATA_SOURCES.md\",\n  \"execution_assumptions\": {\n    \"commission_bps_per_side\": 10.0,\n    \"slippage_bps_per_side\": 5.0,\n    \"initial_capital_try\": 100000.0,\n    \"signal_timing\": \"close decision, next stock-session open execution\"\n  }\n}",
+            "type": "text"
+          }
+        ],
+        "isError": false,
+        "structuredContent": {
+          "ticker": null,
+          "primary_ticker": "THYAO.IS",
+          "as_of": "2025-12-31",
+          "lookback_sessions": 63,
+          "label_rule": {
+            "metric": "relative_vs_sector",
+            "catch_up_below": -0.05,
+            "watch_above": 0.05,
+            "rule": "relative_vs_sector < -0.05 -> POTENTIAL_CATCH_UP_CANDIDATE; relative_vs_sector > 0.05 -> WATCH; otherwise HOLD"
+          },
+          "sector_summary": [
+            {
+              "sector": "airlines",
+              "sector_mean": -0.1459,
+              "laggard": "THYAO.IS",
+              "laggard_relative_vs_sector": -0.0017,
+              "laggard_label_by_rule": "HOLD",
+              "leader": "PGSUS.IS",
+              "leader_relative_vs_sector": 0.0017,
+              "members": [
+                {
+                  "ticker": "PGSUS.IS",
+                  "cum_return": -0.1442,
+                  "relative_vs_sector": 0.0017,
+                  "label_by_rule": "HOLD"
+                },
+                {
+                  "ticker": "THYAO.IS",
+                  "cum_return": -0.1476,
+                  "relative_vs_sector": -0.0017,
+                  "label_by_rule": "HOLD"
+                }
+              ]
+            },
+            {
+              "sector": "automotive",
+              "sector_mean": -0.045,
+              "laggard": "TOASO.IS",
+              "laggard_relative_vs_sector": -0.0333,
+              "laggard_label_by_rule": "HOLD",
+              "leader": "FROTO.IS",
+              "leader_relative_vs_sector": 0.0333,
+              "members": [
+                {
+                  "ticker": "FROTO.IS",
+                  "cum_return": -0.0117,
+                  "relative_vs_sector": 0.0333,
+                  "label_by_rule": "HOLD"
+                },
+                {
+                  "ticker": "TOASO.IS",
+                  "cum_return": -0.0784,
+                  "relative_vs_sector": -0.0333,
+                  "label_by_rule": "HOLD"
+                }
+              ]
+            },
+            {
+              "sector": "banking",
+              "sector_mean": 0.0522,
+              "laggard": "ISCTR.IS",
+              "laggard_relative_vs_sector": -0.0422,
+              "laggard_label_by_rule": "HOLD",
+              "leader": "AKBNK.IS",
+              "leader_relative_vs_sector": 0.0655,
+              "members": [
+                {
+                  "ticker": "AKBNK.IS",
+                  "cum_return": 0.1177,
+                  "relative_vs_sector": 0.0655,
+                  "label_by_rule": "WATCH"
+                },
+                {
+                  "ticker": "YKBNK.IS",
+                  "cum_return": 0.0597,
+                  "relative_vs_sector": 0.0075,
+                  "label_by_rule": "HOLD"
+                },
+                {
+                  "ticker": "GARAN.IS",
+                  "cum_return": 0.0214,
+                  "relative_vs_sector": -0.0308,
+                  "label_by_rule": "HOLD"
+                },
+                {
+                  "ticker": "ISCTR.IS",
+                  "cum_return": 0.01,
+                  "relative_vs_sector": -0.0422,
+                  "label_by_rule": "HOLD"
+                }
+              ]
+            },
+            {
+              "sector": "energy",
+              "sector_mean": -0.0731,
+              "laggard": "PETKM.IS",
+              "laggard_relative_vs_sector": -0.0386,
+              "laggard_label_by_rule": "HOLD",
+              "leader": "TUPRS.IS",
+              "leader_relative_vs_sector": 0.0386,
+              "members": [
+                {
+                  "ticker": "TUPRS.IS",
+                  "cum_return": -0.0346,
+                  "relative_vs_sector": 0.0386,
+                  "label_by_rule": "HOLD"
+                },
+                {
+                  "ticker": "PETKM.IS",
+                  "cum_return": -0.1117,
+                  "relative_vs_sector": -0.0386,
+                  "label_by_rule": "HOLD"
+                }
+              ]
+            },
+            {
+              "sector": "holding",
+              "sector_mean": -0.0274,
+              "laggard": "KCHOL.IS",
+              "laggard_relative_vs_sector": -0.0014,
+              "laggard_label_by_rule": "HOLD",
+              "leader": "SAHOL.IS",
+              "leader_relative_vs_sector": 0.0014,
+              "members": [
+                {
+                  "ticker": "SAHOL.IS",
+                  "cum_return": -0.026,
+                  "relative_vs_sector": 0.0014,
+                  "label_by_rule": "HOLD"
+                },
+                {
+                  "ticker": "KCHOL.IS",
+                  "cum_return": -0.0288,
+                  "relative_vs_sector": -0.0014,
+                  "label_by_rule": "HOLD"
+                }
+              ]
+            },
+            {
+              "sector": "retail",
+              "sector_mean": 0.0406,
+              "laggard": "BIMAS.IS",
+              "laggard_relative_vs_sector": -0.086,
+              "laggard_label_by_rule": "POTENTIAL_CATCH_UP_CANDIDATE",
+              "leader": "MGROS.IS",
+              "leader_relative_vs_sector": 0.086,
+              "members": [
+                {
+                  "ticker": "MGROS.IS",
+                  "cum_return": 0.1265,
+                  "relative_vs_sector": 0.086,
+                  "label_by_rule": "WATCH"
+                },
+                {
+                  "ticker": "BIMAS.IS",
+                  "cum_return": -0.0454,
+                  "relative_vs_sector": -0.086,
+                  "label_by_rule": "POTENTIAL_CATCH_UP_CANDIDATE"
+                }
+              ]
+            },
+            {
+              "sector": "steel",
+              "sector_mean": -0.1412,
+              "laggard": "EREGL.IS",
+              "laggard_relative_vs_sector": -0.0557,
+              "laggard_label_by_rule": "POTENTIAL_CATCH_UP_CANDIDATE",
+              "leader": "KRDMD.IS",
+              "leader_relative_vs_sector": 0.0557,
+              "members": [
+                {
+                  "ticker": "KRDMD.IS",
+                  "cum_return": -0.0854,
+                  "relative_vs_sector": 0.0557,
+                  "label_by_rule": "WATCH"
+                },
+                {
+                  "ticker": "EREGL.IS",
+                  "cum_return": -0.1969,
+                  "relative_vs_sector": -0.0557,
+                  "label_by_rule": "POTENTIAL_CATCH_UP_CANDIDATE"
+                }
+              ]
+            },
+            {
+              "sector": "telecom",
+              "sector_mean": 0.0132,
+              "laggard": "TCELL.IS",
+              "laggard_relative_vs_sector": -0.0778,
+              "laggard_label_by_rule": "POTENTIAL_CATCH_UP_CANDIDATE",
+              "leader": "TTKOM.IS",
+              "leader_relative_vs_sector": 0.0778,
+              "members": [
+                {
+                  "ticker": "TTKOM.IS",
+                  "cum_return": 0.0911,
+                  "relative_vs_sector": 0.0778,
+                  "label_by_rule": "WATCH"
+                },
+                {
+                  "ticker": "TCELL.IS",
+                  "cum_return": -0.0646,
+                  "relative_vs_sector": -0.0778,
+                  "label_by_rule": "POTENTIAL_CATCH_UP_CANDIDATE"
+                }
+              ]
+            }
+          ],
+          "data": [
+            {
+              "index": 0,
+              "ticker": "PGSUS.IS",
+              "sector": "airlines",
+              "cum_return": -0.14419644219642858,
+              "sector_mean": -0.1459077449077381,
+              "relative_vs_sector": 0.001711302711309537,
+              "sector_rank": 1.0,
+              "lookback_sessions": 63,
+              "as_of": "2025-12-31",
+              "label_by_rule": "HOLD"
+            },
+            {
+              "index": 1,
+              "ticker": "THYAO.IS",
+              "sector": "airlines",
+              "cum_return": -0.14761904761904765,
+              "sector_mean": -0.1459077449077381,
+              "relative_vs_sector": -0.001711302711309537,
+              "sector_rank": 2.0,
+              "lookback_sessions": 63,
+              "as_of": "2025-12-31",
+              "label_by_rule": "HOLD"
+            },
+            {
+              "index": 2,
+              "ticker": "FROTO.IS",
+              "sector": "automotive",
+              "cum_return": -0.011683325103909126,
+              "sector_mean": -0.045020742730621455,
+              "relative_vs_sector": 0.03333741762671233,
+              "sector_rank": 1.0,
+              "lookback_sessions": 63,
+              "as_of": "2025-12-31",
+              "label_by_rule": "HOLD"
+            },
+            {
+              "index": 3,
+              "ticker": "TOASO.IS",
+              "sector": "automotive",
+              "cum_return": -0.07835816035733378,
+              "sector_mean": -0.045020742730621455,
+              "relative_vs_sector": -0.03333741762671233,
+              "sector_rank": 2.0,
+              "lookback_sessions": 63,
+              "as_of": "2025-12-31",
+              "label_by_rule": "HOLD"
+            },
+            {
+              "index": 4,
+              "ticker": "AKBNK.IS",
+              "sector": "banking",
+              "cum_return": 0.11769422891457038,
+              "sector_mean": 0.05219162717682713,
+              "relative_vs_sector": 0.06550260173774325,
+              "sector_rank": 1.0,
+              "lookback_sessions": 63,
+              "as_of": "2025-12-31",
+              "label_by_rule": "WATCH"
+            },
+            {
+              "index": 5,
+              "ticker": "YKBNK.IS",
+              "sector": "banking",
+              "cum_return": 0.059684051997789034,
+              "sector_mean": 0.05219162717682713,
+              "relative_vs_sector": 0.007492424820961907,
+              "sector_rank": 2.0,
+              "lookback_sessions": 63,
+              "as_of": "2025-12-31",
+              "label_by_rule": "HOLD"
+            },
+            {
+              "index": 6,
+              "ticker": "GARAN.IS",
+              "sector": "banking",
+              "cum_return": 0.02135237267379897,
+              "sector_mean": 0.05219162717682713,
+              "relative_vs_sector": -0.030839254503028157,
+              "sector_rank": 3.0,
+              "lookback_sessions": 63,
+              "as_of": "2025-12-31",
+              "label_by_rule": "HOLD"
+            },
+            {
+              "index": 7,
+              "ticker": "ISCTR.IS",
+              "sector": "banking",
+              "cum_return": 0.010035855121150128,
+              "sector_mean": 0.05219162717682713,
+              "relative_vs_sector": -0.042155772055677,
+              "sector_rank": 4.0,
+              "lookback_sessions": 63,
+              "as_of": "2025-12-31",
+              "label_by_rule": "HOLD"
+            },
+            {
+              "index": 8,
+              "ticker": "TUPRS.IS",
+              "sector": "energy",
+              "cum_return": -0.034554960876151286,
+              "sector_mean": -0.07310673233962828,
+              "relative_vs_sector": 0.03855177146347699,
+              "sector_rank": 1.0,
+              "lookback_sessions": 63,
+              "as_of": "2025-12-31",
+              "label_by_rule": "HOLD"
+            },
+            {
+              "index": 9,
+              "ticker": "PETKM.IS",
+              "sector": "energy",
+              "cum_return": -0.11165850380310527,
+              "sector_mean": -0.07310673233962828,
+              "relative_vs_sector": -0.03855177146347699,
+              "sector_rank": 2.0,
+              "lookback_sessions": 63,
+              "as_of": "2025-12-31",
+              "label_by_rule": "HOLD"
+            },
+            {
+              "index": 10,
+              "ticker": "SAHOL.IS",
+              "sector": "holding",
+              "cum_return": -0.026011564319789793,
+              "sector_mean": -0.02739014534973694,
+              "relative_vs_sector": 0.0013785810299471457,
+              "sector_rank": 1.0,
+              "lookback_sessions": 63,
+              "as_of": "2025-12-31",
+              "label_by_rule": "HOLD"
+            },
+            {
+              "index": 11,
+              "ticker": "KCHOL.IS",
+              "sector": "holding",
+              "cum_return": -0.028768726379684084,
+              "sector_mean": -0.02739014534973694,
+              "relative_vs_sector": -0.0013785810299471457,
+              "sector_rank": 2.0,
+              "lookback_sessions": 63,
+              "as_of": "2025-12-31",
+              "label_by_rule": "HOLD"
+            },
+            {
+              "index": 12,
+              "ticker": "MGROS.IS",
+              "sector": "retail",
+              "cum_return": 0.126542132900483,
+              "sector_mean": 0.04058806287434591,
+              "relative_vs_sector": 0.08595407002613709,
+              "sector_rank": 1.0,
+              "lookback_sessions": 63,
+              "as_of": "2025-12-31",
+              "label_by_rule": "WATCH"
+            },
+            {
+              "index": 13,
+              "ticker": "BIMAS.IS",
+              "sector": "retail",
+              "cum_return": -0.04536600715179118,
+              "sector_mean": 0.04058806287434591,
+              "relative_vs_sector": -0.08595407002613709,
+              "sector_rank": 2.0,
+              "lookback_sessions": 63,
+              "as_of": "2025-12-31",
+              "label_by_rule": "POTENTIAL_CATCH_UP_CANDIDATE"
+            },
+            {
+              "index": 14,
+              "ticker": "KRDMD.IS",
+              "sector": "steel",
+              "cum_return": -0.08544534897155187,
+              "sector_mean": -0.14117177882715753,
+              "relative_vs_sector": 0.055726429855605664,
+              "sector_rank": 1.0,
+              "lookback_sessions": 63,
+              "as_of": "2025-12-31",
+              "label_by_rule": "WATCH"
+            },
+            {
+              "index": 15,
+              "ticker": "EREGL.IS",
+              "sector": "steel",
+              "cum_return": -0.1968982086827632,
+              "sector_mean": -0.14117177882715753,
+              "relative_vs_sector": -0.055726429855605664,
+              "sector_rank": 2.0,
+              "lookback_sessions": 63,
+              "as_of": "2025-12-31",
+              "label_by_rule": "POTENTIAL_CATCH_UP_CANDIDATE"
+            },
+            {
+              "index": 16,
+              "ticker": "TTKOM.IS",
+              "sector": "telecom",
+              "cum_return": 0.09108157813309048,
+              "sector_mean": 0.013233626846029412,
+              "relative_vs_sector": 0.07784795128706107,
+              "sector_rank": 1.0,
+              "lookback_sessions": 63,
+              "as_of": "2025-12-31",
+              "label_by_rule": "WATCH"
+            },
+            {
+              "index": 17,
+              "ticker": "TCELL.IS",
+              "sector": "telecom",
+              "cum_return": -0.06461432444103166,
+              "sector_mean": 0.013233626846029412,
+              "relative_vs_sector": -0.07784795128706107,
+              "sector_rank": 2.0,
+              "lookback_sessions": 63,
+              "as_of": "2025-12-31",
+              "label_by_rule": "POTENTIAL_CATCH_UP_CANDIDATE"
+            }
+          ],
+          "price_currency": "TRY",
+          "fundamental_currency": "TRY",
+          "vintage_policy": "verified_only",
+          "fundamental_dataset": "data/processed/fintables_tms29_observations.csv",
+          "warnings": [
+            "Single user-selected stock; selection/survivorship bias; no market-wide inference.",
+            "Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.",
+            "Adjusted synthetic units; whole-lot execution and taxes not modeled.",
+            "BIST100 price-index basis differs from adjusted stock return basis.",
+            "Primary analysis uses one internally consistent post-TMS 29 basis; pre-2025 trading results are outside its evaluation window.",
+            "2026 is partial through the last cached session before the exclusive evaluation end.",
+            "KAP context is evidence for interpretation and does not alter any strategy score or order."
+          ],
+          "source_document": "docs/DATA_SOURCES.md",
+          "execution_assumptions": {
+            "commission_bps_per_side": 10.0,
+            "slippage_bps_per_side": 5.0,
+            "initial_capital_try": 100000.0,
+            "signal_timing": "close decision, next stock-session open execution"
+          }
+        }
+      },
+      "result_sha256": "51157d3afdc5ef59a9e1ee9c7d9b79d93597c5c246e29bc785572f74c1f2b3d0",
+      "truncated_for_model": true
+    },
+    {
+      "index": 3,
+      "turn": 1,
+      "type": "assistant",
+      "started_at": "2026-11-25T16:29:28.064+00:00",
+      "finished_at": "2026-11-25T16:29:41.147+00:00",
+      "duration_s": 13.084,
+      "content": "<final_answer>\n{\"educational_label\": \"HOLD\", \"committed_evidence_ids\": [\"rank_sector_relative_strength:ISCTR.IS:2025-12-31:lb63\"], \"explanation\": \"rank_sector_relative_strength (63 sessions to 2025-12-31): ISCTR.IS (banking) cum_return 0.0100 vs sector_mean 0.0522, relative_vs_sector -0.0422 (sector_summary). Other banking laggard: AKBNK.IS cum_return 0.1177, relative_vs_sector 0.0655. label_rule: relative_vs_sector < -0.05 → POTENTIAL_CATCH_UP_CANDIDATE; > 0.05 → WATCH; otherwise HOLD. laggard_label_by_rule: HOLD. ISCTR.IS relative_vs_sector -0.0422 (sector_summary), label_by_rule HOLD. Selected: HOLD.\"}\n</final_answer>",
+      "tool_calls": [],
+      "finish_reason": "stop",
+      "usage": {
+        "prompt_tokens": 2380,
+        "prompt_tokens_details": {
+          "cached_tokens": 789
+        },
+        "completion_tokens": 218,
+        "total_tokens": 2598
+      },
+      "system_fingerprint": "fp_ollama"
+    }
+  ],
+  "tools_called": [
+    "rank_sector_relative_strength"
+  ],
+  "final_answer": "<final_answer>\n{\"educational_label\": \"HOLD\", \"committed_evidence_ids\": [\"rank_sector_relative_strength:ISCTR.IS:2025-12-31:lb63\"], \"explanation\": \"rank_sector_relative_strength (63 sessions to 2025-12-31): ISCTR.IS (banking) cum_return 0.0100 vs sector_mean 0.0522, relative_vs_sector -0.0422 (sector_summary). Other banking laggard: AKBNK.IS cum_return 0.1177, relative_vs_sector 0.0655. label_rule: relative_vs_sector < -0.05 → POTENTIAL_CATCH_UP_CANDIDATE; > 0.05 → WATCH; otherwise HOLD. laggard_label_by_rule: HOLD. ISCTR.IS relative_vs_sector -0.0422 (sector_summary), label_by_rule HOLD. Selected: HOLD.\"}\n</final_answer>",
+  "turns_used": 2,
+  "grounding_audit": {
+    "numbers_found": 9,
+    "grounded_count": 9,
+    "ungrounded_count": 0,
+    "all_grounded": true,
+    "grounded": [
+      {
+        "text": "63",
+        "value": 63.0,
+        "decimals": 0,
+        "percent": false,
+        "is_year": false,
+        "tool_value": 63.0,
+        "scale": 1.0,
+        "abs_match": false
+      },
+      {
+        "text": "0.0100",
+        "value": 0.01,
+        "decimals": 4,
+        "percent": false,
+        "is_year": false,
+        "tool_value": 0.01,
+        "scale": 1.0,
+        "abs_match": false
+      },
+      {
+        "text": "0.0522",
+        "value": 0.0522,
+        "decimals": 4,
+        "percent": false,
+        "is_year": false,
+        "tool_value": 0.05219162717682713,
+        "scale": 1.0,
+        "abs_match": false
+      },
+      {
+        "text": "-0.0422",
+        "value": -0.0422,
+        "decimals": 4,
+        "percent": false,
+        "is_year": false,
+        "tool_value": -0.0422,
+        "scale": 1.0,
+        "abs_match": false
+      },
+      {
+        "text": "0.1177",
+        "value": 0.1177,
+        "decimals": 4,
+        "percent": false,
+        "is_year": false,
+        "tool_value": 0.11769422891457038,
+        "scale": 1.0,
+        "abs_match": false
+      },
+      {
+        "text": "0.0655",
+        "value": 0.0655,
+        "decimals": 4,
+        "percent": false,
+        "is_year": false,
+        "tool_value": 0.0655,
+        "scale": 1.0,
+        "abs_match": false
+      },
+      {
+        "text": "-0.05",
+        "value": -0.05,
+        "decimals": 2,
+        "percent": false,
+        "is_year": false,
+        "tool_value": -0.05,
+        "scale": 1.0,
+        "abs_match": false
+      },
+      {
+        "text": "0.05",
+        "value": 0.05,
+        "decimals": 2,
+        "percent": false,
+        "is_year": false,
+        "tool_value": 0.05,
+        "scale": 1.0,
+        "abs_match": false
+      },
+      {
+        "text": "-0.0422",
+        "value": -0.0422,
+        "decimals": 4,
+        "percent": false,
+        "is_year": false,
+        "tool_value": -0.0422,
+        "scale": 1.0,
+        "abs_match": false
+      }
+    ],
+    "ungrounded": [],
+    "echoed_from_prompt": [],
+    "small_integers": [],
+    "years_ignored": [],
+    "evidence_values_indexed": 117,
+    "method": "src/bist_analytics/harness/grounding.py (audit only; answer never modified)"
+  },
+  "error": null
+}

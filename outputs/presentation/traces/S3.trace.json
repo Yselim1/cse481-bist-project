@@ -1,0 +1,945 @@
+{
+  "schema_version": "bist-execution-trace/1",
+  "run_id": "5f23be12-d8bc-48ef-904e-29d0086adcf4",
+  "scenario_id": "S3",
+  "started_at": "2026-11-25T16:35:46.422+00:00",
+  "finished_at": "2026-11-25T16:36:22.699+00:00",
+  "wall_time_s": 36.277,
+  "model": {
+    "name": "bist-qwen",
+    "endpoint": "http://localhost:11434/v1",
+    "ollama_version": "0.40.16",
+    "digest": "03815952dddc6ff1489e9910c93a872c32be7f09095ffa09c810065f67b66b72",
+    "size_bytes": 1929903359,
+    "modified_at": "2026-11-25T19:13:21.6186539+03:00",
+    "family": "qwen2",
+    "parameter_size": "3.1B",
+    "quantization_level": "Q4_K_M",
+    "format": "gguf",
+    "modelfile_parameters": "top_p                          0.9\nnum_ctx                        65536\ntemperature                    0",
+    "modelfile_sha256": "c7d4eab0ee20daca5cd1bcb148a5991550602e6e48594be4498d69d9acd87dcc"
+  },
+  "sampling": {
+    "temperature": 0.0,
+    "seed": 17,
+    "max_tokens": 1536,
+    "top_p": "0.9",
+    "num_ctx": "65536",
+    "endpoint": "http://localhost:11434/v1/chat/completions"
+  },
+  "harness": {
+    "script": "scripts/local_agent.py",
+    "config_file": "config/universe_live.yaml",
+    "max_turns": 10,
+    "force_answer_after": 10,
+    "tool_result_char_cap": 4500,
+    "tool_protocol": "training_format (no schemas sent; <tool_call> text parsed, as in the fine-tuning data)",
+    "tools_offered": [
+      "project_status",
+      "get_context_events",
+      "get_stock_history",
+      "calculate_indicators",
+      "find_support_resistance",
+      "get_fundamental_metrics",
+      "calculate_scores",
+      "run_backtest",
+      "generate_signal",
+      "generate_report",
+      "get_index_history",
+      "detect_reversal_events",
+      "rank_sector_relative_strength",
+      "test_weekday_pattern",
+      "calculate_fundamental_change",
+      "get_macro_context",
+      "get_news_events",
+      "get_speech_features",
+      "check_data_quality",
+      "build_evidence_bundle",
+      "search_knowledge_base"
+    ],
+    "git": {
+      "commit": "f052f85ddb9484da9694a3e7e53b970f03bbbaa1",
+      "dirty": true
+    },
+    "python": "3.12.14"
+  },
+  "system_prompt": "You are an academic BIST financial-analysis agent. For every claim, call a tool first: you must never invent numbers. Allowed labels are the 8 educational labels (HOLD, WATCH, INVESTIGATE, POTENTIAL_CATCH_UP_CANDIDATE, TECHNICAL_REVERSAL_CANDIDATE, FUNDAMENTAL_IMPROVEMENT_CANDIDATE, REJECT_SIGNAL, ANALYSIS_UNSAFE). When evidence is insufficient, choose INVESTIGATE or ANALYSIS_UNSAFE. Cite tool names in your reasoning. Do not give investment advice. Numeric values must come from committed_evidence entries.\n\nTool guide (pick what the question needs; pass the question's ticker and dates):\n- sector leaders/laggards, catch-up: rank_sector_relative_strength (as_of, lookback)\n- day-of-week effects: test_weekday_pattern (ticker, start, end)\n- reversal / turning-point events: detect_reversal_events (ticker, as_of, lookback<=252)\n- fundamentals and their change: get_fundamental_metrics, calculate_fundamental_change; price reaction: get_stock_history, get_news_events\n- technical state and scores: calculate_indicators, calculate_scores, generate_signal\n- dates beyond the data, unknown tickers, missing data: check_data_quality (ticker, as_of); gate_status HARD_BLOCK means the label must be ANALYSIS_UNSAFE\n- methodology, definitions, disclosures: search_knowledge_base\nApply the label_rule returned by the tool. When the tool returns a summary, sector_summary or best_family block, take the laggard/leader, highest/lowest and best values from it and use its *label_by_rule field as the label; do not re-derive them from the rows. If a tool returns an error or available=false, say the data is unavailable; never estimate it. Copy numbers exactly as the tools return them (you may round, or convert fractions to percentages).",
+  "user_prompt": "Which technical reversal events were detected for TCELL.IS in the 120 trading sessions up to 2025-12-31, and what was the average return over the following 5 sessions?",
+  "user_message_sent": "Which technical reversal events were detected for TCELL.IS in the 120 trading sessions up to 2025-12-31, and what was the average return over the following 5 sessions?\n\nReference context retrieved by search_knowledge_base (cite doc_id when you use it; numbers must still come from tool results):\n- [doc:financial_interpretation:05] FINANCIAL_INTERPRETATION: Backtest findings (undated): | Strategy | Return | Max drawdown | Sharpe (rf=0) | Closed trades | Win rate | Exposure | Sessions | | --- | --- | --- | --- | --- | --- | --- | --- | | combined | 65.32% | -13.85% | 1.08 | 8 | 87.50% | 20.16% | 749 | | technical | 61.19% | -13.16% | 1.0 | 11 | 63.64% | 26.70% | 749 | | buy_hold | ...\n- [universe:TCELL.IS] TCELL.IS universe membership (undated): TCELL.IS belongs to the telecom sector of the research universe. Sector peers: TTKOM.IS. Mobile operator; regulated-revenue profile. Benchmark index: XU100.IS.\n- [doc:financial_interpretation:01] FINANCIAL_INTERPRETATION: Findings and how to explain them (undated): **Final study:** THYAO, 2023-2025 trading; verified original annual Fintables statements; financial amounts and returns in nominal TRY. Latest annual period at 2025-12-31 is FY2024, released 2025-02-28 and usable from 2025-03-03.",
+  "retrieval": {
+    "tool": "search_knowledge_base",
+    "arguments": {
+      "query": "Which technical reversal events were detected for TCELL.IS in the 120 trading sessions up to 2025-12-31, and what was the average return over the following 5 sessions?",
+      "top_k": 3,
+      "as_of": "2025-12-31",
+      "ticker": "TCELL.IS"
+    },
+    "step_index": 0,
+    "injected": true,
+    "injected_text": "Reference context retrieved by search_knowledge_base (cite doc_id when you use it; numbers must still come from tool results):\n- [doc:financial_interpretation:05] FINANCIAL_INTERPRETATION: Backtest findings (undated): | Strategy | Return | Max drawdown | Sharpe (rf=0) | Closed trades | Win rate | Exposure | Sessions | | --- | --- | --- | --- | --- | --- | --- | --- | | combined | 65.32% | -13.85% | 1.08 | 8 | 87.50% | 20.16% | 749 | | technical | 61.19% | -13.16% | 1.0 | 11 | 63.64% | 26.70% | 749 | | buy_hold | ...\n- [universe:TCELL.IS] TCELL.IS universe membership (undated): TCELL.IS belongs to the telecom sector of the research universe. Sector peers: TTKOM.IS. Mobile operator; regulated-revenue profile. Benchmark index: XU100.IS.\n- [doc:financial_interpretation:01] FINANCIAL_INTERPRETATION: Findings and how to explain them (undated): **Final study:** THYAO, 2023-2025 trading; verified original annual Fintables statements; financial amounts and returns in nominal TRY. Latest annual period at 2025-12-31 is FY2024, released 2025-02-28 and usable from 2025-03-03."
+  },
+  "steps": [
+    {
+      "index": 0,
+      "turn": -1,
+      "type": "tool_call",
+      "actor": "harness",
+      "tool": "search_knowledge_base",
+      "arguments": {
+        "query": "Which technical reversal events were detected for TCELL.IS in the 120 trading sessions up to 2025-12-31, and what was the average return over the following 5 sessions?",
+        "top_k": 3,
+        "as_of": "2025-12-31",
+        "ticker": "TCELL.IS"
+      },
+      "date_range": {
+        "as_of": "2025-12-31"
+      },
+      "started_at": "2026-11-25T16:35:54.847+00:00",
+      "finished_at": "2026-11-25T16:35:59.424+00:00",
+      "duration_s": 4.576,
+      "result": {
+        "content": [
+          {
+            "text": "{\n  \"ticker\": \"TCELL.IS\",\n  \"primary_ticker\": \"THYAO.IS\",\n  \"as_of\": \"2025-12-31\",\n  \"data\": {\n    \"query\": \"Which technical reversal events were detected for TCELL.IS in the 120 trading sessions up to 2025-12-31, and what was the average return over the following 5 sessions?\",\n    \"hits\": [\n      {\n        \"doc_id\": \"doc:financial_interpretation:05\",\n        \"score\": 13.076,\n        \"title\": \"FINANCIAL_INTERPRETATION: Backtest findings\",\n        \"text\": \"| Strategy | Return | Max drawdown | Sharpe (rf=0) | Closed trades | Win rate | Exposure | Sessions | | --- | --- | --- | --- | --- | --- | --- | --- | | combined | 65.32% | -13.85% | 1.08 | 8 | 87.50% | 20.16% | 749 | | technical | 61.19% | -13.16% | 1.0 | 11 | 63.64% | 26.70% | 749 | | buy_hold | 92.73% | -25.61% | 0.75 | 0 | Unavailable | 100.00% | 749 | | bist100 | 102.24% | -22.86% | 0.97 | — | Unavailable | Unavailable | 746 | TRY100,000 becomes **TRY165,317.12** under the combined strategy, after modeled costs. It exceeds technical-only return by **4.13 percentage points**, but trails buy-and-hold and BIST100. Its maximum drawdown is slightly deeper than technical-only drawdown, although much smaller than buy-and-hold's drawdown. Thus there is no across-the-board dominance. The strategy holds a position for **20.16%** of sessions and completes **eight trades**, seven profitable. That small sample limits what the 87.5% win rate can establish. Low exposure reduces participation in sustained stock appreciation and also changes risk. Zero interest on idle cash is consequential in a high-inflation market. The gross return using the **same executions** is **69.33%**, compared with 65.32% net. Modeled commission totals TRY2,115.87 and slippage TRY1,057.95; their opportunity/compounding effect contributes to the endpoint difference. A fresh zero-cost strategy run can change stop decisions, so it is a different comparison.\",\n        \"source_type\": \"methodology\",\n        \"source\": \"docs/FINANCIAL_INTERPRETATION.md\",\n        \"published_at\": null,\n        \"tickers\": []\n      },\n      {\n        \"doc_id\": \"universe:TCELL.IS\",\n        \"score\": 12.1136,\n        \"title\": \"TCELL.IS universe membership\",\n        \"text\": \"TCELL.IS belongs to the telecom sector of the research universe. Sector peers: TTKOM.IS. Mobile operator; regulated-revenue profile. Benchmark index: XU100.IS.\",\n        \"source_type\": \"universe_metadata\",\n        \"source\": \"config/bist100_universe.yaml\",\n        \"published_at\": null,\n        \"tickers\": [\n          \"TCELL.IS\"\n        ]\n      },\n      {\n        \"doc_id\": \"doc:financial_interpretation:01\",\n        \"score\": 11.5806,\n        \"title\": \"FINANCIAL_INTERPRETATION: Findings and how to explain them\",\n        \"text\": \"**Final study:** THYAO, 2023-2025 trading; verified original annual Fintables statements; financial amounts and returns in nominal TRY. Latest annual period at 2025-12-31 is FY2024, released 2025-02-28 and usable from 2025-03-03.\",\n        \"source_type\": \"methodology\",\n        \"source\": \"docs/FINANCIAL_INTERPRETATION.md\",\n        \"published_at\": null,\n        \"tickers\": []\n      }\n    ]\n  },\n  \"price_currency\": \"TRY\",\n  \"fundamental_currency\": \"TRY\",\n  \"vintage_policy\": \"verified_only\",\n  \"fundamental_dataset\": \"data/processed/fintables_tms29_observations.csv\",\n  \"warnings\": [\n    \"Single user-selected stock; selection/survivorship bias; no market-wide inference.\",\n    \"Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.\",\n    \"Adjusted synthetic units; whole-lot execution and taxes not modeled.\",\n    \"BIST100 price-index basis differs from adjusted stock return basis.\",\n    \"Primary analysis uses one internally consistent post-TMS 29 basis; pre-2025 trading results are outside its evaluation window.\",\n    \"2026 is partial through the last cached session before the exclusive evaluation end.\",\n    \"KAP context is evidence for interpretation and does not alter any strategy score or order.\"\n  ],\n  \"source_document\": \"docs/DATA_SOURCES.md\",\n  \"execution_assumptions\": {\n    \"commission_bps_per_side\": 10.0,\n    \"slippage_bps_per_side\": 5.0,\n    \"initial_capital_try\": 100000.0,\n    \"signal_timing\": \"close decision, next stock-session open execution\"\n  }\n}",
+            "type": "text"
+          }
+        ],
+        "isError": false,
+        "structuredContent": {
+          "ticker": "TCELL.IS",
+          "primary_ticker": "THYAO.IS",
+          "as_of": "2025-12-31",
+          "data": {
+            "query": "Which technical reversal events were detected for TCELL.IS in the 120 trading sessions up to 2025-12-31, and what was the average return over the following 5 sessions?",
+            "hits": [
+              {
+                "doc_id": "doc:financial_interpretation:05",
+                "score": 13.076,
+                "title": "FINANCIAL_INTERPRETATION: Backtest findings",
+                "text": "| Strategy | Return | Max drawdown | Sharpe (rf=0) | Closed trades | Win rate | Exposure | Sessions | | --- | --- | --- | --- | --- | --- | --- | --- | | combined | 65.32% | -13.85% | 1.08 | 8 | 87.50% | 20.16% | 749 | | technical | 61.19% | -13.16% | 1.0 | 11 | 63.64% | 26.70% | 749 | | buy_hold | 92.73% | -25.61% | 0.75 | 0 | Unavailable | 100.00% | 749 | | bist100 | 102.24% | -22.86% | 0.97 | — | Unavailable | Unavailable | 746 | TRY100,000 becomes **TRY165,317.12** under the combined strategy, after modeled costs. It exceeds technical-only return by **4.13 percentage points**, but trails buy-and-hold and BIST100. Its maximum drawdown is slightly deeper than technical-only drawdown, although much smaller than buy-and-hold's drawdown. Thus there is no across-the-board dominance. The strategy holds a position for **20.16%** of sessions and completes **eight trades**, seven profitable. That small sample limits what the 87.5% win rate can establish. Low exposure reduces participation in sustained stock appreciation and also changes risk. Zero interest on idle cash is consequential in a high-inflation market. The gross return using the **same executions** is **69.33%**, compared with 65.32% net. Modeled commission totals TRY2,115.87 and slippage TRY1,057.95; their opportunity/compounding effect contributes to the endpoint difference. A fresh zero-cost strategy run can change stop decisions, so it is a different comparison.",
+                "source_type": "methodology",
+                "source": "docs/FINANCIAL_INTERPRETATION.md",
+                "published_at": null,
+                "tickers": []
+              },
+              {
+                "doc_id": "universe:TCELL.IS",
+                "score": 12.1136,
+                "title": "TCELL.IS universe membership",
+                "text": "TCELL.IS belongs to the telecom sector of the research universe. Sector peers: TTKOM.IS. Mobile operator; regulated-revenue profile. Benchmark index: XU100.IS.",
+                "source_type": "universe_metadata",
+                "source": "config/bist100_universe.yaml",
+                "published_at": null,
+                "tickers": [
+                  "TCELL.IS"
+                ]
+              },
+              {
+                "doc_id": "doc:financial_interpretation:01",
+                "score": 11.5806,
+                "title": "FINANCIAL_INTERPRETATION: Findings and how to explain them",
+                "text": "**Final study:** THYAO, 2023-2025 trading; verified original annual Fintables statements; financial amounts and returns in nominal TRY. Latest annual period at 2025-12-31 is FY2024, released 2025-02-28 and usable from 2025-03-03.",
+                "source_type": "methodology",
+                "source": "docs/FINANCIAL_INTERPRETATION.md",
+                "published_at": null,
+                "tickers": []
+              }
+            ]
+          },
+          "price_currency": "TRY",
+          "fundamental_currency": "TRY",
+          "vintage_policy": "verified_only",
+          "fundamental_dataset": "data/processed/fintables_tms29_observations.csv",
+          "warnings": [
+            "Single user-selected stock; selection/survivorship bias; no market-wide inference.",
+            "Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.",
+            "Adjusted synthetic units; whole-lot execution and taxes not modeled.",
+            "BIST100 price-index basis differs from adjusted stock return basis.",
+            "Primary analysis uses one internally consistent post-TMS 29 basis; pre-2025 trading results are outside its evaluation window.",
+            "2026 is partial through the last cached session before the exclusive evaluation end.",
+            "KAP context is evidence for interpretation and does not alter any strategy score or order."
+          ],
+          "source_document": "docs/DATA_SOURCES.md",
+          "execution_assumptions": {
+            "commission_bps_per_side": 10.0,
+            "slippage_bps_per_side": 5.0,
+            "initial_capital_try": 100000.0,
+            "signal_timing": "close decision, next stock-session open execution"
+          }
+        }
+      },
+      "result_sha256": "810d7613f7ff60353a59cd30a68f236f218502f13bbbd3e4c0c9b7cd735ff927",
+      "truncated_for_model": false
+    },
+    {
+      "index": 1,
+      "turn": 0,
+      "type": "assistant",
+      "started_at": "2026-11-25T16:35:59.424+00:00",
+      "finished_at": "2026-11-25T16:36:03.681+00:00",
+      "duration_s": 4.256,
+      "content": "<tool_call>\n{\"name\": \"detect_reversal_events\", \"arguments\": {\"ticker\": \"TCELL.IS\", \"as_of\": \"2025-12-31\", \"lookback\": 120}}\n</tool_call>",
+      "tool_calls": [
+        {
+          "name": "detect_reversal_events",
+          "arguments": "{\"ticker\": \"TCELL.IS\", \"as_of\": \"2025-12-31\", \"lookback\": 120}"
+        }
+      ],
+      "finish_reason": "stop",
+      "usage": {
+        "prompt_tokens": 829,
+        "prompt_tokens_details": {
+          "cached_tokens": 408
+        },
+        "completion_tokens": 50,
+        "total_tokens": 879
+      },
+      "system_fingerprint": "fp_ollama"
+    },
+    {
+      "index": 2,
+      "turn": 0,
+      "type": "tool_call",
+      "actor": "model",
+      "tool": "detect_reversal_events",
+      "arguments": {
+        "ticker": "TCELL.IS",
+        "as_of": "2025-12-31",
+        "lookback": 120
+      },
+      "date_range": {
+        "as_of": "2025-12-31",
+        "lookback": 120
+      },
+      "started_at": "2026-11-25T16:36:03.681+00:00",
+      "finished_at": "2026-11-25T16:36:03.783+00:00",
+      "duration_s": 0.102,
+      "result": {
+        "content": [
+          {
+            "text": "{\n  \"ticker\": \"TCELL.IS\",\n  \"primary_ticker\": \"THYAO.IS\",\n  \"as_of\": \"2025-12-31\",\n  \"lookback_sessions\": 120,\n  \"window\": {\n    \"start\": \"2025-07-16\",\n    \"end\": \"2025-12-31\"\n  },\n  \"event_count\": 35,\n  \"label_rule\": {\n    \"metric\": \"mean_forward_5d\",\n    \"candidate_above\": 0.005,\n    \"min_events\": 2,\n    \"rule\": \"event family with >= 2 events and mean_forward_5d > 0.005 -> TECHNICAL_REVERSAL_CANDIDATE; otherwise WATCH. In-sample only\"\n  },\n  \"best_family\": {\n    \"event_type\": \"supertrend_flip_up\",\n    \"count\": 2,\n    \"mean_forward_5d\": 0.0207,\n    \"label_by_rule\": \"TECHNICAL_REVERSAL_CANDIDATE\"\n  },\n  \"summary\": [\n    {\n      \"event_type\": \"supertrend_flip_up\",\n      \"count\": 2,\n      \"mean_forward_1d\": 0.0004,\n      \"mean_forward_3d\": 0.0217,\n      \"mean_forward_5d\": 0.0207,\n      \"n_forward_5d\": 2\n    },\n    {\n      \"event_type\": \"supertrend_flip_down\",\n      \"count\": 3,\n      \"mean_forward_1d\": 0.0061,\n      \"mean_forward_3d\": -0.0049,\n      \"mean_forward_5d\": 0.0102,\n      \"n_forward_5d\": 2\n    },\n    {\n      \"event_type\": \"kama_slope_up\",\n      \"count\": 9,\n      \"mean_forward_1d\": 0.0054,\n      \"mean_forward_3d\": 0.0108,\n      \"mean_forward_5d\": 0.0087,\n      \"n_forward_5d\": 9\n    },\n    {\n      \"event_type\": \"bb_lower_touch\",\n      \"count\": 4,\n      \"mean_forward_1d\": 0.0104,\n      \"mean_forward_3d\": 0.0018,\n      \"mean_forward_5d\": 0.0077,\n      \"n_forward_5d\": 3\n    },\n    {\n      \"event_type\": \"kama_slope_down\",\n      \"count\": 9,\n      \"mean_forward_1d\": -0.0121,\n      \"mean_forward_3d\": -0.0013,\n      \"mean_forward_5d\": -0.0145,\n      \"n_forward_5d\": 9\n    },\n    {\n      \"event_type\": \"bb_upper_touch\",\n      \"count\": 8,\n      \"mean_forward_1d\": -0.0019,\n      \"mean_forward_3d\": -0.0081,\n      \"mean_forward_5d\": -0.0169,\n      \"n_forward_5d\": 8\n    }\n  ],\n  \"data\": [\n    {\n      \"index\": 12,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-07-17T00:00:00\",\n      \"event_type\": \"kama_slope_up\",\n      \"close\": 94.0999984741,\n      \"detail\": \"slope<0 -> slope>0\",\n      \"forward_1d\": 0.004782195377228016,\n      \"forward_3d\": 0.010626992733429708,\n      \"forward_5d\": 0.001594065125742672,\n      \"forward_10d\": -0.009032927607687036\n    },\n    {\n      \"index\": 13,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-07-25T00:00:00\",\n      \"event_type\": \"kama_slope_down\",\n      \"close\": 92.5,\n      \"detail\": \"slope>0 -> slope<0\",\n      \"forward_1d\": 0.0005405735329730987,\n      \"forward_3d\": 0.011351384343783799,\n      \"forward_5d\": 0.008108108108108025,\n      \"forward_10d\": 0.04108111407351367\n    },\n    {\n      \"index\": 14,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-08-07T00:00:00\",\n      \"event_type\": \"kama_slope_up\",\n      \"close\": 94.9499969482,\n      \"detail\": \"slope<0 -> slope>0\",\n      \"forward_1d\": 0.01421807421791188,\n      \"forward_3d\": 0.027382898232408026,\n      \"forward_5d\": -0.003686134653494877,\n      \"forward_10d\": 0.04265406194809551\n    },\n    {\n      \"index\": 15,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-08-08T00:00:00\",\n      \"event_type\": \"bb_upper_touch\",\n      \"close\": 96.3000030518,\n      \"detail\": \"close=96.30 vs upper=96.11\",\n      \"forward_1d\": 0.009864973188931092,\n      \"forward_3d\": 0.015057081020236618,\n      \"forward_5d\": -0.016095565967596648,\n      \"forward_10d\": 0.016095486741223297\n    },\n    {\n      \"index\": 16,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-08-11T00:00:00\",\n      \"event_type\": \"bb_upper_touch\",\n      \"close\": 97.25,\n      \"detail\": \"close=97.25 vs upper=96.75\",\n      \"forward_1d\": 0.0030848642858611885,\n      \"forward_3d\": -0.027249373016966505,\n      \"forward_5d\": -0.032390761191773754,\n      \"forward_10d\": 0.018509028810282713\n    },\n    {\n      \"index\": 17,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-08-12T00:00:00\",\n      \"event_type\": \"bb_upper_touch\",\n      \"close\": 97.5500030518,\n      \"detail\": \"close=97.55 vs upper=97.34\",\n      \"forward_1d\": 0.002050199302339184,\n      \"forward_3d\": -0.02870325949977859,\n      \"forward_5d\": -0.024090271963929433,\n      \"forward_10d\": 0.023065094101588413\n    },\n    {\n      \"index\": 18,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-08-14T00:00:00\",\n      \"event_type\": \"kama_slope_down\",\n      \"close\": 94.5999984741,\n      \"detail\": \"slope>0 -> slope<0\",\n      \"forward_1d\": 0.0015856398342444233,\n      \"forward_3d\": 0.006342478686870878,\n      \"forward_5d\": 0.046511644787231576,\n      \"forward_10d\": 0.02272728922388545\n    },\n    {\n      \"index\": 19,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-08-20T00:00:00\",\n      \"event_type\": \"kama_slope_up\",\n      \"close\": 97.6500015259,\n      \"detail\": \"slope<0 -> slope>0\",\n      \"forward_1d\": 0.013824868950380376,\n      \"forward_3d\": 0.014336932964908122,\n      \"forward_5d\": 0.019969246469318414,\n      \"forward_10d\": -0.07168458669346123\n    },\n    {\n      \"index\": 20,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-08-21T00:00:00\",\n      \"event_type\": \"bb_upper_touch\",\n      \"close\": 99.0,\n      \"detail\": \"close=99.00 vs upper=98.96\",\n      \"forward_1d\": -0.011616177029292851,\n      \"forward_3d\": 0.008080838907070786,\n      \"forward_5d\": -0.022727272727272707,\n      \"forward_10d\": -0.08585858585858586\n    },\n    {\n      \"index\": 21,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-08-29T00:00:00\",\n      \"event_type\": \"kama_slope_down\",\n      \"close\": 94.8000030518,\n      \"detail\": \"slope>0 -> slope<0\",\n      \"forward_1d\": -0.01635024263610052,\n      \"forward_3d\": -0.04377638599475986,\n      \"forward_5d\": -0.05010548361907263,\n      \"forward_10d\": -0.05643466172334077\n    },\n    {\n      \"index\": 22,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-09-01T00:00:00\",\n      \"event_type\": \"supertrend_flip_down\",\n      \"close\": 93.25,\n      \"detail\": \"direction 1 -> -1\",\n      \"forward_1d\": -0.0219839469361931,\n      \"forward_3d\": -0.029490616621983934,\n      \"forward_5d\": -0.046648777202144776,\n      \"forward_10d\": 0.0042895605994637265\n    },\n    {\n      \"index\": 23,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-09-02T00:00:00\",\n      \"event_type\": \"bb_lower_touch\",\n      \"close\": 91.1999969482,\n      \"detail\": \"close=91.20 vs lower=91.56\",\n      \"forward_1d\": -0.0060306517621090405,\n      \"forward_3d\": -0.012609582619319215,\n      \"forward_5d\": -0.023026299828636576,\n      \"forward_10d\": 0.043859650590470256\n    },\n    {\n      \"index\": 24,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-09-03T00:00:00\",\n      \"event_type\": \"bb_lower_touch\",\n      \"close\": 90.6500015259,\n      \"detail\": \"close=90.65 vs lower=91.03\",\n      \"forward_1d\": -0.0016547327454499161,\n      \"forward_3d\": -0.019305018980060318,\n      \"forward_5d\": -0.020959751725510345,\n      \"forward_10d\": 0.05626032419473104\n    },\n    {\n      \"index\": 25,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-09-12T00:00:00\",\n      \"event_type\": \"kama_slope_up\",\n      \"close\": 89.4499969482,\n      \"detail\": \"slope<0 -> slope>0\",\n      \"forward_1d\": 0.04695365814413832,\n      \"forward_3d\": 0.07043044456947611,\n      \"forward_5d\": 0.08440473235758938,\n      \"forward_10d\": 0.08328680639323283\n    },\n    {\n      \"index\": 26,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-09-16T00:00:00\",\n      \"event_type\": \"supertrend_flip_up\",\n      \"close\": 95.1999969482,\n      \"detail\": \"direction -1 -> 1\",\n      \"forward_1d\": 0.005777343166295079,\n      \"forward_3d\": 0.01890759568804845,\n      \"forward_5d\": 0.0404412418804474,\n      \"forward_10d\": 0.0278361513744787\n    },\n    {\n      \"index\": 27,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-09-26T00:00:00\",\n      \"event_type\": \"kama_slope_down\",\n      \"close\": 96.9000015259,\n      \"detail\": \"slope>0 -> slope<0\",\n      \"forward_1d\": 0.004127982658422402,\n      \"forward_3d\": 0.02683176917603114,\n      \"forward_5d\": 0.012383869239457779,\n      \"forward_10d\": 0.03405567977434942\n    },\n    {\n      \"index\": 28,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-09-29T00:00:00\",\n      \"event_type\": \"kama_slope_up\",\n      \"close\": 97.3000030518,\n      \"detail\": \"slope<0 -> slope>0\",\n      \"forward_1d\": 0.005652573535965821,\n      \"forward_3d\": 0.04213770139367057,\n      \"forward_5d\": 0.015416237954293255,\n      \"forward_10d\": 0.006166479499292166\n    },\n    {\n      \"index\": 29,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-10-13T00:00:00\",\n      \"event_type\": \"kama_slope_down\",\n      \"close\": 97.9000015259,\n      \"detail\": \"slope>0 -> slope<0\",\n      \"forward_1d\": -0.07201228745573485,\n      \"forward_3d\": -0.021450443732060842,\n      \"forward_5d\": -0.011235939294740205,\n      \"forward_10d\": 0.021450443732061064\n    },\n    {\n      \"index\": 30,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-10-14T00:00:00\",\n      \"event_type\": \"bb_lower_touch\",\n      \"close\": 90.8499984741,\n      \"detail\": \"close=90.85 vs lower=93.49\",\n      \"forward_1d\": 0.05393507548926291,\n      \"forward_3d\": 0.03742434323616739,\n      \"forward_5d\": 0.06714362770010407,\n      \"forward_10d\": 0.10731975964402007\n    },\n    {\n      \"index\": 31,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-10-14T00:00:00\",\n      \"event_type\": \"supertrend_flip_down\",\n      \"close\": 90.8499984741,\n      \"detail\": \"direction 1 -> -1\",\n      \"forward_1d\": 0.05393507548926291,\n      \"forward_3d\": 0.03742434323616739,\n      \"forward_5d\": 0.06714362770010407,\n      \"forward_10d\": 0.10731975964402007\n    },\n    {\n      \"index\": 32,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-10-22T00:00:00\",\n      \"event_type\": \"kama_slope_up\",\n      \"close\": 97.5999984741,\n      \"detail\": \"slope<0 -> slope>0\",\n      \"forward_1d\": 0.009733653612219006,\n      \"forward_3d\": 0.02459017995309587,\n      \"forward_5d\": 0.01178280270368215,\n      \"forward_10d\": 0.045081983552157645\n    },\n    {\n      \"index\": 33,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-11-03T00:00:00\",\n      \"event_type\": \"kama_slope_down\",\n      \"close\": 97.4499969482,\n      \"detail\": \"slope>0 -> slope<0\",\n      \"forward_1d\": -0.010261672974002822,\n      \"forward_3d\": 0.04669064334828632,\n      \"forward_5d\": -0.010261672974002822,\n      \"forward_10d\": -0.04463826177862529\n    },\n    {\n      \"index\": 34,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-11-06T00:00:00\",\n      \"event_type\": \"kama_slope_up\",\n      \"close\": 102.0,\n      \"detail\": \"slope<0 -> slope>0\",\n      \"forward_1d\": -0.04999998504019609,\n      \"forward_3d\": -0.07450978896176474,\n      \"forward_5d\": -0.06274511299901953,\n      \"forward_10d\": -0.05196081423333343\n    },\n    {\n      \"index\": 35,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-11-07T00:00:00\",\n      \"event_type\": \"kama_slope_down\",\n      \"close\": 96.9000015259,\n      \"detail\": \"slope>0 -> slope<0\",\n      \"forward_1d\": -0.004644010016653266,\n      \"forward_3d\": -0.006191934619728778,\n      \"forward_5d\": -0.03869968979306648,\n      \"forward_10d\": -0.02270386525341772\n    },\n    {\n      \"index\": 36,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-12-02T00:00:00\",\n      \"event_type\": \"kama_slope_up\",\n      \"close\": 97.25,\n      \"detail\": \"slope<0 -> slope>0\",\n      \"forward_1d\": 0.005141388174807249,\n      \"forward_3d\": 0.007712082262210762,\n      \"forward_5d\": 0.045758323372750764,\n      \"forward_10d\": 0.046786663773778825\n    },\n    {\n      \"index\": 37,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-12-08T00:00:00\",\n      \"event_type\": \"bb_upper_touch\",\n      \"close\": 100.800003052,\n      \"detail\": \"close=100.80 vs upper=99.34\",\n      \"forward_1d\": 0.008928510602680628,\n      \"forward_3d\": -0.002976220663854834,\n      \"forward_5d\": 0.04563490411430826,\n      \"forward_10d\": -0.012896855284114994\n    },\n    {\n      \"index\": 38,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-12-09T00:00:00\",\n      \"event_type\": \"bb_upper_touch\",\n      \"close\": 101.699996948,\n      \"detail\": \"close=101.70 vs upper=100.52\",\n      \"forward_1d\": -0.00491642099316536,\n      \"forward_3d\": 0.0245821049658268,\n      \"forward_5d\": 0.000983344218300486,\n      \"forward_10d\": -0.029498525957025734\n    },\n    {\n      \"index\": 39,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-12-09T00:00:00\",\n      \"event_type\": \"supertrend_flip_up\",\n      \"close\": 101.699996948,\n      \"detail\": \"direction -1 -> 1\",\n      \"forward_1d\": -0.00491642099316536,\n      \"forward_3d\": 0.0245821049658268,\n      \"forward_5d\": 0.000983344218300486,\n      \"forward_10d\": -0.029498525957025734\n    },\n    {\n      \"index\": 40,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-12-12T00:00:00\",\n      \"event_type\": \"bb_upper_touch\",\n      \"close\": 104.199996948,\n      \"detail\": \"close=104.20 vs upper=103.20\",\n      \"forward_1d\": 0.011516359051323644,\n      \"forward_3d\": -0.02015353680910359,\n      \"forward_5d\": -0.030710144354389346,\n      \"forward_10d\": -0.08589248762134238\n    },\n    {\n      \"index\": 41,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-12-15T00:00:00\",\n      \"event_type\": \"bb_upper_touch\",\n      \"close\": 105.400001526,\n      \"detail\": \"close=105.40 vs upper=104.57\",\n      \"forward_1d\": -0.034155582750271196,\n      \"forward_3d\": -0.03320683063877017,\n      \"forward_5d\": -0.0559772432692478,\n      \"forward_10d\": -0.10863381795089944\n    },\n    {\n      \"index\": 42,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-12-16T00:00:00\",\n      \"event_type\": \"kama_slope_down\",\n      \"close\": 101.800003052,\n      \"detail\": \"slope>0 -> slope<0\",\n      \"forward_1d\": 0.002946909754479865,\n      \"forward_3d\": -0.00785857591370942,\n      \"forward_5d\": -0.03045192545049824,\n      \"forward_10d\": -0.08153244403892901\n    },\n    {\n      \"index\": 43,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-12-17T00:00:00\",\n      \"event_type\": \"kama_slope_up\",\n      \"close\": 102.099998474,\n      \"detail\": \"slope<0 -> slope>0\",\n      \"forward_1d\": -0.0019588339959764056,\n      \"forward_3d\": -0.025465215600978697,\n      \"forward_5d\": -0.034280118043207186,\n      \"forward_10d\": -0.0881488749697863\n    },\n    {\n      \"index\": 44,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-12-19T00:00:00\",\n      \"event_type\": \"kama_slope_down\",\n      \"close\": 101.0,\n      \"detail\": \"slope>0 -> slope<0\",\n      \"forward_1d\": -0.014851485148514865,\n      \"forward_3d\": -0.023762391345544476,\n      \"forward_5d\": -0.05693069306930698,\n      \"forward_10d\": null\n    },\n    {\n      \"index\": 45,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-12-26T00:00:00\",\n      \"event_type\": \"supertrend_flip_down\",\n      \"close\": 95.25,\n      \"detail\": \"direction 1 -> -1\",\n      \"forward_1d\": -0.013648326003149691,\n      \"forward_3d\": -0.0225721944976377,\n      \"forward_5d\": null,\n      \"forward_10d\": null\n    },\n    {\n      \"index\": 46,\n      \"ticker\": \"TCELL.IS\",\n      \"date\": \"2025-12-29T00:00:00\",\n      \"event_type\": \"bb_lower_touch\",\n      \"close\": 93.9499969482,\n      \"detail\": \"close=93.95 vs lower=94.24\",\n      \"forward_1d\": -0.004789749471179938,\n      \"forward_3d\": null,\n      \"forward_5d\": null,\n      \"forward_10d\": null\n    }\n  ],\n  \"price_currency\": \"TRY\",\n  \"fundamental_currency\": \"TRY\",\n  \"vintage_policy\": \"verified_only\",\n  \"fundamental_dataset\": \"data/processed/fintables_tms29_observations.csv\",\n  \"warnings\": [\n    \"Single user-selected stock; selection/survivorship bias; no market-wide inference.\",\n    \"Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.\",\n    \"Adjusted synthetic units; whole-lot execution and taxes not modeled.\",\n    \"BIST100 price-index basis differs from adjusted stock return basis.\",\n    \"Primary analysis uses one internally consistent post-TMS 29 basis; pre-2025 trading results are outside its evaluation window.\",\n    \"2026 is partial through the last cached session before the exclusive evaluation end.\",\n    \"KAP context is evidence for interpretation and does not alter any strategy score or order.\"\n  ],\n  \"source_document\": \"docs/DATA_SOURCES.md\",\n  \"execution_assumptions\": {\n    \"commission_bps_per_side\": 10.0,\n    \"slippage_bps_per_side\": 5.0,\n    \"initial_capital_try\": 100000.0,\n    \"signal_timing\": \"close decision, next stock-session open execution\"\n  }\n}",
+            "type": "text"
+          }
+        ],
+        "isError": false,
+        "structuredContent": {
+          "ticker": "TCELL.IS",
+          "primary_ticker": "THYAO.IS",
+          "as_of": "2025-12-31",
+          "lookback_sessions": 120,
+          "window": {
+            "start": "2025-07-16",
+            "end": "2025-12-31"
+          },
+          "event_count": 35,
+          "label_rule": {
+            "metric": "mean_forward_5d",
+            "candidate_above": 0.005,
+            "min_events": 2,
+            "rule": "event family with >= 2 events and mean_forward_5d > 0.005 -> TECHNICAL_REVERSAL_CANDIDATE; otherwise WATCH. In-sample only"
+          },
+          "best_family": {
+            "event_type": "supertrend_flip_up",
+            "count": 2,
+            "mean_forward_5d": 0.0207,
+            "label_by_rule": "TECHNICAL_REVERSAL_CANDIDATE"
+          },
+          "summary": [
+            {
+              "event_type": "supertrend_flip_up",
+              "count": 2,
+              "mean_forward_1d": 0.0004,
+              "mean_forward_3d": 0.0217,
+              "mean_forward_5d": 0.0207,
+              "n_forward_5d": 2
+            },
+            {
+              "event_type": "supertrend_flip_down",
+              "count": 3,
+              "mean_forward_1d": 0.0061,
+              "mean_forward_3d": -0.0049,
+              "mean_forward_5d": 0.0102,
+              "n_forward_5d": 2
+            },
+            {
+              "event_type": "kama_slope_up",
+              "count": 9,
+              "mean_forward_1d": 0.0054,
+              "mean_forward_3d": 0.0108,
+              "mean_forward_5d": 0.0087,
+              "n_forward_5d": 9
+            },
+            {
+              "event_type": "bb_lower_touch",
+              "count": 4,
+              "mean_forward_1d": 0.0104,
+              "mean_forward_3d": 0.0018,
+              "mean_forward_5d": 0.0077,
+              "n_forward_5d": 3
+            },
+            {
+              "event_type": "kama_slope_down",
+              "count": 9,
+              "mean_forward_1d": -0.0121,
+              "mean_forward_3d": -0.0013,
+              "mean_forward_5d": -0.0145,
+              "n_forward_5d": 9
+            },
+            {
+              "event_type": "bb_upper_touch",
+              "count": 8,
+              "mean_forward_1d": -0.0019,
+              "mean_forward_3d": -0.0081,
+              "mean_forward_5d": -0.0169,
+              "n_forward_5d": 8
+            }
+          ],
+          "data": [
+            {
+              "index": 12,
+              "ticker": "TCELL.IS",
+              "date": "2025-07-17T00:00:00",
+              "event_type": "kama_slope_up",
+              "close": 94.0999984741,
+              "detail": "slope<0 -> slope>0",
+              "forward_1d": 0.004782195377228016,
+              "forward_3d": 0.010626992733429708,
+              "forward_5d": 0.001594065125742672,
+              "forward_10d": -0.009032927607687036
+            },
+            {
+              "index": 13,
+              "ticker": "TCELL.IS",
+              "date": "2025-07-25T00:00:00",
+              "event_type": "kama_slope_down",
+              "close": 92.5,
+              "detail": "slope>0 -> slope<0",
+              "forward_1d": 0.0005405735329730987,
+              "forward_3d": 0.011351384343783799,
+              "forward_5d": 0.008108108108108025,
+              "forward_10d": 0.04108111407351367
+            },
+            {
+              "index": 14,
+              "ticker": "TCELL.IS",
+              "date": "2025-08-07T00:00:00",
+              "event_type": "kama_slope_up",
+              "close": 94.9499969482,
+              "detail": "slope<0 -> slope>0",
+              "forward_1d": 0.01421807421791188,
+              "forward_3d": 0.027382898232408026,
+              "forward_5d": -0.003686134653494877,
+              "forward_10d": 0.04265406194809551
+            },
+            {
+              "index": 15,
+              "ticker": "TCELL.IS",
+              "date": "2025-08-08T00:00:00",
+              "event_type": "bb_upper_touch",
+              "close": 96.3000030518,
+              "detail": "close=96.30 vs upper=96.11",
+              "forward_1d": 0.009864973188931092,
+              "forward_3d": 0.015057081020236618,
+              "forward_5d": -0.016095565967596648,
+              "forward_10d": 0.016095486741223297
+            },
+            {
+              "index": 16,
+              "ticker": "TCELL.IS",
+              "date": "2025-08-11T00:00:00",
+              "event_type": "bb_upper_touch",
+              "close": 97.25,
+              "detail": "close=97.25 vs upper=96.75",
+              "forward_1d": 0.0030848642858611885,
+              "forward_3d": -0.027249373016966505,
+              "forward_5d": -0.032390761191773754,
+              "forward_10d": 0.018509028810282713
+            },
+            {
+              "index": 17,
+              "ticker": "TCELL.IS",
+              "date": "2025-08-12T00:00:00",
+              "event_type": "bb_upper_touch",
+              "close": 97.5500030518,
+              "detail": "close=97.55 vs upper=97.34",
+              "forward_1d": 0.002050199302339184,
+              "forward_3d": -0.02870325949977859,
+              "forward_5d": -0.024090271963929433,
+              "forward_10d": 0.023065094101588413
+            },
+            {
+              "index": 18,
+              "ticker": "TCELL.IS",
+              "date": "2025-08-14T00:00:00",
+              "event_type": "kama_slope_down",
+              "close": 94.5999984741,
+              "detail": "slope>0 -> slope<0",
+              "forward_1d": 0.0015856398342444233,
+              "forward_3d": 0.006342478686870878,
+              "forward_5d": 0.046511644787231576,
+              "forward_10d": 0.02272728922388545
+            },
+            {
+              "index": 19,
+              "ticker": "TCELL.IS",
+              "date": "2025-08-20T00:00:00",
+              "event_type": "kama_slope_up",
+              "close": 97.6500015259,
+              "detail": "slope<0 -> slope>0",
+              "forward_1d": 0.013824868950380376,
+              "forward_3d": 0.014336932964908122,
+              "forward_5d": 0.019969246469318414,
+              "forward_10d": -0.07168458669346123
+            },
+            {
+              "index": 20,
+              "ticker": "TCELL.IS",
+              "date": "2025-08-21T00:00:00",
+              "event_type": "bb_upper_touch",
+              "close": 99.0,
+              "detail": "close=99.00 vs upper=98.96",
+              "forward_1d": -0.011616177029292851,
+              "forward_3d": 0.008080838907070786,
+              "forward_5d": -0.022727272727272707,
+              "forward_10d": -0.08585858585858586
+            },
+            {
+              "index": 21,
+              "ticker": "TCELL.IS",
+              "date": "2025-08-29T00:00:00",
+              "event_type": "kama_slope_down",
+              "close": 94.8000030518,
+              "detail": "slope>0 -> slope<0",
+              "forward_1d": -0.01635024263610052,
+              "forward_3d": -0.04377638599475986,
+              "forward_5d": -0.05010548361907263,
+              "forward_10d": -0.05643466172334077
+            },
+            {
+              "index": 22,
+              "ticker": "TCELL.IS",
+              "date": "2025-09-01T00:00:00",
+              "event_type": "supertrend_flip_down",
+              "close": 93.25,
+              "detail": "direction 1 -> -1",
+              "forward_1d": -0.0219839469361931,
+              "forward_3d": -0.029490616621983934,
+              "forward_5d": -0.046648777202144776,
+              "forward_10d": 0.0042895605994637265
+            },
+            {
+              "index": 23,
+              "ticker": "TCELL.IS",
+              "date": "2025-09-02T00:00:00",
+              "event_type": "bb_lower_touch",
+              "close": 91.1999969482,
+              "detail": "close=91.20 vs lower=91.56",
+              "forward_1d": -0.0060306517621090405,
+              "forward_3d": -0.012609582619319215,
+              "forward_5d": -0.023026299828636576,
+              "forward_10d": 0.043859650590470256
+            },
+            {
+              "index": 24,
+              "ticker": "TCELL.IS",
+              "date": "2025-09-03T00:00:00",
+              "event_type": "bb_lower_touch",
+              "close": 90.6500015259,
+              "detail": "close=90.65 vs lower=91.03",
+              "forward_1d": -0.0016547327454499161,
+              "forward_3d": -0.019305018980060318,
+              "forward_5d": -0.020959751725510345,
+              "forward_10d": 0.05626032419473104
+            },
+            {
+              "index": 25,
+              "ticker": "TCELL.IS",
+              "date": "2025-09-12T00:00:00",
+              "event_type": "kama_slope_up",
+              "close": 89.4499969482,
+              "detail": "slope<0 -> slope>0",
+              "forward_1d": 0.04695365814413832,
+              "forward_3d": 0.07043044456947611,
+              "forward_5d": 0.08440473235758938,
+              "forward_10d": 0.08328680639323283
+            },
+            {
+              "index": 26,
+              "ticker": "TCELL.IS",
+              "date": "2025-09-16T00:00:00",
+              "event_type": "supertrend_flip_up",
+              "close": 95.1999969482,
+              "detail": "direction -1 -> 1",
+              "forward_1d": 0.005777343166295079,
+              "forward_3d": 0.01890759568804845,
+              "forward_5d": 0.0404412418804474,
+              "forward_10d": 0.0278361513744787
+            },
+            {
+              "index": 27,
+              "ticker": "TCELL.IS",
+              "date": "2025-09-26T00:00:00",
+              "event_type": "kama_slope_down",
+              "close": 96.9000015259,
+              "detail": "slope>0 -> slope<0",
+              "forward_1d": 0.004127982658422402,
+              "forward_3d": 0.02683176917603114,
+              "forward_5d": 0.012383869239457779,
+              "forward_10d": 0.03405567977434942
+            },
+            {
+              "index": 28,
+              "ticker": "TCELL.IS",
+              "date": "2025-09-29T00:00:00",
+              "event_type": "kama_slope_up",
+              "close": 97.3000030518,
+              "detail": "slope<0 -> slope>0",
+              "forward_1d": 0.005652573535965821,
+              "forward_3d": 0.04213770139367057,
+              "forward_5d": 0.015416237954293255,
+              "forward_10d": 0.006166479499292166
+            },
+            {
+              "index": 29,
+              "ticker": "TCELL.IS",
+              "date": "2025-10-13T00:00:00",
+              "event_type": "kama_slope_down",
+              "close": 97.9000015259,
+              "detail": "slope>0 -> slope<0",
+              "forward_1d": -0.07201228745573485,
+              "forward_3d": -0.021450443732060842,
+              "forward_5d": -0.011235939294740205,
+              "forward_10d": 0.021450443732061064
+            },
+            {
+              "index": 30,
+              "ticker": "TCELL.IS",
+              "date": "2025-10-14T00:00:00",
+              "event_type": "bb_lower_touch",
+              "close": 90.8499984741,
+              "detail": "close=90.85 vs lower=93.49",
+              "forward_1d": 0.05393507548926291,
+              "forward_3d": 0.03742434323616739,
+              "forward_5d": 0.06714362770010407,
+              "forward_10d": 0.10731975964402007
+            },
+            {
+              "index": 31,
+              "ticker": "TCELL.IS",
+              "date": "2025-10-14T00:00:00",
+              "event_type": "supertrend_flip_down",
+              "close": 90.8499984741,
+              "detail": "direction 1 -> -1",
+              "forward_1d": 0.05393507548926291,
+              "forward_3d": 0.03742434323616739,
+              "forward_5d": 0.06714362770010407,
+              "forward_10d": 0.10731975964402007
+            },
+            {
+              "index": 32,
+              "ticker": "TCELL.IS",
+              "date": "2025-10-22T00:00:00",
+              "event_type": "kama_slope_up",
+              "close": 97.5999984741,
+              "detail": "slope<0 -> slope>0",
+              "forward_1d": 0.009733653612219006,
+              "forward_3d": 0.02459017995309587,
+              "forward_5d": 0.01178280270368215,
+              "forward_10d": 0.045081983552157645
+            },
+            {
+              "index": 33,
+              "ticker": "TCELL.IS",
+              "date": "2025-11-03T00:00:00",
+              "event_type": "kama_slope_down",
+              "close": 97.4499969482,
+              "detail": "slope>0 -> slope<0",
+              "forward_1d": -0.010261672974002822,
+              "forward_3d": 0.04669064334828632,
+              "forward_5d": -0.010261672974002822,
+              "forward_10d": -0.04463826177862529
+            },
+            {
+              "index": 34,
+              "ticker": "TCELL.IS",
+              "date": "2025-11-06T00:00:00",
+              "event_type": "kama_slope_up",
+              "close": 102.0,
+              "detail": "slope<0 -> slope>0",
+              "forward_1d": -0.04999998504019609,
+              "forward_3d": -0.07450978896176474,
+              "forward_5d": -0.06274511299901953,
+              "forward_10d": -0.05196081423333343
+            },
+            {
+              "index": 35,
+              "ticker": "TCELL.IS",
+              "date": "2025-11-07T00:00:00",
+              "event_type": "kama_slope_down",
+              "close": 96.9000015259,
+              "detail": "slope>0 -> slope<0",
+              "forward_1d": -0.004644010016653266,
+              "forward_3d": -0.006191934619728778,
+              "forward_5d": -0.03869968979306648,
+              "forward_10d": -0.02270386525341772
+            },
+            {
+              "index": 36,
+              "ticker": "TCELL.IS",
+              "date": "2025-12-02T00:00:00",
+              "event_type": "kama_slope_up",
+              "close": 97.25,
+              "detail": "slope<0 -> slope>0",
+              "forward_1d": 0.005141388174807249,
+              "forward_3d": 0.007712082262210762,
+              "forward_5d": 0.045758323372750764,
+              "forward_10d": 0.046786663773778825
+            },
+            {
+              "index": 37,
+              "ticker": "TCELL.IS",
+              "date": "2025-12-08T00:00:00",
+              "event_type": "bb_upper_touch",
+              "close": 100.800003052,
+              "detail": "close=100.80 vs upper=99.34",
+              "forward_1d": 0.008928510602680628,
+              "forward_3d": -0.002976220663854834,
+              "forward_5d": 0.04563490411430826,
+              "forward_10d": -0.012896855284114994
+            },
+            {
+              "index": 38,
+              "ticker": "TCELL.IS",
+              "date": "2025-12-09T00:00:00",
+              "event_type": "bb_upper_touch",
+              "close": 101.699996948,
+              "detail": "close=101.70 vs upper=100.52",
+              "forward_1d": -0.00491642099316536,
+              "forward_3d": 0.0245821049658268,
+              "forward_5d": 0.000983344218300486,
+              "forward_10d": -0.029498525957025734
+            },
+            {
+              "index": 39,
+              "ticker": "TCELL.IS",
+              "date": "2025-12-09T00:00:00",
+              "event_type": "supertrend_flip_up",
+              "close": 101.699996948,
+              "detail": "direction -1 -> 1",
+              "forward_1d": -0.00491642099316536,
+              "forward_3d": 0.0245821049658268,
+              "forward_5d": 0.000983344218300486,
+              "forward_10d": -0.029498525957025734
+            },
+            {
+              "index": 40,
+              "ticker": "TCELL.IS",
+              "date": "2025-12-12T00:00:00",
+              "event_type": "bb_upper_touch",
+              "close": 104.199996948,
+              "detail": "close=104.20 vs upper=103.20",
+              "forward_1d": 0.011516359051323644,
+              "forward_3d": -0.02015353680910359,
+              "forward_5d": -0.030710144354389346,
+              "forward_10d": -0.08589248762134238
+            },
+            {
+              "index": 41,
+              "ticker": "TCELL.IS",
+              "date": "2025-12-15T00:00:00",
+              "event_type": "bb_upper_touch",
+              "close": 105.400001526,
+              "detail": "close=105.40 vs upper=104.57",
+              "forward_1d": -0.034155582750271196,
+              "forward_3d": -0.03320683063877017,
+              "forward_5d": -0.0559772432692478,
+              "forward_10d": -0.10863381795089944
+            },
+            {
+              "index": 42,
+              "ticker": "TCELL.IS",
+              "date": "2025-12-16T00:00:00",
+              "event_type": "kama_slope_down",
+              "close": 101.800003052,
+              "detail": "slope>0 -> slope<0",
+              "forward_1d": 0.002946909754479865,
+              "forward_3d": -0.00785857591370942,
+              "forward_5d": -0.03045192545049824,
+              "forward_10d": -0.08153244403892901
+            },
+            {
+              "index": 43,
+              "ticker": "TCELL.IS",
+              "date": "2025-12-17T00:00:00",
+              "event_type": "kama_slope_up",
+              "close": 102.099998474,
+              "detail": "slope<0 -> slope>0",
+              "forward_1d": -0.0019588339959764056,
+              "forward_3d": -0.025465215600978697,
+              "forward_5d": -0.034280118043207186,
+              "forward_10d": -0.0881488749697863
+            },
+            {
+              "index": 44,
+              "ticker": "TCELL.IS",
+              "date": "2025-12-19T00:00:00",
+              "event_type": "kama_slope_down",
+              "close": 101.0,
+              "detail": "slope>0 -> slope<0",
+              "forward_1d": -0.014851485148514865,
+              "forward_3d": -0.023762391345544476,
+              "forward_5d": -0.05693069306930698,
+              "forward_10d": null
+            },
+            {
+              "index": 45,
+              "ticker": "TCELL.IS",
+              "date": "2025-12-26T00:00:00",
+              "event_type": "supertrend_flip_down",
+              "close": 95.25,
+              "detail": "direction 1 -> -1",
+              "forward_1d": -0.013648326003149691,
+              "forward_3d": -0.0225721944976377,
+              "forward_5d": null,
+              "forward_10d": null
+            },
+            {
+              "index": 46,
+              "ticker": "TCELL.IS",
+              "date": "2025-12-29T00:00:00",
+              "event_type": "bb_lower_touch",
+              "close": 93.9499969482,
+              "detail": "close=93.95 vs lower=94.24",
+              "forward_1d": -0.004789749471179938,
+              "forward_3d": null,
+              "forward_5d": null,
+              "forward_10d": null
+            }
+          ],
+          "price_currency": "TRY",
+          "fundamental_currency": "TRY",
+          "vintage_policy": "verified_only",
+          "fundamental_dataset": "data/processed/fintables_tms29_observations.csv",
+          "warnings": [
+            "Single user-selected stock; selection/survivorship bias; no market-wide inference.",
+            "Nominal TRY returns, zero cash yield and zero-risk-free Sharpe.",
+            "Adjusted synthetic units; whole-lot execution and taxes not modeled.",
+            "BIST100 price-index basis differs from adjusted stock return basis.",
+            "Primary analysis uses one internally consistent post-TMS 29 basis; pre-2025 trading results are outside its evaluation window.",
+            "2026 is partial through the last cached session before the exclusive evaluation end.",
+            "KAP context is evidence for interpretation and does not alter any strategy score or order."
+          ],
+          "source_document": "docs/DATA_SOURCES.md",
+          "execution_assumptions": {
+            "commission_bps_per_side": 10.0,
+            "slippage_bps_per_side": 5.0,
+            "initial_capital_try": 100000.0,
+            "signal_timing": "close decision, next stock-session open execution"
+          }
+        }
+      },
+      "result_sha256": "884a5b6275f19251592be9e67f9a18e492997b88374b850d8d80182dfdbada3b",
+      "truncated_for_model": true
+    },
+    {
+      "index": 3,
+      "turn": 1,
+      "type": "assistant",
+      "started_at": "2026-11-25T16:36:03.783+00:00",
+      "finished_at": "2026-11-25T16:36:22.693+00:00",
+      "duration_s": 18.91,
+      "content": "<final_answer>\n{\"educational_label\": \"TECHNICAL_REVERSAL_CANDIDATE\", \"committed_evidence_ids\": [\"detect_reversal_events:TCELL.IS:2025-12-31:lb120\"], \"explanation\": \"detect_reversal_events for TCELL.IS, 120 sessions to 2025-12-31: 35 events. By family (summary): supertrend_flip_up: count 2, mean_forward_5d 0.0207; supertrend_flip_down: count 3, mean_forward_5d 0.0102; kama_slope_up: count 9, mean_forward_5d 0.0087; bb_lower_touch: count 4, mean_forward_5d 0.0077; kama_slope_down: count 9, mean_forward_5d -0.0145. label_rule: mean_forward_5d > 0.005 → TECHNICAL_REVERSAL_CANDIDATE, otherwise WATCH. best_family (at least 2 forward returns): supertrend_flip_up, count 2, mean_forward_5d 0.0207. label_by_rule: TECHNICAL_REVERSAL_CANDIDATE. Selected: TECHNICAL_REVERSAL_CANDIDATE. In-sample only; not a trading signal.\"}\n</final_answer>",
+      "tool_calls": [],
+      "finish_reason": "stop",
+      "usage": {
+        "prompt_tokens": 3221,
+        "prompt_tokens_details": {
+          "cached_tokens": 878
+        },
+        "completion_tokens": 314,
+        "total_tokens": 3535
+      },
+      "system_fingerprint": "fp_ollama"
+    }
+  ],
+  "tools_called": [
+    "detect_reversal_events"
+  ],
+  "final_answer": "<final_answer>\n{\"educational_label\": \"TECHNICAL_REVERSAL_CANDIDATE\", \"committed_evidence_ids\": [\"detect_reversal_events:TCELL.IS:2025-12-31:lb120\"], \"explanation\": \"detect_reversal_events for TCELL.IS, 120 sessions to 2025-12-31: 35 events. By family (summary): supertrend_flip_up: count 2, mean_forward_5d 0.0207; supertrend_flip_down: count 3, mean_forward_5d 0.0102; kama_slope_up: count 9, mean_forward_5d 0.0087; bb_lower_touch: count 4, mean_forward_5d 0.0077; kama_slope_down: count 9, mean_forward_5d -0.0145. label_rule: mean_forward_5d > 0.005 → TECHNICAL_REVERSAL_CANDIDATE, otherwise WATCH. best_family (at least 2 forward returns): supertrend_flip_up, count 2, mean_forward_5d 0.0207. label_by_rule: TECHNICAL_REVERSAL_CANDIDATE. Selected: TECHNICAL_REVERSAL_CANDIDATE. In-sample only; not a trading signal.\"}\n</final_answer>",
+  "turns_used": 2,
+  "grounding_audit": {
+    "numbers_found": 16,
+    "grounded_count": 16,
+    "ungrounded_count": 0,
+    "all_grounded": true,
+    "grounded": [
+      {
+        "text": "120",
+        "value": 120.0,
+        "decimals": 0,
+        "percent": false,
+        "is_year": false,
+        "tool_value": 120.0,
+        "scale": 1.0,
+        "abs_match": false
+      },
+      {
+        "text": "35",
+        "value": 35.0,
+        "decimals": 0,
+        "percent": false,
+        "is_year": false,
+        "tool_value": 35.0,
+        "scale": 1.0,
+        "abs_match": false
+      },
+      {
+        "text": "2",
+        "value": 2.0,
+        "decimals": 0,
+        "percent": false,
+        "is_year": false,
+        "tool_value": 2.0,
+        "scale": 1.0,
+        "abs_match": false
+      },
+      {
+        "text": "0.0207",
+        "value": 0.0207,
+        "decimals": 4,
+        "percent": false,
+        "is_year": false,
+        "tool_value": 0.0207,
+        "scale": 1.0,
+        "abs_match": false
+      },
+      {
+        "text": "3",
+        "value": 3.0,
+        "decimals": 0,
+        "percent": false,
+        "is_year": false,
+        "tool_value": 3.0,
+        "scale": 1.0,
+        "abs_match": false
+      },
+      {
+        "text": "0.0102",
+        "value": 0.0102,
+        "decimals": 4,
+        "percent": false,
+        "is_year": false,
+        "tool_value": 0.0102,
+        "scale": 1.0,
+        "abs_match": false
+      },
+      {
+        "text": "9",
+        "value": 9.0,
+        "decimals": 0,
+        "percent": false,
+        "is_year": false,
+        "tool_value": 9.0,
+        "scale": 1.0,
+        "abs_match": false
+      },
+      {
+        "text": "0.0087",
+        "value": 0.0087,
+        "decimals": 4,
+        "percent": false,
+        "is_year": false,
+        "tool_value": 0.0087,
+        "scale": 1.0,
+        "abs_match": false
+      },
+      {
+        "text": "4",
+        "value": 4.0,
+        "decimals": 0,
+        "percent": false,
+        "is_year": false,
+        "tool_value": 4.0,
+        "scale": 1.0,
+        "abs_match": false
+      },
+      {
+        "text": "0.0077",
+        "value": 0.0077,
+        "decimals": 4,
+        "percent": false,
+        "is_year": false,
+        "tool_value": 0.0077,
+        "scale": 1.0,
+        "abs_match": false
+      },
+      {
+        "text": "9",
+        "value": 9.0,
+        "decimals": 0,
+        "percent": false,
+        "is_year": false,
+        "tool_value": 9.0,
+        "scale": 1.0,
+        "abs_match": false
+      },
+      {
+        "text": "-0.0145",
+        "value": -0.0145,
+        "decimals": 4,
+        "percent": false,
+        "is_year": false,
+        "tool_value": -0.0145,
+        "scale": 1.0,
+        "abs_match": false
+      },
+      {
+        "text": "0.005",
+        "value": 0.005,
+        "decimals": 3,
+        "percent": false,
+        "is_year": false,
+        "tool_value": 0.005,
+        "scale": 1.0,
+        "abs_match": false
+      },
+      {
+        "text": "2",
+        "value": 2.0,
+        "decimals": 0,
+        "percent": false,
+        "is_year": false,
+        "tool_value": 2.0,
+        "scale": 1.0,
+        "abs_match": false
+      },
+      {
+        "text": "2",
+        "value": 2.0,
+        "decimals": 0,
+        "percent": false,
+        "is_year": false,
+        "tool_value": 2.0,
+        "scale": 1.0,
+        "abs_match": false
+      },
+      {
+        "text": "0.0207",
+        "value": 0.0207,
+        "decimals": 4,
+        "percent": false,
+        "is_year": false,
+        "tool_value": 0.0207,
+        "scale": 1.0,
+        "abs_match": false
+      }
+    ],
+    "ungrounded": [],
+    "echoed_from_prompt": [],
+    "small_integers": [],
+    "years_ignored": [],
+    "evidence_values_indexed": 287,
+    "method": "src/bist_analytics/harness/grounding.py (audit only; answer never modified)"
+  },
+  "error": null
+}
