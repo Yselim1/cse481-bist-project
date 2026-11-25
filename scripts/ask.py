@@ -54,7 +54,7 @@ def main() -> None:
     print(f"model={args.model} seed={args.seed} temperature={args.temperature} config={args.config}")
     result = run_agent(args.question, model=args.model, seed=args.seed, temperature=args.temperature,
                        config=args.config, retrieval_top_k=args.rag_top_k, max_turns=args.max_turns,
-                       system_prompt=PRESENTATION_SYSTEM_PROMPT, tool_char_cap=PRESENTATION_TOOL_CHAR_CAP, scenario_id="LIVE",
+                       system_prompt=PRESENTATION_SYSTEM_PROMPT, tool_char_cap=PRESENTATION_TOOL_CHAR_CAP, tool_schemas=False, scenario_id="LIVE",
                        trace_path=path, on_event=on_event)
     t = result["execution_trace"]
     g = t["grounding_audit"]

@@ -1,0 +1,261 @@
+{
+  "started_at": "2026-11-25T15:00:49+00:00",
+  "finished_at": "2026-11-25T15:50:51+00:00",
+  "train_seconds": 3002.0,
+  "method": "QLoRA (4-bit base, LoRA adapters) via Unsloth + TRL SFTTrainer, loss on assistant turns only (train_on_responses_only)",
+  "base_model": {
+    "upstream": "Qwen/Qwen2.5-3B-Instruct",
+    "upstream_revision": "aa8e72537993ba99e69dfaafa59ed015b17504d1",
+    "training_checkpoint": "unsloth/Qwen2.5-3B-Instruct-bnb-4bit",
+    "training_checkpoint_revision": "2672b588848527e456d320c11926c794539f47d5",
+    "source": "https://huggingface.co/Qwen/Qwen2.5-3B-Instruct",
+    "license": "Qwen Research License (qwen2.5-3b-instruct)"
+  },
+  "hyperparameters": {
+    "epochs": 3,
+    "per_device_batch": 2,
+    "grad_accum": 8,
+    "effective_batch": 16,
+    "learning_rate": 0.0002,
+    "lr_scheduler": "cosine",
+    "warmup_ratio": 0.03,
+    "lora_rank": 16,
+    "lora_alpha": 32,
+    "lora_dropout": 0.05,
+    "bias": "none",
+    "target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ],
+    "max_seq_length": 4096,
+    "load_in_4bit": true,
+    "precision": "fp16",
+    "packing": false,
+    "gradient_checkpointing": "unsloth",
+    "seed": 17,
+    "chat_template": "qwen-2.5"
+  },
+  "dataset": {
+    "train": "training/dataset/train.jsonl",
+    "train_sha256": "7ffdd4e9d96621e7505c27d51a9f70118a5dad796292ddf95e0b0d0f5e423e75",
+    "train_rows": 320,
+    "eval": "training/dataset/eval.jsonl",
+    "eval_sha256": "506699466aa2ab6092e98ce3a39f54ae05ad8dbbb00b65668ba9715bbf261c48",
+    "eval_rows": 80
+  },
+  "results": {
+    "train_loss": 0.15990932908219596,
+    "global_steps": 60,
+    "eval": {
+      "eval_loss": 0.003235872834920883,
+      "eval_runtime": 61.108,
+      "eval_samples_per_second": 1.309,
+      "eval_steps_per_second": 0.327,
+      "epoch": 3.0
+    },
+    "log_history": [
+      {
+        "loss": 1.0915879249572753,
+        "grad_norm": 0.8032030463218689,
+        "learning_rate": 0.00019941379571543596,
+        "epoch": 0.25,
+        "step": 5
+      },
+      {
+        "loss": 0.44670915603637695,
+        "grad_norm": 0.4516410529613495,
+        "learning_rate": 0.00019289767198167916,
+        "epoch": 0.5,
+        "step": 10
+      },
+      {
+        "loss": 0.20502996444702148,
+        "grad_norm": 0.44531524181365967,
+        "learning_rate": 0.00017960930657056438,
+        "epoch": 0.75,
+        "step": 15
+      },
+      {
+        "loss": 0.10142600536346436,
+        "grad_norm": 0.5418404936790466,
+        "learning_rate": 0.00016051742151937655,
+        "epoch": 1.0,
+        "step": 20
+      },
+      {
+        "eval_loss": 0.049836210906505585,
+        "eval_runtime": 60.9754,
+        "eval_samples_per_second": 1.312,
+        "eval_steps_per_second": 0.328,
+        "epoch": 1.0,
+        "step": 20
+      },
+      {
+        "loss": 0.042061954736709595,
+        "grad_norm": 0.33946266770362854,
+        "learning_rate": 0.00013701381553399145,
+        "epoch": 1.25,
+        "step": 25
+      },
+      {
+        "loss": 0.01457955539226532,
+        "grad_norm": 0.21963469684123993,
+        "learning_rate": 0.00011081190184239419,
+        "epoch": 1.5,
+        "step": 30
+      },
+      {
+        "loss": 0.006761813908815384,
+        "grad_norm": 0.22994135320186615,
+        "learning_rate": 8.382180034472353e-05,
+        "epoch": 1.75,
+        "step": 35
+      },
+      {
+        "loss": 0.0035035435110330583,
+        "grad_norm": 0.07351506501436234,
+        "learning_rate": 5.801108984397354e-05,
+        "epoch": 2.0,
+        "step": 40
+      },
+      {
+        "eval_loss": 0.004356663674116135,
+        "eval_runtime": 60.7893,
+        "eval_samples_per_second": 1.316,
+        "eval_steps_per_second": 0.329,
+        "epoch": 2.0,
+        "step": 40
+      },
+      {
+        "loss": 0.0020754309371113777,
+        "grad_norm": 0.04963401332497597,
+        "learning_rate": 3.5261371521817244e-05,
+        "epoch": 2.25,
+        "step": 45
+      },
+      {
+        "loss": 0.0021007075905799867,
+        "grad_norm": 0.04969458654522896,
+        "learning_rate": 1.7231100184310956e-05,
+        "epoch": 2.5,
+        "step": 50
+      },
+      {
+        "loss": 0.0021315928548574447,
+        "grad_norm": 0.11067626625299454,
+        "learning_rate": 5.2346828817197655e-06,
+        "epoch": 2.75,
+        "step": 55
+      },
+      {
+        "loss": 0.0009442992508411407,
+        "grad_norm": 0.10201948136091232,
+        "learning_rate": 1.4665861488761813e-07,
+        "epoch": 3.0,
+        "step": 60
+      },
+      {
+        "eval_loss": 0.003235872834920883,
+        "eval_runtime": 60.9821,
+        "eval_samples_per_second": 1.312,
+        "eval_steps_per_second": 0.328,
+        "epoch": 3.0,
+        "step": 60
+      },
+      {
+        "train_runtime": 2831.6081,
+        "train_samples_per_second": 0.339,
+        "train_steps_per_second": 0.021,
+        "total_flos": 3.4526457664413696e+16,
+        "train_loss": 0.15990932908219596,
+        "epoch": 3.0,
+        "step": 60
+      },
+      {
+        "eval_loss": 0.003235872834920883,
+        "eval_runtime": 61.108,
+        "eval_samples_per_second": 1.309,
+        "eval_steps_per_second": 0.327,
+        "epoch": 3.0,
+        "step": 60
+      }
+    ]
+  },
+  "adapter": {
+    "path": "training/outputs/lora/adapter_model.safetensors",
+    "sha256": "ad3716e908060dc87c3095d5a20ac9811f557cf293ead4f80a2497d143908e53",
+    "bytes": 119801528,
+    "config_sha256": "ed4c2fa721961c851c6fe0c0fcad03fc0b169ea8050b2dbd28b63cc5f471f461",
+    "config": {
+      "alora_invocation_tokens": null,
+      "alpha_pattern": {},
+      "arrow_config": null,
+      "auto_mapping": {
+        "base_model_class": "Qwen2ForCausalLM",
+        "parent_library": "transformers.models.qwen2.modeling_qwen2",
+        "unsloth_fixed": true
+      },
+      "base_model_name_or_path": "unsloth/Qwen2.5-3B-Instruct-bnb-4bit",
+      "bias": "none",
+      "corda_config": null,
+      "ensure_weight_tying": false,
+      "eva_config": null,
+      "exclude_modules": null,
+      "fan_in_fan_out": false,
+      "inference_mode": true,
+      "init_lora_weights": true,
+      "kasa_config": null,
+      "layer_replication": null,
+      "layers_pattern": null,
+      "layers_to_transform": null,
+      "loftq_config": {},
+      "lora_alpha": 32,
+      "lora_bias": false,
+      "lora_dropout": 0.05,
+      "lora_ga_config": null,
+      "megatron_config": null,
+      "megatron_core": "megatron.core",
+      "modules_to_save": null,
+      "monteclora_config": null,
+      "peft_type": "LORA",
+      "peft_version": "0.21.2",
+      "qalora_group_size": 16,
+      "r": 16,
+      "rank_pattern": {},
+      "revision": null,
+      "target_modules": [
+        "up_proj",
+        "down_proj",
+        "v_proj",
+        "gate_proj",
+        "q_proj",
+        "o_proj",
+        "k_proj"
+      ],
+      "target_parameters": null,
+      "task_type": "CAUSAL_LM",
+      "trainable_token_indices": null,
+      "use_bdlora": null,
+      "use_dora": false,
+      "use_qalora": false,
+      "use_rslora": false,
+      "velora_config": null
+    }
+  },
+  "environment": {
+    "gpu": "Tesla T4",
+    "peak_gpu_memory_gb": 8.79,
+    "python": "3.13.16",
+    "torch": "2.14.1+cu130",
+    "transformers": "5.18.0",
+    "trl": "1.18.2",
+    "peft": "0.21.2",
+    "datasets": "4.8.5",
+    "unsloth": "2026.11.12"
+  }
+}

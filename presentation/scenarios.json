@@ -25,7 +25,8 @@
       "id": "S3",
       "scenario": "reversal_events",
       "title": "Technical reversal events",
-      "question": "For TCELL.IS, which technical reversal signals appeared in the 120 trading sessions up to 2025-12-31, and how did the price behave over the following 5 sessions on average?",
+      "question": "Which technical reversal events were detected for TCELL.IS in the 120 trading sessions up to 2025-12-31, and what was the average return over the following 5 sessions?",
+      "wording_note": "Reworded on 2026-11-25. With the earlier wording ('For TCELL.IS, which technical reversal signals appeared ... how did the price behave ...') the fine-tuned model called calculate_indicators and calculate_scores instead of detect_reversal_events and answered ANALYSIS_UNSAFE. Same ticker, window and intent; the answer itself was not edited.",
       "tickers": ["TCELL.IS"],
       "date_range": {"as_of": "2025-12-31", "lookback_sessions": 120},
       "expected_behaviour": "Calls detect_reversal_events; counts events by type; reports forward_5d returns."

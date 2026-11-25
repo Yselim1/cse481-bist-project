@@ -41,6 +41,9 @@ DEFAULT_MODEL = os.environ.get("BIST_LOCAL_MODEL", "qwen2.5:7b-instruct")
 DEFAULT_CONFIG = os.environ.get("BIST_AGENT_CONFIG", "config/universe_live.yaml")
 DEFAULT_SEED = 17
 DEFAULT_TEMPERATURE = 0.0
+# Ceiling on tokens per model turn. Final answers are < 600 tokens; this stops a repetition
+# loop from running to the context limit. Recorded in each trace's sampling block.
+DEFAULT_MAX_TOKENS = 1536
 TRACE_SCHEMA = "bist-execution-trace/1"
 SYSTEM_PROMPT = (
     "You are an academic BIST financial-analysis agent. For every claim, call a tool first: "
@@ -265,8 +268,9 @@ def _date_range(args: dict) -> dict | None:
 
 def _chat(messages: list[dict], tools: list[dict], model: str,
           temperature: float = DEFAULT_TEMPERATURE, allow_tools: bool = True,
-          seed: int | None = DEFAULT_SEED) -> dict:
-    body: dict = {"model": model, "messages": messages, "temperature": temperature, "stream": False}
+          seed: int | None = DEFAULT_SEED, max_tokens: int | None = None) -> dict:
+    body: dict = {"model": model, "messages": messages, "temperature": temperature, "stream": False,
+                  "max_tokens": max_tokens or DEFAULT_MAX_TOKENS}
     if seed is not None:
         body["seed"] = seed  # Ollama's OpenAI-compatible endpoint forwards this to the sampler
     if allow_tools and tools:
@@ -283,6 +287,25 @@ def _chat(messages: list[dict], tools: list[dict], model: str,
         raise RuntimeError(f"Ollama HTTP {exc.code} at {OLLAMA_URL}: {body}") from exc
     except urllib.error.URLError as exc:
         raise RuntimeError(f"Ollama endpoint unreachable at {OLLAMA_URL}: {exc}") from exc
+
+
+_TOOL_CALL_RE = re.compile(r"<tool_call>\s*(\{.*?\})\s*</tool_call>", re.DOTALL)
+
+
+def parse_text_tool_calls(content: str | None) -> list[dict]:
+    """Tool calls the model wrote as Qwen ``<tool_call>{json}</tool_call>`` text, in the
+    OpenAI ``tool_calls`` shape. Used by the training-format protocol (no schemas sent)."""
+    calls = []
+    for i, raw in enumerate(_TOOL_CALL_RE.findall(content or "")):
+        try:
+            obj = json.loads(raw)
+        except json.JSONDecodeError:
+            continue
+        if isinstance(obj, dict) and isinstance(obj.get("name"), str):
+            calls.append({"id": f"text_call_{i}", "type": "function",
+                          "function": {"name": obj["name"],
+                                       "arguments": json.dumps(obj.get("arguments") or {})}})
+    return calls
 
 
 _RAG_SNIPPET_CHARS = 300
@@ -327,7 +350,7 @@ def run_agent(prompt: str, *, model: str = DEFAULT_MODEL, max_turns: int = 10,
               seed: int | None = DEFAULT_SEED, config: str | None = DEFAULT_CONFIG,
               retrieval_top_k: int = 3, system_prompt: str = SYSTEM_PROMPT,
               scenario_id: str | None = None, on_event: Any = None,
-              tool_char_cap: int = _TOOL_RESULT_CHAR_CAP) -> dict:
+              tool_char_cap: int = _TOOL_RESULT_CHAR_CAP, tool_schemas: bool = True) -> dict:
     """Run a tool-calling loop against a local Ollama model and the BIST MCP server.
 
     If ``allow_tools`` is False the MCP server is still launched for schema listing but
@@ -361,7 +384,7 @@ def run_agent(prompt: str, *, model: str = DEFAULT_MODEL, max_turns: int = 10,
     tools_active = allow_tools
     text_retry_used = False
     provenance = model_provenance(model)
-    sampling = {"temperature": temperature, "seed": seed,
+    sampling = {"temperature": temperature, "seed": seed, "max_tokens": DEFAULT_MAX_TOKENS,
                 "top_p": _modelfile_param(provenance, "top_p"),
                 "num_ctx": _modelfile_param(provenance, "num_ctx"),
                 "endpoint": f"{OLLAMA_URL}/chat/completions"}
@@ -414,11 +437,18 @@ def run_agent(prompt: str, *, model: str = DEFAULT_MODEL, max_turns: int = 10,
                 tools_active = False
             call_start, ct = _now(), time.perf_counter()
             emit("thinking", turn, None)
-            response = _chat(messages, openai_tools if tools_active else [], model=model,
-                             allow_tools=tools_active, temperature=temperature, seed=seed)
+            response = _chat(messages, openai_tools if tools_active and tool_schemas else [],
+                             model=model, allow_tools=tools_active and tool_schemas,
+                             temperature=temperature, seed=seed)
             choice = response["choices"][0]
             message = choice["message"]
             tool_calls = message.get("tool_calls") or []
+            if not tool_schemas and tools_active and not tool_calls:
+                # Training-format protocol: the model writes <tool_call> text, as in its
+                # fine-tuning data; the assistant turn is kept as that same text.
+                tool_calls = parse_text_tool_calls(message.get("content"))
+                if tool_calls:
+                    message = {"role": "assistant", "content": message.get("content") or ""}
             trace.append({"turn": turn, "role": "assistant", "content": message.get("content"),
                           "tool_calls": message.get("tool_calls", [])})
             steps.append({"index": len(steps), "turn": turn, "type": "assistant",
@@ -505,6 +535,9 @@ def run_agent(prompt: str, *, model: str = DEFAULT_MODEL, max_turns: int = 10,
             "harness": {"script": "scripts/local_agent.py", "config_file": config,
                         "max_turns": max_turns, "force_answer_after": force_answer_after,
                         "tool_result_char_cap": tool_char_cap,
+                        "tool_protocol": ("openai_tools (schemas sent by Ollama)" if tool_schemas else
+                                          "training_format (no schemas sent; <tool_call> text parsed, "
+                                          "as in the fine-tuning data)"),
                         "tools_offered": [t["function"]["name"] for t in openai_tools],
                         "git": _git_state(), "python": sys.version.split()[0]},
             "system_prompt": system_prompt,
