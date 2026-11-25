@@ -77,6 +77,8 @@ input[type=checkbox]{width:18px;height:18px;accent-color:var(--teal);margin:0}
 .lbl{font-size:13px;font-weight:700;color:var(--teal);margin:0 0 6px}
 .screen{background:var(--panel);border:1px solid var(--rule);border-radius:4px;padding:12px 14px;font-size:15px}
 .screen ul{margin:0;padding-left:18px}
+.screen li.obs{list-style:none;margin:0 0 6px -18px;padding-bottom:6px;border-bottom:1px solid var(--rule)}
+kbd{font:600 12.5px ui-monospace,Consolas,monospace;border:1px solid var(--rule);border-bottom-width:2px;border-radius:3px;padding:0 5px;white-space:nowrap;background:var(--bg)}
 .say p{margin:0 0 12px;font-size:17px;line-height:1.65}
 .say p:last-child{margin-bottom:0}
 .meta{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin-top:14px;font-size:13px;color:var(--mute)}
@@ -142,6 +144,9 @@ body.tp .honest{background:#2a2112;color:#f2f2f2}
   <div>
     <h2>Before you press record</h2>
     <ul>
+      <li>In OBS, go to <b>Scene Collection → Import</b> and choose <code>Desktop\CSE481_Video_OBS_Scenes.json</code>, then switch to the "CSE481 Video" collection. It has one scene per screen in this script, with a hotkey for each (shown in each segment).</li>
+      <li>In OBS, open the <b>Webcam</b> source once and pick your camera (or leave it empty for no camera). Check that <b>Mic/Aux</b> moves in the audio mixer. Desktop audio starts muted so notification sounds stay out.</li>
+      <li>Open Windows Terminal and VS Code before switching to scenes 02b, 07 and 09a. If a capture is black, open the source and pick the window again.</li>
       <li>Start Ollama and check that <code>ollama list</code> shows <code>bist-qwen</code>. If it doesn't, run <code>ollama create bist-qwen -f training/Modelfile.finetuned</code>.</li>
       <li>Set <code>$env:BIST_LOCAL_MODEL="bist-qwen"</code> or pass <code>--model bist-qwen</code>. <code>local_agent.py</code> falls back to <code>qwen2.5:7b-instruct</code> when neither is given.</li>
       <li>Run the 5-stage harness before recording; it takes about 8–15 minutes. During the video, only show <code>outputs/harness/</code>.</li>
@@ -178,7 +183,7 @@ body.tp .honest{background:#2a2112;color:#f2f2f2}
 <section class="scene" id="s1" data-dur="40" data-act="1" data-title="Intro and question">
   <div class="scene-h"><h2>1 · Intro, disclaimer, research question</h2></div>
   <div class="cols">
-    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li>Title slide (slide 1)</li><li><code>docs/PROPOSAL.md</code>, research question</li></ul></div></div>
+    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li class="obs"><b>OBS:</b> 01 · Intro (slide 1) <kbd>Ctrl+Shift+F1</kbd></li><li>Title slide (slide 1)</li><li><code>docs/PROPOSAL.md</code>, research question</li></ul></div></div>
     <div class="say"><p class="lbl">SAY</p>
       <p>Hi, I'm Yavuz Selim Gezginci. This is my CSE481 Engineering Economics term project for Doç. Dr. Alper Özcan.</p>
       <p>I built a Python system that analyses Turkish Airlines, THYAO, using Yahoo Finance prices and Fintables financial statements, backtests a rule-based strategy, and lets an AI agent explain the results through MCP tools. The agent is a model I fine-tuned myself, and it runs entirely on my laptop.</p>
@@ -191,7 +196,7 @@ body.tp .honest{background:#2a2112;color:#f2f2f2}
 <section class="scene" id="s2" data-dur="70" data-act="1" data-title="Architecture and data">
   <div class="scene-h"><h2>2 · Architecture and data</h2></div>
   <div class="cols">
-    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li>Slide 3, "System Architecture"</li><li><code>data/raw/market/THYAO.IS.csv</code></li><li><code>data/processed/fintables_tms29_observations.csv</code></li></ul></div>
+    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li class="obs"><b>OBS:</b> 02a · Architecture (slide 3) <kbd>Ctrl+Shift+F2</kbd>, then 02b · Data files (VS Code) <kbd>Ctrl+Shift+F3</kbd></li><li>Slide 3, "System Architecture"</li><li><code>data/raw/market/THYAO.IS.csv</code></li><li><code>data/processed/fintables_tms29_observations.csv</code></li></ul></div>
       <div class="cmd"><code>.\.venv\Scripts\python.exe -m bist_analytics.cli --config config/tms29.yaml import-tms29</code><button data-copy>Copy</button></div></div>
     <div class="say"><p class="lbl">SAY</p>
       <p>The architecture follows the instructor's pipeline. Market data and Fintables data feed technical and fundamental analysis. Both feed a combined score, then the strategy, the backtest, and finally the MCP agent that explains the result.</p>
@@ -259,7 +264,7 @@ body.tp .honest{background:#2a2112;color:#f2f2f2}
 <section class="scene" id="s6" data-dur="95" data-act="3" data-title="MCP and fine-tuned model">
   <div class="scene-h"><h2>6 · MCP tools and the fine-tuned model</h2></div>
   <div class="cols">
-    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li>Slide 5, "MCP Tools"</li><li>Slide 6, "Fine-Tuning Pipeline"</li><li>Slide 8, base vs fine-tuned table</li></ul></div></div>
+    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li class="obs"><b>OBS:</b> 06a · MCP tools <kbd>Ctrl+Shift+F7</kbd>, 06b · Fine-tuning <kbd>Ctrl+Shift+F8</kbd>, 06c · Base vs fine-tuned <kbd>Ctrl+Shift+F9</kbd></li><li class="obs"><b>OBS:</b> 05 · Performance chart <kbd>Ctrl+Shift+F6</kbd></li><li class="obs"><b>OBS:</b> 04 · Scores chart <kbd>Ctrl+Shift+F5</kbd></li><li class="obs"><b>OBS:</b> 03 · Technical chart <kbd>Ctrl+Shift+F4</kbd></li><li>Slide 5, "MCP Tools"</li><li>Slide 6, "Fine-Tuning Pipeline"</li><li>Slide 8, base vs fine-tuned table</li></ul></div></div>
     <div class="say"><p class="lbl">SAY</p>
       <p>The MCP server exposes the same Python functions as 20 read-only tools, including the ones the spec lists: stock history, indicators, support and resistance, fundamentals, scores, signals and backtest. No tool can trade, and the agent gets every number from a tool.</p>
       <p>The agent model covers the instructor's six points. The <b>base model</b> is Qwen 2.5 3B Instruct, Apache-licensed, with tool calling. I picked 3B because 7B didn't reliably fit on a free Colab T4.</p>
@@ -274,7 +279,7 @@ body.tp .honest{background:#2a2112;color:#f2f2f2}
 <section class="scene" id="s7" data-dur="80" data-act="3" data-title="Live demo">
   <div class="scene-h"><h2>7 · Live demo</h2></div>
   <div class="cols">
-    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li>PowerShell at the repo root, font at 18pt or larger</li></ul></div>
+    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li class="obs"><b>OBS:</b> 07 · Live demo (terminal) <kbd>Ctrl+Shift+F10</kbd></li><li>PowerShell at the repo root, font at 18pt or larger</li></ul></div>
       <div class="cmd"><code>.\.venv\Scripts\python.exe scripts/local_agent.py --smoke --model bist-qwen</code><button data-copy>Copy</button></div>
       <div class="cmd"><code>.\.venv\Scripts\python.exe scripts/local_agent.py --ticker THYAO.IS --as-of 2025-12-31 --model bist-qwen</code><button data-copy>Copy</button></div>
       <div class="cmd"><code>netstat -ano | findstr 11434</code><button data-copy>Copy</button></div></div>
@@ -291,7 +296,7 @@ body.tp .honest{background:#2a2112;color:#f2f2f2}
 <section class="scene" id="s8" data-dur="40" data-act="3" data-title="Harness and extras">
   <div class="scene-h"><h2>8 · Harness and extra studies</h2></div>
   <div class="cols">
-    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li>Slide 9, harness table</li><li>Slide 7, scenarios</li></ul></div></div>
+    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li class="obs"><b>OBS:</b> 08a · Harness (slide 9) <kbd>Ctrl+Shift+F11</kbd>, then 08b · Scenarios (slide 7) <kbd>Ctrl+Shift+F12</kbd></li><li>Slide 9, harness table</li><li>Slide 7, scenarios</li></ul></div></div>
     <div class="say"><p class="lbl">SAY</p>
       <p>A five-stage harness measures what each layer adds. Giving the model tools raises evidence coverage from 0 to 1.0, and it stays there. Numeric exactness stays at 0, though, so this shows the architecture works, not that the model is precise.</p>
       <p>I also ran four scenario studies on ten BIST stocks in five sectors, for example 1,458 technical reversal events. These became the fine-tuning data.</p>
@@ -303,7 +308,7 @@ body.tp .honest{background:#2a2112;color:#f2f2f2}
 <section class="scene" id="s9" data-dur="45" data-act="4" data-title="Quality and close">
   <div class="scene-h"><h2>9 · Tests, limitations, close</h2></div>
   <div class="cols">
-    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li><code>pytest</code> output</li><li>Slide 11, limitations</li><li>File explorer showing the deliverables</li></ul></div>
+    <div class="screen-col"><p class="lbl">ON SCREEN</p><div class="screen"><ul><li class="obs"><b>OBS:</b> 09a · Tests (terminal) <kbd>Ctrl+Alt+Shift+F1</kbd>, then 09b · Limitations (slide 11) <kbd>Ctrl+Alt+Shift+F2</kbd></li><li><code>pytest</code> output</li><li>Slide 11, limitations</li><li>File explorer showing the deliverables</li></ul></div>
       <div class="cmd"><code>.\.venv\Scripts\pytest.exe</code><button data-copy>Copy</button></div></div>
     <div class="say"><p class="lbl">SAY</p>
       <p>All 68 tests pass, checking things like indicator maths, pivot timing, publication dates, costs and next-open execution, and a clean-environment reproduction matches the results.</p>
