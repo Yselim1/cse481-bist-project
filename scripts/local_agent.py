@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import http.client
 import json
 import os
 import re
@@ -292,7 +293,7 @@ def _chat(messages: list[dict], tools: list[dict], model: str,
                 time.sleep(5 * (attempt + 1))
                 continue
             raise RuntimeError(f"Ollama HTTP {exc.code} at {OLLAMA_URL}: {body}") from exc
-        except urllib.error.URLError as exc:
+        except (urllib.error.URLError, ConnectionError, http.client.HTTPException, TimeoutError) as exc:
             if attempt < 2:
                 time.sleep(5 * (attempt + 1))
                 continue
